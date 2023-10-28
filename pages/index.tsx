@@ -1,10 +1,9 @@
 import Head from "next/head";
 
-import {Box, Text} from "@chakra-ui/react";
-
 import Layout from "@/components/Layout";
 
 import {NextPage} from "next";
+import Home from "@/components/Home";
 
 
 const HomePage: NextPage = () => {
@@ -19,11 +18,7 @@ const HomePage: NextPage = () => {
           <Layout
             authGate
           >
-              <Box>
-                  <Text>
-                      Hello World
-                  </Text>
-              </Box>
+              <Home />
           </Layout>
       </>
   )
