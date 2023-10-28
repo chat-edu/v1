@@ -29,10 +29,10 @@ const Welcome = () => {
             </Heading>
             <Text
                 textAlign={'center'}
-                fontSize={'xl'}
+                fontSize={'2xl'}
                 fontWeight={'bold'}
             >
-                An AI platform to supercharge your learning
+                Supercharge your learning with AI
             </Text>
         </VStack>
     );

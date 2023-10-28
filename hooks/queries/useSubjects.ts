@@ -9,10 +9,10 @@ const useSubjects = () => {
     const { user } = useAuth();
 
 
-    const [courses, loading, error] = useCollectionData(subjectsCollection(user?.uid || "a"));
+    const [subjects, loading, error] = useCollectionData(subjectsCollection(user?.uid || "a"));
 
     return {
-        courses: courses || [],
+        subjects: subjects || [],
         loading,
         error,
     }
