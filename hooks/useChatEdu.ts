@@ -1,9 +1,12 @@
 import {useEffect, useState} from "react";
 
-import {nanoid} from "ai";
+import {Message, nanoid} from "ai";
 import {useChat} from "ai/react";
 
 import {Note} from "@/types/Note";
+import chunkString from "@/lib/chunkString";
+
+const MAX_LENGTH = 16385 * 3;
 
 const useOpenAi = (notes: Note[]) => {
 
@@ -21,21 +24,28 @@ const useOpenAi = (notes: Note[]) => {
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
+
+        const content = `
+            ${notes.map((note) => `
+                ${note.content}
+            `)}
+        `;
+
         setMessages([
             {
-                id: '1',
+                id: nanoid(),
                 content: `
-                
                     You are to act as a teacher helping a student learn content they have taken notes on. You can only respond with information that is within the notes include below.
                     
                     These are the notes the student has taken so far:
-                    
-                    ${notes.map((note) => `
-                        ${note.content}
-                    `)} 
                 `,
                 role: 'system',
-            }
+            },
+            ...chunkString(content, MAX_LENGTH).map((content): Message => ({
+                id: nanoid(),
+                content,
+                role: 'system',
+            }))
         ])
     }, [notes])
 
