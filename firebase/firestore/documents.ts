@@ -1,6 +1,6 @@
 import {doc} from "@firebase/firestore";
 
-import firestore from "@/firebase/firestore/firestore";
+import firestore from "@/firebase/firestore";
 
 import {
     NOTES_COLLECTION_SLUG,
