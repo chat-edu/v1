@@ -3,6 +3,7 @@ import React from 'react';
 import {Box, Flex, Skeleton} from "@chakra-ui/react";
 
 import NotConnected from "@/components/Layout/NotConnected";
+import Navbar, { navbarHeight } from "@/components/Navbar";
 
 interface Props {
     children: React.ReactNode,
@@ -19,11 +20,12 @@ const Layout: React.FC<Props> = ({ children, authGate }) => {
         <Box
             h={'100vh'}
         >
+            <Navbar />
             <Flex
                 direction={'column'}
                 gap={4}
                 w={'100%'}
-                h={'100%'}
+                h={`calc(100vh - ${navbarHeight})`}
             >
                 {
                     authGate ? (
