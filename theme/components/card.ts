@@ -11,7 +11,6 @@ const baseStyle = definePartsStyle((props) => ({
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
-        width: "100%",
         position: "relative",
         minWidth: "0px",
         wordWrap: "break-word",

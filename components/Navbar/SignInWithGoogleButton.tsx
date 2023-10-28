@@ -3,9 +3,11 @@ import React from 'react';
 import {Button, IconButton} from "@chakra-ui/react";
 
 import {FcGoogle} from "react-icons/fc";
+
+import useSignIn from "@/hooks/auth/useSignIn";
 const SignInWithGoogleButton = () => {
 
-    const onSignIn = () => {};
+    const { onSignIn } = useSignIn();
 
     return (
         <>
