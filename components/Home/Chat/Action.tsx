@@ -15,9 +15,11 @@ interface Props {
 const Action: React.FC<Props> = ({ label, description, icon, onClick }) => {
 
     const hoverColor = transparentize(useColorModeValue('brand.200', 'brand.700'), 0.5);
+    const actionCardColor = useColorModeValue("white", "#2D2D2D")
 
     return (
         <Card
+            bg={actionCardColor}
             flex={1}
             onClick={onClick}
             cursor={'pointer'}

@@ -4,6 +4,8 @@ import { Message as MessageInterface } from "ai";
 
 import {Card, ColorMode, Text, useColorMode} from "@chakra-ui/react";
 
+import Markdown from "@/components/Utilities/Markdown";
+
 interface Props {
     message: MessageInterface
 }
@@ -43,9 +45,9 @@ const Message: React.FC<Props> = ({ message }) => {
             >
                 {getRoleName(message.role)}
             </Text>
-            <Text>
-                {message.content}
-            </Text>
+            <Markdown
+                content={message.content}
+            />
         </Card>
     );
 };
