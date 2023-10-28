@@ -29,7 +29,9 @@ const Home = () => {
                 />
                 {
                     notes.length > 0 ? (
-                        <Chat />
+                        <Chat
+                            notes={notes}
+                        />
                     ) : (
                         <HomeLanding />
                     )
