@@ -21,6 +21,8 @@ import useAuth from "@/hooks/auth/useAuth";
 
 import {Subject as SubjectType} from "@/types/Subject";
 import {Note} from "@/types/Note";
+import UploadNotes from "@/components/Home/UploadNotes";
+import {SmallAddIcon} from "@chakra-ui/icons";
 
 interface Props {
     subject: SubjectType,
@@ -55,36 +57,48 @@ const Subject: React.FC<Props> = ({ subject, addNote, removeNote }) => {
                 />
             </HStack>
             <AccordionPanel>
-                {
-                    loading ? (
-                        <Skeleton />
-                    ) : (
-                        <CheckboxGroup colorScheme='brand'>
-                            <VStack
-                                spacing={2}
-                                align={'start'}
-                            >
-                                {
-                                    notes.map((note) => (
-                                        <Checkbox
-                                            key={note.id}
-                                            value={note.id}
-                                            onChange={(e) => {
-                                                if(e.target.checked) {
-                                                    addNote(note);
-                                                } else {
-                                                    removeNote(note.id);
-                                                }
-                                            }}
-                                        >
-                                            {note.title}
-                                        </Checkbox>
-                                    ))
-                                }
-                            </VStack>
-                        </CheckboxGroup>
-                    )
-                }
+                <VStack
+                    align={'start'}
+                    spacing={4}
+                >
+                    {
+                        loading ? (
+                            <Skeleton />
+                        ) : (
+                            <CheckboxGroup colorScheme='brand'>
+                                <VStack
+                                    spacing={2}
+                                    align={'start'}
+                                >
+                                    {
+                                        notes.map((note) => (
+                                            <Checkbox
+                                                key={note.id}
+                                                value={note.id}
+                                                onChange={(e) => {
+                                                    if(e.target.checked) {
+                                                        addNote(note);
+                                                    } else {
+                                                        removeNote(note.id);
+                                                    }
+                                                }}
+                                            >
+                                                {note.title}
+                                            </Checkbox>
+                                        ))
+                                    }
+                                </VStack>
+                            </CheckboxGroup>
+                        )
+                    }
+                    <UploadNotes
+                        text={"Add Note"}
+                        icon={<SmallAddIcon />}
+                        buttonProps={{
+                            w: '100%',
+                        }}
+                    />
+                </VStack>
             </AccordionPanel>
         </AccordionItem>
     );

@@ -7,6 +7,7 @@ import UploadNotes from "@/components/Home/UploadNotes";
 import AddSubjectButton from "@/components/Home/AddSubject/AddSubjectButton";
 
 import useSubjects from "@/hooks/queries/useSubjects";
+import {BiUpload} from "react-icons/bi";
 
 const HomeLanding = () => {
 
@@ -29,7 +30,10 @@ const HomeLanding = () => {
             </Text>
             {
                 subjects.length > 0 ? (
-                    <UploadNotes />
+                    <UploadNotes
+                        text={'Upload Notes'}
+                        icon={<BiUpload />}
+                    />
                 ) : (
                     <AddSubjectButton />
                 )

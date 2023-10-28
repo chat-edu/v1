@@ -6,12 +6,10 @@ import {
     Card,
     Heading, HStack,
     Skeleton,
-    VStack
 } from "@chakra-ui/react";
 
 import Subject from "@/components/Home/Sidebar/Subject";
 import AddSubject from "@/components/Home/Sidebar/AddSubject";
-import Upload from "@/components/Home/UploadNotes";
 
 import useSubjects from "@/hooks/queries/useSubjects";
 
@@ -71,11 +69,6 @@ const CoursesSidebar: React.FC<Props> = ({ addNote, removeNote }) => {
                     )
                 }
             </Box>
-            <VStack
-                w={'100%'}
-            >
-                <Upload />
-            </VStack>
         </Card>
     );
 };

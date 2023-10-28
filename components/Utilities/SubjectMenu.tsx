@@ -16,7 +16,7 @@ interface Props {
     placeholder?: string
 }
 
-const CourseMenu: React.FC<Props> = ({ label, course, placeholder, setCourse, onBlur, error, closeButton }) => {
+const SubjectMenu: React.FC<Props> = ({ label, course, placeholder, setCourse, onBlur, error, closeButton }) => {
 
     const { subjects } = useSubjects();
 
@@ -35,4 +35,4 @@ const CourseMenu: React.FC<Props> = ({ label, course, placeholder, setCourse, on
     );
 };
 
-export default CourseMenu;
+export default SubjectMenu;
