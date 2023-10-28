@@ -1,12 +1,11 @@
 import React from 'react';
 
 import {Button, useDisclosure} from "@chakra-ui/react";
+import {SmallAddIcon} from "@chakra-ui/icons";
 
-import {BiUpload} from "react-icons/bi";
+import AddSubjectModal from "@/components/Home/AddSubject/AddSubjectModal";
 
-import UploadModal from "@/components/Home/UploadNotes/UploadModal";
-
-const UploadNotes = () => {
+const AddSubjectButton = () => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -14,12 +13,12 @@ const UploadNotes = () => {
         <>
             <Button
                 colorScheme={'brand'}
-                leftIcon={<BiUpload />}
                 onClick={onOpen}
+                leftIcon={<SmallAddIcon />}
             >
-                Upload your Notes
+                Add Subject
             </Button>
-            <UploadModal
+            <AddSubjectModal
                 isOpen={isOpen}
                 onClose={onClose}
             />
@@ -27,4 +26,4 @@ const UploadNotes = () => {
     );
 };
 
-export default UploadNotes;
+export default AddSubjectButton;
