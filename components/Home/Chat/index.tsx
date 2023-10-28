@@ -16,7 +16,15 @@ interface Props {
 
 const Chat: React.FC<Props> = ({ notes }) => {
 
-    const { input, messages, handleInputChange, handleSubmit } = useChatEdu(notes);
+    const {
+        input,
+        messages,
+        handleInputChange,
+        handleSubmit,
+        askMultipleChoiceQuestion,
+        askFreeFormQuestion,
+        generateStudyGuide,
+    } = useChatEdu(notes);
 
     return (
         <Flex
@@ -35,6 +43,9 @@ const Chat: React.FC<Props> = ({ notes }) => {
                 value={input}
                 handleChange={handleInputChange}
                 handleSubmit={handleSubmit}
+                askMultipleChoice={askMultipleChoiceQuestion}
+                askFreeForm={askFreeFormQuestion}
+                generateStudyGuide={generateStudyGuide}
             />
         </Flex>
     );

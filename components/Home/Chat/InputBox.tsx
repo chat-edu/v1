@@ -10,10 +10,13 @@ interface Props {
     value: string,
     handleChange: ChangeEventHandler<HTMLInputElement>,
     handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
-    notes: Note[]
+    notes: Note[],
+    askMultipleChoice: () => Promise<void>;
+    askFreeForm: () => Promise<void>;
+    generateStudyGuide: () => Promise<void>;
 }
 
-const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, notes }) => {
+const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMultipleChoice, askFreeForm, generateStudyGuide }) => {
 
     const inputBoxColor = useColorModeValue("white", "#2D2D2D")
 
@@ -27,7 +30,9 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, notes })
            pt={4}
         >
             <Actions
-                notes={notes}
+                askMultipleChoice={askMultipleChoice}
+                askFreeForm={askFreeForm}
+                generateStudyGuide={generateStudyGuide}
             />
             <Card
                 bg={inputBoxColor}
