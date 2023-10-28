@@ -5,6 +5,8 @@ import {Box, Flex, Skeleton} from "@chakra-ui/react";
 import NotConnected from "@/components/Layout/NotConnected";
 import Navbar, { navbarHeight } from "@/components/Navbar";
 
+import useAuth from "@/hooks/auth/useAuth";
+
 interface Props {
     children: React.ReactNode,
     authGate?: boolean
@@ -12,9 +14,7 @@ interface Props {
 
 const Layout: React.FC<Props> = ({ children, authGate }) => {
 
-
-    const loading = false;
-    const isConnected = true;
+    const { loading, isConnected } = useAuth();
 
     return (
         <Box

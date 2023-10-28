@@ -1,23 +1,41 @@
 import React from 'react';
 
-import {Card, Heading, Text, VStack} from "@chakra-ui/react";
+import {Button, Card, Text, VStack} from "@chakra-ui/react";
+
+import Welcome from "@/components/Welcome";
+
+import SignInWithGoogleButton from "@/components/Navbar/SignInWithGoogleButton";
 
 const NotConnected = () => {
     return (
-        <Card>
-            <VStack
-                spacing={4}
+        <VStack
+            flex={1}
+            justifyContent={'center'}
+        >
+            <Card
+                p={16}
             >
-                <Heading
-                    size={'lg'}
-                >
-                    You are not signed in
-                </Heading>
-                <Text>
-                    You must be signed in with your Vanderbilt Google account to view this page.
-                </Text>
-            </VStack>
-        </Card>
+                <VStack>
+                    <Welcome />
+                    <VStack>
+                        <Text
+                            textAlign={'center'}
+                        >
+                            Get started by logging in with your vanderbilt.edu email
+                        </Text>
+                        <SignInWithGoogleButton />
+                        <Text
+                            textAlign={'center'}
+                        >
+                            If you want to try the app without logging in
+                        </Text>
+                        <Button>
+                            Test as Guest
+                        </Button>
+                    </VStack>
+                </VStack>
+            </Card>
+        </VStack>
     );
 };
 

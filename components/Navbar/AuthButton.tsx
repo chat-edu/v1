@@ -5,19 +5,19 @@ import {
     MenuButton,
     MenuList,
     MenuItem,
-    Button, IconButton, useBreakpointValue
+    Button, IconButton, useBreakpointValue, Avatar
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 
+import {CgProfile} from "react-icons/cg";
+
 import SignInWithGoogleButton from "@/components/Navbar/SignInWithGoogleButton";
 
-import {CgProfile} from "react-icons/cg";
+import useAuth from "@/hooks/auth/useAuth";
 
 const AuthButton = () => {
 
-    const isConnected = false;
-    const onSignOut = () => {}
-
+    const { isConnected, user, onSignOut } = useAuth();
 
     const menuButton = useBreakpointValue({
         base: <MenuButton
@@ -27,9 +27,14 @@ const AuthButton = () => {
         />,
         md: <MenuButton
             as={Button}
+            leftIcon={<Avatar
+                size={'sm'}
+                name={user?.displayName || ""}
+                src={user?.photoURL || ""}
+            />}
             rightIcon={<ChevronDownIcon />}
         >
-            User Name
+            {user?.displayName}
         </MenuButton>
     })
 
