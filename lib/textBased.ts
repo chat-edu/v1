@@ -16,5 +16,5 @@ export const parseTextBased = (message: Message): TextBasedQuestion => ({
 export const textBasedAnswerPrompt = (answer: string) => `
     The user has answered ${answer}.
     
-    Please respond by saying whether or not they are correct and explain why.
+    Please respond by saying whether or not they are correct and explain why. Speak in the second person.
 `

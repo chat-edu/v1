@@ -19,6 +19,7 @@ const Chat: React.FC<Props> = ({ notes }) => {
     const {
         input,
         messages,
+        promptType,
         handleInputChange,
         onSubmit,
         askMultipleChoiceQuestion,
@@ -50,6 +51,7 @@ const Chat: React.FC<Props> = ({ notes }) => {
                 askMultipleChoice={askMultipleChoiceQuestion}
                 askFreeForm={askFreeFormQuestion}
                 generateStudyGuide={generateStudyGuide}
+                promptType={promptType}
             />
         </Flex>
     );

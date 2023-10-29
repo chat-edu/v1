@@ -12,7 +12,7 @@ import {Note} from "@/types/Note";
 
 const MAX_LENGTH = 16385 * 3;
 
-enum PromptTypes {
+export enum PromptTypes {
     REGULAR,
     MULTIPLE_CHOICE,
     TEXT_BASED,
@@ -24,6 +24,8 @@ const useOpenAi = (notes: Note[]) => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const [promptType, setPromptType] = useState<PromptTypes>(PromptTypes.REGULAR);
+
+    // const [correctMapping, setCorrectMapping] = useState<{[key: string]: boolean}>({});
 
     const onFinish =  () => {
         setLoading(false);
@@ -69,6 +71,7 @@ const useOpenAi = (notes: Note[]) => {
     }, [notes])
 
     const askMultipleChoiceQuestion = async () => {
+        setPromptType(PromptTypes.MULTIPLE_CHOICE);
         setLoading(true);
         setMessages([
             ...messages,
@@ -91,6 +94,7 @@ const useOpenAi = (notes: Note[]) => {
             content: multipleChoiceAnswerPrePrompt(answer),
             role: 'system',
         });
+        setPromptType(PromptTypes.REGULAR);
     }
 
     const askFreeFormQuestion = async () => {
@@ -124,6 +128,9 @@ const useOpenAi = (notes: Note[]) => {
             content: textBasedAnswerPrompt(text),
             role: 'system',
         })
+        // setCorrectMapping({
+        //     ...correctMapping,
+        // })
         setPromptType(PromptTypes.REGULAR)
     }
 
@@ -159,6 +166,7 @@ const useOpenAi = (notes: Note[]) => {
         )),
         input,
         loading,
+        promptType,
         handleInputChange,
         onSubmit,
         askMultipleChoiceQuestion,

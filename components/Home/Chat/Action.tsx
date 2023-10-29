@@ -9,27 +9,29 @@ interface Props {
     label: string,
     description: string,
     icon: IconType
-    onClick: () => void
+    onClick: () => void,
+    disabled: boolean
 }
 
-const Action: React.FC<Props> = ({ label, description, icon, onClick }) => {
+const Action: React.FC<Props> = ({ label, description, icon, onClick, disabled }) => {
 
     const hoverColor = transparentize(useColorModeValue('brand.200', 'brand.700'), 0.5);
-    const actionCardColor = useColorModeValue("white", "#2D2D2D")
+    const actionCardColor = useColorModeValue("white", "#2D2D2D");
 
     return (
         <Card
-            bg={actionCardColor}
+            bg={(actionCardColor)}
             flex={1}
-            onClick={onClick}
-            cursor={'pointer'}
+            onClick={disabled ? undefined : onClick}
+            cursor={disabled ? "not-allowed" : 'pointer'}
             p={4}
-            _hover={{
+            _hover={disabled ? undefined : {
                 boxShadow: 'lg',
                 bg: hoverColor
             }}
             transition={'all 0.2s ease-in-out'}
             h={'100%'}
+            opacity={disabled ? 0.8 : 1}
         >
             <HStack
                 spacing={4}
