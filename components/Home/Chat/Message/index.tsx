@@ -14,6 +14,7 @@ import {parseMultipleChoice, multipleChoiceTag} from "@/lib/multipleChoice";
 import {parseStudyGuide, studyGuideTag} from "@/lib/studyGuide";
 import {parseTextBased, textBasedTag} from "@/lib/textBased";
 import {answerCheckTag, parseAnswerCorrectness} from "@/lib/answerCorrectness";
+import {transparentize} from "@chakra-ui/theme-tools";
 
 
 interface Props {
@@ -37,9 +38,9 @@ const getRoleColor = (role: string, colorMode: ColorMode) => {
 const getRoleBgColor = (role: string, colorMode: ColorMode) => {
     switch (role) {
         case 'user':
-            return colorMode === 'light' ? 'brand.50' : 'brand.800';
+            return transparentize(colorMode === 'light' ? 'brand.200' : 'brand.300', 0.2);
         case 'assistant':
-            return 'undefined'
+            return undefined
         default:
             return 'gray.500';
     }
@@ -71,6 +72,7 @@ const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForHint,
 
     const { colorMode } = useColorMode();
 
+    // @ts-ignore
     return (
         <Flex
             justifyContent={getRoleJustifyContent(message.role)}
@@ -81,6 +83,7 @@ const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForHint,
                 w={'95%'}
                 borderColor={isCorrect === undefined ? undefined : isCorrect ? 'brand.500' : 'red.500'}
                 borderWidth={isCorrect === undefined ? undefined : 2}
+                // @ts-ignore
                 bg={getRoleBgColor(message.role, colorMode)}
             >
                 <Text
