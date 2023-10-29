@@ -5,31 +5,28 @@ import {
     AccordionIcon,
     AccordionItem,
     AccordionPanel,
-    Checkbox,
     CheckboxGroup,
     HStack,
     Skeleton,
     Text,
     VStack,
-    CircularProgress, 
-    CircularProgressLabel
 } from "@chakra-ui/react";
+import {SmallAddIcon} from "@chakra-ui/icons";
 
-
+import UploadNotes from "@/components/Home/UploadNotes";
 import DeleteSubject from "@/components/Home/Sidebar/DeleteSubject";
+import Note from "@/components/Home/Sidebar/Note";
 
 import useNotes from "@/hooks/queries/useNotes";
 import useAuth from "@/hooks/auth/useAuth";
 
+
 import {Subject as SubjectType} from "@/types/Subject";
-import {Note} from "@/types/Note";
-import UploadNotes from "@/components/Home/UploadNotes";
-import {SmallAddIcon} from "@chakra-ui/icons";
-import { MAX_SCORE } from '@/lib/score';
+import {Note as NoteType} from "@/types/Note";
 
 interface Props {
     subject: SubjectType,
-    addNote: (note: Note) => void
+    addNote: (note: NoteType) => void
     removeNote: (id: string) => void
 }
 
@@ -76,31 +73,12 @@ const Subject: React.FC<Props> = ({ subject, addNote, removeNote }) => {
                                 >
                                     {
                                         notes.map((note) => (
-                                            <HStack
-                                                w={'100%'}
-                                                justifyContent={'space-between'}
-                                            >
-                                            <Checkbox
+                                            <Note
                                                 key={note.id}
-                                                value={note.id}
-                                                onChange={(e) => {
-                                                    if(e.target.checked) {
-                                                        addNote(note);
-                                                    } else {
-                                                        removeNote(note.id);
-                                                    }
-                                                }}
-                                            >
-                                                {note.title}
-                                            </Checkbox>
-                                            <CircularProgress 
-                                                value={note.score} 
-                                                max={MAX_SCORE}
-                                                color='brand.400' 
-                                                thickness='13px' 
-                                                size='25px'
+                                                note={note}
+                                                addNote={addNote}
+                                                removeNote={removeNote}
                                             />
-                                            </HStack>
                                         ))
                                     }
                                 </VStack>
@@ -110,6 +88,7 @@ const Subject: React.FC<Props> = ({ subject, addNote, removeNote }) => {
                     <UploadNotes
                         text={"Add Note"}
                         icon={<SmallAddIcon />}
+                        subject={subject}
                         buttonProps={{
                             w: '100%',
                         }}

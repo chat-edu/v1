@@ -4,11 +4,13 @@ import {Message, nanoid} from "ai";
 import {useChat} from "ai/react";
 
 import chunkString from "@/lib/chunkString";
-import {multipleChoiceAnswerPrePrompt, multipleChoicePrePrompt} from "@/lib/multipleChoice";
-import {textBasedAnswerPrompt, textBasedPrePrompt} from "@/lib/textBased";
+import {multipleChoiceAnswerPrePrompt, multipleChoicePrePrompt, multipleChoicePrompt} from "@/lib/multipleChoice";
+import {textBasedAnswerPrompt, textBasedPrePrompt, textBasedPrompt} from "@/lib/textBased";
 import {answerCheckTag, incorrectTag} from "@/lib/answerCorrectness";
 
 import {Note} from "@/types/Note";
+import {studyGuidePrePrompt, studyGuidePrompt} from "@/lib/studyGuide";
+import {hintPrePrompt, hintPrompt} from "@/lib/hints";
 
 const MAX_LENGTH = 16385 * 3;
 
@@ -29,6 +31,8 @@ const useOpenAi = (notes: Note[]) => {
 
     const [correctMapping, setCorrectMapping] = useState<{[key: string]: boolean}>({});
 
+    const [messageBottomRef, setMessageBottomRef] = useState<HTMLDivElement | null>(null);
+
     const onFinish =  (message: Message) => {
         setLoading(false);
         if(!currentQuestionId && message.content.includes('Question: ')) {
@@ -39,6 +43,11 @@ const useOpenAi = (notes: Note[]) => {
                 [currentQuestionId || ""]: !message.content.includes(incorrectTag)
             })
         }
+        scrollToBottom();
+    }
+
+    const scrollToBottom = () => {
+        messageBottomRef?.scrollIntoView({ behavior: "smooth" })
     }
 
     const {
@@ -80,83 +89,51 @@ const useOpenAi = (notes: Note[]) => {
         ])
     }, [notes])
 
-    const askMultipleChoiceQuestion = async () => {
-        setPromptType(PromptTypes.MULTIPLE_CHOICE);
-        setLoading(true);
+    const promptWithContext = async (context: string, prompt: string) => {
         setMessages([
             ...messages,
             {
                 id: nanoid(),
-                content: multipleChoicePrePrompt,
+                content: context,
                 role: 'system',
             }
         ])
         await append({
             id: nanoid(),
-            content: "Please ask me a multiple choice question",
+            content: prompt,
             role: 'user',
         });
     }
 
+    const askMultipleChoiceQuestion = async () => {
+        setPromptType(PromptTypes.MULTIPLE_CHOICE);
+        setLoading(true);
+        await promptWithContext(multipleChoicePrePrompt, multipleChoicePrompt);
+    }
+
     const answerMultipleChoiceQuestion = async (answer: string) => {
-        await append({
-            id: nanoid(),
-            content: multipleChoiceAnswerPrePrompt(answer),
-            role: 'system',
-        });
+        await promptWithContext(multipleChoiceAnswerPrePrompt, answer)
         setPromptType(PromptTypes.REGULAR);
         setCurrentQuestionId(null);
     }
 
     const askFreeFormQuestion = async () => {
         setPromptType(PromptTypes.TEXT_BASED);
-        setMessages([
-            ...messages,
-            {
-                id: nanoid(),
-                content: textBasedPrePrompt,
-                role: 'system',
-            }
-        ])
-        await append({
-            id: nanoid(),
-            content: "Please ask me a text-based question.",
-            role: 'user',
-        })
+        await promptWithContext(textBasedPrePrompt, textBasedPrompt);
     }
 
     const askForHint = async () => {
-        await append({
-            id: nanoid(),
-            content: "Can you give me a hint?",
-            role: 'user',
-        })
+        await promptWithContext(hintPrePrompt, hintPrompt)
     }
 
     const answerFreeFormQuestion = async (text: string) => {
-        await append({
-            id: nanoid(),
-            content: textBasedAnswerPrompt(text),
-            role: 'system',
-        })
+        await promptWithContext(textBasedAnswerPrompt, text)
         setPromptType(PromptTypes.REGULAR);
         setCurrentQuestionId(null);
     }
 
     const generateStudyGuide = async () => {
-        setMessages([
-            ...messages,
-            {
-                id: nanoid(),
-                content: "Study guides should be in markdown format and should be 5% of the length and should only include the most important information.",
-                role: 'system',
-            }
-        ])
-        await append({
-            id: nanoid(),
-            content: "Please make me a study guide",
-            role: 'user',
-        })
+        await promptWithContext(studyGuidePrePrompt, studyGuidePrompt)
     }
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -183,7 +160,8 @@ const useOpenAi = (notes: Note[]) => {
         askFreeFormQuestion,
         generateStudyGuide,
         answerMultipleChoiceQuestion,
-        askForHint
+        askForHint,
+        setMessageBottomRef
     };
 }
 

@@ -4,17 +4,20 @@ import {correctTag, incorrectTag, answerCheckTag} from "@/lib/answerCorrectness"
 
 import {MultipleChoiceQuestion} from "@/types/MultipleChoiceQuestion";
 
-export const multipleChoiceTag = 'Multiple Choice Question';
+export const multipleChoicePromptTag = 'Multiple Choice Prompt';
+export const multipleChoiceQuestionTag = 'Multiple Choice Question';
 export const multipleChoicePrePrompt = `Multiple choice questions must be in the following format:
-    ${multipleChoiceTag}: <question>?\n
+    ${multipleChoiceQuestionTag}: <question>?\n
     A) <answer 1>\n
     B) <answer 2>\n
     C) <answer 3>\n
     D) <answer 4>\n
     Answer: <letter of correct answer>`
 
+export const multipleChoicePrompt = `${multipleChoicePromptTag}: Please ask me a multiple choice question`;
+
 export const parseMultipleChoice = (message: Message): MultipleChoiceQuestion => {
-    const splitMessage = message.content.split('Question: ')[1].split('?');
+    const splitMessage = message.content.split(`${multipleChoiceQuestionTag}: `)[1].split('?');
     const lines = message.content.split('\n');
     return {
         id: message.id,
@@ -39,10 +42,9 @@ const letterToIndex = (letter: string): number => {
     }
 }
 
-export const multipleChoiceAnswerPrePrompt = (answer: string) => `
-    The user has answered ${answer}.
+export const multipleChoiceAnswerPrePrompt = `
     
-    Please respond by saying whether they are correct and explain why. Speak in the second person.
+    Please respond by saying whether they are correct and explain why. Speak in the second person and only use the notes the user has provided.
     
     Use the following format:
     

@@ -24,6 +24,7 @@ const SubjectMenu: React.FC<Props> = ({ label, course, placeholder, setCourse, o
         <AutoCompleteMenu
             label={label}
             value={course}
+            initInputValue={course?.name || undefined}
             placeholder={placeholder}
             optionLabels={(subjects || []).map(subject => subject.name)}
             options={subjects || []}

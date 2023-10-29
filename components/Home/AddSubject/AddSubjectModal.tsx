@@ -18,7 +18,7 @@ interface Props {
 
 const AddSubjectModal: React.FC<Props> = ({ isOpen, onClose }) => {
 
-    const { setFieldTouched, setFieldValue, values, touched, errors, submitForm } = useAddSubject();
+    const { setFieldTouched, setFieldValue, values, touched, errors, disabled, submitForm } = useAddSubject();
 
     const onSubmit = async () => {
         await submitForm();
@@ -49,6 +49,7 @@ const AddSubjectModal: React.FC<Props> = ({ isOpen, onClose }) => {
                     <Button
                         colorScheme="brand"
                         onClick={onSubmit}
+                        isDisabled={disabled}
                     >
                         Add
                     </Button>
