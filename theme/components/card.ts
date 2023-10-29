@@ -6,7 +6,7 @@ const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpe
 
 const baseStyle = definePartsStyle((props) => ({
     container: {
-        backgroundColor: mode("white", "whiteAlpha.200")(props),
+        backgroundColor: mode("white", "#2D2D2D")(props),
         p: 4,
         display: "flex",
         flexDirection: "column",

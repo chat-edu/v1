@@ -23,8 +23,9 @@ const Actions: React.FC<Props> = ({ askMultipleChoice, askFreeForm, generateStud
                 showMessage && (
                     <Text
                         fontWeight={'bold'}
+                        fontSize={'xl'}
                     >
-                        Get started with our study tools
+                        Actions
                     </Text>
                 )
             }

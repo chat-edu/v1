@@ -19,6 +19,9 @@ const Layout: React.FC<Props> = ({ children, authGate }) => {
     return (
         <Box
             h={'100vh'}
+            // add the background image here, which is at /background.png
+            backgroundImage={!isConnected ? 'url(http://localhost:3000/background.png)' : undefined}
+            backgroundSize={'cover'}
         >
             <Navbar />
             <Flex

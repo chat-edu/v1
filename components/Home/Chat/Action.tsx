@@ -30,6 +30,8 @@ const Action: React.FC<Props> = ({ label, description, icon, onClick, disabled }
             }}
             transition={'all 0.2s ease-in-out'}
             h={'100%'}
+            borderColor={'brand.500'}
+            borderWidth={2}
         >
             <HStack
                 spacing={4}
