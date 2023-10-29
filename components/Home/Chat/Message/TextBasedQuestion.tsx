@@ -6,10 +6,10 @@ import {TextBasedQuestion as TextBasedQuestionType} from "@/types/TextBasedQuest
 
 interface Props {
     textBasedQuestion: TextBasedQuestionType,
-    askForFreeFormHint: () => void
+    askForHint: () => void
 }
 
-const TextBasedQuestion: React.FC<Props> = ({ textBasedQuestion, askForFreeFormHint }) => {
+const TextBasedQuestion: React.FC<Props> = ({ textBasedQuestion, askForHint }) => {
     return (
         <HStack
             w={'100%'}
@@ -24,7 +24,7 @@ const TextBasedQuestion: React.FC<Props> = ({ textBasedQuestion, askForFreeFormH
             <Button
                 variant={'outline'}
                 colorScheme={'brand'}
-                onClick={askForFreeFormHint}
+                onClick={askForHint}
             >
                 Hint
             </Button>

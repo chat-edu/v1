@@ -25,7 +25,7 @@ const Chat: React.FC<Props> = ({ notes }) => {
         askFreeFormQuestion,
         generateStudyGuide,
         answerMultipleChoiceQuestion,
-        askForFreeFormHint
+        askForHint
     } = useChatEdu(notes);
 
     return (
@@ -40,7 +40,7 @@ const Chat: React.FC<Props> = ({ notes }) => {
             <Messages
                 messages={messages}
                 onMultipleChoiceAnswer={answerMultipleChoiceQuestion}
-                askForFreeFormHint={askForFreeFormHint}
+                askForHint={askForHint}
             />
             <InputBox
                 notes={notes}
