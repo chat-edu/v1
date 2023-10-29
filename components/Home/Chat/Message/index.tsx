@@ -13,7 +13,9 @@ import QuestionCorrectness from "@/components/Home/Chat/Message/QuestionCorrectn
 import {parseMultipleChoice, multipleChoiceTag} from "@/lib/multipleChoice";
 import {parseStudyGuide, studyGuideTag} from "@/lib/studyGuide";
 import {parseTextBased, textBasedTag} from "@/lib/textBased";
+import TextMessage from "@/components/Home/Chat/Message/TextMessage";
 import {answerCheckTag, parseAnswerCorrectness} from "@/lib/answerCorrectness";
+import QuestionCorrectness from "@/components/Home/Chat/Message/QuestionCorrectness";
 
 
 interface Props {
@@ -75,6 +77,9 @@ const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForHint,
         <Flex
             justifyContent={getRoleJustifyContent(message.role)}
             w="100%"
+        <Card
+            w={'100%'}
+            borderColor={isCorrect === undefined ? undefined : isCorrect ? 'brand.500' : 'red.500'}
         >
             <Card
                 w={'95%'}
@@ -93,6 +98,12 @@ const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForHint,
                 }
             </Card>
         </Flex>
+                {getRoleName(message.role)}
+            </Text>
+            {
+                getMessageComponent(message, onMultipleChoiceAnswer, askForHint, isCorrect !== undefined)
+            }
+        </Card>
     );
 };
 
