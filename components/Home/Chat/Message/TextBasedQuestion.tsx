@@ -17,7 +17,10 @@ const TextBasedQuestion: React.FC<Props> = ({ textBasedQuestion, askForHint, ans
         >
             <Text
                 flex={1}
-                fontSize={'lg'}
+                fontSize={{
+                    base: 'xs',
+                    md: 'md'
+                }}
                 fontWeight={'bold'}
             >
                 {textBasedQuestion.question}

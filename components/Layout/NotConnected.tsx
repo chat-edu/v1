@@ -25,12 +25,20 @@ const NotConnected = () => {
                     <VStack>
                         <Text
                             textAlign={'center'}
+                            fontSize={{
+                                base: 'xs',
+                                md: 'md'
+                            }}
                         >
                             Get started by logging in with your vanderbilt.edu email
                         </Text>
                         <SignInWithGoogleButton />
                         <Text
                             textAlign={'center'}
+                            fontSize={{
+                                base: 'xs',
+                                md: 'md'
+                            }}
                         >
                             If you want to try the app without logging in
                         </Text>

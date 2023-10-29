@@ -15,9 +15,17 @@ const ActionPrompt: React.FC<Props> = ({ title, icon }) => {
         >
             <Icon
                 as={icon}
-                boxSize={6}
+                boxSize={{
+                    base: 4,
+                    md: 6
+                }}
             />
-            <Text>
+            <Text
+                fontSize={{
+                    base: 'xs',
+                    md: 'md'
+                }}
+            >
                 {title}
             </Text>
         </HStack>

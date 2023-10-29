@@ -92,12 +92,6 @@ const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForHint,
                 // @ts-ignore
                 bg={getRoleBgColor(message.role, colorMode)}
             >
-                {/*<Text*/}
-                {/*    color={getRoleColor(message.role, colorMode)}*/}
-                {/*    fontWeight={'semibold'}*/}
-                {/*>*/}
-                {/*    {getRoleName(message.role)}*/}
-                {/*</Text>*/}
                 {
                     getMessageComponent(message, onMultipleChoiceAnswer, askForHint, isCorrect !== undefined)
                 }

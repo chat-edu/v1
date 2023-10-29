@@ -9,6 +9,7 @@ import {navbarHeight} from "@/components/Navbar";
 import useChatEdu from "@/hooks/useChatEdu";
 
 import {Note} from "@/types/Note";
+import {mobileHeaderHeight} from "@/components/Home/Sidebar";
 
 interface Props {
     notes: Note[]
@@ -35,13 +36,20 @@ const Chat: React.FC<Props> = ({ notes }) => {
         <Container
             w={'100%'}
             maxW={'6xl'}
+            p={0}
         >
             <Flex
-                p={4}
+                p={{
+                    base: 0,
+                    md: 4
+                }}
                 flexDirection={'column'}
                 w={'100%'}
                 position={'relative'}
-                h={`calc(100vh - ${navbarHeight})`}
+                h={{
+                    base: `calc(100vh - ${navbarHeight + mobileHeaderHeight}px)`,
+                    md: `calc(100vh - ${navbarHeight}px)`
+                }}
                 overflow={'auto'}
                 ref={setMessageBottomRef}
             >

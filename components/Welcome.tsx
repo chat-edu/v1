@@ -5,7 +5,10 @@ import {Heading, Image, Text, VStack} from "@chakra-ui/react";
 const Welcome = () => {
     return (
         <VStack
-            gap={4}
+            gap={{
+                base: 2,
+                md: 4
+            }}
         >
             <Image
                 src={'/logo.png'}
@@ -14,6 +17,10 @@ const Welcome = () => {
             />
             <Heading
                 textAlign={'center'}
+                size={{
+                    base: 'md',
+                    md: 'lg'
+                }}
             >
                 <Text
                     as='span'
@@ -29,7 +36,10 @@ const Welcome = () => {
             </Heading>
             <Text
                 textAlign={'center'}
-                fontSize={'2xl'}
+                fontSize={{
+                    base: 'sm',
+                    md: '2xl'
+            }}
                 fontWeight={'bold'}
             >
                 Supercharge your learning with AI

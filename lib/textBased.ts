@@ -7,7 +7,7 @@ import {TextBasedQuestion} from "@/types/TextBasedQuestion";
 export const textBasedPromptTag = 'Text-based Prompt';
 export const textBasedQuestionTag = 'Text-based Question';
 
-export const textBasedPrePrompt = `Text-based questions must be in the following format:
+export const textBasedPrePrompt = `Text-based questions must be in the following format. Do not include the answer:
     ${textBasedQuestionTag}: <question>?\n
 `;
 

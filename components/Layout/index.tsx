@@ -6,6 +6,7 @@ import NotConnected from "@/components/Layout/NotConnected";
 import Navbar, { navbarHeight } from "@/components/Navbar";
 
 import useAuth from "@/hooks/auth/useAuth";
+import {mobileHeaderHeight} from "@/components/Home/Sidebar";
 
 interface Props {
     children: React.ReactNode,
@@ -28,7 +29,10 @@ const Layout: React.FC<Props> = ({ children, authGate }) => {
                 direction={'column'}
                 gap={4}
                 w={'100%'}
-                h={`calc(100vh - ${navbarHeight})`}
+                h={{
+                    base: `calc(100vh - ${navbarHeight + mobileHeaderHeight}px)`,
+                    md: `calc(100vh - ${navbarHeight}px)`
+                }}
             >
                 {
                     authGate ? (

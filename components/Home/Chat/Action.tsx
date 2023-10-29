@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Card, Heading, HStack, Icon, Text, useColorModeValue, VStack} from "@chakra-ui/react";
+import {Card, HStack, Icon, Text, useColorModeValue, VStack} from "@chakra-ui/react";
 
 import {IconType} from "react-icons";
 
@@ -23,7 +23,10 @@ const Action: React.FC<Props> = ({ label, description, icon, onClick, disabled }
             flex={1}
             onClick={disabled ? undefined : onClick}
             cursor={disabled ? "not-allowed" : 'pointer'}
-            p={4}
+            p={{
+                base: 2,
+                md: 4
+            }}
             _hover={disabled ? undefined : {
                 boxShadow: 'lg',
                 bg: hoverColor
@@ -41,19 +44,27 @@ const Action: React.FC<Props> = ({ label, description, icon, onClick, disabled }
                 <Icon
                     as={icon}
                     color={'brand.500'}
-                    boxSize={10}
+                    boxSize={{
+                        base: 4,
+                        md: 6
+                    }}
                 />
                 <VStack
                     align={'flex-start'}
                 >
-                    <Heading
-                        size={'md'}
+                    <Text
+                        fontSize={{
+                            base: '2xs',
+                            md: 'md'
+                        }}
+                        fontWeight={'bold'}
                     >
                         {label}
-                    </Heading>
+                    </Text>
                     <Text
                         fontSize={'sm'}
                         opacity={0.7}
+                        display={{base: 'none', md: 'block'}}
                     >
                         {description}
                     </Text>

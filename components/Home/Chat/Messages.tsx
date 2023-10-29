@@ -34,6 +34,7 @@ const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHin
                     spacing={4}
                     flex={messages.length === 0 ? 1 : undefined}
                     justifyContent={messages.length === 0 ? 'center' : undefined}
+                    pt={2}
                 >
                     {
                         messages.length > 0 ? (
@@ -49,12 +50,16 @@ const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHin
                         ) : (
                             <VStack
                                 maxW={{ base: '100%', md: '40%' }}
+                                px={4}
                             >
                                 <Welcome />
                                 <Text
                                     color={'brand.500'}
                                     fontWeight={'bold'}
-                                    fontSize={'lg'}
+                                    fontSize={{
+                                        base: 'sm',
+                                        md: 'lg'
+                                    }}
                                     textAlign={'center'}
                                 >
                                     Get started by making a multiple choice question, free form question, or study guide!

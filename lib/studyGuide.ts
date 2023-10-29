@@ -6,6 +6,7 @@ export const studyGuidePromptTag = `Study Guide Prompt`;
 export const studyGuideAnswerTag = 'Study Guide';
 
 export const studyGuidePrePrompt = `Study guides must be in markdown and should be 5% of the length and should only include the most important information.
+    Use heading 1s, 2s, and 3s to organize your study guide.
     They must be in the following format:
     ${studyGuideAnswerTag}: <content>?\n
 `;

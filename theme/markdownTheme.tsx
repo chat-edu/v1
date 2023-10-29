@@ -8,7 +8,12 @@ const markdownTheme: Components = {
     p: (props: {children?: React.ReactNode}) => {
         const { children } = props;
         return (
-            <Text>
+            <Text
+                fontSize={{
+                    base: 'xs',
+                    md: 'md'
+                }}
+            >
                 {children}
             </Text>
         );
@@ -17,7 +22,10 @@ const markdownTheme: Components = {
         const { children } = props;
         return (
             <Heading
-                size={'lg'}
+                size={{
+                    base: 'md',
+                    md: 'lg'
+                }}
                 mb={2}
             >
                 {children}
@@ -28,7 +36,10 @@ const markdownTheme: Components = {
         const { children } = props;
         return (
             <Heading
-                size={'md'}
+                size={{
+                    base: 'sm',
+                    md: 'md'
+                }}
                 mb={2}
             >
                 {children}
@@ -39,7 +50,10 @@ const markdownTheme: Components = {
         const { children } = props;
         return (
             <Heading
-                size={'sm'}
+                size={{
+                    base: 'sm',
+                    md: 'xs'
+                }}
                 mb={2}
             >
                 {children}
@@ -50,7 +64,12 @@ const markdownTheme: Components = {
         const { children } = props;
         return (
             <ListItem
-                mb={2}>
+                mb={2}
+                fontSize={{
+                    base: 'xs',
+                    md: 'md'
+                }}
+            >
                 {children}
             </ListItem>
         );

@@ -6,7 +6,7 @@ import {
     MenuList,
     MenuItem,
     Button,
-    Avatar
+    Avatar, IconButton
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 
@@ -28,6 +28,19 @@ const AuthButton = () => {
         return (
             <Menu>
                 <MenuButton
+                    display={{base: 'flex', md: 'none'}}
+                    as={IconButton}
+                    aria-label={'Profile '}
+                    icon={
+                        <Avatar
+                            size={'sm'}
+                            name={user?.displayName || ""}
+                            src={user?.photoURL || ""}
+                        />
+                    }
+                />
+                <MenuButton
+                    display={{base: 'none', md: 'flex'}}
                     as={Button}
                     leftIcon={<Avatar
                         size={'sm'}
@@ -35,6 +48,7 @@ const AuthButton = () => {
                         src={user?.photoURL || ""}
                     />}
                     rightIcon={<ChevronDownIcon />}
+
                 >
                     {user?.displayName}
                 </MenuButton>

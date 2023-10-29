@@ -7,14 +7,14 @@ import ColorModeToggle from "@/components/Navbar/ColorModeToggle";
 
 import Image from 'next/image';
 
-export const navbarHeight = '80px'
+export const navbarHeight = 80;
 
 const Navbar = () => {
   return (
       <Card
         p={2}
         rounded={'none'}
-        h={navbarHeight}
+        h={`${navbarHeight}px`}
         display={'flex'}
         justifyContent={'center'}
       >

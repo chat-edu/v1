@@ -16,10 +16,19 @@ const HomeLanding = () => {
     return (
         <VStack
             flex={1}
-            spacing={4}
+            spacing={{
+                base: 2,
+                md: 4
+            }}
+            justifyContent={'center'}
         >
             <Welcome />
-            <Text>
+            <Text
+                fontSize={{
+                    base: 'sm',
+                    md: 'md'
+                }}
+            >
                 {
                     subjects.length > 0 ? (
                         'Select or upload notes to get started'
