@@ -28,6 +28,7 @@ const CoursesSidebar: React.FC<Props> = ({ addNote, removeNote }) => {
         <Card
             h={'100%'}
             w={{base: '100%', md: '400px' }}
+            minW={{base: '100%', md: '400px' }}
             rounded={'none'}
             gap={4}
         >
