@@ -77,6 +77,7 @@ const Subject: React.FC<Props> = ({ subject, addNote, removeNote }) => {
                                     {
                                         notes.map((note) => (
                                             <HStack
+                                                key={note.id}
                                                 w={'100%'}
                                                 justifyContent={'space-between'}
                                             >
