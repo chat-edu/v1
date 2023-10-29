@@ -2,9 +2,10 @@ import React from 'react';
 
 import {Message as MessageInterface} from "ai";
 
-import {Box, Flex, VStack} from "@chakra-ui/react";
+import {Box, Flex, Text, VStack} from "@chakra-ui/react";
 
 import Message from "@/components/Home/Chat/Message";
+import Welcome from "@/components/Welcome";
 
 interface Props {
     messages: MessageInterface[],
@@ -31,17 +32,36 @@ const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHin
                 <VStack
                     w={'100%'}
                     spacing={4}
+                    flex={messages.length === 0 ? 1 : undefined}
+                    justifyContent={messages.length === 0 ? 'center' : undefined}
                 >
                     {
-                        messages.map(message => (
-                            <Message
-                                 key={message.id}
-                                 message={message}
-                                 onMultipleChoiceAnswer={onMultipleChoiceAnswer}
-                                 askForHint={askForHint}
-                                 isCorrect={correctAnswers[message.id]}
-                            />
-                        ))
+                        messages.length > 0 ? (
+                            messages.map(message => (
+                                <Message
+                                    key={message.id}
+                                    message={message}
+                                    onMultipleChoiceAnswer={onMultipleChoiceAnswer}
+                                    askForHint={askForHint}
+                                    isCorrect={correctAnswers[message.id]}
+                                />
+                            ))
+                        ) : (
+                            <VStack
+                                maxW={{ base: '100%', md: '40%' }}
+                            >
+                                <Welcome />
+                                <Text
+                                    color={'brand.500'}
+                                    fontWeight={'bold'}
+                                    fontSize={'lg'}
+                                    textAlign={'center'}
+                                >
+                                    Get started by making a multiple choice question, free form question, or study guide!
+                                </Text>
+                            </VStack>
+                        )
+
                     }
                 </VStack>
             </Flex>
