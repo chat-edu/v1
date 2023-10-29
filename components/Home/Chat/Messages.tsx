@@ -54,6 +54,14 @@ const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHin
                         }}
                     />
                 </VStack>
+                <Box
+                    w={'100%'}
+                    h={0}
+                    ref={el => {
+                        if(!el) return;
+                        setRef(el);
+                    }}
+                />
             </Flex>
         </Box>
     );

@@ -1,6 +1,6 @@
 import React, {ChangeEventHandler} from 'react';
 
-import {Button, Card, Flex, FormControl, FormLabel, HStack, useColorModeValue, Textarea} from "@chakra-ui/react";
+import {Button, Card, Flex, FormControl, FormLabel, HStack, useColorModeValue, Input} from "@chakra-ui/react";
 
 import Actions from "@/components/Home/Chat/Actions";
 
@@ -59,15 +59,12 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                             <FormLabel>
                                 Prompt
                             </FormLabel>
-                            <Textarea
+                            <Input
                                 value={value}
                                 onChange={handleChange}
                                 focusBorderColor={'brand.500'}
                                 flex={1}
                                 isDisabled={promptType === PromptTypes.MULTIPLE_CHOICE}
-                                resize="vertical" // Allow vertical resizing
-                                minHeight="45px"  // Set a minimum height if needed
-                                maxHeight="200px"  // Set a maximum height
                             />
                         </FormControl>
                         <Button

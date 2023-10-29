@@ -64,6 +64,10 @@ const useOpenAi = (notes: Note[]) => {
     });
 
     useEffect(() => {
+        scrollToBottom();
+    }, [messages])
+
+    useEffect(() => {
 
         const content = `
             ${notes.map((note) => `

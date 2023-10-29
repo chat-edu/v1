@@ -28,8 +28,6 @@ const UploadModal: React.FC<Props> = ({ isOpen, onClose , initSubject}) => {
 
     const { values, setFieldValue, touched, setFieldTouched, disabled, submitForm, updateSubject, errors, subject } = useAddNote(initSubject);
 
-    console.log(subject);
-
     const onSubmit = async () => {
         await submitForm();
         onClose();

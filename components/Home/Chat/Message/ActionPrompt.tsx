@@ -15,7 +15,7 @@ const ActionPrompt: React.FC<Props> = ({ title, icon }) => {
         >
             <Icon
                 as={icon}
-                boxSize={8}
+                boxSize={6}
             />
             <Text
                 fontSize={'lg'}
