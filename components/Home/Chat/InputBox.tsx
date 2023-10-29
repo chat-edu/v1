@@ -5,6 +5,7 @@ import {Button, Card, Flex, FormControl, FormLabel, HStack, Input, useColorModeV
 import Actions from "@/components/Home/Chat/Actions";
 
 import {Note} from "@/types/Note";
+import {PromptTypes} from "@/hooks/useChatEdu";
 
 interface Props {
     value: string,
@@ -14,9 +15,10 @@ interface Props {
     askMultipleChoice: () => Promise<void>;
     askFreeForm: () => Promise<void>;
     generateStudyGuide: () => Promise<void>;
+    promptType: PromptTypes
 }
 
-const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMultipleChoice, askFreeForm, generateStudyGuide }) => {
+const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMultipleChoice, askFreeForm, generateStudyGuide, promptType }) => {
 
     const inputBoxColor = useColorModeValue("white", "#2D2D2D")
 
@@ -33,6 +35,7 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                 askMultipleChoice={askMultipleChoice}
                 askFreeForm={askFreeForm}
                 generateStudyGuide={generateStudyGuide}
+                disabled={promptType === PromptTypes.TEXT_BASED || promptType === PromptTypes.MULTIPLE_CHOICE}
             />
             <Card
                 bg={inputBoxColor}
@@ -58,12 +61,14 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                                 onChange={handleChange}
                                 focusBorderColor={'brand.500'}
                                 flex={1}
+                                isDisabled={promptType === PromptTypes.MULTIPLE_CHOICE}
                             />
                         </FormControl>
                         <Button
                             type={'submit'}
                             colorScheme={'brand'}
                             flexShrink={0}
+                            isDisabled={promptType === PromptTypes.MULTIPLE_CHOICE}
                         >
                             Send
                         </Button>
