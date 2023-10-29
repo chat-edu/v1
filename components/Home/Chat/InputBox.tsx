@@ -94,7 +94,7 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                             flex={1}
                         >
                             <FormLabel>
-                                Prompt
+                                {promptType === PromptTypes.TEXT_BASED ? 'Answer' : 'Ask ChatEDU'}
                             </FormLabel>
                             <Input
                                 value={value}
