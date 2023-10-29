@@ -11,10 +11,9 @@ interface Props {
     onMultipleChoiceAnswer: (answer: string) => void,
     askForHint: () => void,
     correctAnswers: { [key: string]: boolean }
-    setRef: (el: HTMLDivElement) => void
 }
 
-const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHint, correctAnswers, setRef }) => {
+const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHint, correctAnswers }) => {
 
     return (
         <Box
@@ -28,7 +27,6 @@ const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHin
                 w={'100%'}
                 flexDirection={'column'}
                 justifyContent={'flex-end'}
-                overflow={'auto'}
             >
                 <VStack
                     w={'100%'}
@@ -45,14 +43,6 @@ const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHin
                             />
                         ))
                     }
-                    <Box
-                        w={'100%'}
-                        h={0}
-                        ref={el => {
-                            if(!el) return;
-                            setRef(el);
-                        }}
-                    />
                 </VStack>
             </Flex>
         </Box>

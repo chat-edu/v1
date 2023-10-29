@@ -8,6 +8,7 @@ import {transparentize} from "@chakra-ui/theme-tools";
 import {SlOptionsVertical} from "react-icons/sl";
 import {MdQuestionAnswer} from "react-icons/md";
 import {FaLeaf} from "react-icons/fa";
+import {BsFillLightbulbFill} from "react-icons/bs";
 
 import StudyGuide from "@/components/Home/Chat/Message/StudyGuide";
 import MultipleChoiceQuestion from "@/components/Home/Chat/Message/MultipleChoiceQuestion";
@@ -21,7 +22,6 @@ import {parseStudyGuide, studyGuideAnswerTag, studyGuidePromptTag} from "@/lib/s
 import {parseTextBased, textBasedPromptTag, textBasedQuestionTag} from "@/lib/textBased";
 import {answerCheckTag, parseAnswerCorrectness} from "@/lib/answerCorrectness";
 import {hintTag} from "@/lib/hints";
-import {BsFillLightbulbFill} from "react-icons/bs";
 
 
 interface Props {
@@ -45,7 +45,7 @@ interface Props {
 const getRoleBgColor = (role: string, colorMode: ColorMode) => {
     switch (role) {
         case 'user':
-            return transparentize(colorMode === 'light' ? 'brand.200' : 'brand.300', 0.2);
+            return transparentize(colorMode === 'light' ? 'brand.200' : 'brand.300', 0.3);
         case 'assistant':
             return undefined
         default:

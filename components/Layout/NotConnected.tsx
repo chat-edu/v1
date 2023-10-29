@@ -6,7 +6,12 @@ import Welcome from "@/components/Welcome";
 
 import SignInWithGoogleButton from "@/components/Navbar/SignInWithGoogleButton";
 
+import useAuth from "@/hooks/auth/useAuth";
+
 const NotConnected = () => {
+
+    const { useDefaultUser } = useAuth();
+
     return (
         <VStack
             flex={1}
@@ -29,7 +34,9 @@ const NotConnected = () => {
                         >
                             If you want to try the app without logging in
                         </Text>
-                        <Button>
+                        <Button
+                            onClick={useDefaultUser}
+                        >
                             Test as Guest
                         </Button>
                     </VStack>

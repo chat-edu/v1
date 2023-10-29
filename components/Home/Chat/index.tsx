@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Flex} from "@chakra-ui/react";
+import {Container, Flex} from "@chakra-ui/react";
 
 import InputBox from "@/components/Home/Chat/InputBox";
 import Messages from "@/components/Home/Chat/Messages";
@@ -32,33 +32,39 @@ const Chat: React.FC<Props> = ({ notes }) => {
     } = useChatEdu(notes);
 
     return (
-        <Flex
-            p={4}
-            flexDirection={'column'}
+        <Container
             w={'100%'}
-            position={'relative'}
-            h={`calc(100vh - ${navbarHeight})`}
-            overflow={'auto'}
+            maxW={'6xl'}
         >
-            <Messages
-                messages={messages}
-                onMultipleChoiceAnswer={answerMultipleChoiceQuestion}
-                askForHint={askForHint}
-                correctAnswers={correctMapping}
-                setRef={setMessageBottomRef}
-            />
-            <InputBox
-                notes={notes}
-                value={input}
-                handleChange={handleInputChange}
-                handleSubmit={onSubmit}
-                askMultipleChoice={askMultipleChoiceQuestion}
-                askFreeForm={askFreeFormQuestion}
-                generateStudyGuide={generateStudyGuide}
-                promptType={promptType}
-                showMessage={messages.length === 0}
-            />
-        </Flex>
+            <Flex
+                p={4}
+                flexDirection={'column'}
+                w={'100%'}
+                position={'relative'}
+                h={`calc(100vh - ${navbarHeight})`}
+                overflow={'auto'}
+                ref={setMessageBottomRef}
+            >
+                <Messages
+                    messages={messages}
+                    onMultipleChoiceAnswer={answerMultipleChoiceQuestion}
+                    askForHint={askForHint}
+                    correctAnswers={correctMapping}
+                />
+                <InputBox
+                    notes={notes}
+                    value={input}
+                    handleChange={handleInputChange}
+                    handleSubmit={onSubmit}
+                    askMultipleChoice={askMultipleChoiceQuestion}
+                    askFreeForm={askFreeFormQuestion}
+                    generateStudyGuide={generateStudyGuide}
+                    promptType={promptType}
+                    showMessage={messages.length === 0}
+                    correctAnswers={correctMapping}
+                />
+            </Flex>
+        </Container>
     );
 };
 

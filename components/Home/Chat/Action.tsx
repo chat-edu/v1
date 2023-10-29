@@ -3,7 +3,6 @@ import React from 'react';
 import {Card, Heading, HStack, Icon, Text, useColorModeValue, VStack} from "@chakra-ui/react";
 
 import {IconType} from "react-icons";
-import {transparentize} from "@chakra-ui/theme-tools";
 
 interface Props {
     label: string,
@@ -15,7 +14,7 @@ interface Props {
 
 const Action: React.FC<Props> = ({ label, description, icon, onClick, disabled }) => {
 
-    const hoverColor = transparentize(useColorModeValue('brand.200', 'brand.700'), 0.5);
+    const hoverColor = useColorModeValue('#cde6ce', '#30542c');
     const actionCardColor = useColorModeValue("white", "#2D2D2D");
 
     return (
@@ -31,7 +30,6 @@ const Action: React.FC<Props> = ({ label, description, icon, onClick, disabled }
             }}
             transition={'all 0.2s ease-in-out'}
             h={'100%'}
-            opacity={disabled ? 0.8 : 1}
         >
             <HStack
                 spacing={4}

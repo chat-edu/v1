@@ -13,8 +13,6 @@ interface Props {
 
 const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHint, answered }) => {
 
-    console.log(question);
-
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
     const onClick = (option: string, index: number) => {
@@ -27,7 +25,7 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHin
     const buttonColorScheme = (index: number) => (
         selectedIndex == index
             ? (index == question.answerIndex ? 'green' : 'red')
-            : undefined
+            : (answered && index == question.answerIndex ? 'green' : undefined)
     )
 
     return (
