@@ -13,6 +13,8 @@ interface Props {
 
 const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHint, answered }) => {
 
+    console.log(question);
+
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
     const onClick = (option: string, index: number) => {

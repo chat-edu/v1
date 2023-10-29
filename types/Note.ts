@@ -6,4 +6,5 @@ export interface NoteInput {
 
 export interface Note extends NoteInput {
     id: string;
+    score: number;
 }
