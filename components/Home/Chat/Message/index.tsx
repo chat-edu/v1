@@ -17,7 +17,7 @@ import TextMessage from "@/components/Home/Chat/Message/TextMessage";
 interface Props {
     message: MessageInterface,
     onMultipleChoiceAnswer: (answer: string) => void,
-    askForFreeFormHint: () => void
+    askForHint: () => void
 }
 
 const getRoleColor = (role: string, colorMode: ColorMode) => {
@@ -42,7 +42,7 @@ const getRoleName = (role: string) => {
     }
 }
 
-const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForFreeFormHint }) => {
+const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForHint }) => {
 
     const { colorMode } = useColorMode();
 
@@ -56,7 +56,7 @@ const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForFreeF
                 {getRoleName(message.role)}
             </Text>
             {
-                getMessageComponent(message, onMultipleChoiceAnswer, askForFreeFormHint)
+                getMessageComponent(message, onMultipleChoiceAnswer, askForHint)
             }
         </Card>
     );
@@ -65,7 +65,7 @@ const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForFreeF
 const getMessageComponent = (
     message: MessageInterface,
     onMultpleChoiceAnswer: (answer: string) => void,
-    askForFreeFormHint: () => void,
+    askForHint: () => void,
 ) => {
     const messageType = message.content.split(':')[0];
     switch (messageType) {
@@ -80,13 +80,14 @@ const getMessageComponent = (
                 <MultipleChoiceQuestion
                     question={parseMultipleChoice(message)}
                     onAnswer={onMultpleChoiceAnswer}
+                    askForHint={askForHint}
                 />
             );
         case textBasedTag:
             return (
                 <TextBasedQuestion
                     textBasedQuestion={parseTextBased(message)}
-                    askForFreeFormHint={askForFreeFormHint}
+                    askForHint={askForHint}
                 />
             );
         default:
