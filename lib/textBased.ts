@@ -19,7 +19,7 @@ export const parseTextBased = (message: Message): TextBasedQuestion => ({
 })
 
 export const textBasedAnswerPrompt = `    
-    Please respond by saying whether or not they are correct and explain why. Speak in the second person.
+    Please respond to the user in the second person saying whether or not they are correct and why.
     
     Use the following format:
     

@@ -20,6 +20,8 @@ import {parseMultipleChoice, multipleChoiceQuestionTag, multipleChoicePromptTag}
 import {parseStudyGuide, studyGuideAnswerTag, studyGuidePromptTag} from "@/lib/studyGuide";
 import {parseTextBased, textBasedPromptTag, textBasedQuestionTag} from "@/lib/textBased";
 import {answerCheckTag, parseAnswerCorrectness} from "@/lib/answerCorrectness";
+import {hintTag} from "@/lib/hints";
+import {BsFillLightbulbFill} from "react-icons/bs";
 
 
 interface Props {
@@ -84,7 +86,7 @@ const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForHint,
             borderColor={isCorrect === undefined ? undefined : isCorrect ? 'brand.500' : 'red.500'}
         >
             <Card
-                w={'95%'}
+                maxW={'95%'}
                 borderColor={isCorrect === undefined ? undefined : isCorrect ? 'brand.500' : 'red.500'}
                 borderWidth={isCorrect === undefined ? undefined : 2}
                 // @ts-ignore
@@ -138,6 +140,13 @@ const getMessageComponent = (
         case answerCheckTag:
             return (
                 <QuestionCorrectness content={parseAnswerCorrectness(message)} />
+            );
+        case hintTag:
+            return (
+                <ActionPrompt
+                    title={"Hint"}
+                    icon={BsFillLightbulbFill}
+                />
             );
         case multipleChoicePromptTag:
             return (
