@@ -7,10 +7,11 @@ import {Box, Flex, VStack} from "@chakra-ui/react";
 import Message from "@/components/Home/Chat/Message";
 
 interface Props {
-    messages: MessageInterface[]
+    messages: MessageInterface[],
+    onMultipleChoiceAnswer: (answer: string) => void,
 }
 
-const Messages: React.FC<Props> = ({ messages}) => {
+const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer}) => {
     return (
         <Box
             w={'100%'}
@@ -34,6 +35,7 @@ const Messages: React.FC<Props> = ({ messages}) => {
                             <Message
                                  key={message.id}
                                  message={message}
+                                 onMultipleChoiceAnswer={onMultipleChoiceAnswer}
                             />
                         ))
                     }

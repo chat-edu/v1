@@ -1,21 +1,29 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, FormEvent} from "react";
 
 import {Message, nanoid} from "ai";
 import {useChat} from "ai/react";
 
 import chunkString from "@/lib/chunkString";
 
-import {multipleChoicePrePrompt} from "@/lib/multipleChoice";
-import {textBasedPrePrompt} from "@/lib/textBased";
+import {multipleChoiceAnswerPrePrompt, multipleChoicePrePrompt} from "@/lib/multipleChoice";
+import {textBasedAnswerPrompt, textBasedPrePrompt} from "@/lib/textBased";
 
 import {Note} from "@/types/Note";
 
-
 const MAX_LENGTH = 16385 * 3;
+
+enum PromptTypes {
+    REGULAR,
+    MULTIPLE_CHOICE,
+    TEXT_BASED,
+    STUDY_GUIDE
+}
 
 const useOpenAi = (notes: Note[]) => {
 
     const [loading, setLoading] = useState<boolean>(false);
+
+    const [promptType, setPromptType] = useState<PromptTypes>(PromptTypes.REGULAR);
 
     const onFinish =  () => {
         setLoading(false);
@@ -24,6 +32,7 @@ const useOpenAi = (notes: Note[]) => {
     const {
         messages,
         input,
+        setInput,
         handleInputChange,
         handleSubmit,
         setMessages,
@@ -76,7 +85,16 @@ const useOpenAi = (notes: Note[]) => {
         });
     }
 
+    const answerMultipleChoiceQuestion = async (answer: string) => {
+        await append({
+            id: nanoid(),
+            content: multipleChoiceAnswerPrePrompt(answer),
+            role: 'system',
+        });
+    }
+
     const askFreeFormQuestion = async () => {
+        setPromptType(PromptTypes.TEXT_BASED);
         setMessages([
             ...messages,
             {
@@ -90,6 +108,15 @@ const useOpenAi = (notes: Note[]) => {
             content: "Please ask me a text-based question.",
             role: 'user',
         })
+    }
+
+    const answerFreeFormQuestion = async (text: string) => {
+        await append({
+            id: nanoid(),
+            content: textBasedAnswerPrompt(text),
+            role: 'system',
+        })
+        setPromptType(PromptTypes.REGULAR)
     }
 
     const generateStudyGuide = async () => {
@@ -108,6 +135,16 @@ const useOpenAi = (notes: Note[]) => {
         })
     }
 
+    const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        if(promptType == PromptTypes.TEXT_BASED) {
+            e.preventDefault();
+            await answerFreeFormQuestion(input);
+            setInput('');
+        } else {
+            handleSubmit(e)
+        }
+    }
+
     return {
         messages: messages.filter((message, index) => (
             message.role !== 'system' && (!loading || index !== messages.length - 1)
@@ -115,10 +152,11 @@ const useOpenAi = (notes: Note[]) => {
         input,
         loading,
         handleInputChange,
-        handleSubmit,
+        onSubmit,
         askMultipleChoiceQuestion,
         askFreeFormQuestion,
         generateStudyGuide,
+        answerMultipleChoiceQuestion
     };
 }
 

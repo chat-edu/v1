@@ -15,7 +15,8 @@ import TextMessage from "@/components/Home/Chat/Message/TextMessage";
 
 
 interface Props {
-    message: MessageInterface
+    message: MessageInterface,
+    onMultipleChoiceAnswer: (answer: string) => void,
 }
 
 const getRoleColor = (role: string, colorMode: ColorMode) => {
@@ -40,7 +41,7 @@ const getRoleName = (role: string) => {
     }
 }
 
-const Message: React.FC<Props> = ({ message }) => {
+const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer }) => {
 
     const { colorMode } = useColorMode();
 
@@ -54,13 +55,13 @@ const Message: React.FC<Props> = ({ message }) => {
                 {getRoleName(message.role)}
             </Text>
             {
-                getMessageComponent(message)
+                getMessageComponent(message, onMultipleChoiceAnswer)
             }
         </Card>
     );
 };
 
-const getMessageComponent = (message: MessageInterface) => {
+const getMessageComponent = (message: MessageInterface, onMultpleChoiceAnswer: (answer: string) => void) => {
     const messageType = message.content.split(':')[0];
     switch (messageType) {
         case studyGuideTag:
@@ -73,6 +74,7 @@ const getMessageComponent = (message: MessageInterface) => {
             return (
                 <MultipleChoiceQuestion
                     question={parseMultipleChoice(message)}
+                    onAnswer={onMultpleChoiceAnswer}
                 />
             );
         case textBasedTag:
