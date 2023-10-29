@@ -1,6 +1,6 @@
 import React, {ChangeEventHandler} from 'react';
 
-import {Button, Card, Flex, FormControl, FormLabel, HStack, Input, useColorModeValue} from "@chakra-ui/react";
+import {Button, Card, Flex, FormControl, FormLabel, HStack, Input, useColorModeValue, Textarea} from "@chakra-ui/react";
 
 import Actions from "@/components/Home/Chat/Actions";
 
@@ -9,7 +9,7 @@ import {PromptTypes} from "@/hooks/useChatEdu";
 
 interface Props {
     value: string,
-    handleChange: ChangeEventHandler<HTMLInputElement>,
+    handleChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
     handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
     notes: Note[],
     askMultipleChoice: () => Promise<void>;
@@ -56,12 +56,15 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                             <FormLabel>
                                 Prompt
                             </FormLabel>
-                            <Input
+                            <Textarea
                                 value={value}
                                 onChange={handleChange}
                                 focusBorderColor={'brand.500'}
                                 flex={1}
                                 isDisabled={promptType === PromptTypes.MULTIPLE_CHOICE}
+                                resize="vertical" // Allow vertical resizing
+                                minHeight="45px"  // Set a minimum height if needed
+                                maxHeight="200px"  // Set a maximum height
                             />
                         </FormControl>
                         <Button
