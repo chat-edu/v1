@@ -61,6 +61,7 @@ const Chat: React.FC<Props> = ({ notes }) => {
                     generateStudyGuide={generateStudyGuide}
                     promptType={promptType}
                     showMessage={messages.length === 0}
+                    correctAnswers={correctMapping}
                 />
             </Flex>
         </Container>

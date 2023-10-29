@@ -1,6 +1,16 @@
 import React, {ChangeEventHandler} from 'react';
 
-import {Button, Card, Flex, FormControl, FormLabel, HStack, useColorModeValue, Input} from "@chakra-ui/react";
+import {
+    Button,
+    Card,
+    Flex,
+    FormControl,
+    FormLabel,
+    HStack,
+    useColorModeValue,
+    Input,
+    CircularProgress, Box, Text
+} from "@chakra-ui/react";
 
 import Actions from "@/components/Home/Chat/Actions";
 
@@ -18,9 +28,10 @@ interface Props {
     generateStudyGuide: () => Promise<void>;
     promptType: PromptTypes
     showMessage: boolean;
+    correctAnswers: { [key: string]: boolean };
 }
 
-const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMultipleChoice, askFreeForm, generateStudyGuide, promptType, showMessage }) => {
+const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMultipleChoice, askFreeForm, generateStudyGuide, promptType, showMessage, correctAnswers }) => {
 
     const inputBoxColor = useColorModeValue("white", "#2D2D2D")
 
@@ -53,6 +64,33 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                     <HStack
                         align={'flex-end'}
                     >
+                        {
+                            Object.keys(correctAnswers).length > 0 && (
+                                <Box
+                                    position={'relative'}
+                                    boxSize={'60px'}
+                                >
+                                    <CircularProgress
+                                        color={'brand.500'}
+                                        value={Object.values(correctAnswers).filter(Boolean).length}
+                                        max={Object.keys(correctAnswers).length}
+                                        size={'60px'}
+                                        trackColor={'transparent'}
+                                    />
+                                    <Text
+                                        position={'absolute'}
+                                        top={'50%'}
+                                        left={'50%'}
+                                        transform={'translate(-50%, -50%)'}
+                                        fontSize={'xs'}
+                                        fontWeight={'bold'}
+                                    >
+                                        {Object.values(correctAnswers).filter(Boolean).length} / {Object.keys(correctAnswers).length}
+                                    </Text>
+                                </Box>
+                            )
+                        }
+
                         <FormControl
                             flex={1}
                         >
