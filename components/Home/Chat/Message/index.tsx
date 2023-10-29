@@ -12,12 +12,15 @@ import {parseMultipleChoice, multipleChoiceTag} from "@/lib/multipleChoice";
 import {parseStudyGuide, studyGuideTag} from "@/lib/studyGuide";
 import {parseTextBased, textBasedTag} from "@/lib/textBased";
 import TextMessage from "@/components/Home/Chat/Message/TextMessage";
+import {answerCheckTag, parseAnswerCorrectness} from "@/lib/answerCorrectness";
+import QuestionCorrectness from "@/components/Home/Chat/Message/QuestionCorrectness";
 
 
 interface Props {
     message: MessageInterface,
     onMultipleChoiceAnswer: (answer: string) => void,
-    askForHint: () => void
+    askForHint: () => void,
+    isCorrect?: boolean
 }
 
 const getRoleColor = (role: string, colorMode: ColorMode) => {
@@ -42,13 +45,14 @@ const getRoleName = (role: string) => {
     }
 }
 
-const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForHint }) => {
+const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForHint, isCorrect }) => {
 
     const { colorMode } = useColorMode();
 
     return (
         <Card
             w={'100%'}
+            borderColor={isCorrect === undefined ? undefined : isCorrect ? 'brand.500' : 'red.500'}
         >
             <Text
                 color={getRoleColor(message.role, colorMode)}
@@ -56,7 +60,7 @@ const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForHint 
                 {getRoleName(message.role)}
             </Text>
             {
-                getMessageComponent(message, onMultipleChoiceAnswer, askForHint)
+                getMessageComponent(message, onMultipleChoiceAnswer, askForHint, isCorrect !== undefined)
             }
         </Card>
     );
@@ -66,6 +70,7 @@ const getMessageComponent = (
     message: MessageInterface,
     onMultpleChoiceAnswer: (answer: string) => void,
     askForHint: () => void,
+    answered: boolean
 ) => {
     const messageType = message.content.split(':')[0];
     switch (messageType) {
@@ -81,6 +86,7 @@ const getMessageComponent = (
                     question={parseMultipleChoice(message)}
                     onAnswer={onMultpleChoiceAnswer}
                     askForHint={askForHint}
+                    answered={answered}
                 />
             );
         case textBasedTag:
@@ -88,7 +94,12 @@ const getMessageComponent = (
                 <TextBasedQuestion
                     textBasedQuestion={parseTextBased(message)}
                     askForHint={askForHint}
+                    answered={answered}
                 />
+            );
+        case answerCheckTag:
+            return (
+                <QuestionCorrectness content={parseAnswerCorrectness(message)} />
             );
         default:
             return (
