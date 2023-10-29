@@ -6,7 +6,7 @@ const { definePartsStyle, defineMultiStyleConfig } =
 
 const baseStyle = definePartsStyle({
     button: {
-        py: 4
+        py: 2
     }
 })
 

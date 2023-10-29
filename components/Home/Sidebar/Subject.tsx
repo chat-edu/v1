@@ -88,6 +88,7 @@ const Subject: React.FC<Props> = ({ subject, addNote, removeNote }) => {
                     <UploadNotes
                         text={"Add Note"}
                         icon={<SmallAddIcon />}
+                        subject={subject}
                         buttonProps={{
                             w: '100%',
                         }}
