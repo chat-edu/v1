@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import {Message as MessageInterface} from "ai";
 
@@ -13,14 +13,7 @@ interface Props {
     correctAnswers: { [key: string]: boolean }
 }
 
-const Messages: React.FC<Props & { setShowMessage: (value: boolean) => void }> = ({ messages, setShowMessage, onMultipleChoiceAnswer, askForHint, correctAnswers  }) => {
-    
-    // Use effect to listen for changes in the messages array
-    useEffect(() => {
-        if (messages.length > 0) {
-            setShowMessage(false);
-        }
-    }, [messages, setShowMessage]);
+const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHint, correctAnswers  }) => {
     
     return (
         <Box

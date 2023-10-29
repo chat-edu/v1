@@ -1,11 +1,12 @@
 import React, {ChangeEventHandler} from 'react';
 
-import {Button, Card, Flex, FormControl, FormLabel, HStack, Input, useColorModeValue, Textarea} from "@chakra-ui/react";
+import {Button, Card, Flex, FormControl, FormLabel, HStack, useColorModeValue, Textarea} from "@chakra-ui/react";
 
 import Actions from "@/components/Home/Chat/Actions";
 
-import {Note} from "@/types/Note";
 import {PromptTypes} from "@/hooks/useChatEdu";
+
+import {Note} from "@/types/Note";
 
 interface Props {
     value: string,
@@ -17,10 +18,9 @@ interface Props {
     generateStudyGuide: () => Promise<void>;
     promptType: PromptTypes
     showMessage: boolean;
-    setShowMessage: (value: boolean) => void;
 }
 
-const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMultipleChoice, askFreeForm, generateStudyGuide, promptType, showMessage, setShowMessage }) => {
+const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMultipleChoice, askFreeForm, generateStudyGuide, promptType, showMessage }) => {
 
     const inputBoxColor = useColorModeValue("white", "#2D2D2D")
 
@@ -39,7 +39,6 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                 generateStudyGuide={generateStudyGuide}
                 disabled={promptType === PromptTypes.TEXT_BASED || promptType === PromptTypes.MULTIPLE_CHOICE}
                 showMessage={showMessage}
-                setShowMessage={setShowMessage}
             />
             <Card
                 bg={inputBoxColor}
