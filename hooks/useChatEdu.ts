@@ -30,6 +30,8 @@ const useOpenAi = (notes: Note[]) => {
 
     const [correctMapping, setCorrectMapping] = useState<{[key: string]: boolean}>({});
 
+    const [messageBottomRef, setMessageBottomRef] = useState<HTMLDivElement | null>(null);
+
     const onFinish =  (message: Message) => {
         setLoading(false);
         if(!currentQuestionId && message.content.includes('Question: ')) {
@@ -40,6 +42,11 @@ const useOpenAi = (notes: Note[]) => {
                 [currentQuestionId || ""]: !message.content.includes(incorrectTag)
             })
         }
+        scrollToBottom();
+    }
+
+    const scrollToBottom = () => {
+        messageBottomRef?.scrollIntoView({ behavior: "smooth" })
     }
 
     const {
@@ -156,7 +163,8 @@ const useOpenAi = (notes: Note[]) => {
         askFreeFormQuestion,
         generateStudyGuide,
         answerMultipleChoiceQuestion,
-        askForHint
+        askForHint,
+        setMessageBottomRef
     };
 }
 
