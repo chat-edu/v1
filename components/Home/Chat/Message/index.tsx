@@ -2,18 +2,19 @@ import React from 'react';
 
 import { Message as MessageInterface } from "ai";
 
-import {Card, ColorMode, Text, useColorMode} from "@chakra-ui/react";
+import {Card, ColorMode, Text, Flex, useColorMode} from "@chakra-ui/react";
 
 import StudyGuide from "@/components/Home/Chat/Message/StudyGuide";
 import MultipleChoiceQuestion from "@/components/Home/Chat/Message/MultipleChoiceQuestion";
 import TextBasedQuestion from "@/components/Home/Chat/Message/TextBasedQuestion";
+import TextMessage from "@/components/Home/Chat/Message/TextMessage";
+import QuestionCorrectness from "@/components/Home/Chat/Message/QuestionCorrectness";
 
 import {parseMultipleChoice, multipleChoiceTag} from "@/lib/multipleChoice";
 import {parseStudyGuide, studyGuideTag} from "@/lib/studyGuide";
 import {parseTextBased, textBasedTag} from "@/lib/textBased";
-import TextMessage from "@/components/Home/Chat/Message/TextMessage";
 import {answerCheckTag, parseAnswerCorrectness} from "@/lib/answerCorrectness";
-import QuestionCorrectness from "@/components/Home/Chat/Message/QuestionCorrectness";
+import {transparentize} from "@chakra-ui/theme-tools";
 
 
 interface Props {
@@ -26,9 +27,20 @@ interface Props {
 const getRoleColor = (role: string, colorMode: ColorMode) => {
     switch (role) {
         case 'user':
-            return 'brand.500';
+            return colorMode === 'light' ? 'brand.500' : 'brand.500';
         case 'assistant':
             return colorMode === 'light' ? 'blackAlpha.700' : 'whiteAlpha.700';
+        default:
+            return 'gray.500';
+    }
+}
+
+const getRoleBgColor = (role: string, colorMode: ColorMode) => {
+    switch (role) {
+        case 'user':
+            return transparentize(colorMode === 'light' ? 'brand.200' : 'brand.300', 0.2);
+        case 'assistant':
+            return undefined
         default:
             return 'gray.500';
     }
@@ -45,24 +57,46 @@ const getRoleName = (role: string) => {
     }
 }
 
+const getRoleJustifyContent = (role: string) => {
+    switch (role) {
+        case 'user':
+            return 'flex-end';  // Align to the right
+        case 'assistant':
+            return 'flex-start'; // Align to the left
+        default:
+            return 'center';
+    }
+}
+
 const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForHint, isCorrect }) => {
 
     const { colorMode } = useColorMode();
 
+    // @ts-ignore
     return (
-        <Card
-            w={'100%'}
+        <Flex
+            justifyContent={getRoleJustifyContent(message.role)}
+            w="100%"
             borderColor={isCorrect === undefined ? undefined : isCorrect ? 'brand.500' : 'red.500'}
         >
-            <Text
-                color={getRoleColor(message.role, colorMode)}
+            <Card
+                w={'95%'}
+                borderColor={isCorrect === undefined ? undefined : isCorrect ? 'brand.500' : 'red.500'}
+                borderWidth={isCorrect === undefined ? undefined : 2}
+                // @ts-ignore
+                bg={getRoleBgColor(message.role, colorMode)}
             >
-                {getRoleName(message.role)}
-            </Text>
-            {
-                getMessageComponent(message, onMultipleChoiceAnswer, askForHint, isCorrect !== undefined)
-            }
-        </Card>
+                <Text
+                    color={getRoleColor(message.role, colorMode)}
+                    fontWeight={'semibold'}
+                >
+                    {getRoleName(message.role)}
+                </Text>
+                {
+                    getMessageComponent(message, onMultipleChoiceAnswer, askForHint, isCorrect !== undefined)
+                }
+            </Card>
+        </Flex>
     );
 };
 
