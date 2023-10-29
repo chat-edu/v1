@@ -8,7 +8,12 @@ interface Props {
 
 const QuestionCorrectness: React.FC<Props> = ({ content }) => {
     return (
-        <Text>
+        <Text
+            fontSize={{
+                base: 'xs',
+                md: 'md'
+            }}
+        >
             {content}
         </Text>
     );

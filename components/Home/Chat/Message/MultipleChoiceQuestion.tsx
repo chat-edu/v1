@@ -39,7 +39,10 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHin
                 flex={1}
             >
                 <Text
-                    fontSize={'lg'}
+                    fontSize={{
+                        base: 'sm',
+                        md: 'lg'
+                    }}
                     fontWeight={'bold'}
                 >
                     {question.question}
@@ -60,6 +63,10 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHin
                                 py={2}
                                 textAlign={'left'}
                                 justifyContent={'flex-start'}
+                                fontSize={{
+                                    base: 'xs',
+                                    md: 'md'
+                                }}
                                 fontWeight={'normal'}
                                 colorScheme={buttonColorScheme(index)}
                                 onClick={() => onClick(option, index)}

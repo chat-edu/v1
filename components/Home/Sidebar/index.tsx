@@ -44,7 +44,10 @@ const CoursesSidebar: React.FC<Props> = ({ addNote, removeNote, notes }) => {
                         alignItems={'flex-start'}
                         spacing={0}
                     >
-                        <Text>
+                        <Text
+                            fontSize={'sm'}
+                            fontWeight={'semibold'}
+                        >
                             Courses
                         </Text>
                         <Text

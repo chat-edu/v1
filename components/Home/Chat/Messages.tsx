@@ -34,6 +34,7 @@ const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHin
                     spacing={4}
                     flex={messages.length === 0 ? 1 : undefined}
                     justifyContent={messages.length === 0 ? 'center' : undefined}
+                    pt={2}
                 >
                     {
                         messages.length > 0 ? (
