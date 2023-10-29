@@ -10,6 +10,7 @@ import {answerCheckTag, incorrectTag} from "@/lib/answerCorrectness";
 
 import {Note} from "@/types/Note";
 import {studyGuidePrePrompt, studyGuidePrompt} from "@/lib/studyGuide";
+import {hintPrePrompt, hintPrompt} from "@/lib/hints";
 
 const MAX_LENGTH = 16385 * 3;
 
@@ -122,11 +123,7 @@ const useOpenAi = (notes: Note[]) => {
     }
 
     const askForHint = async () => {
-        await append({
-            id: nanoid(),
-            content: "Can you give me a hint?",
-            role: 'user',
-        })
+        await promptWithContext(hintPrePrompt, hintPrompt)
     }
 
     const answerFreeFormQuestion = async (text: string) => {
