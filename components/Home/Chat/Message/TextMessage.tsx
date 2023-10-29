@@ -1,0 +1,17 @@
+import React from 'react';
+
+import Markdown from "@/components/Utilities/Markdown";
+
+interface Props {
+    content: string
+}
+
+const TextMessage: React.FC<Props> = ({ content }) => {
+    return (
+        <Markdown
+            content={content}
+        />
+    );
+};
+
+export default TextMessage;
