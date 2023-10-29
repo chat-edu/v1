@@ -9,10 +9,12 @@ import Message from "@/components/Home/Chat/Message";
 interface Props {
     messages: MessageInterface[],
     onMultipleChoiceAnswer: (answer: string) => void,
-    askForHint: () => void
+    askForHint: () => void,
+    correctAnswers: { [key: string]: boolean }
 }
 
-const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHint }) => {
+const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHint, correctAnswers }) => {
+
     return (
         <Box
             w={'100%'}
@@ -38,6 +40,7 @@ const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHin
                                  message={message}
                                  onMultipleChoiceAnswer={onMultipleChoiceAnswer}
                                  askForHint={askForHint}
+                                 isCorrect={correctAnswers[message.id]}
                             />
                         ))
                     }

@@ -20,6 +20,7 @@ const Chat: React.FC<Props> = ({ notes }) => {
         input,
         messages,
         promptType,
+        correctMapping,
         handleInputChange,
         onSubmit,
         askMultipleChoiceQuestion,
@@ -42,6 +43,7 @@ const Chat: React.FC<Props> = ({ notes }) => {
                 messages={messages}
                 onMultipleChoiceAnswer={answerMultipleChoiceQuestion}
                 askForHint={askForHint}
+                correctAnswers={correctMapping}
             />
             <InputBox
                 notes={notes}

@@ -8,10 +8,10 @@ interface Props {
     question: MultipleChoiceQuestionType,
     onAnswer: (answer: string) => void,
     askForHint: () => void
-
+    answered: boolean
 }
 
-const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHint }) => {
+const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHint, answered }) => {
 
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
@@ -63,6 +63,7 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHin
                                 fontWeight={'normal'}
                                 colorScheme={buttonColorScheme(index)}
                                 onClick={() => onClick(option, index)}
+                                isDisabled={answered}
                             >
                                 {option}
                             </Button>
@@ -74,6 +75,7 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHin
                 variant={'outline'}
                 colorScheme={'brand'}
                 onClick={askForHint}
+                isDisabled={answered}
             >
                 Hint
             </Button>

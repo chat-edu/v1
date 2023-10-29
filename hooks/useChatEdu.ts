@@ -4,9 +4,9 @@ import {Message, nanoid} from "ai";
 import {useChat} from "ai/react";
 
 import chunkString from "@/lib/chunkString";
-
 import {multipleChoiceAnswerPrePrompt, multipleChoicePrePrompt} from "@/lib/multipleChoice";
 import {textBasedAnswerPrompt, textBasedPrePrompt} from "@/lib/textBased";
+import {answerCheckTag, incorrectTag} from "@/lib/answerCorrectness";
 
 import {Note} from "@/types/Note";
 
@@ -25,10 +25,20 @@ const useOpenAi = (notes: Note[]) => {
 
     const [promptType, setPromptType] = useState<PromptTypes>(PromptTypes.REGULAR);
 
-    // const [correctMapping, setCorrectMapping] = useState<{[key: string]: boolean}>({});
+    const [currentQuestionId, setCurrentQuestionId] = useState<string | null>(null);
 
-    const onFinish =  () => {
+    const [correctMapping, setCorrectMapping] = useState<{[key: string]: boolean}>({});
+
+    const onFinish =  (message: Message) => {
         setLoading(false);
+        if(!currentQuestionId && message.content.includes('Question: ')) {
+            setCurrentQuestionId(message.id);
+        } else if(message.content.includes(answerCheckTag)) {
+            setCorrectMapping({
+                ...correctMapping,
+                [currentQuestionId || ""]: !message.content.includes(incorrectTag)
+            })
+        }
     }
 
     const {
@@ -95,6 +105,7 @@ const useOpenAi = (notes: Note[]) => {
             role: 'system',
         });
         setPromptType(PromptTypes.REGULAR);
+        setCurrentQuestionId(null);
     }
 
     const askFreeFormQuestion = async () => {
@@ -128,10 +139,8 @@ const useOpenAi = (notes: Note[]) => {
             content: textBasedAnswerPrompt(text),
             role: 'system',
         })
-        // setCorrectMapping({
-        //     ...correctMapping,
-        // })
-        setPromptType(PromptTypes.REGULAR)
+        setPromptType(PromptTypes.REGULAR);
+        setCurrentQuestionId(null);
     }
 
     const generateStudyGuide = async () => {
@@ -167,6 +176,7 @@ const useOpenAi = (notes: Note[]) => {
         input,
         loading,
         promptType,
+        correctMapping,
         handleInputChange,
         onSubmit,
         askMultipleChoiceQuestion,
