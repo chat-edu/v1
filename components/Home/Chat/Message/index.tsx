@@ -8,6 +8,7 @@ import {transparentize} from "@chakra-ui/theme-tools";
 import {SlOptionsVertical} from "react-icons/sl";
 import {MdQuestionAnswer} from "react-icons/md";
 import {FaLeaf} from "react-icons/fa";
+import {BsFillLightbulbFill} from "react-icons/bs";
 
 import StudyGuide from "@/components/Home/Chat/Message/StudyGuide";
 import MultipleChoiceQuestion from "@/components/Home/Chat/Message/MultipleChoiceQuestion";
@@ -21,7 +22,6 @@ import {parseStudyGuide, studyGuideAnswerTag, studyGuidePromptTag} from "@/lib/s
 import {parseTextBased, textBasedPromptTag, textBasedQuestionTag} from "@/lib/textBased";
 import {answerCheckTag, parseAnswerCorrectness} from "@/lib/answerCorrectness";
 import {hintTag} from "@/lib/hints";
-import {BsFillLightbulbFill} from "react-icons/bs";
 
 
 interface Props {
