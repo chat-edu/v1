@@ -56,6 +56,7 @@ const Chat: React.FC<Props> = ({ notes }) => {
                 askFreeForm={askFreeFormQuestion}
                 generateStudyGuide={generateStudyGuide}
                 promptType={promptType}
+                showMessage={messages.length === 0}
             />
         </Flex>
     );

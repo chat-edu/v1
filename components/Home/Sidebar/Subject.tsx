@@ -23,6 +23,9 @@ import useAuth from "@/hooks/auth/useAuth";
 
 import {Subject as SubjectType} from "@/types/Subject";
 import {Note as NoteType} from "@/types/Note";
+import UploadNotes from "@/components/Home/UploadNotes";
+import {SmallAddIcon} from "@chakra-ui/icons";
+import { MAX_SCORE } from '@/lib/score';
 
 interface Props {
     subject: SubjectType,

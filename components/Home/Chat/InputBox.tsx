@@ -1,24 +1,26 @@
 import React, {ChangeEventHandler} from 'react';
 
-import {Button, Card, Flex, FormControl, FormLabel, HStack, Input, useColorModeValue} from "@chakra-ui/react";
+import {Button, Card, Flex, FormControl, FormLabel, HStack, useColorModeValue, Textarea} from "@chakra-ui/react";
 
 import Actions from "@/components/Home/Chat/Actions";
 
-import {Note} from "@/types/Note";
 import {PromptTypes} from "@/hooks/useChatEdu";
+
+import {Note} from "@/types/Note";
 
 interface Props {
     value: string,
-    handleChange: ChangeEventHandler<HTMLInputElement>,
+    handleChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
     handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
     notes: Note[],
     askMultipleChoice: () => Promise<void>;
     askFreeForm: () => Promise<void>;
     generateStudyGuide: () => Promise<void>;
     promptType: PromptTypes
+    showMessage: boolean;
 }
 
-const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMultipleChoice, askFreeForm, generateStudyGuide, promptType }) => {
+const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMultipleChoice, askFreeForm, generateStudyGuide, promptType, showMessage }) => {
 
     const inputBoxColor = useColorModeValue("white", "#2D2D2D")
 
@@ -36,6 +38,7 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                 askFreeForm={askFreeForm}
                 generateStudyGuide={generateStudyGuide}
                 disabled={promptType === PromptTypes.TEXT_BASED || promptType === PromptTypes.MULTIPLE_CHOICE}
+                showMessage={showMessage}
             />
             <Card
                 bg={inputBoxColor}
@@ -56,12 +59,15 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                             <FormLabel>
                                 Prompt
                             </FormLabel>
-                            <Input
+                            <Textarea
                                 value={value}
                                 onChange={handleChange}
                                 focusBorderColor={'brand.500'}
                                 flex={1}
                                 isDisabled={promptType === PromptTypes.MULTIPLE_CHOICE}
+                                resize="vertical" // Allow vertical resizing
+                                minHeight="45px"  // Set a minimum height if needed
+                                maxHeight="200px"  // Set a maximum height
                             />
                         </FormControl>
                         <Button
