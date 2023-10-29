@@ -91,6 +91,10 @@ const useOpenAi = (notes: Note[]) => {
                 role: 'system',
             }))
         ])
+
+        setCurrentQuestionId(null);
+        setCorrectMapping({});
+        setPromptType(PromptTypes.REGULAR)
     }, [notes])
 
     const promptWithContext = async (context: string, prompt: string) => {
