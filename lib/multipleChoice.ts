@@ -41,5 +41,5 @@ const letterToIndex = (letter: string): number => {
 export const multipleChoiceAnswerPrePrompt = (answer: string) => `
     The user has answered ${answer}.
     
-    Please respond by saying whether or not they are correct and explain why.
+    Please respond by saying whether or not they are correct and explain why. Speak in the second person.
 `
