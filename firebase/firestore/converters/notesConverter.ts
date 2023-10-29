@@ -9,6 +9,7 @@ import {
 import { notesCollection as baseNotesCollection } from "@/firebase/firestore/collections";
 
 import {Note} from "@/types/Note";
+import { MAX_SCORE } from "@/lib/score";
 
 
 // converts a course document to a Course object, allowing for typed queries and strict type checking
@@ -31,6 +32,7 @@ const noteConverter: FirestoreDataConverter<Note> = {
             title: data.title,
             content: data.content,
             courseId: data.courseId,
+            score: Math.floor(Math.random() * MAX_SCORE)
         };
     },
 };

@@ -10,7 +10,9 @@ import {
     HStack,
     Skeleton,
     Text,
-    VStack
+    VStack,
+    CircularProgress, 
+    CircularProgressLabel
 } from "@chakra-ui/react";
 
 
@@ -23,6 +25,7 @@ import {Subject as SubjectType} from "@/types/Subject";
 import {Note} from "@/types/Note";
 import UploadNotes from "@/components/Home/UploadNotes";
 import {SmallAddIcon} from "@chakra-ui/icons";
+import { MAX_SCORE } from '@/lib/score';
 
 interface Props {
     subject: SubjectType,
@@ -67,11 +70,16 @@ const Subject: React.FC<Props> = ({ subject, addNote, removeNote }) => {
                         ) : (
                             <CheckboxGroup colorScheme='brand'>
                                 <VStack
+                                    w={'100%'}
                                     spacing={2}
                                     align={'start'}
                                 >
                                     {
                                         notes.map((note) => (
+                                            <HStack
+                                                w={'100%'}
+                                                justifyContent={'space-between'}
+                                            >
                                             <Checkbox
                                                 key={note.id}
                                                 value={note.id}
@@ -85,6 +93,14 @@ const Subject: React.FC<Props> = ({ subject, addNote, removeNote }) => {
                                             >
                                                 {note.title}
                                             </Checkbox>
+                                            <CircularProgress 
+                                                value={note.score} 
+                                                max={MAX_SCORE}
+                                                color='brand.400' 
+                                                thickness='13px' 
+                                                size='25px'
+                                            />
+                                            </HStack>
                                         ))
                                     }
                                 </VStack>
