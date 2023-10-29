@@ -1,4 +1,4 @@
-import React, {useState, ChangeEvent} from 'react';
+import React, {useState, ChangeEvent, useEffect} from 'react';
 
 import {
     Icon,
@@ -18,6 +18,7 @@ import FormElement from "@/components/Utilities/FormElement";
 interface Props<T> {
     label: string;
     value: T | null;
+    initInputValue?: string;
     optionLabels: string[];
     options: T[];
     onSelect: (value: T | null) => void;
@@ -27,12 +28,16 @@ interface Props<T> {
     closeButton?: boolean;
 }
 
-const AutoCompleteMenu = <T,>({ label, value, optionLabels, options, onSelect, onBlur, error, placeholder, closeButton }: Props<T>) => {
+const AutoCompleteMenu = <T,>({ label, value, initInputValue, optionLabels, options, onSelect, onBlur, error, placeholder, closeButton }: Props<T>) => {
 
     const menuBackground = useColorModeValue('white', '#2D2D2D');
     const menuBorderColor = useColorModeValue("gray.200", "whiteAlpha.300");
 
-    const [inputValue, setInputValue] = useState("");
+    const [inputValue, setInputValue] = useState(initInputValue);
+
+    useEffect(() => {
+        setInputValue(initInputValue);
+    }, [initInputValue])
 
     return (
         <FormElement

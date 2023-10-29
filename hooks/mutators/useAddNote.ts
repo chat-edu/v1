@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 import * as Yup from "yup";
 
 import {useFormik} from "formik";
@@ -7,6 +9,7 @@ import { addNote } from "@/services/notes";
 import useAuth from "@/hooks/auth/useAuth";
 
 import {NoteInput} from "@/types/Note";
+import {Subject} from "@/types/Subject";
 
 const NoteSchema: Yup.ObjectSchema<NoteInput> = Yup.object().shape({
     title: Yup.string()
@@ -20,9 +23,15 @@ const NoteSchema: Yup.ObjectSchema<NoteInput> = Yup.object().shape({
         .min(1, 'Course ID is Required'),
 });
 
-const useAddNote = () => {
+const useAddNote = (initSubject?: Subject) => {
 
     const { user } = useAuth();
+
+    const [subject, setSubject] = useState<Subject | null>(initSubject || null);
+
+    useEffect(() => {
+        setSubject(initSubject || null)
+    }, [initSubject])
 
     const {
         values,
@@ -31,12 +40,12 @@ const useAddNote = () => {
         setFieldValue,
         setFieldTouched,
         submitForm,
-        resetForm
+        resetForm,
     } = useFormik<NoteInput>({
         initialValues: {
             title: '',
             content: '',
-            courseId: '',
+            courseId: subject?.id || '',
         },
         validationSchema: NoteSchema,
         onSubmit: async note => {
@@ -46,14 +55,25 @@ const useAddNote = () => {
         },
     });
 
+    useEffect(() => {
+        setFieldValue('courseId', subject?.id || '');
+    }, [setFieldValue, subject]);
+
+    const updateSubject = (subject: Subject | null) => {
+        setSubject(subject);
+    }
+
     return {
+        subject,
         values,
         errors,
         touched,
         setFieldValue,
         setFieldTouched,
         submitForm,
-        resetForm
+        updateSubject,
+        resetForm,
+        disabled: Object.keys(errors).length > 0 || Object.keys(touched).length === 0,
     }
 }
 

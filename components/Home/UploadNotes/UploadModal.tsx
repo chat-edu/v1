@@ -16,14 +16,19 @@ import SubjectMenu from "@/components/Utilities/SubjectMenu";
 
 import useAddNote from "@/hooks/mutators/useAddNote";
 
+import {Subject} from "@/types/Subject";
+
 interface Props {
     isOpen: boolean;
     onClose: () => void;
+    initSubject?: Subject
 }
 
-const UploadModal: React.FC<Props> = ({ isOpen, onClose }) => {
+const UploadModal: React.FC<Props> = ({ isOpen, onClose , initSubject}) => {
 
-    const { values, setFieldValue, touched, setFieldTouched, submitForm, errors } = useAddNote();
+    const { values, setFieldValue, touched, setFieldTouched, disabled, submitForm, updateSubject, errors, subject } = useAddNote(initSubject);
+
+    console.log(subject);
 
     const onSubmit = async () => {
         await submitForm();
@@ -47,8 +52,8 @@ const UploadModal: React.FC<Props> = ({ isOpen, onClose }) => {
                     >
                         <SubjectMenu
                             label={"Course"}
-                            course={null}
-                            setCourse={(course) => {setFieldValue('courseId', course?.id)}}
+                            course={subject}
+                            setCourse={updateSubject}
                             onBlur={() => setFieldTouched('courseId', true)}
                             error={touched.courseId && errors.courseId || undefined}
                         />
@@ -74,6 +79,7 @@ const UploadModal: React.FC<Props> = ({ isOpen, onClose }) => {
                     <Button
                         colorScheme={'brand'}
                         onClick={onSubmit}
+                        isDisabled={disabled}
                     >
                         Submit
                     </Button>

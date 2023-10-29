@@ -17,7 +17,7 @@ export const multipleChoicePrePrompt = `Multiple choice questions must be in the
 export const multipleChoicePrompt = `${multipleChoicePromptTag}: Please ask me a multiple choice question`;
 
 export const parseMultipleChoice = (message: Message): MultipleChoiceQuestion => {
-    const splitMessage = message.content.split('Question: ')[1].split('?');
+    const splitMessage = message.content.split(`${multipleChoiceQuestionTag}: `)[1].split('?');
     const lines = message.content.split('\n');
     return {
         id: message.id,
