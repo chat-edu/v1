@@ -21,7 +21,9 @@ const Actions: React.FC<Props> = ({ askMultipleChoice, askFreeForm, generateStud
         <VStack>
             {
                 showMessage && (
-                    <Text>
+                    <Text
+                        fontWeight={'bold'}
+                    >
                         Get started with our study tools
                     </Text>
                 )

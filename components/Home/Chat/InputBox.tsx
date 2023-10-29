@@ -75,7 +75,6 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                                         value={Object.values(correctAnswers).filter(Boolean).length}
                                         max={Object.keys(correctAnswers).length}
                                         size={'60px'}
-                                        trackColor={'transparent'}
                                     />
                                     <Text
                                         position={'absolute'}

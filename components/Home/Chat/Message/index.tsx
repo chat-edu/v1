@@ -45,7 +45,7 @@ interface Props {
 const getRoleBgColor = (role: string, colorMode: ColorMode) => {
     switch (role) {
         case 'user':
-            return transparentize(colorMode === 'light' ? 'brand.200' : 'brand.300', 0.2);
+            return transparentize(colorMode === 'light' ? 'brand.200' : 'brand.300', 0.3);
         case 'assistant':
             return undefined
         default:

@@ -17,10 +17,7 @@ const ActionPrompt: React.FC<Props> = ({ title, icon }) => {
                 as={icon}
                 boxSize={6}
             />
-            <Text
-                fontSize={'lg'}
-                fontWeight={'medium'}
-            >
+            <Text>
                 {title}
             </Text>
         </HStack>
