@@ -39,8 +39,7 @@ const letterToIndex = (letter: string): number => {
     }
 }
 
-export const multipleChoiceAnswerPrePrompt = (answer: string) => `
-    The user has answered ${answer}.
+export const multipleChoiceAnswerPrePrompt = `
     
     Please respond by saying whether they are correct and explain why. Speak in the second person.
     

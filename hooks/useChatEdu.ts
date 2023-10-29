@@ -99,11 +99,19 @@ const useOpenAi = (notes: Note[]) => {
     }
 
     const answerMultipleChoiceQuestion = async (answer: string) => {
+        await setMessages([
+            ...messages,
+            {
+                id: nanoid(),
+                content: multipleChoiceAnswerPrePrompt,
+                role: 'system',
+            }
+        ]);
         await append({
             id: nanoid(),
-            content: multipleChoiceAnswerPrePrompt(answer),
-            role: 'system',
-        });
+            content: answer,
+            role: 'user',
+        })
         setPromptType(PromptTypes.REGULAR);
         setCurrentQuestionId(null);
     }
