@@ -9,9 +9,10 @@ import Message from "@/components/Home/Chat/Message";
 interface Props {
     messages: MessageInterface[],
     onMultipleChoiceAnswer: (answer: string) => void,
+    askForFreeFormHint: () => void
 }
 
-const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer}) => {
+const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForFreeFormHint }) => {
     return (
         <Box
             w={'100%'}
@@ -36,6 +37,7 @@ const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer}) => {
                                  key={message.id}
                                  message={message}
                                  onMultipleChoiceAnswer={onMultipleChoiceAnswer}
+                                 askForFreeFormHint={askForFreeFormHint}
                             />
                         ))
                     }

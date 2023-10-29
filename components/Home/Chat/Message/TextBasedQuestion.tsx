@@ -1,18 +1,34 @@
 import React from 'react';
 
-import {Text} from "@chakra-ui/react";
+import {Button, HStack, Text} from "@chakra-ui/react";
 
 import {TextBasedQuestion as TextBasedQuestionType} from "@/types/TextBasedQuestion";
 
 interface Props {
-    textBasedQuestion: TextBasedQuestionType
+    textBasedQuestion: TextBasedQuestionType,
+    askForFreeFormHint: () => void
 }
 
-const TextBasedQuestion: React.FC<Props> = ({ textBasedQuestion }) => {
+const TextBasedQuestion: React.FC<Props> = ({ textBasedQuestion, askForFreeFormHint }) => {
     return (
-        <Text>
-            {textBasedQuestion.question}
-        </Text>
+        <HStack
+            w={'100%'}
+        >
+            <Text
+                flex={1}
+                fontSize={'lg'}
+                fontWeight={'bold'}
+            >
+                {textBasedQuestion.question}
+            </Text>
+            <Button
+                variant={'outline'}
+                colorScheme={'brand'}
+                onClick={askForFreeFormHint}
+            >
+                Hint
+            </Button>
+        </HStack>
     );
 };
 
