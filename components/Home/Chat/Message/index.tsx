@@ -2,19 +2,24 @@ import React from 'react';
 
 import { Message as MessageInterface } from "ai";
 
-import {Card, ColorMode, Text, Flex, useColorMode} from "@chakra-ui/react";
+import {Card, ColorMode, Flex, useColorMode} from "@chakra-ui/react";
+import {transparentize} from "@chakra-ui/theme-tools";
+
+import {SlOptionsVertical} from "react-icons/sl";
+import {MdQuestionAnswer} from "react-icons/md";
+import {FaLeaf} from "react-icons/fa";
 
 import StudyGuide from "@/components/Home/Chat/Message/StudyGuide";
 import MultipleChoiceQuestion from "@/components/Home/Chat/Message/MultipleChoiceQuestion";
 import TextBasedQuestion from "@/components/Home/Chat/Message/TextBasedQuestion";
 import TextMessage from "@/components/Home/Chat/Message/TextMessage";
 import QuestionCorrectness from "@/components/Home/Chat/Message/QuestionCorrectness";
+import ActionPrompt from "@/components/Home/Chat/Message/ActionPrompt";
 
-import {parseMultipleChoice, multipleChoiceTag} from "@/lib/multipleChoice";
-import {parseStudyGuide, studyGuideTag} from "@/lib/studyGuide";
-import {parseTextBased, textBasedTag} from "@/lib/textBased";
+import {parseMultipleChoice, multipleChoiceQuestionTag, multipleChoicePromptTag} from "@/lib/multipleChoice";
+import {parseStudyGuide, studyGuideAnswerTag, studyGuidePromptTag} from "@/lib/studyGuide";
+import {parseTextBased, textBasedPromptTag, textBasedQuestionTag} from "@/lib/textBased";
 import {answerCheckTag, parseAnswerCorrectness} from "@/lib/answerCorrectness";
-import {transparentize} from "@chakra-ui/theme-tools";
 
 
 interface Props {
@@ -24,16 +29,16 @@ interface Props {
     isCorrect?: boolean
 }
 
-const getRoleColor = (role: string, colorMode: ColorMode) => {
-    switch (role) {
-        case 'user':
-            return colorMode === 'light' ? 'brand.500' : 'brand.500';
-        case 'assistant':
-            return colorMode === 'light' ? 'blackAlpha.700' : 'whiteAlpha.700';
-        default:
-            return 'gray.500';
-    }
-}
+// const getRoleColor = (role: string, colorMode: ColorMode) => {
+//     switch (role) {
+//         case 'user':
+//             return colorMode === 'light' ? 'brand.500' : 'brand.500';
+//         case 'assistant':
+//             return colorMode === 'light' ? 'blackAlpha.700' : 'whiteAlpha.700';
+//         default:
+//             return 'gray.500';
+//     }
+// }
 
 const getRoleBgColor = (role: string, colorMode: ColorMode) => {
     switch (role) {
@@ -46,16 +51,16 @@ const getRoleBgColor = (role: string, colorMode: ColorMode) => {
     }
 }
 
-const getRoleName = (role: string) => {
-    switch (role) {
-        case 'user':
-            return 'You';
-        case 'assistant':
-            return 'Assistant';
-        default:
-            return 'Unknown';
-    }
-}
+// const getRoleName = (role: string) => {
+//     switch (role) {
+//         case 'user':
+//             return 'You';
+//         case 'assistant':
+//             return 'Assistant';
+//         default:
+//             return 'Unknown';
+//     }
+// }
 
 const getRoleJustifyContent = (role: string) => {
     switch (role) {
@@ -72,7 +77,6 @@ const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForHint,
 
     const { colorMode } = useColorMode();
 
-    // @ts-ignore
     return (
         <Flex
             justifyContent={getRoleJustifyContent(message.role)}
@@ -86,12 +90,12 @@ const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForHint,
                 // @ts-ignore
                 bg={getRoleBgColor(message.role, colorMode)}
             >
-                <Text
-                    color={getRoleColor(message.role, colorMode)}
-                    fontWeight={'semibold'}
-                >
-                    {getRoleName(message.role)}
-                </Text>
+                {/*<Text*/}
+                {/*    color={getRoleColor(message.role, colorMode)}*/}
+                {/*    fontWeight={'semibold'}*/}
+                {/*>*/}
+                {/*    {getRoleName(message.role)}*/}
+                {/*</Text>*/}
                 {
                     getMessageComponent(message, onMultipleChoiceAnswer, askForHint, isCorrect !== undefined)
                 }
@@ -108,13 +112,13 @@ const getMessageComponent = (
 ) => {
     const messageType = message.content.split(':')[0];
     switch (messageType) {
-        case studyGuideTag:
+        case studyGuideAnswerTag:
             return (
                 <StudyGuide
                     studyGuide={parseStudyGuide(message)}
                 />
             );
-        case multipleChoiceTag:
+        case multipleChoiceQuestionTag:
             return (
                 <MultipleChoiceQuestion
                     question={parseMultipleChoice(message)}
@@ -123,7 +127,7 @@ const getMessageComponent = (
                     answered={answered}
                 />
             );
-        case textBasedTag:
+        case textBasedQuestionTag:
             return (
                 <TextBasedQuestion
                     textBasedQuestion={parseTextBased(message)}
@@ -134,6 +138,27 @@ const getMessageComponent = (
         case answerCheckTag:
             return (
                 <QuestionCorrectness content={parseAnswerCorrectness(message)} />
+            );
+        case multipleChoicePromptTag:
+            return (
+                <ActionPrompt
+                    title={"Multiple Choice Question"}
+                    icon={SlOptionsVertical}
+                />
+            );
+        case studyGuidePromptTag:
+            return (
+                <ActionPrompt
+                    title={"Study Guide"}
+                    icon={FaLeaf}
+                />
+            );
+        case textBasedPromptTag:
+            return (
+                <ActionPrompt
+                    title={"Free-From Question"}
+                    icon={MdQuestionAnswer}
+                />
             );
         default:
             return (

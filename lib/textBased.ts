@@ -4,20 +4,21 @@ import {correctTag, incorrectTag, answerCheckTag} from "@/lib/answerCorrectness"
 
 import {TextBasedQuestion} from "@/types/TextBasedQuestion";
 
-export const textBasedTag = 'Text-based Question';
+export const textBasedPromptTag = 'Text-based Prompt';
+export const textBasedQuestionTag = 'Text-based Question';
 
 export const textBasedPrePrompt = `Text-based questions must be in the following format:
-    ${textBasedTag}: <question>?\n
+    ${textBasedQuestionTag}: <question>?\n
 `;
+
+export const textBasedPrompt = `${textBasedPromptTag}: Please ask me a text-based question`;
 
 export const parseTextBased = (message: Message): TextBasedQuestion => ({
     id: message.id,
     question: message.content.split('Question: ')[1]
 })
 
-export const textBasedAnswerPrompt = (answer: string) => `
-    The user has answered ${answer}.
-    
+export const textBasedAnswerPrompt = `    
     Please respond by saying whether or not they are correct and explain why. Speak in the second person.
     
     Use the following format:
