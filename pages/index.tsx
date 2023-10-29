@@ -5,7 +5,6 @@ import Layout from "@/components/Layout";
 import {NextPage} from "next";
 import Home from "@/components/Home";
 
-
 const HomePage: NextPage = () => {
   return (
       <>
