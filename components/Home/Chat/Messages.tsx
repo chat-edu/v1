@@ -49,12 +49,16 @@ const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHin
                         ) : (
                             <VStack
                                 maxW={{ base: '100%', md: '40%' }}
+                                px={4}
                             >
                                 <Welcome />
                                 <Text
                                     color={'brand.500'}
                                     fontWeight={'bold'}
-                                    fontSize={'lg'}
+                                    fontSize={{
+                                        base: 'sm',
+                                        md: 'lg'
+                                    }}
                                     textAlign={'center'}
                                 >
                                     Get started by making a multiple choice question, free form question, or study guide!

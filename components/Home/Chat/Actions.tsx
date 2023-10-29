@@ -23,7 +23,10 @@ const Actions: React.FC<Props> = ({ askMultipleChoice, askFreeForm, generateStud
                 showMessage && (
                     <Text
                         fontWeight={'bold'}
-                        fontSize={'xl'}
+                        fontSize={{
+                            base: 'sm',
+                            md: 'xl'
+                        }}
                     >
                         Actions
                     </Text>
@@ -31,8 +34,8 @@ const Actions: React.FC<Props> = ({ askMultipleChoice, askFreeForm, generateStud
             }
             <Stack
                 w={'100%'}
-                spacing={4}
-                flexDirection={{ base: "column", md: "row" }}
+                spacing={{ base: 2, md: 4 }}
+                flexDirection={{ base: "row", md: "row" }}
             >
                 <Action
                     label={"Study Guide"}

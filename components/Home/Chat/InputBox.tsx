@@ -38,7 +38,10 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
     return (
         <Flex
            flexDirection={'column'}
-           gap={4}
+           gap={{
+               base: 2,
+               md: 4
+           }}
            position={'sticky'}
            bottom={0}
            right={0}
