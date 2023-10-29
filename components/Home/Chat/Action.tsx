@@ -22,6 +22,7 @@ const Action: React.FC<Props> = ({ label, description, icon, onClick, disabled }
         <Card
             bg={(actionCardColor)}
             flex={1}
+            borderRadius={'3xl'}
             onClick={disabled ? undefined : onClick}
             cursor={disabled ? "not-allowed" : 'pointer'}
             p={4}

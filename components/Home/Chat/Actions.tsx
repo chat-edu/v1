@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Stack} from "@chakra-ui/react";
+import {Stack, VStack} from "@chakra-ui/react";
 
 import {FaLeaf} from "react-icons/fa";
 import {MdQuestionAnswer} from "react-icons/md";
@@ -13,10 +13,14 @@ interface Props {
     askFreeForm: () => Promise<void>;
     generateStudyGuide: () => Promise<void>;
     disabled: boolean;
+    showMessage: boolean;
+    setShowMessage: (value: boolean) => void;
 }
 
-const Actions: React.FC<Props> = ({ askMultipleChoice, askFreeForm, generateStudyGuide, disabled }) => {
+const Actions: React.FC<Props> = ({ askMultipleChoice, askFreeForm, generateStudyGuide, disabled, showMessage, setShowMessage }) => {
     return (
+        <VStack>
+            {showMessage && <h2>Actions</h2>}
         <Stack
             w={'100%'}
             spacing={4}
@@ -44,6 +48,7 @@ const Actions: React.FC<Props> = ({ askMultipleChoice, askFreeForm, generateStud
                 disabled={disabled}
             />
         </Stack>
+        </VStack>
     );
 };
 

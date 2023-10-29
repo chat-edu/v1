@@ -16,9 +16,11 @@ interface Props {
     askFreeForm: () => Promise<void>;
     generateStudyGuide: () => Promise<void>;
     promptType: PromptTypes
+    showMessage: boolean;
+    setShowMessage: (value: boolean) => void;
 }
 
-const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMultipleChoice, askFreeForm, generateStudyGuide, promptType }) => {
+const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMultipleChoice, askFreeForm, generateStudyGuide, promptType, showMessage, setShowMessage }) => {
 
     const inputBoxColor = useColorModeValue("white", "#2D2D2D")
 
@@ -36,6 +38,8 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                 askFreeForm={askFreeForm}
                 generateStudyGuide={generateStudyGuide}
                 disabled={promptType === PromptTypes.TEXT_BASED || promptType === PromptTypes.MULTIPLE_CHOICE}
+                showMessage={showMessage}
+                setShowMessage={setShowMessage}
             />
             <Card
                 bg={inputBoxColor}

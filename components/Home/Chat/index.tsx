@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {Flex} from "@chakra-ui/react";
 
@@ -30,6 +30,8 @@ const Chat: React.FC<Props> = ({ notes }) => {
         askForHint
     } = useChatEdu(notes);
 
+    const [showMessage, setShowMessage] = useState(true);
+
     return (
         <Flex
             p={4}
@@ -40,6 +42,7 @@ const Chat: React.FC<Props> = ({ notes }) => {
             overflow={'auto'}
         >
             <Messages
+                setShowMessage={setShowMessage}
                 messages={messages}
                 onMultipleChoiceAnswer={answerMultipleChoiceQuestion}
                 askForHint={askForHint}
@@ -54,6 +57,8 @@ const Chat: React.FC<Props> = ({ notes }) => {
                 askFreeForm={askFreeFormQuestion}
                 generateStudyGuide={generateStudyGuide}
                 promptType={promptType}
+                showMessage={showMessage}
+                setShowMessage={setShowMessage}
             />
         </Flex>
     );
