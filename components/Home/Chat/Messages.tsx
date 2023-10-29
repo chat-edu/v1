@@ -33,7 +33,7 @@ const Messages: React.FC<Props> = ({ messages}) => {
                         messages.map(message => (
                             <Message
                                  key={message.id}
-                                message={message}
+                                 message={message}
                             />
                         ))
                     }

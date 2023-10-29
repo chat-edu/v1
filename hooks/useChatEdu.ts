@@ -3,12 +3,23 @@ import {useEffect, useState} from "react";
 import {Message, nanoid} from "ai";
 import {useChat} from "ai/react";
 
-import {Note} from "@/types/Note";
 import chunkString from "@/lib/chunkString";
+
+import {multipleChoicePrePrompt} from "@/lib/multipleChoice";
+import {textBasedPrePrompt} from "@/lib/textBased";
+
+import {Note} from "@/types/Note";
+
 
 const MAX_LENGTH = 16385 * 3;
 
 const useOpenAi = (notes: Note[]) => {
+
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const onFinish =  () => {
+        setLoading(false);
+    }
 
     const {
         messages,
@@ -19,9 +30,8 @@ const useOpenAi = (notes: Note[]) => {
         append
     } = useChat({
         api: '/api/chat',
+        onFinish,
     });
-
-    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
 
@@ -55,14 +65,7 @@ const useOpenAi = (notes: Note[]) => {
             ...messages,
             {
                 id: nanoid(),
-                content: `Multiple choice questions must be in the following format:
-                    Multiple Choice Question: <question>? 
-                    A) <answer 1>
-                    B) <answer 2> 
-                    C) <answer 3> 
-                    D) <answer 4>
-                    Answer: <letter of correct answer>
-                `,
+                content: multipleChoicePrePrompt,
                 role: 'system',
             }
         ])
@@ -78,13 +81,13 @@ const useOpenAi = (notes: Note[]) => {
             ...messages,
             {
                 id: nanoid(),
-                content: "Do not add the answer to the question. The user will input it next.",
+                content: textBasedPrePrompt,
                 role: 'system',
             }
         ])
         await append({
             id: nanoid(),
-            content: "Please ask me a text based question.",
+            content: "Please ask me a text-based question.",
             role: 'user',
         })
     }
@@ -105,9 +108,10 @@ const useOpenAi = (notes: Note[]) => {
         })
     }
 
-
     return {
-        messages: messages.filter((message) => message.role !== 'system'),
+        messages: messages.filter((message, index) => (
+            message.role !== 'system' && (!loading || index !== messages.length - 1)
+        )),
         input,
         loading,
         handleInputChange,
