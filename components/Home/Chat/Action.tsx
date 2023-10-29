@@ -30,7 +30,6 @@ const Action: React.FC<Props> = ({ label, description, icon, onClick, disabled }
             }}
             transition={'all 0.2s ease-in-out'}
             h={'100%'}
-            rounded={'3xl'}
             borderColor={'brand.500'}
             borderWidth={2}
         >
