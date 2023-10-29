@@ -110,6 +110,14 @@ const useOpenAi = (notes: Note[]) => {
         })
     }
 
+    const askForFreeFormHint = async () => {
+        await append({
+            id: nanoid(),
+            content: "Can you give me a hint?",
+            role: 'user',
+        })
+    }
+
     const answerFreeFormQuestion = async (text: string) => {
         await append({
             id: nanoid(),
@@ -156,7 +164,8 @@ const useOpenAi = (notes: Note[]) => {
         askMultipleChoiceQuestion,
         askFreeFormQuestion,
         generateStudyGuide,
-        answerMultipleChoiceQuestion
+        answerMultipleChoiceQuestion,
+        askForFreeFormHint
     };
 }
 
