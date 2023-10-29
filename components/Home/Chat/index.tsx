@@ -43,13 +43,13 @@ const Chat: React.FC<Props> = ({ notes }) => {
                 position={'relative'}
                 h={`calc(100vh - ${navbarHeight})`}
                 overflow={'auto'}
+                ref={setMessageBottomRef}
             >
                 <Messages
                     messages={messages}
                     onMultipleChoiceAnswer={answerMultipleChoiceQuestion}
                     askForHint={askForHint}
                     correctAnswers={correctMapping}
-                    setRef={setMessageBottomRef}
                 />
                 <InputBox
                     notes={notes}

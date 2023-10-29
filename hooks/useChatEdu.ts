@@ -23,8 +23,6 @@ export enum PromptTypes {
 
 const useOpenAi = (notes: Note[]) => {
 
-    const [loading, setLoading] = useState<boolean>(false);
-
     const [promptType, setPromptType] = useState<PromptTypes>(PromptTypes.REGULAR);
 
     const [currentQuestionId, setCurrentQuestionId] = useState<string | null>(null);
@@ -34,7 +32,7 @@ const useOpenAi = (notes: Note[]) => {
     const [messageBottomRef, setMessageBottomRef] = useState<HTMLDivElement | null>(null);
 
     const onFinish =  (message: Message) => {
-        setLoading(false);
+        // setLoading(false);
         if(!currentQuestionId && message.content.includes('Question: ')) {
             setCurrentQuestionId(message.id);
         } else if(message.content.includes(answerCheckTag)) {
@@ -47,7 +45,11 @@ const useOpenAi = (notes: Note[]) => {
     }
 
     const scrollToBottom = () => {
-        messageBottomRef?.scrollIntoView({ behavior: "smooth" })
+        if (!messageBottomRef) return;
+        messageBottomRef.scroll({
+            top: messageBottomRef.scrollHeight,
+            behavior: 'auto'
+        })
     }
 
     const {
@@ -115,7 +117,7 @@ const useOpenAi = (notes: Note[]) => {
 
     const askMultipleChoiceQuestion = async () => {
         setPromptType(PromptTypes.MULTIPLE_CHOICE);
-        setLoading(true);
+        // setLoading(true);
         await promptWithContext(multipleChoicePrePrompt, multipleChoicePrompt);
     }
 
@@ -155,11 +157,8 @@ const useOpenAi = (notes: Note[]) => {
     }
 
     return {
-        messages: messages.filter((message, index) => (
-            message.role !== 'system' && (!loading || index !== messages.length - 1)
-        )),
+        messages: messages.filter((message) => (message.role !== 'system')),
         input,
-        loading,
         promptType,
         correctMapping,
         handleInputChange,

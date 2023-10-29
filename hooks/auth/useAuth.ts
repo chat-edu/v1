@@ -39,7 +39,6 @@ const useAuthImpl = (): AuthHook => {
     const [user, setUser] = useState<BasicUser | null>(userToBasicUser(rawUser));
 
     useEffect(() => {
-        console.log(rawUser);
         setUser(userToBasicUser(rawUser));
     }, [rawUser]);
 

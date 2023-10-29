@@ -17,13 +17,13 @@ export const multipleChoicePrePrompt = `Multiple choice questions must be in the
 export const multipleChoicePrompt = `${multipleChoicePromptTag}: Please ask me a multiple choice question`;
 
 export const parseMultipleChoice = (message: Message): MultipleChoiceQuestion => {
-    const splitMessage = message.content.split(`${multipleChoiceQuestionTag}: `)[1].split('?');
+    const splitMessage = message.content.split(`${multipleChoiceQuestionTag}: `)[1]?.split('?');
     const lines = message.content.split('\n');
     return {
         id: message.id,
-        question: splitMessage[0] + '?',
+        question: splitMessage?.length > 0 ? splitMessage[0] + '?' : '',
         options: lines.slice(1, lines.length - 1).filter((option) => option !== '' && option !== ' '),
-        answerIndex: letterToIndex(message.content.split('Answer: ')[1].substring(0, 1))
+        answerIndex: letterToIndex(message.content.split('Answer: ')[1]?.substring(0, 1))
     }
 }
 
