@@ -37,3 +37,9 @@ const letterToIndex = (letter: string): number => {
             return -1;
     }
 }
+
+export const multipleChoiceAnswerPrePrompt = (answer: string) => `
+    The user has answered ${answer}.
+    
+    Please respond by saying whether or not they are correct and explain why.
+`

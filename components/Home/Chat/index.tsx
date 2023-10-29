@@ -20,10 +20,11 @@ const Chat: React.FC<Props> = ({ notes }) => {
         input,
         messages,
         handleInputChange,
-        handleSubmit,
+        onSubmit,
         askMultipleChoiceQuestion,
         askFreeFormQuestion,
         generateStudyGuide,
+        answerMultipleChoiceQuestion
     } = useChatEdu(notes);
 
     return (
@@ -37,12 +38,13 @@ const Chat: React.FC<Props> = ({ notes }) => {
         >
             <Messages
                 messages={messages}
+                onMultipleChoiceAnswer={answerMultipleChoiceQuestion}
             />
             <InputBox
                 notes={notes}
                 value={input}
                 handleChange={handleInputChange}
-                handleSubmit={handleSubmit}
+                handleSubmit={onSubmit}
                 askMultipleChoice={askMultipleChoiceQuestion}
                 askFreeForm={askFreeFormQuestion}
                 generateStudyGuide={generateStudyGuide}

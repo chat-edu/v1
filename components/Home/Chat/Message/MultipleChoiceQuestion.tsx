@@ -5,12 +5,20 @@ import {Button, Text, VStack} from "@chakra-ui/react";
 import {MultipleChoiceQuestion as MultipleChoiceQuestionType} from "@/types/MultipleChoiceQuestion";
 
 interface Props {
-    question: MultipleChoiceQuestionType
+    question: MultipleChoiceQuestionType,
+    onAnswer: (answer: string) => void
 }
 
-const MultipleChoiceQuestion: React.FC<Props> = ({ question }) => {
+const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer }) => {
 
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+    const onClick = (option: string, index: number) => {
+        if(selectedIndex == null) {
+            setSelectedIndex(index);
+            onAnswer(option);
+        }
+    }
 
     const buttonColorScheme = (index: number) => (
         selectedIndex == index
@@ -47,7 +55,7 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question }) => {
                             justifyContent={'flex-start'}
                             fontWeight={'normal'}
                             colorScheme={buttonColorScheme(index)}
-                            onClick={() => setSelectedIndex(index)}
+                            onClick={() => onClick(option, index)}
                         >
                             {option}
                         </Button>
