@@ -8,8 +8,7 @@ const markdownTheme: Components = {
     p: (props: {children?: React.ReactNode}) => {
         const { children } = props;
         return (
-            <Text 
-                mb={2}>
+            <Text>
                 {children}
             </Text>
         );
