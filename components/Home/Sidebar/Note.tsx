@@ -20,6 +20,7 @@ import {MAX_SCORE} from "@/lib/score";
 import {Note as NoteType} from "@/types/Note";
 import {AiFillEye} from "react-icons/ai";
 import Markdown from "@/components/Utilities/Markdown";
+import useNote from "@/hooks/mutators/useNote";
 
 interface Props {
     note: NoteType,
@@ -30,6 +31,13 @@ interface Props {
 const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const { deleteNote } = useNote(note);
+
+    const onDelete = async () => {
+        await deleteNote();
+        onClose();
+    }
 
     return (
         <>
@@ -85,6 +93,7 @@ const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
                         <Button
                             variant='ghost'
                             colorScheme='red'
+                            onClick={onDelete}
                         >
                             Delete
                         </Button>
