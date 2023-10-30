@@ -15,6 +15,7 @@
     "@choc-ui/chakra-autocomplete": "^5.2.8",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@vercel/analytics": "^1.1.1",
     "ai": "^2.2.20",
     "chakra-ui-markdown-renderer": "^4.1.0",
     "firebase": "^10.5.2",
