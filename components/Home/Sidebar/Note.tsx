@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
     Checkbox,
-    CircularProgress,
     HStack,
     IconButton,
     Modal,
@@ -15,12 +14,14 @@ import {
     useDisclosure, Button
 } from "@chakra-ui/react";
 
-import {MAX_SCORE} from "@/lib/score";
+import {AiFillEye} from "react-icons/ai";
+
+import Markdown from "@/components/Utilities/Markdown";
+
+import useNote from "@/hooks/mutators/useNote";
 
 import {Note as NoteType} from "@/types/Note";
-import {AiFillEye} from "react-icons/ai";
-import Markdown from "@/components/Utilities/Markdown";
-import useNote from "@/hooks/mutators/useNote";
+
 
 interface Props {
     note: NoteType,
@@ -60,13 +61,13 @@ const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
                     {note.title}
                 </Checkbox>
                 <HStack>
-                    <CircularProgress
-                        value={note.score}
-                        max={MAX_SCORE}
-                        color='brand.400'
-                        thickness='13px'
-                        size='25px'
-                    />
+                    {/*<CircularProgress*/}
+                    {/*    value={note.score}*/}
+                    {/*    max={MAX_SCORE}*/}
+                    {/*    color='brand.400'*/}
+                    {/*    thickness='13px'*/}
+                    {/*    size='25px'*/}
+                    {/*/>*/}
                     <IconButton
                         aria-label={"View Note"}
                         icon={<AiFillEye />}
