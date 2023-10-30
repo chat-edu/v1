@@ -2,13 +2,15 @@ import useAuth from "@/hooks/auth/useAuth";
 
 import {removeNote} from "@/services/notes";
 
-const useNote = (courseId: string, noteId: string) => {
+import {Note} from "@/types/Note";
+
+const useNote = (note: Note) => {
 
     const { user } = useAuth();
     
     const deleteNote = async () => {
         if(!user) return;
-        await removeNote(user.uid, courseId, noteId)
+        await removeNote(user.uid, note.courseId, note.id)
     }
 
     return {
