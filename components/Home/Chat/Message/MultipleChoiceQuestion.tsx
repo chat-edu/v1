@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import {Button, HStack, Text, VStack} from "@chakra-ui/react";
 
 import {MultipleChoiceQuestion as MultipleChoiceQuestionType} from "@/types/MultipleChoiceQuestion";
+
+import confetti from 'canvas-confetti';
 
 interface Props {
     question: MultipleChoiceQuestionType,
@@ -14,12 +16,34 @@ interface Props {
 const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHint, answered }) => {
 
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+    const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
     const onClick = (option: string, index: number) => {
-        if(selectedIndex == null) {
+        if (selectedIndex == null) {
             setSelectedIndex(index);
             onAnswer(option);
+
+            // If the answer is correct, trigger confetti
+        if (index === question.answerIndex) {
+            const buttonRef = buttonRefs.current[index];
+            if (buttonRef) {
+                triggerConfettiFromButton(buttonRef);
+            }
         }
+        }
+    };
+
+    const triggerConfettiFromButton = (button: HTMLButtonElement) => {
+        const rect = button.getBoundingClientRect(); // get button's position
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+        confetti({
+            particleCount: 50,
+            startVelocity: 25,
+            spread: 360,
+            gravity: 0.6,
+            origin: { x: x / window.innerWidth, y: y / window.innerHeight }
+        });
     }
 
     const buttonColorScheme = (index: number) => (
@@ -53,6 +77,7 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHin
                     {
                         question.options.map((option, index) => (
                             <Button
+                                ref={(el: HTMLButtonElement | null) => buttonRefs.current[index] = el}
                                 variant={'outline'}
                                 key={index}
                                 maxW={'100%'}
