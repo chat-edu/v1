@@ -61,13 +61,6 @@ const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
                     {note.title}
                 </Checkbox>
                 <HStack>
-                    {/*<CircularProgress*/}
-                    {/*    value={note.score}*/}
-                    {/*    max={MAX_SCORE}*/}
-                    {/*    color='brand.400'*/}
-                    {/*    thickness='13px'*/}
-                    {/*    size='25px'*/}
-                    {/*/>*/}
                     <IconButton
                         aria-label={"View Note"}
                         icon={<AiFillEye />}
@@ -80,6 +73,7 @@ const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
                 isOpen={isOpen}
                 onClose={onClose}
                 size={'3xl'}
+                scrollBehavior={'inside'}
             >
                 <ModalOverlay />
                 <ModalContent>

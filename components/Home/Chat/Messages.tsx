@@ -49,7 +49,7 @@ const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHin
                             ))
                         ) : (
                             <VStack
-                                maxW={{ base: '100%', md: '40%' }}
+                                maxW={{ base: '100%', md: '60%' }}
                                 px={4}
                             >
                                 <Welcome />
