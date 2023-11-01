@@ -42,7 +42,8 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHin
             startVelocity: 25,
             spread: 360,
             gravity: 0.6,
-            origin: { x: x / window.innerWidth, y: y / window.innerHeight }
+            origin: { x: x / window.innerWidth, y: y / window.innerHeight },
+            colors: ["#4caf50"]
         });
     }
 

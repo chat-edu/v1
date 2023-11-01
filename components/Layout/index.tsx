@@ -32,6 +32,7 @@ const Layout: React.FC<Props> = ({ children, authGate }) => {
                     base: `calc(100vh - ${navbarHeight + mobileHeaderHeight}px)`,
                     md: `calc(100vh - ${navbarHeight}px)`
                 }}
+                position={'relative'}
             >
                 {
                     authGate ? (

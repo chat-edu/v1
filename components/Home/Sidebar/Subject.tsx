@@ -63,7 +63,9 @@ const Subject: React.FC<Props> = ({ subject, addNote, removeNote }) => {
                 >
                     {
                         loading ? (
-                            <Skeleton />
+                            <Skeleton
+                                h={'300px'}
+                            />
                         ) : (
                             <CheckboxGroup colorScheme='brand'>
                                 <VStack
