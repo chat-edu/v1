@@ -81,7 +81,11 @@ const useOpenAi = (notes: Note[]) => {
             {
                 id: nanoid(),
                 content: `
-                    You are to act as a teacher helping a student learn content they have taken notes on. You can only respond with information that is within the notes include below.
+                    You are to act as a teacher helping a student learn content they have taken notes on. 
+                    
+                    You can only respond with information that is within the notes include below. If they ask a question that is not in the notes, kindly tell them that you can only answer questions that are in the notes.
+                    
+                    You can use external information to describe concepts.
                     
                     These are the notes the student has taken so far:
                 `,
