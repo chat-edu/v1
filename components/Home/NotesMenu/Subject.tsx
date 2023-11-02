@@ -4,7 +4,7 @@ import {
     AccordionButton,
     AccordionIcon,
     AccordionItem,
-    AccordionPanel,
+    AccordionPanel, Button,
     CheckboxGroup,
     HStack,
     Skeleton,
@@ -14,27 +14,25 @@ import {
 import {SmallAddIcon} from "@chakra-ui/icons";
 
 import UploadNotes from "@/components/Home/UploadNotes";
-import DeleteSubject from "@/components/Home/Sidebar/DeleteSubject";
-import Note from "@/components/Home/Sidebar/Note";
+import DeleteSubject from "@/components/Home/NotesMenu/DeleteSubject";
+import Note from "@/components/Home/NotesMenu/Note";
 
 import useNotes from "@/hooks/queries/useNotes";
-import useAuth from "@/hooks/auth/useAuth";
-
 
 import {Subject as SubjectType} from "@/types/Subject";
 import {Note as NoteType} from "@/types/Note";
 
 interface Props {
     subject: SubjectType,
+    selectedNotes: NoteType[],
     addNote: (note: NoteType) => void
-    removeNote: (id: string) => void
+    removeNote: (id: string) => void,
+    closeSidebar?: () => void
 }
 
-const Subject: React.FC<Props> = ({ subject, addNote, removeNote }) => {
+const Subject: React.FC<Props> = ({ subject, selectedNotes,  addNote, removeNote, closeSidebar }) => {
 
-    const { user } = useAuth();
-
-    const { notes, loading } = useNotes(user?.uid || "a", subject.id);
+    const { notes, loading } = useNotes(subject.id);
 
     return (
         <AccordionItem>
@@ -63,7 +61,9 @@ const Subject: React.FC<Props> = ({ subject, addNote, removeNote }) => {
                 >
                     {
                         loading ? (
-                            <Skeleton />
+                            <Skeleton
+                                h={'300px'}
+                            />
                         ) : (
                             <CheckboxGroup colorScheme='brand'>
                                 <VStack
@@ -72,17 +72,35 @@ const Subject: React.FC<Props> = ({ subject, addNote, removeNote }) => {
                                     align={'start'}
                                 >
                                     {
-                                        notes.map((note) => (
-                                            <Note
-                                                key={note.id}
-                                                note={note}
-                                                addNote={addNote}
-                                                removeNote={removeNote}
-                                            />
-                                        ))
+                                        notes.length > 0 ? (
+                                            notes.map((note) => (
+                                                <Note
+                                                    key={note.id}
+                                                    note={note}
+                                                    addNote={addNote}
+                                                    removeNote={removeNote}
+                                                />
+                                            ))
+                                        ) : (
+                                            <Text>
+                                                No notes found
+                                            </Text>
+                                        )
                                     }
                                 </VStack>
                             </CheckboxGroup>
+                        )
+                    }
+                    {
+                        closeSidebar && selectedNotes.length > 0 && (
+                            <Button
+                                onClick={closeSidebar}
+                                colorScheme={'brand'}
+                                w={'100%'}
+                                variant={'outline'}
+                            >
+                                Start Studying
+                            </Button>
                         )
                     }
                     <UploadNotes

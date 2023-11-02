@@ -39,10 +39,11 @@ const Welcome = () => {
                 fontSize={{
                     base: 'sm',
                     md: '2xl'
-            }}
-                fontWeight={'bold'}
+                }}
+                fontWeight={'semibold'}
+                opacity={0.5}
             >
-                Supercharge your learning with AI
+                Your Personal AI-Powered Tutor
             </Text>
         </VStack>
     );

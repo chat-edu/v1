@@ -11,11 +11,16 @@ interface Props {
     onChange: (value: string) => void,
     onBlur?: () => void,
     error?: string,
+    helperText?: string,
 }
 
-const TextareaInput: React.FC<Props> = ({ label, placeholder, value, onChange, onBlur, error}) => {
+const TextareaInput: React.FC<Props> = ({ label, placeholder, value, onChange, onBlur, error, helperText}) => {
     return (
-        <FormElement label={label} error={error}>
+        <FormElement
+            label={label}
+            error={error}
+            helperText={helperText}
+        >
             <Textarea
                 placeholder={placeholder}
                 value={value}

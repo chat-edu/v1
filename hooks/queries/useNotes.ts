@@ -2,11 +2,15 @@ import {useCollectionData} from "react-firebase-hooks/firestore";
 
 import {query} from "@firebase/firestore";
 
+import useAuth from "@/hooks/auth/useAuth";
+
 import notesCollection from "@/firebase/firestore/converters/notesConverter";
 
-const useNotes = (userId: string, courseId: string) => {
+const useNotes = (courseId: string) => {
 
-    const [notes, loading, error] = useCollectionData(query(notesCollection(userId, courseId)));
+    const { user } = useAuth();
+
+    const [notes, loading, error] = useCollectionData(query(notesCollection(user?.uid || "a", courseId)));
 
     return {
         notes: notes || [],

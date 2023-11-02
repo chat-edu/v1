@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
     Checkbox,
-    CircularProgress,
     HStack,
     IconButton,
     Modal,
@@ -15,11 +14,14 @@ import {
     useDisclosure, Button
 } from "@chakra-ui/react";
 
-import {MAX_SCORE} from "@/lib/score";
+import {AiFillEye} from "react-icons/ai";
+
+import Markdown from "@/components/Utilities/Markdown";
+
+import useNote from "@/hooks/mutators/useNote";
 
 import {Note as NoteType} from "@/types/Note";
-import {AiFillEye} from "react-icons/ai";
-import Markdown from "@/components/Utilities/Markdown";
+
 
 interface Props {
     note: NoteType,
@@ -30,6 +32,13 @@ interface Props {
 const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const { deleteNote } = useNote(note);
+
+    const onDelete = async () => {
+        await deleteNote();
+        onClose();
+    }
 
     return (
         <>
@@ -52,13 +61,6 @@ const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
                     {note.title}
                 </Checkbox>
                 <HStack>
-                    <CircularProgress
-                        value={note.score}
-                        max={MAX_SCORE}
-                        color='brand.400'
-                        thickness='13px'
-                        size='25px'
-                    />
                     <IconButton
                         aria-label={"View Note"}
                         icon={<AiFillEye />}
@@ -71,6 +73,7 @@ const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
                 isOpen={isOpen}
                 onClose={onClose}
                 size={'3xl'}
+                scrollBehavior={'inside'}
             >
                 <ModalOverlay />
                 <ModalContent>
@@ -85,6 +88,7 @@ const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
                         <Button
                             variant='ghost'
                             colorScheme='red'
+                            onClick={onDelete}
                         >
                             Delete
                         </Button>

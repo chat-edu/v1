@@ -8,6 +8,9 @@ import {
     USERS_COLLECTION_SLUG
 } from "@/firebase/firestore/collections";
 
+export const userDocument = (userId: string) =>
+    doc(firestore, USERS_COLLECTION_SLUG, userId);
+
 export const subjectDocument = (userId: string, subjectId: string) =>
     doc(firestore, USERS_COLLECTION_SLUG, userId, SUBJECTS_COLLECTION_SLUG, subjectId);
 

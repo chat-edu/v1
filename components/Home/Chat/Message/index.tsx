@@ -133,7 +133,9 @@ const getMessageComponent = (
             );
         case answerCheckTag:
             return (
-                <QuestionCorrectness content={parseAnswerCorrectness(message)} />
+                <QuestionCorrectness
+                    correctness={parseAnswerCorrectness(message)}
+                />
             );
         case hintTag:
             return (

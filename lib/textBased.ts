@@ -1,6 +1,6 @@
 import {Message} from "ai";
 
-import {correctTag, incorrectTag, answerCheckTag} from "@/lib/answerCorrectness";
+import {correctTag, incorrectTag, answerCheckTag, explanationTag} from "@/lib/answerCorrectness";
 
 import {TextBasedQuestion} from "@/types/TextBasedQuestion";
 
@@ -21,7 +21,7 @@ export const parseTextBased = (message: Message): TextBasedQuestion => ({
 export const textBasedAnswerPrompt = `    
     Please respond to the user in the second person saying whether or not they are correct and why.
     
-    Use the following format:
+    Use this EXACT format:
     
-    ${answerCheckTag}: <${correctTag}/${incorrectTag}>, <reason>
+    ${answerCheckTag}: <${correctTag}/${incorrectTag}>, ${explanationTag}: <reason>
 `

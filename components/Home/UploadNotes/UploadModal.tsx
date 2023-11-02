@@ -62,6 +62,7 @@ const UploadModal: React.FC<Props> = ({ isOpen, onClose , initSubject}) => {
                             onChange={(title) => setFieldValue('title', title)}
                             onBlur={() => setFieldTouched('title', true)}
                             error={touched.title && errors.title || undefined}
+                            helperText={"Ex: Lecture 1"}
                         />
                         <TextareaInput
                             label={"Notes"}
@@ -70,6 +71,7 @@ const UploadModal: React.FC<Props> = ({ isOpen, onClose , initSubject}) => {
                             onChange={(content) => setFieldValue('content', content)}
                             onBlur={() => setFieldTouched('content', true)}
                             error={touched.content && errors.content || undefined}
+                            helperText={"Ex: A programming language is a system of notation for writing computer programs. A programming language is usually described in terms of its syntax and semantics."}
                         />
                     </Flex>
                 </ModalBody>

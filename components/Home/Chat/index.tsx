@@ -4,12 +4,13 @@ import {Container, Flex} from "@chakra-ui/react";
 
 import InputBox from "@/components/Home/Chat/InputBox";
 import Messages from "@/components/Home/Chat/Messages";
+
+import {mobileHeaderHeight} from "@/components/Home/NotesMenu/MobileHeader";
 import {navbarHeight} from "@/components/Navbar";
 
 import useChatEdu from "@/hooks/useChatEdu";
 
 import {Note} from "@/types/Note";
-import {mobileHeaderHeight} from "@/components/Home/Sidebar";
 
 interface Props {
     notes: Note[]
@@ -40,7 +41,7 @@ const Chat: React.FC<Props> = ({ notes }) => {
         >
             <Flex
                 p={{
-                    base: 0,
+                    base: 2,
                     md: 4
                 }}
                 flexDirection={'column'}

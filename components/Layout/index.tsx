@@ -4,9 +4,10 @@ import {Box, Flex, Skeleton} from "@chakra-ui/react";
 
 import NotConnected from "@/components/Layout/NotConnected";
 import Navbar, { navbarHeight } from "@/components/Navbar";
+import {mobileHeaderHeight} from "@/components/Home/NotesMenu/MobileHeader";
 
 import useAuth from "@/hooks/auth/useAuth";
-import {mobileHeaderHeight} from "@/components/Home/Sidebar";
+
 
 interface Props {
     children: React.ReactNode,
@@ -32,6 +33,7 @@ const Layout: React.FC<Props> = ({ children, authGate }) => {
                     base: `calc(100vh - ${navbarHeight + mobileHeaderHeight}px)`,
                     md: `calc(100vh - ${navbarHeight}px)`
                 }}
+                position={'relative'}
             >
                 {
                     authGate ? (

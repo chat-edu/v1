@@ -73,7 +73,7 @@ const useAddNote = (initSubject?: Subject) => {
         submitForm,
         updateSubject,
         resetForm,
-        disabled: Object.keys(errors).length > 0 || Object.keys(touched).length === 0,
+        disabled: Object.keys(errors).length > 0,
     }
 }
 
