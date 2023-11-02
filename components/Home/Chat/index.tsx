@@ -41,7 +41,7 @@ const Chat: React.FC<Props> = ({ notes }) => {
         >
             <Flex
                 p={{
-                    base: 0,
+                    base: 2,
                     md: 4
                 }}
                 flexDirection={'column'}

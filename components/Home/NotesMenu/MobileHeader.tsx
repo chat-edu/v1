@@ -43,6 +43,7 @@ const MobileHeader: React.FC<Props> = ({ notes, addNote, removeNote}) => {
                     </Text>
                 </VStack>
                 <MobileSidebar
+                    selectedNotes={notes}
                     addNote={addNote}
                     removeNote={removeNote}
                 />

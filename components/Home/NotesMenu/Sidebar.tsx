@@ -15,11 +15,12 @@ export const openWebSidebarWidth = 400;
 export const closedWebSidebarWidth = 72;
 
 interface Props {
+    selectedNotes: Note[],
     addNote: (note: Note) => void;
     removeNote: (id: string) => void
 }
 
-const Sidebar: React.FC<Props> = ({ addNote, removeNote }) => {
+const Sidebar: React.FC<Props> = ({ selectedNotes, addNote, removeNote }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
@@ -62,6 +63,7 @@ const Sidebar: React.FC<Props> = ({ addNote, removeNote }) => {
                     w={'100%'}
                 >
                     <SubjectsAccordion
+                        selectedNotes={selectedNotes}
                         addNote={addNote}
                         removeNote={removeNote}
                     />

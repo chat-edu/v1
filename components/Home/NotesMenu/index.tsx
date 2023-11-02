@@ -23,6 +23,7 @@ const NotesMenu: React.FC<Props> = ({ addNote, removeNote, notes }) => {
                 removeNote={removeNote}
             />
             <Sidebar
+                selectedNotes={notes}
                 addNote={addNote}
                 removeNote={removeNote}
             />

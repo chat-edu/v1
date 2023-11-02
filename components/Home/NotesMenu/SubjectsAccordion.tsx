@@ -10,11 +10,13 @@ import {Note} from "@/types/Note";
 import AddSubjectButton from "@/components/Home/AddSubject/AddSubjectButton";
 
 interface Props {
+    selectedNotes: Note[];
     addNote: (note: Note) => void;
-    removeNote: (id: string) => void
+    removeNote: (id: string) => void;
+    closeSidebar?: () => void;
 }
 
-const SubjectsAccordion: React.FC<Props> = ({ addNote, removeNote }) => {
+const SubjectsAccordion: React.FC<Props> = ({ selectedNotes, addNote, removeNote, closeSidebar }) => {
 
     const { subjects, loading } = useSubjects();
 
@@ -54,7 +56,6 @@ const SubjectsAccordion: React.FC<Props> = ({ addNote, removeNote }) => {
 
     return (
         <Accordion
-            allowToggle
             allowMultiple
             w={'100%'}
             index={subjects.reduce((acc, subject, index) => {
@@ -77,8 +78,10 @@ const SubjectsAccordion: React.FC<Props> = ({ addNote, removeNote }) => {
                     <Subject
                         key={subject.id}
                         subject={subject}
+                        selectedNotes={selectedNotes}
                         addNote={addNote}
                         removeNote={removeNote}
+                        closeSidebar={closeSidebar}
                     />
                 ))
             }

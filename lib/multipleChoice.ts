@@ -1,6 +1,6 @@
 import {Message} from "ai";
 
-import {correctTag, incorrectTag, answerCheckTag} from "@/lib/answerCorrectness";
+import {correctTag, incorrectTag, answerCheckTag, explanationTag} from "@/lib/answerCorrectness";
 
 import {MultipleChoiceQuestion} from "@/types/MultipleChoiceQuestion";
 
@@ -46,8 +46,8 @@ export const multipleChoiceAnswerPrePrompt = `
     
     Please respond by saying whether they are correct and explain why. Speak in the second person and only use the notes the user has provided.
     
-    Use the following format:
+    Use this EXACT format:
     
-    ${answerCheckTag}: <${correctTag}/${incorrectTag}>, <reason>
+    ${answerCheckTag}: <${correctTag}/${incorrectTag}>, ${explanationTag}: <reason>
     
 `

@@ -24,11 +24,12 @@ import {Note} from "@/types/Note";
 
 
 interface Props {
+    selectedNotes: Note[],
     addNote: (note: Note) => void;
     removeNote: (id: string) => void
 }
 
-const MobileSidebar: React.FC<Props> = ({ addNote, removeNote }) => {
+const MobileSidebar: React.FC<Props> = ({ selectedNotes, addNote, removeNote }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -67,8 +68,10 @@ const MobileSidebar: React.FC<Props> = ({ addNote, removeNote }) => {
                             w={'100%'}
                         >
                             <SubjectsAccordion
+                                selectedNotes={selectedNotes}
                                 addNote={addNote}
                                 removeNote={removeNote}
+                                closeSidebar={onClose}
                             />
                         </Box>
                     </DrawerBody>

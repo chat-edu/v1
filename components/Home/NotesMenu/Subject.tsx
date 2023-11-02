@@ -4,7 +4,7 @@ import {
     AccordionButton,
     AccordionIcon,
     AccordionItem,
-    AccordionPanel,
+    AccordionPanel, Button,
     CheckboxGroup,
     HStack,
     Skeleton,
@@ -24,11 +24,13 @@ import {Note as NoteType} from "@/types/Note";
 
 interface Props {
     subject: SubjectType,
+    selectedNotes: NoteType[],
     addNote: (note: NoteType) => void
-    removeNote: (id: string) => void
+    removeNote: (id: string) => void,
+    closeSidebar?: () => void
 }
 
-const Subject: React.FC<Props> = ({ subject, addNote, removeNote }) => {
+const Subject: React.FC<Props> = ({ subject, selectedNotes,  addNote, removeNote, closeSidebar }) => {
 
     const { notes, loading } = useNotes(subject.id);
 
@@ -87,6 +89,18 @@ const Subject: React.FC<Props> = ({ subject, addNote, removeNote }) => {
                                     }
                                 </VStack>
                             </CheckboxGroup>
+                        )
+                    }
+                    {
+                        closeSidebar && selectedNotes.length > 0 && (
+                            <Button
+                                onClick={closeSidebar}
+                                colorScheme={'brand'}
+                                w={'100%'}
+                                variant={'outline'}
+                            >
+                                Start Studying
+                            </Button>
                         )
                     }
                     <UploadNotes
