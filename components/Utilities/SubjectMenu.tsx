@@ -31,6 +31,7 @@ const SubjectMenu: React.FC<Props> = ({ label, course, placeholder, setCourse, o
             onSelect={setCourse}
             onBlur={onBlur}
             error={error}
+            helperText={"Select a subject"}
             closeButton={closeButton}
         />
     );

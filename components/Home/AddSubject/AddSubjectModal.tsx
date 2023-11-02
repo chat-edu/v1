@@ -39,6 +39,7 @@ const AddSubjectModal: React.FC<Props> = ({ isOpen, onClose }) => {
                     <TextInput
                         label={'Subject Name'}
                         placeholder={'Ex: CS 2201'}
+                        helperText={'Enter the name of the subject'}
                         value={values.name}
                         onChange={(name) => setFieldValue('name', name)}
                         onBlur={() => setFieldTouched('name')}

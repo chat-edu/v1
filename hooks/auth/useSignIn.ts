@@ -21,7 +21,7 @@ const useLogin = () => {
     const toast = useToast();
 
     const onSignIn = async () => {
-        await signIn([], {hd: "vanderbilt.edu"})
+        await signIn()
             .then((_result) => {
                 toast({
                     title: "Success",

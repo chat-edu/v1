@@ -11,12 +11,17 @@ interface Props {
     onChange: (value: string) => void,
     onBlur?: () => void,
     error?: string,
+    helperText?: string,
     button?: React.ReactNode
 }
 
-const TextInput: React.FC<Props> = ({ label, placeholder, value, onChange, onBlur, error, button}) => {
+const TextInput: React.FC<Props> = ({ label, placeholder, value, onChange, onBlur, error, helperText, button}) => {
     return (
-        <FormElement label={label} error={error}>
+        <FormElement
+            label={label}
+            error={error}
+            helperText={helperText}
+        >
             <HStack
                 w={'100%'}
             >
