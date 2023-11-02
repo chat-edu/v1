@@ -14,12 +14,10 @@ import {
 import {SmallAddIcon} from "@chakra-ui/icons";
 
 import UploadNotes from "@/components/Home/UploadNotes";
-import DeleteSubject from "@/components/Home/Sidebar/DeleteSubject";
-import Note from "@/components/Home/Sidebar/Note";
+import DeleteSubject from "@/components/Home/NotesMenu/DeleteSubject";
+import Note from "@/components/Home/NotesMenu/Note";
 
 import useNotes from "@/hooks/queries/useNotes";
-import useAuth from "@/hooks/auth/useAuth";
-
 
 import {Subject as SubjectType} from "@/types/Subject";
 import {Note as NoteType} from "@/types/Note";
@@ -32,9 +30,7 @@ interface Props {
 
 const Subject: React.FC<Props> = ({ subject, addNote, removeNote }) => {
 
-    const { user } = useAuth();
-
-    const { notes, loading } = useNotes(user?.uid || "a", subject.id);
+    const { notes, loading } = useNotes(subject.id);
 
     return (
         <AccordionItem>
@@ -74,14 +70,20 @@ const Subject: React.FC<Props> = ({ subject, addNote, removeNote }) => {
                                     align={'start'}
                                 >
                                     {
-                                        notes.map((note) => (
-                                            <Note
-                                                key={note.id}
-                                                note={note}
-                                                addNote={addNote}
-                                                removeNote={removeNote}
-                                            />
-                                        ))
+                                        notes.length > 0 ? (
+                                            notes.map((note) => (
+                                                <Note
+                                                    key={note.id}
+                                                    note={note}
+                                                    addNote={addNote}
+                                                    removeNote={removeNote}
+                                                />
+                                            ))
+                                        ) : (
+                                            <Text>
+                                                No notes found
+                                            </Text>
+                                        )
                                     }
                                 </VStack>
                             </CheckboxGroup>

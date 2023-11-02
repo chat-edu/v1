@@ -11,18 +11,17 @@ import {
     useDisclosure,
     Heading,
     HStack,
-    Skeleton,
-    Accordion,
     Box,
     IconButton, Button,
 } from '@chakra-ui/react'
 
-import AddSubject from "@/components/Home/Sidebar/AddSubject";
-import Subject from "@/components/Home/Sidebar/Subject";
-import useSubjects from "@/hooks/queries/useSubjects";
+import {BiNote} from "react-icons/bi";
+
+import AddSubject from "@/components/Home/NotesMenu/AddSubject";
+import SubjectsAccordion from "@/components/Home/NotesMenu/SubjectsAccordion";
 
 import {Note} from "@/types/Note";
-import {BiNote} from "react-icons/bi";
+
 
 interface Props {
     addNote: (note: Note) => void;
@@ -32,8 +31,6 @@ interface Props {
 const MobileSidebar: React.FC<Props> = ({ addNote, removeNote }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-
-    const { subjects, loading } = useSubjects();
 
     return (
         <>
@@ -69,29 +66,10 @@ const MobileSidebar: React.FC<Props> = ({ addNote, removeNote }) => {
                             flex={1}
                             w={'100%'}
                         >
-                            {
-                                loading ? (
-                                    <Skeleton />
-                                ) : (
-                                    <Accordion
-                                        allowToggle
-                                        allowMultiple
-                                        w={'100%'}
-                                        defaultIndex={subjects.map((_, index) => index)}
-                                    >
-                                        {
-                                            subjects.map((subject) => (
-                                                <Subject
-                                                    key={subject.id}
-                                                    subject={subject}
-                                                    addNote={addNote}
-                                                    removeNote={removeNote}
-                                                />
-                                            ))
-                                        }
-                                    </Accordion>
-                                )
-                            }
+                            <SubjectsAccordion
+                                addNote={addNote}
+                                removeNote={removeNote}
+                            />
                         </Box>
                     </DrawerBody>
                     <DrawerFooter>

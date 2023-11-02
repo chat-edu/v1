@@ -8,6 +8,8 @@ export const SUBJECTS_COLLECTION_SLUG = 'subjects';
 
 export const NOTES_COLLECTION_SLUG = 'notes';
 
+export const usersCollection = collection(firestore, USERS_COLLECTION_SLUG);
+
 export const subjectsCollection = (userId: string) =>
     collection(firestore, USERS_COLLECTION_SLUG, userId, SUBJECTS_COLLECTION_SLUG);
 
