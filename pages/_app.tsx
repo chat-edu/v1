@@ -2,7 +2,6 @@ import { Analytics } from '@vercel/analytics/react';
 
 import { ChakraProvider } from '@chakra-ui/react'
 
-import '@fontsource/archivo-black'
 import '@fontsource-variable/archivo'
 
 import theme from "@/theme";

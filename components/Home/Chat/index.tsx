@@ -38,6 +38,10 @@ const Chat: React.FC<Props> = ({ notes }) => {
             w={'100%'}
             maxW={'6xl'}
             p={0}
+            h={{
+                base: `calc(100vh - ${navbarHeight + mobileHeaderHeight}px)`,
+                md: `calc(100vh - ${navbarHeight}px)`
+            }}
         >
             <Flex
                 p={{
@@ -47,12 +51,9 @@ const Chat: React.FC<Props> = ({ notes }) => {
                 flexDirection={'column'}
                 w={'100%'}
                 position={'relative'}
-                h={{
-                    base: `calc(100vh - ${navbarHeight + mobileHeaderHeight}px)`,
-                    md: `calc(100vh - ${navbarHeight}px)`
-                }}
                 overflow={'auto'}
                 ref={setMessageBottomRef}
+                h={'100%'}
             >
                 <Messages
                     messages={messages}
