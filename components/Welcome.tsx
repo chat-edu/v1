@@ -7,7 +7,6 @@ const Welcome = () => {
         <VStack
             gap={{
                 base: 2,
-                md: 4
             }}
         >
             <Image

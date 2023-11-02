@@ -1,7 +1,7 @@
 import { defineStyle, defineStyleConfig } from '@chakra-ui/react'
 
 const baseStyle = defineStyle({
-    borderWidth: '3px',
+    borderWidth: '2px',
     _dark: {
         borderColor: 'whiteAlpha.500',
     },
