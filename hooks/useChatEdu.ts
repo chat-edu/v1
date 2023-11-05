@@ -4,13 +4,13 @@ import {Message, nanoid} from "ai";
 import {useChat} from "ai/react";
 
 import chunkString from "@/lib/chunkString";
-import {multipleChoiceAnswerPrePrompt, multipleChoicePrePrompt, multipleChoicePrompt} from "@/lib/multipleChoice";
-import {textBasedAnswerPrompt, textBasedPrePrompt, textBasedPrompt} from "@/lib/textBased";
-import {answerCheckTag, incorrectTag} from "@/lib/answerCorrectness";
+import {multipleChoiceAnswerPrePrompt, multipleChoicePrePrompt, multipleChoicePrompt} from "@/prompts/multipleChoice";
+import {textBasedAnswerPrompt, textBasedPrePrompt, textBasedPrompt} from "@/prompts/textBased";
+import {answerCheckTag, incorrectTag} from "@/prompts/answerCorrectness";
 
 import {Note} from "@/types/Note";
-import {studyGuidePrePrompt, studyGuidePrompt} from "@/lib/studyGuide";
-import {hintPrePrompt, hintPrompt} from "@/lib/hints";
+import {studyGuidePrePrompt, studyGuidePrompt} from "@/prompts/studyGuide";
+import {hintPrePrompt, hintPrompt} from "@/prompts/hints";
 
 const MAX_LENGTH = 16385 * 3;
 
@@ -121,7 +121,6 @@ const useOpenAi = (notes: Note[]) => {
 
     const askMultipleChoiceQuestion = async () => {
         setPromptType(PromptTypes.MULTIPLE_CHOICE);
-        // setLoading(true);
         await promptWithContext(multipleChoicePrePrompt, multipleChoicePrompt);
     }
 

@@ -17,11 +17,11 @@ import TextMessage from "@/components/Home/Chat/Message/TextMessage";
 import QuestionCorrectness from "@/components/Home/Chat/Message/QuestionCorrectness";
 import ActionPrompt from "@/components/Home/Chat/Message/ActionPrompt";
 
-import {parseMultipleChoice, multipleChoiceQuestionTag, multipleChoicePromptTag} from "@/lib/multipleChoice";
-import {parseStudyGuide, studyGuideAnswerTag, studyGuidePromptTag} from "@/lib/studyGuide";
-import {parseTextBased, textBasedPromptTag, textBasedQuestionTag} from "@/lib/textBased";
-import {answerCheckTag, parseAnswerCorrectness} from "@/lib/answerCorrectness";
-import {hintTag} from "@/lib/hints";
+import {parseMultipleChoice, multipleChoiceQuestionTag, multipleChoicePromptTag} from "@/prompts/multipleChoice";
+import {parseStudyGuide, studyGuideAnswerTag, studyGuidePromptTag} from "@/prompts/studyGuide";
+import {parseTextBased, textBasedPromptTag, textBasedQuestionTag} from "@/prompts/textBased";
+import {answerCheckTag, parseAnswerCorrectness} from "@/prompts/answerCorrectness";
+import {hintPromptTag} from "@/prompts/hints";
 
 
 interface Props {
@@ -137,7 +137,7 @@ const getMessageComponent = (
                     correctness={parseAnswerCorrectness(message)}
                 />
             );
-        case hintTag:
+        case hintPromptTag:
             return (
                 <ActionPrompt
                     title={"Hint"}

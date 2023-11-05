@@ -1,6 +1,6 @@
 import {Message} from "ai";
 
-import {correctTag, incorrectTag, answerCheckTag, explanationTag} from "@/lib/answerCorrectness";
+import {correctTag, incorrectTag, answerCheckTag, explanationTag} from "@/prompts/answerCorrectness";
 
 import {TextBasedQuestion} from "@/types/TextBasedQuestion";
 

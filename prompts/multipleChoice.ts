@@ -1,18 +1,23 @@
 import {Message} from "ai";
 
-import {correctTag, incorrectTag, answerCheckTag, explanationTag} from "@/lib/answerCorrectness";
+import {correctTag, incorrectTag, answerCheckTag, explanationTag} from "@/prompts/answerCorrectness";
 
 import {MultipleChoiceQuestion} from "@/types/MultipleChoiceQuestion";
 
 export const multipleChoicePromptTag = 'Multiple Choice Prompt';
 export const multipleChoiceQuestionTag = 'Multiple Choice Question';
-export const multipleChoicePrePrompt = `Multiple choice questions must be in the following format:
+export const multipleChoicePrePrompt = `
+    Multiple choice questions should be challenging and force the user to demonstrate understanding of the topic. They SHOULD NOT simply be a definition or a fact. They should be a question that requires the user to think about the topic and apply their knowledge. Feel free to use examples of scenarios or practice examples to help the user understand the topic better.
+
+    Multiple choice questions must be in the following format:
+    
     ${multipleChoiceQuestionTag}: <question>?\n
     A) <answer 1>\n
     B) <answer 2>\n
     C) <answer 3>\n
     D) <answer 4>\n
-    Answer: <letter of correct answer>`
+    Answer: <letter of correct answer>
+`
 
 export const multipleChoicePrompt = `${multipleChoicePromptTag}: Please ask me a multiple choice question`;
 
