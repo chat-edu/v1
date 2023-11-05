@@ -9,12 +9,14 @@ import {
     HStack,
     useColorModeValue,
     Input,
-    CircularProgress, Box, Text
+    CircularProgress,
+    Box,
+    Text
 } from "@chakra-ui/react";
 
 import Actions from "@/components/Home/Chat/Actions";
 
-import {PromptTypes} from "@/hooks/useChatEdu";
+import { PromptTypes } from "@/prompts/Prompt";
 
 import {Note} from "@/types/Note";
 

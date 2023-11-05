@@ -2,7 +2,7 @@ import {Message} from "ai";
 
 import {correctTag, incorrectTag, answerCheckTag, explanationTag} from "@/prompts/answerCorrectness";
 
-import {TextBasedQuestion} from "@/types/TextBasedQuestion";
+import {TextBasedQuestion} from "@/types/prompts/TextBasedQuestion";
 
 export const textBasedPromptTag = 'Text-based Prompt';
 export const textBasedQuestionTag = 'Text-based Question';

@@ -1,6 +1,6 @@
 import {Message} from "ai";
 
-import {AnswerCorrectness, Correctness} from "@/types/AnswerCorrectness";
+import {AnswerCorrectness, Correctness} from "@/types/prompts/AnswerCorrectness";
 
 export const answerCheckTag = 'Question Correctness';
 
@@ -20,6 +20,7 @@ export const parseAnswerCorrectness = (message: Message): AnswerCorrectness => {
         explanation = temp[1];
     }
     return {
+        id: message.id,
         correct,
         explanation
     }

@@ -2,7 +2,7 @@ import {Message} from "ai";
 
 import {correctTag, incorrectTag, answerCheckTag, explanationTag} from "@/prompts/answerCorrectness";
 
-import {MultipleChoiceQuestion} from "@/types/MultipleChoiceQuestion";
+import {MultipleChoiceQuestion} from "@/types/prompts/MultipleChoiceQuestion";
 
 export const multipleChoicePromptTag = 'Multiple Choice Prompt';
 export const multipleChoiceQuestionTag = 'Multiple Choice Question';

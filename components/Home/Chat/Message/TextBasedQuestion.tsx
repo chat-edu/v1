@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Button, HStack, Text} from "@chakra-ui/react";
 
-import {TextBasedQuestion as TextBasedQuestionType} from "@/types/TextBasedQuestion";
+import {TextBasedQuestion as TextBasedQuestionType} from "@/types/prompts/TextBasedQuestion";
 
 interface Props {
     textBasedQuestion: TextBasedQuestionType,

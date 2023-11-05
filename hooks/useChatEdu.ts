@@ -4,22 +4,19 @@ import {Message, nanoid} from "ai";
 import {useChat} from "ai/react";
 
 import chunkString from "@/lib/chunkString";
-import {multipleChoiceAnswerPrePrompt, multipleChoicePrePrompt, multipleChoicePrompt} from "@/prompts/multipleChoice";
-import {textBasedAnswerPrompt, textBasedPrePrompt, textBasedPrompt} from "@/prompts/textBased";
+
 import {answerCheckTag, incorrectTag} from "@/prompts/answerCorrectness";
+import {Prompt, PromptTypes} from "@/prompts/Prompt";
+import {questionResponseTagSuffix} from "@/prompts/questions";
+import {MultipleChoicePrompt} from "@/prompts/MultipleChoicePrompt";
+import {AnswerCorrectnessPrompt} from "@/prompts/AnswerCorrectnessPrompt";
+import {TextBasedPrompt} from "@/prompts/TextBasedPrompt";
+import {HintPrompt} from "@/prompts/HintPrompt";
+import {StudyGuidePrompt} from "@/prompts/StudyGuidePrompt";
 
 import {Note} from "@/types/Note";
-import {studyGuidePrePrompt, studyGuidePrompt} from "@/prompts/studyGuide";
-import {hintPrePrompt, hintPrompt} from "@/prompts/hints";
 
 const MAX_LENGTH = 16385 * 3;
-
-export enum PromptTypes {
-    REGULAR,
-    MULTIPLE_CHOICE,
-    TEXT_BASED,
-    STUDY_GUIDE
-}
 
 const useOpenAi = (notes: Note[]) => {
 
@@ -33,7 +30,7 @@ const useOpenAi = (notes: Note[]) => {
 
     const onFinish =  (message: Message) => {
         // setLoading(false);
-        if(!currentQuestionId && message.content.includes('Question: ')) {
+        if(!currentQuestionId && message.content.includes(`${questionResponseTagSuffix}: `)) {
             setCurrentQuestionId(message.id);
         } else if(message.content.includes(answerCheckTag)) {
             setCorrectMapping({
@@ -103,50 +100,49 @@ const useOpenAi = (notes: Note[]) => {
         setPromptType(PromptTypes.REGULAR)
     }, [notes])
 
-    const promptWithContext = async (context: string, prompt: string) => {
+    const promptWithContext = async (prompt: Prompt<any>) => {
+        setPromptType(prompt.getPromptType());
         setMessages([
             ...messages,
             {
                 id: nanoid(),
-                content: context,
+                content: prompt.getPrePrompt(),
                 role: 'system',
             }
         ])
         await append({
             id: nanoid(),
-            content: prompt,
+            content: prompt.getPrompt(),
             role: 'user',
         });
     }
 
     const askMultipleChoiceQuestion = async () => {
-        setPromptType(PromptTypes.MULTIPLE_CHOICE);
-        await promptWithContext(multipleChoicePrePrompt, multipleChoicePrompt);
+        await promptWithContext(new MultipleChoicePrompt());
     }
 
     const answerMultipleChoiceQuestion = async (answer: string) => {
-        await promptWithContext(multipleChoiceAnswerPrePrompt, answer)
-        setPromptType(PromptTypes.REGULAR);
+        await promptWithContext(new AnswerCorrectnessPrompt(answer))
         setCurrentQuestionId(null);
     }
 
     const askFreeFormQuestion = async () => {
-        setPromptType(PromptTypes.TEXT_BASED);
-        await promptWithContext(textBasedPrePrompt, textBasedPrompt);
+        await promptWithContext(new TextBasedPrompt());
     }
 
     const askForHint = async () => {
-        await promptWithContext(hintPrePrompt, hintPrompt)
+        await promptWithContext(new HintPrompt())
+        setPromptType(PromptTypes.REGULAR)
     }
 
     const answerFreeFormQuestion = async (text: string) => {
-        await promptWithContext(textBasedAnswerPrompt, text)
-        setPromptType(PromptTypes.REGULAR);
+        await promptWithContext(new AnswerCorrectnessPrompt(text))
         setCurrentQuestionId(null);
     }
 
     const generateStudyGuide = async () => {
-        await promptWithContext(studyGuidePrePrompt, studyGuidePrompt)
+        await promptWithContext(new StudyGuidePrompt())
+        setPromptType(PromptTypes.REGULAR)
     }
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
