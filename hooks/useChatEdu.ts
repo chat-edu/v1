@@ -5,11 +5,10 @@ import {useChat} from "ai/react";
 
 import chunkString from "@/lib/chunkString";
 
-import {answerCheckTag, incorrectTag} from "@/prompts/answerCorrectness";
 import {Prompt, PromptTypes} from "@/prompts/Prompt";
 import {questionResponseTagSuffix} from "@/prompts/questions";
 import {MultipleChoicePrompt} from "@/prompts/MultipleChoicePrompt";
-import {AnswerCorrectnessPrompt} from "@/prompts/AnswerCorrectnessPrompt";
+import {AnswerCorrectnessPrompt, answerCorrectnessResponseTag, incorrectTag} from "@/prompts/AnswerCorrectnessPrompt";
 import {TextBasedPrompt} from "@/prompts/TextBasedPrompt";
 import {HintPrompt} from "@/prompts/HintPrompt";
 import {StudyGuidePrompt} from "@/prompts/StudyGuidePrompt";
@@ -29,10 +28,9 @@ const useOpenAi = (notes: Note[]) => {
     const [messageBottomRef, setMessageBottomRef] = useState<HTMLDivElement | null>(null);
 
     const onFinish =  (message: Message) => {
-        // setLoading(false);
         if(!currentQuestionId && message.content.includes(`${questionResponseTagSuffix}: `)) {
             setCurrentQuestionId(message.id);
-        } else if(message.content.includes(answerCheckTag)) {
+        } else if(message.content.includes(answerCorrectnessResponseTag)) {
             setCorrectMapping({
                 ...correctMapping,
                 [currentQuestionId || ""]: !message.content.includes(incorrectTag)

@@ -1,11 +1,14 @@
 import {Prompt, PromptTypes} from "@/prompts/Prompt";
 
-import {AnswerCorrectness} from "@/types/prompts/AnswerCorrectness";
-import {correctTag, explanationTag, incorrectTag} from "@/prompts/answerCorrectness";
+export const correctTag = 'Correct';
+export const incorrectTag = 'Incorrect';
+export const explanationTag = 'Explanation';
 
 export const answerCorrectnessResponseTag = 'Answer Correctness';
 const answerCorrectnessResponseDescription = 'Please respond by saying whether they are correct and explain why. Speak in the second person and only use the notes the user has provided.';
 const answerCorrectnessResponseFormatting = `<${correctTag}/${incorrectTag}>, ${explanationTag}: <reason>`;
+
+import {AnswerCorrectness} from "@/types/prompts/AnswerCorrectness";
 
 export const answerCorrectnessPromptTag = 'Answer Correctness Prompt';
 

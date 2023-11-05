@@ -17,12 +17,16 @@ import TextMessage from "@/components/Home/Chat/Message/TextMessage";
 import QuestionCorrectness from "@/components/Home/Chat/Message/QuestionCorrectness";
 import ActionPrompt from "@/components/Home/Chat/Message/ActionPrompt";
 
-import {parseMultipleChoice, multipleChoiceQuestionTag, multipleChoicePromptTag} from "@/prompts/multipleChoice";
-import {parseStudyGuide, studyGuideAnswerTag, studyGuidePromptTag} from "@/prompts/studyGuide";
-import {parseTextBased, textBasedPromptTag, textBasedQuestionTag} from "@/prompts/textBased";
-import {answerCheckTag, parseAnswerCorrectness} from "@/prompts/answerCorrectness";
-import {hintPromptTag} from "@/prompts/hints";
-
+import {
+    multipleChoiceResponseTag,
+    multipleChoicePromptTag,
+    studyGuideResponseTag,
+    studyGuidePromptTag,
+    textBasedResponseTag,
+    textBasedPromptTag,
+    answerCorrectnessResponseTag,
+    hintPromptTag
+} from "@/prompts/tags";
 
 interface Props {
     message: MessageInterface,
@@ -30,17 +34,6 @@ interface Props {
     askForHint: () => void,
     isCorrect?: boolean
 }
-
-// const getRoleColor = (role: string, colorMode: ColorMode) => {
-//     switch (role) {
-//         case 'user':
-//             return colorMode === 'light' ? 'brand.500' : 'brand.500';
-//         case 'assistant':
-//             return colorMode === 'light' ? 'blackAlpha.700' : 'whiteAlpha.700';
-//         default:
-//             return 'gray.500';
-//     }
-// }
 
 const getRoleBgColor = (role: string, colorMode: ColorMode) => {
     switch (role) {
@@ -52,17 +45,6 @@ const getRoleBgColor = (role: string, colorMode: ColorMode) => {
             return 'gray.500';
     }
 }
-
-// const getRoleName = (role: string) => {
-//     switch (role) {
-//         case 'user':
-//             return 'You';
-//         case 'assistant':
-//             return 'Assistant';
-//         default:
-//             return 'Unknown';
-//     }
-// }
 
 const getRoleJustifyContent = (role: string) => {
     switch (role) {
@@ -108,13 +90,13 @@ const getMessageComponent = (
 ) => {
     const messageType = message.content.split(':')[0];
     switch (messageType) {
-        case studyGuideAnswerTag:
+        case studyGuideResponseTag:
             return (
                 <StudyGuide
                     studyGuide={parseStudyGuide(message)}
                 />
             );
-        case multipleChoiceQuestionTag:
+        case multipleChoiceResponseTag:
             return (
                 <MultipleChoiceQuestion
                     question={parseMultipleChoice(message)}
@@ -123,7 +105,7 @@ const getMessageComponent = (
                     answered={answered}
                 />
             );
-        case textBasedQuestionTag:
+        case textBasedResponseTag:
             return (
                 <TextBasedQuestion
                     textBasedQuestion={parseTextBased(message)}
@@ -131,7 +113,7 @@ const getMessageComponent = (
                     answered={answered}
                 />
             );
-        case answerCheckTag:
+        case answerCorrectnessResponseTag:
             return (
                 <QuestionCorrectness
                     correctness={parseAnswerCorrectness(message)}
