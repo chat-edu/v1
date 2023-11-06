@@ -1,21 +1,18 @@
-import {multipleChoiceResponseTag, multipleChoicePromptTag} from "@/prompts/MultipleChoicePrompt";
-import {textBasedResponseTag, textBasedPromptTag} from "@/prompts/TextBasedPrompt";
-import {answerCorrectnessResponseTag, answerCorrectnessPromptTag, correctTag, incorrectTag, explanationTag} from "@/prompts/AnswerCorrectnessPrompt";
-import {hintResponseTag, hintPromptTag} from "@/prompts/HintPrompt";
-import {studyGuideResponseTag, studyGuidePromptTag} from "@/prompts/StudyGuidePrompt";
+export const questionResponseTagSuffix = 'Question';
+export const promptTagSuffix = 'Prompt';
 
-export {
-    multipleChoiceResponseTag,
-    multipleChoicePromptTag,
-    textBasedResponseTag,
-    textBasedPromptTag,
-    answerCorrectnessResponseTag,
-    answerCorrectnessPromptTag,
-    correctTag,
-    incorrectTag,
-    explanationTag,
-    hintResponseTag,
-    hintPromptTag,
-    studyGuideResponseTag,
-    studyGuidePromptTag
+export enum ResponseTags {
+    MULTIPLE_CHOICE = `Multiple Choice ${questionResponseTagSuffix}`,
+    TEXT_BASED = `Text Based ${questionResponseTagSuffix}`,
+    ANSWER_CORRECTNESS = `Answer Correctness`,
+    HINT = `Hint`,
+    STUDY_GUIDE = `Study Guide`
+}
+
+export enum PromptTags {
+    MULTIPLE_CHOICE = `Multiple Choice ${promptTagSuffix}`,
+    TEXT_BASED = `Text Based ${promptTagSuffix}`,
+    ANSWER_CORRECTNESS = `Answer Correctness ${promptTagSuffix}`,
+    HINT = `Hint ${promptTagSuffix}`,
+    STUDY_GUIDE = `Study Guide ${promptTagSuffix}`
 }

@@ -17,16 +17,8 @@ import TextMessage from "@/components/Home/Chat/Message/TextMessage";
 import QuestionCorrectness from "@/components/Home/Chat/Message/QuestionCorrectness";
 import ActionPrompt from "@/components/Home/Chat/Message/ActionPrompt";
 
-import {
-    multipleChoiceResponseTag,
-    multipleChoicePromptTag,
-    studyGuideResponseTag,
-    studyGuidePromptTag,
-    textBasedResponseTag,
-    textBasedPromptTag,
-    answerCorrectnessResponseTag,
-    hintPromptTag
-} from "@/prompts/tags";
+import { ResponseTags, PromptTags } from "@/prompts/tags";
+import * as parsers from "@/prompts/parsers";
 
 interface Props {
     message: MessageInterface,
@@ -90,57 +82,57 @@ const getMessageComponent = (
 ) => {
     const messageType = message.content.split(':')[0];
     switch (messageType) {
-        case studyGuideResponseTag:
+        case ResponseTags.STUDY_GUIDE:
             return (
                 <StudyGuide
-                    studyGuide={parseStudyGuide(message)}
+                    studyGuide={parsers.parseStudyGuide(message)}
                 />
             );
-        case multipleChoiceResponseTag:
+        case ResponseTags.MULTIPLE_CHOICE:
             return (
                 <MultipleChoiceQuestion
-                    question={parseMultipleChoice(message)}
+                    question={parsers.parseMultipleChoice(message)}
                     onAnswer={onMultpleChoiceAnswer}
                     askForHint={askForHint}
                     answered={answered}
                 />
             );
-        case textBasedResponseTag:
+        case ResponseTags.TEXT_BASED:
             return (
                 <TextBasedQuestion
-                    textBasedQuestion={parseTextBased(message)}
+                    textBasedQuestion={parsers.parseTextBased(message)}
                     askForHint={askForHint}
                     answered={answered}
                 />
             );
-        case answerCorrectnessResponseTag:
+        case ResponseTags.ANSWER_CORRECTNESS:
             return (
                 <QuestionCorrectness
-                    correctness={parseAnswerCorrectness(message)}
+                    correctness={parsers.parseAnswerCorrectness(message)}
                 />
             );
-        case hintPromptTag:
+        case ResponseTags.HINT:
             return (
                 <ActionPrompt
                     title={"Hint"}
                     icon={BsFillLightbulbFill}
                 />
             );
-        case multipleChoicePromptTag:
+        case PromptTags.MULTIPLE_CHOICE:
             return (
                 <ActionPrompt
                     title={"Multiple Choice Question"}
                     icon={SlOptionsVertical}
                 />
             );
-        case studyGuidePromptTag:
+        case PromptTags.STUDY_GUIDE:
             return (
                 <ActionPrompt
                     title={"Study Guide"}
                     icon={FaLeaf}
                 />
             );
-        case textBasedPromptTag:
+        case PromptTags.TEXT_BASED:
             return (
                 <ActionPrompt
                     title={"Free-From Question"}

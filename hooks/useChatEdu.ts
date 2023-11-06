@@ -5,15 +5,21 @@ import {useChat} from "ai/react";
 
 import chunkString from "@/lib/chunkString";
 
-import {Prompt, PromptTypes} from "@/prompts/Prompt";
-import {questionResponseTagSuffix} from "@/prompts/questions";
-import {MultipleChoicePrompt} from "@/prompts/MultipleChoicePrompt";
-import {AnswerCorrectnessPrompt, answerCorrectnessResponseTag, incorrectTag} from "@/prompts/AnswerCorrectnessPrompt";
-import {TextBasedPrompt} from "@/prompts/TextBasedPrompt";
-import {HintPrompt} from "@/prompts/HintPrompt";
-import {StudyGuidePrompt} from "@/prompts/StudyGuidePrompt";
+import {
+    multipleChoicePrompt,
+    answerCorrectnessPrompt,
+    textBasedPrompt,
+    studyGuidePrompt,
+    hintPrompt,
+} from "@/prompts/prompts";
+import {answerCorrectnessResponseTag, incorrectTag} from "@/prompts/answerCorrectness";
+
+import {Prompt, PromptTypes} from "@/types/prompts/Prompt";
+
 
 import {Note} from "@/types/Note";
+import {getPrePrompt, getPrompt} from "@/prompts";
+import {questionResponseTagSuffix} from "@/prompts/tags";
 
 const MAX_LENGTH = 16385 * 3;
 
@@ -98,48 +104,48 @@ const useOpenAi = (notes: Note[]) => {
         setPromptType(PromptTypes.REGULAR)
     }, [notes])
 
-    const promptWithContext = async (prompt: Prompt<any>) => {
-        setPromptType(prompt.getPromptType());
+    const promptWithContext = async (prompt: Prompt) => {
+        setPromptType(prompt.promptType);
         setMessages([
             ...messages,
             {
                 id: nanoid(),
-                content: prompt.getPrePrompt(),
+                content: getPrePrompt(prompt),
                 role: 'system',
             }
         ])
         await append({
             id: nanoid(),
-            content: prompt.getPrompt(),
+            content: getPrompt(prompt),
             role: 'user',
         });
     }
 
     const askMultipleChoiceQuestion = async () => {
-        await promptWithContext(new MultipleChoicePrompt());
+        await promptWithContext(multipleChoicePrompt);
     }
 
     const answerMultipleChoiceQuestion = async (answer: string) => {
-        await promptWithContext(new AnswerCorrectnessPrompt(answer))
+        await promptWithContext(answerCorrectnessPrompt(answer))
         setCurrentQuestionId(null);
     }
 
     const askFreeFormQuestion = async () => {
-        await promptWithContext(new TextBasedPrompt());
+        await promptWithContext(textBasedPrompt);
     }
 
     const askForHint = async () => {
-        await promptWithContext(new HintPrompt())
+        await promptWithContext(hintPrompt)
         setPromptType(PromptTypes.REGULAR)
     }
 
     const answerFreeFormQuestion = async (text: string) => {
-        await promptWithContext(new AnswerCorrectnessPrompt(text))
+        await promptWithContext(answerCorrectnessPrompt(text));
         setCurrentQuestionId(null);
     }
 
     const generateStudyGuide = async () => {
-        await promptWithContext(new StudyGuidePrompt())
+        await promptWithContext(studyGuidePrompt)
         setPromptType(PromptTypes.REGULAR)
     }
 

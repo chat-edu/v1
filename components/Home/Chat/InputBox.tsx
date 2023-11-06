@@ -16,7 +16,7 @@ import {
 
 import Actions from "@/components/Home/Chat/Actions";
 
-import { PromptTypes } from "@/prompts/Prompt";
+import { PromptTypes } from "@/types/prompts/Prompt";
 
 import {Note} from "@/types/Note";
 
