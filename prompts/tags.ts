@@ -3,7 +3,8 @@ export const promptTagSuffix = 'Prompt';
 
 export enum ResponseTags {
     MULTIPLE_CHOICE = `Multiple Choice ${questionResponseTagSuffix}`,
-    TEXT_BASED = `Text Based ${questionResponseTagSuffix}`,
+    UNDERSTANDING = `Understanding ${questionResponseTagSuffix}`,
+    APPLICATION = `Application ${questionResponseTagSuffix}`,
     ANSWER_CORRECTNESS = `Answer Correctness`,
     HINT = `Hint`,
     STUDY_GUIDE = `Study Guide`
@@ -11,7 +12,8 @@ export enum ResponseTags {
 
 export enum PromptTags {
     MULTIPLE_CHOICE = `Multiple Choice ${promptTagSuffix}`,
-    TEXT_BASED = `Text Based ${promptTagSuffix}`,
+    UNDERSTANDING = `Understanding ${promptTagSuffix}`,
+    APPLICATION = `Application ${promptTagSuffix}`,
     ANSWER_CORRECTNESS = `Answer Correctness ${promptTagSuffix}`,
     HINT = `Hint ${promptTagSuffix}`,
     STUDY_GUIDE = `Study Guide ${promptTagSuffix}`

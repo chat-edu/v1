@@ -9,7 +9,7 @@ export enum PromptTypes {
     HINT,
 }
 
-export interface Prompt<ResponseType extends PromptResponse> {
+export interface Command<ResponseType extends PromptResponse> {
     responseTag: ResponseTags;
     responseDescription: string;
     responseFormatting: string;

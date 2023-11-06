@@ -22,10 +22,11 @@ import {
     ResponseTags,
     PromptTags,
     parseResponse,
-    studyGuidePrompt,
-    hintPrompt,
-    multipleChoicePrompt,
-    textBasedPrompt,
+    studyGuideCommand,
+    hintCommand,
+    multipleChoiceCommand,
+    understandingQuestionCommand,
+    applicationQuestionCommand,
     answerCorrectnessDefaults
 } from "@/prompts";
 
@@ -94,22 +95,30 @@ const getMessageComponent = (
         case ResponseTags.STUDY_GUIDE:
             return (
                 <StudyGuide
-                    studyGuide={parseResponse(studyGuidePrompt, message)}
+                    studyGuide={parseResponse(studyGuideCommand, message)}
                 />
             );
         case ResponseTags.MULTIPLE_CHOICE:
             return (
                 <MultipleChoiceQuestion
-                    question={parseResponse(multipleChoicePrompt, message)}
+                    question={parseResponse(multipleChoiceCommand, message)}
                     onAnswer={onMultpleChoiceAnswer}
                     askForHint={askForHint}
                     answered={answered}
                 />
             );
-        case ResponseTags.TEXT_BASED:
+        case ResponseTags.UNDERSTANDING:
             return (
                 <TextBasedQuestion
-                    textBasedQuestion={parseResponse(textBasedPrompt, message)}
+                    textBasedQuestion={parseResponse(understandingQuestionCommand, message)}
+                    askForHint={askForHint}
+                    answered={answered}
+                />
+            );
+        case ResponseTags.APPLICATION:
+            return (
+                <TextBasedQuestion
+                    textBasedQuestion={parseResponse(applicationQuestionCommand, message)}
                     askForHint={askForHint}
                     answered={answered}
                 />
@@ -123,7 +132,7 @@ const getMessageComponent = (
         case ResponseTags.HINT:
             return (
                 <Hint
-                    hint={parseResponse(hintPrompt, message)}
+                    hint={parseResponse(hintCommand, message)}
                 />
             );
         case PromptTags.HINT:
@@ -147,10 +156,17 @@ const getMessageComponent = (
                     icon={FaLeaf}
                 />
             );
-        case PromptTags.TEXT_BASED:
+        case PromptTags.UNDERSTANDING:
             return (
                 <ActionPrompt
-                    title={"Free-From Question"}
+                    title={"Understanding Question"}
+                    icon={MdQuestionAnswer}
+                />
+            );
+        case PromptTags.APPLICATION:
+            return (
+                <ActionPrompt
+                    title={"Application Question"}
                     icon={MdQuestionAnswer}
                 />
             );

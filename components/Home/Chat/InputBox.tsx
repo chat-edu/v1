@@ -16,25 +16,27 @@ import {
 
 import Actions from "@/components/Home/Chat/Actions";
 
-import {PromptTypes} from "@/types/prompts/Prompt";
+import {PromptTypes} from "@/types/prompts/Command";
 
 import {Note} from "@/types/Note";
 
 interface Props {
     value: string,
+    isLoading: boolean,
     handleChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>,
 
     handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
     notes: Note[],
     askMultipleChoice: () => Promise<void>;
-    askFreeForm: () => Promise<void>;
+    askUnderstanding: () => Promise<void>;
+    askApplication: () => Promise<void>;
     generateStudyGuide: () => Promise<void>;
     promptType: PromptTypes
     showMessage: boolean;
     correctAnswers: { [key: string]: boolean };
 }
 
-const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMultipleChoice, askFreeForm, generateStudyGuide, promptType, showMessage, correctAnswers }) => {
+const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmit, askMultipleChoice, askUnderstanding, askApplication, generateStudyGuide, promptType, showMessage, correctAnswers }) => {
 
     const inputBoxColor = useColorModeValue("white", "#2D2D2D")
 
@@ -52,9 +54,10 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
         >
             <Actions
                 askMultipleChoice={askMultipleChoice}
-                askFreeForm={askFreeForm}
+                askUnderstanding={askUnderstanding}
+                askApplication={askApplication}
                 generateStudyGuide={generateStudyGuide}
-                disabled={promptType === PromptTypes.TEXT_BASED || promptType === PromptTypes.MULTIPLE_CHOICE || promptType === PromptTypes.HINT}
+                disabled={promptType === PromptTypes.TEXT_BASED || promptType === PromptTypes.MULTIPLE_CHOICE || promptType === PromptTypes.HINT || isLoading}
                 showMessage={showMessage}
             />
             <Card
@@ -101,7 +104,6 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                                 </Box>
                             )
                         }
-
                         <FormControl
                             flex={1}
                         >
@@ -113,14 +115,14 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                                 onChange={handleChange}
                                 focusBorderColor={'brand.500'}
                                 flex={1}
-                                isDisabled={promptType === PromptTypes.MULTIPLE_CHOICE}
+                                isDisabled={promptType === PromptTypes.MULTIPLE_CHOICE || isLoading}
                             />
                         </FormControl>
                         <Button
                             type={'submit'}
                             colorScheme={'brand'}
                             flexShrink={0}
-                            isDisabled={promptType === PromptTypes.MULTIPLE_CHOICE}
+                            isDisabled={promptType === PromptTypes.MULTIPLE_CHOICE || isLoading}
                         >
                             Send
                         </Button>

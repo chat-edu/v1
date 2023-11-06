@@ -23,10 +23,12 @@ const Chat: React.FC<Props> = ({ notes }) => {
         messages,
         promptType,
         correctMapping,
+        isLoading,
         handleInputChange,
         onSubmit,
         askMultipleChoiceQuestion,
-        askFreeFormQuestion,
+        askUnderstandingQuestion,
+        askApplicationQuestion,
         generateStudyGuide,
         answerMultipleChoiceQuestion,
         askForHint,
@@ -60,14 +62,17 @@ const Chat: React.FC<Props> = ({ notes }) => {
                     onMultipleChoiceAnswer={answerMultipleChoiceQuestion}
                     askForHint={askForHint}
                     correctAnswers={correctMapping}
+                    isLoading={isLoading}
                 />
                 <InputBox
                     notes={notes}
                     value={input}
+                    isLoading={isLoading}
                     handleChange={handleInputChange}
                     handleSubmit={onSubmit}
                     askMultipleChoice={askMultipleChoiceQuestion}
-                    askFreeForm={askFreeFormQuestion}
+                    askUnderstanding={askUnderstandingQuestion}
+                    askApplication={askApplicationQuestion}
                     generateStudyGuide={generateStudyGuide}
                     promptType={promptType}
                     showMessage={messages.length === 0}

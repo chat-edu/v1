@@ -1,9 +1,9 @@
 import {PromptTags, ResponseTags} from "@/prompts/tags";
 
-import {Prompt, PromptTypes} from "@/types/prompts/Prompt";
+import {Command, PromptTypes} from "@/types/prompts/Command";
 import {MultipleChoiceQuestion} from "@/types/prompts/MultipleChoiceQuestion";
 
-const multipleChoiceResponseDescription = 'Multiple choice questions should be challenging and force the user to demonstrate understanding of the topic. They SHOULD NOT simply be a definition or a fact. They should be a question that requires the user to think about the topic and apply their knowledge. Feel free to use examples of scenarios or practice examples to help the user understand the topic better.'
+const multipleChoiceResponseDescription = 'Multiple choice questions should be challenging and force the user to demonstrate understanding of the topic. They SHOULD NOT simply be a definition or a fact. They should be a question that requires the user to think about the topic and apply their knowledge. Feel free to use examples of scenarios or practice examples to help the user understand the topic better. Ensure there are no ambiguities in the answers.'
 const multipleChoiceResponseFormatting = `
     <question>?
     A) <answer 1>
@@ -14,7 +14,7 @@ const multipleChoiceResponseFormatting = `
 `
 const multipleChoicePromptContent = 'Please ask me a multiple choice question';
 
-export const multipleChoicePrompt: Prompt<MultipleChoiceQuestion> = {
+export const multipleChoiceCommand: Command<MultipleChoiceQuestion> = {
     responseTag: ResponseTags.MULTIPLE_CHOICE,
     responseDescription: multipleChoiceResponseDescription,
     responseFormatting: multipleChoiceResponseFormatting,

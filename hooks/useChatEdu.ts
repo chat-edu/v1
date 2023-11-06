@@ -6,15 +6,16 @@ import {useChat} from "ai/react";
 import chunkString from "@/lib/chunkString";
 
 import {
-    answerCorrectnessPrompt,
-    hintPrompt,
-    multipleChoicePrompt,
-    studyGuidePrompt,
-    textBasedPrompt,
-} from "@/prompts/prompts";
-import {answerCorrectnessResponseTag, incorrectTag} from "@/prompts/answerCorrectness";
+    answerCorrectnessCommand,
+    hintCommand,
+    multipleChoiceCommand,
+    studyGuideCommand,
+    understandingQuestionCommand,
+    applicationQuestionCommand
+} from "@/prompts";
+import {answerCorrectnessResponseTag, incorrectTag} from "@/prompts/commands/answerCorrectness";
 
-import {Prompt, PromptTypes} from "@/types/prompts/Prompt";
+import {Command, PromptTypes} from "@/types/prompts/Command";
 
 
 import {Note} from "@/types/Note";
@@ -27,19 +28,19 @@ const useOpenAi = (notes: Note[]) => {
 
     const [promptType, setPromptType] = useState<PromptTypes>(PromptTypes.REGULAR);
 
-    const [currentQuestionId, setCurrentQuestionId] = useState<string | null>(null);
+    const [currentQuestion, setCurrentQuestion] = useState<Message | null>(null);
 
     const [correctMapping, setCorrectMapping] = useState<{[key: string]: boolean}>({});
 
     const [messageBottomRef, setMessageBottomRef] = useState<HTMLDivElement | null>(null);
 
     const onFinish =  (message: Message) => {
-        if(!currentQuestionId && message.content.includes(`${questionResponseTagSuffix}: `)) {
-            setCurrentQuestionId(message.id);
+        if(!currentQuestion && message.content.includes(`${questionResponseTagSuffix}: `)) {
+            setCurrentQuestion(message);
         } else if(message.content.includes(answerCorrectnessResponseTag)) {
             setCorrectMapping({
                 ...correctMapping,
-                [currentQuestionId || ""]: !message.content.includes(incorrectTag)
+                [currentQuestion?.id || ""]: !message.content.includes(incorrectTag)
             })
         }
         scrollToBottom();
@@ -61,6 +62,7 @@ const useOpenAi = (notes: Note[]) => {
         handleSubmit,
         setMessages,
         append,
+        isLoading
     } = useChat({
         api: '/api/chat',
         onFinish,
@@ -84,7 +86,7 @@ const useOpenAi = (notes: Note[]) => {
                 content: `
                     You are to act as a teacher helping a student learn content they have taken notes on. 
                     
-                    You can only respond with information that is within the notes include below. If they ask a question that is not in the notes, kindly tell them that you can only answer questions that are in the notes.
+                    You should limit the topics you describe to the notes the student has taken. In the case of application or understanding questions, you can create examples that are not included in the notes. It is encouraged to make problems that disguise the class of problem to which the student should apply the concept.
                     
                     You can use external information to describe concepts.
                     
@@ -99,12 +101,12 @@ const useOpenAi = (notes: Note[]) => {
             }))
         ])
 
-        setCurrentQuestionId(null);
+        setCurrentQuestion(null);
         setCorrectMapping({});
         setPromptType(PromptTypes.REGULAR)
     }, [notes])
 
-    const promptWithContext = async (prompt: Prompt<any>) => {
+    const promptWithContext = async (prompt: Command<any>) => {
         if(prompt.promptType !== PromptTypes.HINT) {
             setPromptType(prompt.promptType);
         }
@@ -124,29 +126,33 @@ const useOpenAi = (notes: Note[]) => {
     }
 
     const askMultipleChoiceQuestion = async () => {
-        await promptWithContext(multipleChoicePrompt);
+        await promptWithContext(multipleChoiceCommand);
     }
 
     const answerMultipleChoiceQuestion = async (answer: string) => {
-        await promptWithContext(answerCorrectnessPrompt(answer))
-        setCurrentQuestionId(null);
+        await promptWithContext(answerCorrectnessCommand(currentQuestion?.content || "", answer))
+        setCurrentQuestion(null);
     }
 
-    const askFreeFormQuestion = async () => {
-        await promptWithContext(textBasedPrompt);
+    const askApplicationQuestion = async () => {
+        await promptWithContext(applicationQuestionCommand);
+    }
+
+    const askUnderstandingQuestion = async () => {
+        await promptWithContext(understandingQuestionCommand);
     }
 
     const askForHint = async () => {
-        await promptWithContext(hintPrompt)
+        await promptWithContext(hintCommand)
     }
 
     const answerFreeFormQuestion = async (text: string) => {
-        await promptWithContext(answerCorrectnessPrompt(text));
-        setCurrentQuestionId(null);
+        await promptWithContext(answerCorrectnessCommand(currentQuestion?.content || "", text));
+        setCurrentQuestion(null);
     }
 
     const generateStudyGuide = async () => {
-        await promptWithContext(studyGuidePrompt)
+        await promptWithContext(studyGuideCommand)
         setPromptType(PromptTypes.REGULAR)
     }
 
@@ -165,10 +171,12 @@ const useOpenAi = (notes: Note[]) => {
         input,
         promptType,
         correctMapping,
+        isLoading,
         handleInputChange,
         onSubmit,
         askMultipleChoiceQuestion,
-        askFreeFormQuestion,
+        askUnderstandingQuestion,
+        askApplicationQuestion,
         generateStudyGuide,
         answerMultipleChoiceQuestion,
         askForHint,
