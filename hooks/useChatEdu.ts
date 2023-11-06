@@ -60,7 +60,7 @@ const useOpenAi = (notes: Note[]) => {
         handleInputChange,
         handleSubmit,
         setMessages,
-        append
+        append,
     } = useChat({
         api: '/api/chat',
         onFinish,

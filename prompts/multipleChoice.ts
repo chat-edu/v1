@@ -12,7 +12,6 @@ const multipleChoiceResponseFormatting = `
     D) <answer 4>
     Answer: <letter of correct answer>
 `
-
 const multipleChoicePromptContent = 'Please ask me a multiple choice question';
 
 export const multipleChoicePrompt: Prompt<MultipleChoiceQuestion> = {

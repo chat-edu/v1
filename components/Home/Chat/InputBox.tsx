@@ -9,8 +9,8 @@ import {
     FormControl,
     FormLabel,
     HStack,
-    Input,
     Text,
+    Textarea,
     useColorModeValue
 } from "@chakra-ui/react";
 
@@ -22,7 +22,8 @@ import {Note} from "@/types/Note";
 
 interface Props {
     value: string,
-    handleChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+    handleChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>,
+
     handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
     notes: Note[],
     askMultipleChoice: () => Promise<void>;
@@ -65,6 +66,12 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                     style={{
                         width: '100%'
                     }}
+                    onKeyDown={(event) => {
+                        if (event.key === 'Enter' && !event.shiftKey) {
+                            event.preventDefault();
+                            handleSubmit(event);
+                        }
+                    }}
                 >
                     <HStack
                         align={'flex-end'}
@@ -101,7 +108,7 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                             <FormLabel>
                                 {promptType === PromptTypes.TEXT_BASED ? 'Answer' : 'Ask ChatEDU'}
                             </FormLabel>
-                            <Input
+                            <Textarea
                                 value={value}
                                 onChange={handleChange}
                                 focusBorderColor={'brand.500'}
