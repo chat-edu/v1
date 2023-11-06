@@ -16,9 +16,18 @@ import TextBasedQuestion from "@/components/Home/Chat/Message/TextBasedQuestion"
 import TextMessage from "@/components/Home/Chat/Message/TextMessage";
 import QuestionCorrectness from "@/components/Home/Chat/Message/QuestionCorrectness";
 import ActionPrompt from "@/components/Home/Chat/Message/ActionPrompt";
+import Hint from "@/components/Home/Chat/Message/Hint";
 
-import { ResponseTags, PromptTags } from "@/prompts/tags";
-import * as parsers from "@/prompts/parsers";
+import {
+    ResponseTags,
+    PromptTags,
+    parseResponse,
+    studyGuidePrompt,
+    hintPrompt,
+    multipleChoicePrompt,
+    textBasedPrompt,
+    answerCorrectnessDefaults
+} from "@/prompts";
 
 interface Props {
     message: MessageInterface,
@@ -85,13 +94,13 @@ const getMessageComponent = (
         case ResponseTags.STUDY_GUIDE:
             return (
                 <StudyGuide
-                    studyGuide={parsers.parseStudyGuide(message)}
+                    studyGuide={parseResponse(studyGuidePrompt, message)}
                 />
             );
         case ResponseTags.MULTIPLE_CHOICE:
             return (
                 <MultipleChoiceQuestion
-                    question={parsers.parseMultipleChoice(message)}
+                    question={parseResponse(multipleChoicePrompt, message)}
                     onAnswer={onMultpleChoiceAnswer}
                     askForHint={askForHint}
                     answered={answered}
@@ -100,7 +109,7 @@ const getMessageComponent = (
         case ResponseTags.TEXT_BASED:
             return (
                 <TextBasedQuestion
-                    textBasedQuestion={parsers.parseTextBased(message)}
+                    textBasedQuestion={parseResponse(textBasedPrompt, message)}
                     askForHint={askForHint}
                     answered={answered}
                 />
@@ -108,10 +117,16 @@ const getMessageComponent = (
         case ResponseTags.ANSWER_CORRECTNESS:
             return (
                 <QuestionCorrectness
-                    correctness={parsers.parseAnswerCorrectness(message)}
+                    correctness={parseResponse(answerCorrectnessDefaults, message)}
                 />
             );
         case ResponseTags.HINT:
+            return (
+                <Hint
+                    hint={parseResponse(hintPrompt, message)}
+                />
+            );
+        case PromptTags.HINT:
             return (
                 <ActionPrompt
                     title={"Hint"}

@@ -8,18 +8,17 @@ export const studyGuideResponseFormatting = '<content>';
 
 export const studyGuidePromptContent = `Please make me a study guide`;
 
-export const studyGuidePrompt: Prompt = {
+export const studyGuidePrompt: Prompt<StudyGuide> = {
     responseTag: ResponseTags.STUDY_GUIDE,
     responseDescription: studyGuideResponseDescription,
     responseFormatting: studyGuideResponseFormatting,
     promptTag: PromptTags.STUDY_GUIDE,
     promptContent: studyGuidePromptContent,
-    promptType: PromptTypes.STUDY_GUIDE
-}
-
-export const parseStudyGuideContent = (content: string, id: string): StudyGuide => {
-    return {
-        id,
-        content
+    promptType: PromptTypes.STUDY_GUIDE,
+    parseResponse: (content: string, id: string): StudyGuide => {
+        return {
+            id,
+            content
+        }
     }
 }

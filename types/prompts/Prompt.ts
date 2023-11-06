@@ -1,4 +1,5 @@
 import {PromptTags, ResponseTags} from "@/prompts/tags";
+import {PromptResponse} from "@/types/prompts/PromptResponse";
 
 export enum PromptTypes {
     REGULAR,
@@ -8,11 +9,12 @@ export enum PromptTypes {
     HINT,
 }
 
-export interface Prompt {
+export interface Prompt<ResponseType extends PromptResponse> {
     responseTag: ResponseTags;
     responseDescription: string;
     responseFormatting: string;
     promptTag: PromptTags;
     promptContent: string;
     promptType: PromptTypes;
+    parseResponse: (content: string, id: string) => ResponseType
 }

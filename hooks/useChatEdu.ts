@@ -1,4 +1,4 @@
-import {useEffect, useState, FormEvent} from "react";
+import {FormEvent, useEffect, useState} from "react";
 
 import {Message, nanoid} from "ai";
 import {useChat} from "ai/react";
@@ -6,11 +6,11 @@ import {useChat} from "ai/react";
 import chunkString from "@/lib/chunkString";
 
 import {
-    multipleChoicePrompt,
     answerCorrectnessPrompt,
-    textBasedPrompt,
-    studyGuidePrompt,
     hintPrompt,
+    multipleChoicePrompt,
+    studyGuidePrompt,
+    textBasedPrompt,
 } from "@/prompts/prompts";
 import {answerCorrectnessResponseTag, incorrectTag} from "@/prompts/answerCorrectness";
 
@@ -104,8 +104,10 @@ const useOpenAi = (notes: Note[]) => {
         setPromptType(PromptTypes.REGULAR)
     }, [notes])
 
-    const promptWithContext = async (prompt: Prompt) => {
-        setPromptType(prompt.promptType);
+    const promptWithContext = async (prompt: Prompt<any>) => {
+        if(prompt.promptType !== PromptTypes.HINT) {
+            setPromptType(prompt.promptType);
+        }
         setMessages([
             ...messages,
             {
@@ -136,7 +138,6 @@ const useOpenAi = (notes: Note[]) => {
 
     const askForHint = async () => {
         await promptWithContext(hintPrompt)
-        setPromptType(PromptTypes.REGULAR)
     }
 
     const answerFreeFormQuestion = async (text: string) => {

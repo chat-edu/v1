@@ -1,22 +1,22 @@
 import React, {ChangeEventHandler} from 'react';
 
 import {
+    Box,
     Button,
     Card,
+    CircularProgress,
     Flex,
     FormControl,
     FormLabel,
     HStack,
-    useColorModeValue,
     Input,
-    CircularProgress,
-    Box,
-    Text
+    Text,
+    useColorModeValue
 } from "@chakra-ui/react";
 
 import Actions from "@/components/Home/Chat/Actions";
 
-import { PromptTypes } from "@/types/prompts/Prompt";
+import {PromptTypes} from "@/types/prompts/Prompt";
 
 import {Note} from "@/types/Note";
 
@@ -53,7 +53,7 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                 askMultipleChoice={askMultipleChoice}
                 askFreeForm={askFreeForm}
                 generateStudyGuide={generateStudyGuide}
-                disabled={promptType === PromptTypes.TEXT_BASED || promptType === PromptTypes.MULTIPLE_CHOICE}
+                disabled={promptType === PromptTypes.TEXT_BASED || promptType === PromptTypes.MULTIPLE_CHOICE || promptType === PromptTypes.HINT}
                 showMessage={showMessage}
             />
             <Card
@@ -89,7 +89,7 @@ const InputBox: React.FC<Props> = ({ value, handleChange, handleSubmit, askMulti
                                         fontSize={'xs'}
                                         fontWeight={'bold'}
                                     >
-                                        {Object.values(correctAnswers).filter(Boolean).length} / {Object.keys(correctAnswers).length}
+                                        {Math.ceil(Object.values(correctAnswers).filter(Boolean).length / Object.keys(correctAnswers).length * 100)}%
                                     </Text>
                                 </Box>
                             )

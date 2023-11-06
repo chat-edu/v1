@@ -15,28 +15,27 @@ const multipleChoiceResponseFormatting = `
 
 const multipleChoicePromptContent = 'Please ask me a multiple choice question';
 
-export const multipleChoicePrompt: Prompt = {
+export const multipleChoicePrompt: Prompt<MultipleChoiceQuestion> = {
     responseTag: ResponseTags.MULTIPLE_CHOICE,
     responseDescription: multipleChoiceResponseDescription,
     responseFormatting: multipleChoiceResponseFormatting,
     promptTag: PromptTags.MULTIPLE_CHOICE,
     promptContent: multipleChoicePromptContent,
-    promptType: PromptTypes.MULTIPLE_CHOICE
-}
-
-export const parseMultipleChoiceContent = (content: string, id: string): MultipleChoiceQuestion => {
-    if(content == undefined || content.length == 0 ) return {
-        id,
-        question: '',
-        options: [],
-        answerIndex: -1
-    };
-    const lines = content.split('\n');
-    return {
-        id,
-        question: lines?.length > 0 ? lines[0] : '',
-        options: lines.slice(1, lines.length - 1).filter((option) => option !== '' && option !== ' '),
-        answerIndex: letterToIndex(content.split('Answer: ')[1]?.substring(0, 1))
+    promptType: PromptTypes.MULTIPLE_CHOICE,
+    parseResponse: (content: string, id: string): MultipleChoiceQuestion => {
+        if(content == undefined || content.length == 0 ) return {
+            id,
+            question: '',
+            options: [],
+            answerIndex: -1
+        };
+        const lines = content.split('\n').filter(Boolean);
+        return {
+            id,
+            question: lines?.length > 0 ? lines[0] : '',
+            options: lines.slice(1, lines.length - 1).filter((option) => option !== '' && option !== ' '),
+            answerIndex: letterToIndex(content.split('Answer: ')[1]?.substring(0, 1))
+        }
     }
 }
 
