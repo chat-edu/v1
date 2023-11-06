@@ -80,8 +80,8 @@ const getMessageComponent = (
     askForHint: () => void,
     answered: boolean
 ) => {
-    const messageType = message.content.split(':')[0];
-    switch (messageType) {
+    const messageParts = message.content.split(':');
+    switch (messageParts[0]) {
         case ResponseTags.STUDY_GUIDE:
             return (
                 <StudyGuide
@@ -138,6 +138,10 @@ const getMessageComponent = (
                     title={"Free-From Question"}
                     icon={MdQuestionAnswer}
                 />
+            );
+        case PromptTags.ANSWER_CORRECTNESS:
+            return (
+                <TextMessage content={messageParts[1].trim()} />
             );
         default:
             return (

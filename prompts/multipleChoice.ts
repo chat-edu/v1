@@ -25,17 +25,16 @@ export const multipleChoicePrompt: Prompt = {
 }
 
 export const parseMultipleChoiceContent = (content: string, id: string): MultipleChoiceQuestion => {
-    if(content?.length == 0) return {
+    if(content == undefined || content.length == 0 ) return {
         id,
         question: '',
         options: [],
         answerIndex: -1
     };
     const lines = content.split('\n');
-    console.log(lines);
     return {
         id,
-        question: content?.length > 0 ? content[0] + '?' : '',
+        question: lines?.length > 0 ? lines[0] : '',
         options: lines.slice(1, lines.length - 1).filter((option) => option !== '' && option !== ' '),
         answerIndex: letterToIndex(content.split('Answer: ')[1]?.substring(0, 1))
     }
