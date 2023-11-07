@@ -10,13 +10,14 @@ import Action from "@/components/Home/Chat/Action";
 
 interface Props {
     askMultipleChoice: () => Promise<void>;
-    askFreeForm: () => Promise<void>;
+    askUnderstanding: () => Promise<void>;
+    askApplication: () => Promise<void>;
     generateStudyGuide: () => Promise<void>;
     disabled: boolean;
     showMessage: boolean;
 }
 
-const Actions: React.FC<Props> = ({ askMultipleChoice, askFreeForm, generateStudyGuide, disabled, showMessage }) => {
+const Actions: React.FC<Props> = ({ askMultipleChoice, askUnderstanding, askApplication, generateStudyGuide, disabled, showMessage }) => {
     return (
         <VStack>
             {
@@ -39,23 +40,26 @@ const Actions: React.FC<Props> = ({ askMultipleChoice, askFreeForm, generateStud
             >
                 <Action
                     label={"Study Guide"}
-                    description={"Generate a study guide based on your notes"}
                     icon={FaLeaf}
                     onClick={generateStudyGuide}
                     disabled={disabled}
                 />
                 <Action
                     label={"Multiple Choice"}
-                    description={"Test your knowledge with multiple choice questions"}
                     icon={SlOptionsVertical}
                     onClick={askMultipleChoice}
                     disabled={disabled}
                 />
                 <Action
-                    label={"Free-form Questions"}
-                    description={"Test your knowledge with free-form questions"}
+                    label={"Understanding Question"}
                     icon={MdQuestionAnswer}
-                    onClick={askFreeForm}
+                    onClick={askUnderstanding}
+                    disabled={disabled}
+                />
+                <Action
+                    label={"Application Questions"}
+                    icon={MdQuestionAnswer}
+                    onClick={askApplication}
                     disabled={disabled}
                 />
             </Stack>

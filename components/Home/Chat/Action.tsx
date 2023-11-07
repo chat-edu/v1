@@ -6,13 +6,12 @@ import {IconType} from "react-icons";
 
 interface Props {
     label: string,
-    description: string,
     icon: IconType
     onClick: () => void,
     disabled: boolean
 }
 
-const Action: React.FC<Props> = ({ label, description, icon, onClick, disabled }) => {
+const Action: React.FC<Props> = ({ label, icon, onClick, disabled }) => {
 
     const hoverColor = useColorModeValue('#cde6ce', '#30542c');
     const actionCardColor = useColorModeValue("white", "#2D2D2D");
@@ -60,13 +59,6 @@ const Action: React.FC<Props> = ({ label, description, icon, onClick, disabled }
                         fontWeight={'bold'}
                     >
                         {label}
-                    </Text>
-                    <Text
-                        fontSize={'sm'}
-                        opacity={0.7}
-                        display={{base: 'none', md: 'block'}}
-                    >
-                        {description}
                     </Text>
                 </VStack>
             </HStack>

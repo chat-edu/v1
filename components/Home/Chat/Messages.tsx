@@ -9,6 +9,7 @@ import Welcome from "@/components/Welcome";
 
 interface Props {
     messages: MessageInterface[],
+    isLoading: boolean,
     onMultipleChoiceAnswer: (answer: string) => void,
     askForHint: () => void,
     correctAnswers: { [key: string]: boolean }
@@ -38,7 +39,7 @@ const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHin
                 >
                     {
                         messages.length > 0 ? (
-                            messages.map(message => (
+                            messages.map((message) => (
                                 <Message
                                     key={message.id}
                                     message={message}

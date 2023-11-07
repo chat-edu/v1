@@ -16,13 +16,19 @@ import TextBasedQuestion from "@/components/Home/Chat/Message/TextBasedQuestion"
 import TextMessage from "@/components/Home/Chat/Message/TextMessage";
 import QuestionCorrectness from "@/components/Home/Chat/Message/QuestionCorrectness";
 import ActionPrompt from "@/components/Home/Chat/Message/ActionPrompt";
+import Hint from "@/components/Home/Chat/Message/Hint";
 
-import {parseMultipleChoice, multipleChoiceQuestionTag, multipleChoicePromptTag} from "@/lib/multipleChoice";
-import {parseStudyGuide, studyGuideAnswerTag, studyGuidePromptTag} from "@/lib/studyGuide";
-import {parseTextBased, textBasedPromptTag, textBasedQuestionTag} from "@/lib/textBased";
-import {answerCheckTag, parseAnswerCorrectness} from "@/lib/answerCorrectness";
-import {hintTag} from "@/lib/hints";
-
+import {
+    ResponseTags,
+    PromptTags,
+    parseResponse,
+    studyGuideCommand,
+    hintCommand,
+    multipleChoiceCommand,
+    understandingQuestionCommand,
+    applicationQuestionCommand,
+    answerCorrectnessDefaults
+} from "@/prompts";
 
 interface Props {
     message: MessageInterface,
@@ -30,17 +36,6 @@ interface Props {
     askForHint: () => void,
     isCorrect?: boolean
 }
-
-// const getRoleColor = (role: string, colorMode: ColorMode) => {
-//     switch (role) {
-//         case 'user':
-//             return colorMode === 'light' ? 'brand.500' : 'brand.500';
-//         case 'assistant':
-//             return colorMode === 'light' ? 'blackAlpha.700' : 'whiteAlpha.700';
-//         default:
-//             return 'gray.500';
-//     }
-// }
 
 const getRoleBgColor = (role: string, colorMode: ColorMode) => {
     switch (role) {
@@ -52,17 +47,6 @@ const getRoleBgColor = (role: string, colorMode: ColorMode) => {
             return 'gray.500';
     }
 }
-
-// const getRoleName = (role: string) => {
-//     switch (role) {
-//         case 'user':
-//             return 'You';
-//         case 'assistant':
-//             return 'Assistant';
-//         default:
-//             return 'Unknown';
-//     }
-// }
 
 const getRoleJustifyContent = (role: string) => {
     switch (role) {
@@ -106,64 +90,89 @@ const getMessageComponent = (
     askForHint: () => void,
     answered: boolean
 ) => {
-    const messageType = message.content.split(':')[0];
-    switch (messageType) {
-        case studyGuideAnswerTag:
+    const messageParts = message.content.split(':');
+    switch (messageParts[0]) {
+        case ResponseTags.STUDY_GUIDE:
             return (
                 <StudyGuide
-                    studyGuide={parseStudyGuide(message)}
+                    studyGuide={parseResponse(studyGuideCommand, message)}
                 />
             );
-        case multipleChoiceQuestionTag:
+        case ResponseTags.MULTIPLE_CHOICE:
             return (
                 <MultipleChoiceQuestion
-                    question={parseMultipleChoice(message)}
+                    question={parseResponse(multipleChoiceCommand, message)}
                     onAnswer={onMultpleChoiceAnswer}
                     askForHint={askForHint}
                     answered={answered}
                 />
             );
-        case textBasedQuestionTag:
+        case ResponseTags.UNDERSTANDING:
             return (
                 <TextBasedQuestion
-                    textBasedQuestion={parseTextBased(message)}
+                    textBasedQuestion={parseResponse(understandingQuestionCommand, message)}
                     askForHint={askForHint}
                     answered={answered}
                 />
             );
-        case answerCheckTag:
+        case ResponseTags.APPLICATION:
             return (
-                <QuestionCorrectness
-                    correctness={parseAnswerCorrectness(message)}
+                <TextBasedQuestion
+                    textBasedQuestion={parseResponse(applicationQuestionCommand, message)}
+                    askForHint={askForHint}
+                    answered={answered}
                 />
             );
-        case hintTag:
+        case ResponseTags.ANSWER_CORRECTNESS:
+            return (
+                <QuestionCorrectness
+                    correctness={parseResponse(answerCorrectnessDefaults, message)}
+                />
+            );
+        case ResponseTags.HINT:
+            return (
+                <Hint
+                    hint={parseResponse(hintCommand, message)}
+                />
+            );
+        case PromptTags.HINT:
             return (
                 <ActionPrompt
                     title={"Hint"}
                     icon={BsFillLightbulbFill}
                 />
             );
-        case multipleChoicePromptTag:
+        case PromptTags.MULTIPLE_CHOICE:
             return (
                 <ActionPrompt
                     title={"Multiple Choice Question"}
                     icon={SlOptionsVertical}
                 />
             );
-        case studyGuidePromptTag:
+        case PromptTags.STUDY_GUIDE:
             return (
                 <ActionPrompt
                     title={"Study Guide"}
                     icon={FaLeaf}
                 />
             );
-        case textBasedPromptTag:
+        case PromptTags.UNDERSTANDING:
             return (
                 <ActionPrompt
-                    title={"Free-From Question"}
+                    title={"Understanding Question"}
                     icon={MdQuestionAnswer}
                 />
+            );
+        case PromptTags.APPLICATION:
+            return (
+                <ActionPrompt
+                    title={"Application Question"}
+                    icon={MdQuestionAnswer}
+                />
+            );
+        case PromptTags.ANSWER_CORRECTNESS:
+            return (
+                <TextMessage content={messageParts[1].trim()} />
             );
         default:
             return (

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 
 import {Button, HStack, Text, VStack} from "@chakra-ui/react";
 
-import {MultipleChoiceQuestion as MultipleChoiceQuestionType} from "@/types/MultipleChoiceQuestion";
+import {MultipleChoiceQuestion as MultipleChoiceQuestionType} from "@/types/prompts/MultipleChoiceQuestion";
 
 import confetti from 'canvas-confetti';
 

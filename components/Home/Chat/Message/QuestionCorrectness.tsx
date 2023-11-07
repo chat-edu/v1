@@ -5,7 +5,7 @@ import {HStack, Icon, Text, VStack} from "@chakra-ui/react";
 import {MdExposurePlus1} from "react-icons/md";
 import {AiOutlineExclamationCircle} from "react-icons/ai";
 
-import {AnswerCorrectness, Correctness} from "@/types/AnswerCorrectness";
+import {AnswerCorrectness, Correctness} from "@/types/prompts/AnswerCorrectness";
 
 interface Props {
     correctness: AnswerCorrectness
