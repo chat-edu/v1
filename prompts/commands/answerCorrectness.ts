@@ -10,7 +10,7 @@ export const explanationTag = 'Explanation';
 
 export const answerCorrectnessResponseTag = 'Answer Correctness';
 const answerCorrectnessResponseDescription = `Please respond by saying whether the user has answered are correct and explain why. Speak in the second person. Provide an explanation of the correct answer if the user\'s answer is incorrect. The question asked is as follows: `;
-const answerCorrectnessResponseFormatting = `<${correctTag}/${incorrectTag}> ${explanationTag}: <explanation>`;
+const answerCorrectnessResponseFormatting = `<"${correctTag}" (if correct)/"${incorrectTag}" (if incorrect)> ${explanationTag}: <explanation>`;
 export enum Correctness {
     Correct,
     Incorrect,
