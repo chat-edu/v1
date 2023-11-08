@@ -26,7 +26,7 @@ const NotConnected = () => {
                                 md: 'md'
                             }}
                         >
-                            Get started by logging in with your vanderbilt.edu email
+                            Get started by logging in with your Google account
                         </Text>
                         <SignInWithGoogleButton />
                     </VStack>
