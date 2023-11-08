@@ -14,11 +14,12 @@ export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-4-1106-preview',
+    model: process.env.GPT_MODEL_ID as string,
     stream: true,
     messages: messages,
   });
 
+  // @ts-ignore
   const stream = OpenAIStream(response);
   return new StreamingTextResponse(stream);
 }
