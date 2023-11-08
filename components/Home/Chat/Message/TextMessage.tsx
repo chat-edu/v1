@@ -8,9 +8,9 @@ interface Props {
 
 const TextMessage: React.FC<Props> = ({ content }) => {
     return (
-        <Markdown
-            content={content}
-        />
+        <Markdown>
+            {content}
+        </Markdown>
     );
 };
 

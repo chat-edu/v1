@@ -3,16 +3,46 @@ import React from 'react'
 import Markdown from "@/components/Utilities/Markdown";
 
 import {StudyGuide as StudyGuideType} from "@/types/prompts/StudyGuide";
+import {Box, IconButton, useClipboard, useToast} from "@chakra-ui/react";
+import {CopyIcon} from "@chakra-ui/icons";
 
 interface Props {
     studyGuide: StudyGuideType
 }
 
 const StudyGuide: React.FC<Props> = ({ studyGuide}) => {
+
+    const { onCopy } = useClipboard(studyGuide.content)
+
+    const toast = useToast();
+
+    const copy = () => {
+        onCopy();
+        toast({
+            title: "Copied",
+            description: "The study guide has been copied to your clipboard.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+        })
+    }
+
     return (
-        <Markdown
-            content={studyGuide.content}
-        />
+        <Box
+            position={'relative'}
+        >
+            <IconButton
+                aria-label={"Copy"}
+                onClick={copy}
+                icon={<CopyIcon />}
+                position={'absolute'}
+                top={0}
+                right={0}
+            />
+            <Markdown>
+                {studyGuide.content}
+            </Markdown>
+        </Box>
     );
 };
 

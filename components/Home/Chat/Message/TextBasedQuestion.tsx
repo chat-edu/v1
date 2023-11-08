@@ -1,8 +1,9 @@
 import React from 'react';
 
-import {Button, HStack, Text} from "@chakra-ui/react";
+import {Box, Button, HStack} from "@chakra-ui/react";
 
 import {TextBasedQuestion as TextBasedQuestionType} from "@/types/prompts/TextBasedQuestion";
+import Markdown from "@/components/Utilities/Markdown";
 
 interface Props {
     textBasedQuestion: TextBasedQuestionType,
@@ -15,16 +16,13 @@ const TextBasedQuestion: React.FC<Props> = ({ textBasedQuestion, askForHint, ans
         <HStack
             w={'100%'}
         >
-            <Text
+            <Box
                 flex={1}
-                fontSize={{
-                    base: 'xs',
-                    md: 'md'
-                }}
-                fontWeight={'bold'}
             >
-                {textBasedQuestion.question}
-            </Text>
+                <Markdown>
+                    {`***${textBasedQuestion.question}***`}
+                </Markdown>
+            </Box>
             <Button
                 variant={'outline'}
                 colorScheme={'brand'}

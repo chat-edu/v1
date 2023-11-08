@@ -3,8 +3,6 @@ import {FormEvent, useEffect, useState} from "react";
 import {Message, nanoid} from "ai";
 import {useChat} from "ai/react";
 
-import chunkString from "@/lib/chunkString";
-
 import {
     answerCorrectnessCommand,
     hintCommand,
@@ -14,15 +12,12 @@ import {
     applicationQuestionCommand
 } from "@/prompts";
 import {answerCorrectnessResponseTag, incorrectTag} from "@/prompts/commands/answerCorrectness";
-
-import {Command, PromptTypes} from "@/types/prompts/Command";
-
-
-import {Note} from "@/types/Note";
 import {getPrePrompt, getPrompt} from "@/prompts";
 import {questionResponseTagSuffix} from "@/prompts/tags";
+import {context} from "@/prompts/context";
 
-const MAX_LENGTH = 16385 * 3;
+import {Command, PromptTypes} from "@/types/prompts/Command";
+import {Note} from "@/types/Note";
 
 const useOpenAi = (notes: Note[]) => {
 
@@ -83,24 +78,10 @@ const useOpenAi = (notes: Note[]) => {
         setMessages([
             {
                 id: nanoid(),
-                content: `
-                    You are to act as a teacher helping a student learn content they have taken notes on. 
-                    
-                    You should limit the topics you describe to the notes the student has taken. In the case of application or understanding questions, you can create examples that are not included in the notes. It is encouraged to make problems that disguise the class of problem to which the student should apply the concept.
-                    
-                    You can use external information to describe concepts.
-                    
-                    These are the notes the student has taken so far:
-                `,
+                content: context(content),
                 role: 'system',
-            },
-            ...chunkString(content, MAX_LENGTH).map((content): Message => ({
-                id: nanoid(),
-                content,
-                role: 'system',
-            }))
+            }
         ])
-
         setCurrentQuestion(null);
         setCorrectMapping({});
         setPromptType(PromptTypes.REGULAR)

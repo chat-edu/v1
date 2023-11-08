@@ -5,9 +5,9 @@ export enum ResponseTags {
     MULTIPLE_CHOICE = `Multiple Choice ${questionResponseTagSuffix}`,
     UNDERSTANDING = `Understanding ${questionResponseTagSuffix}`,
     APPLICATION = `Application ${questionResponseTagSuffix}`,
-    ANSWER_CORRECTNESS = `Answer Correctness`,
-    HINT = `Hint`,
-    STUDY_GUIDE = `Study Guide`
+    ANSWER_CORRECTNESS = `Answer Correctness Response`,
+    HINT = `Hint Response`,
+    STUDY_GUIDE = `Study Guide Response`
 }
 
 export enum PromptTags {

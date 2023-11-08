@@ -6,7 +6,7 @@ export const getPrePrompt = (prompt: Command<any>): string => {
     return `
         Content: ${prompt.responseDescription}
 
-        Formatting: responses MUST be in EXACTLY the following format. <> indicates a placeholder. Do NOT include the <> in your response, but ensure that the placeholder is EXACTLY satisfied.
+        Formatting: Responses MUST be in EXACTLY the following format. <> indicates a placeholder. Do NOT include the <> in your response, but ensure that the placeholder is EXACTLY satisfied.
         
         ${prompt.responseTag}: <${prompt.responseFormatting}>
     `

@@ -80,9 +80,9 @@ const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
                     <ModalHeader>{note.title}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <Markdown
-                            content={note.content}
-                        />
+                        <Markdown>
+                            {note.content}
+                        </Markdown>
                     </ModalBody>
                     <ModalFooter>
                         <Button

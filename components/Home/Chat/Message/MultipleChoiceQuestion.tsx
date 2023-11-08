@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
 
-import {Button, HStack, Text, VStack} from "@chakra-ui/react";
+import {Button, HStack, VStack} from "@chakra-ui/react";
 
 import {MultipleChoiceQuestion as MultipleChoiceQuestionType} from "@/types/prompts/MultipleChoiceQuestion";
 
 import confetti from 'canvas-confetti';
+import Markdown from "@/components/Utilities/Markdown";
 
 interface Props {
     question: MultipleChoiceQuestionType,
@@ -63,15 +64,9 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHin
                 alignItems={'flex-start'}
                 flex={1}
             >
-                <Text
-                    fontSize={{
-                        base: 'sm',
-                        md: 'lg'
-                    }}
-                    fontWeight={'bold'}
-                >
-                    {question.question}
-                </Text>
+                <Markdown>
+                    {`***${question.question}***`}
+                </Markdown>
                 <VStack
                     w={'100%'}
                 >
@@ -98,7 +93,9 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHin
                                 onClick={() => onClick(option, index)}
                                 isDisabled={answered}
                             >
-                                {option}
+                                <Markdown>
+                                    {option}
+                                </Markdown>
                             </Button>
                         ))
                     }
