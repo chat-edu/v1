@@ -1,34 +1,35 @@
 import React from 'react';
 
-import {Button, HStack, Text} from "@chakra-ui/react";
+import {Box, Button, HStack} from "@chakra-ui/react";
+
+import Markdown from "@/components/Utilities/Markdown";
 
 import {TextBasedQuestion as TextBasedQuestionType} from "@/types/prompts/TextBasedQuestion";
+import {Command} from "@/types/prompts/Command";
+import {hintCommand} from "@/prompts";
 
 interface Props {
     textBasedQuestion: TextBasedQuestionType,
-    askForHint: () => void,
+    promptWithCommand: (command: Command<any>) => void,
     answered: boolean
 }
 
-const TextBasedQuestion: React.FC<Props> = ({ textBasedQuestion, askForHint, answered }) => {
+const TextBasedQuestion: React.FC<Props> = ({ textBasedQuestion, promptWithCommand, answered }) => {
     return (
         <HStack
             w={'100%'}
         >
-            <Text
+            <Box
                 flex={1}
-                fontSize={{
-                    base: 'xs',
-                    md: 'md'
-                }}
-                fontWeight={'bold'}
             >
-                {textBasedQuestion.question}
-            </Text>
+                <Markdown>
+                    {`***${textBasedQuestion.question}***`}
+                </Markdown>
+            </Box>
             <Button
                 variant={'outline'}
                 colorScheme={'brand'}
-                onClick={askForHint}
+                onClick={() => promptWithCommand(hintCommand)}
                 isDisabled={answered}
             >
                 Hint

@@ -4,7 +4,8 @@ import {
     AccordionButton,
     AccordionIcon,
     AccordionItem,
-    AccordionPanel, Button,
+    AccordionPanel,
+    Button,
     CheckboxGroup,
     HStack,
     Skeleton,
@@ -61,9 +62,7 @@ const Subject: React.FC<Props> = ({ subject, selectedNotes,  addNote, removeNote
                 >
                     {
                         loading ? (
-                            <Skeleton
-                                h={'300px'}
-                            />
+                            <Skeleton />
                         ) : (
                             <CheckboxGroup colorScheme='brand'>
                                 <VStack

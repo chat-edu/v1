@@ -6,6 +6,7 @@ import {MdExposurePlus1} from "react-icons/md";
 import {AiOutlineExclamationCircle} from "react-icons/ai";
 
 import {AnswerCorrectness, Correctness} from "@/types/prompts/AnswerCorrectness";
+import Markdown from "@/components/Utilities/Markdown";
 
 interface Props {
     correctness: AnswerCorrectness
@@ -17,7 +18,10 @@ const QuestionCorrectness: React.FC<Props> = ({ correctness }) => {
 
     return (
         <HStack
-            spacing={4}
+            spacing={{
+                base: 2,
+                md: 4
+            }}
         >
             {
                 correctness.correct === Correctness.Correct && (
@@ -51,9 +55,9 @@ const QuestionCorrectness: React.FC<Props> = ({ correctness }) => {
                 >
                     {correctness.correct == Correctness.Correct ? 'Correct!' : 'Incorrect!'}
                 </Text>
-                <Text>
+                <Markdown>
                     {correctness.explanation}
-                </Text>
+                </Markdown>
             </VStack>
         </HStack>
     );

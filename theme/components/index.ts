@@ -6,6 +6,7 @@ import Skeleton from "./skeleton";
 import Divider from "./divider";
 import Accordion from "./accordion";
 import Heading from "./heading";
+import Drawer from "@/theme/components/drawer";
 
 import {ThemeComponents} from "@chakra-ui/react";
 
@@ -17,7 +18,8 @@ const components: ThemeComponents = {
     Skeleton,
     Divider,
     Accordion,
-    Heading
+    Heading,
+    Drawer
 }
 
 export default components

@@ -6,7 +6,7 @@ import MobileSidebar from "@/components/Home/NotesMenu/MobileSidebar";
 
 import {Note} from "@/types/Note";
 
-export const mobileHeaderHeight = 80;
+export const mobileHeaderHeight = 60;
 
 interface Props {
     notes: Note[];
@@ -19,7 +19,11 @@ const MobileHeader: React.FC<Props> = ({ notes, addNote, removeNote}) => {
         <Card
             display={{base: 'flex', md: 'none'}}
             h={`${mobileHeaderHeight}px`}
-            rounded={'none'}
+            roundedTop={'none'}
+            roundedBottom={'md'}
+            justifyContent={'center'}
+            py={0}
+            px={4}
         >
             <HStack
                 w={'100%'}
