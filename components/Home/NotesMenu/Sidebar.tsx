@@ -6,8 +6,9 @@ import {VscLayoutSidebarLeft, VscLayoutSidebarLeftOff} from "react-icons/vsc";
 
 import AddSubject from "@/components/Home/NotesMenu/AddSubject";
 import SubjectsAccordion from "@/components/Home/NotesMenu/SubjectsAccordion";
-
 import {navbarHeight} from "@/components/Navbar";
+
+import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
 import {Note} from "@/types/Note";
 
@@ -24,10 +25,12 @@ const Sidebar: React.FC<Props> = ({ selectedNotes, addNote, removeNote }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
+    const { height } = useViewportDimensions();
+
     return (
         <Card
             display={{base: 'none', md: 'flex'}}
-            h={window.innerHeight - navbarHeight}
+            h={height - navbarHeight}
             w={isOpen ? `${openWebSidebarWidth}px` : `${closedWebSidebarWidth}px`}
             minW={isOpen ? `${openWebSidebarWidth}px` : `${closedWebSidebarWidth}px`}
             rounded={'none'}

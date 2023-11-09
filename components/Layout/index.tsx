@@ -7,6 +7,7 @@ import Navbar, { navbarHeight } from "@/components/Navbar";
 import {mobileHeaderHeight} from "@/components/Home/NotesMenu/MobileHeader";
 
 import useAuth from "@/hooks/auth/useAuth";
+import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
 
 interface Props {
@@ -18,11 +19,11 @@ const Layout: React.FC<Props> = ({ children, authGate }) => {
 
     const { loading, isConnected } = useAuth();
 
-    if(typeof window === 'undefined') return null;
+    const { height } = useViewportDimensions();
 
     return (
         <Box
-            h={window.innerHeight}
+            h={height}
             backgroundImage={!isConnected ? 'url(http://localhost:3000/background.png)' : undefined}
             backgroundSize={'cover'}
         >
@@ -32,8 +33,8 @@ const Layout: React.FC<Props> = ({ children, authGate }) => {
                 gap={4}
                 w={'100%'}
                 h={{
-                    base: window.innerHeight - navbarHeight - mobileHeaderHeight,
-                    md: window.innerHeight - navbarHeight
+                    base: height - navbarHeight - mobileHeaderHeight,
+                    md: height - navbarHeight
                 }}
                 position={'relative'}
             >

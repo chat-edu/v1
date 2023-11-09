@@ -11,6 +11,7 @@ import {navbarHeight} from "@/components/Navbar";
 import useChatEdu from "@/hooks/useChatEdu";
 
 import {Note} from "@/types/Note";
+import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
 interface Props {
     notes: Note[]
@@ -30,14 +31,16 @@ const Chat: React.FC<Props> = ({ notes }) => {
         setMessageBottomRef
     } = useChatEdu(notes);
 
+    const { height } = useViewportDimensions();
+
     return (
         <Container
             w={'100%'}
             maxW={'6xl'}
             p={0}
             h={{
-                base: window.innerHeight - navbarHeight - mobileHeaderHeight,
-                md: window.innerHeight - navbarHeight
+                base: height - navbarHeight - mobileHeaderHeight,
+                md: height - navbarHeight
             }}
         >
             <Flex

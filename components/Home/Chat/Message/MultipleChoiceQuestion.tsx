@@ -8,6 +8,7 @@ import confetti from 'canvas-confetti';
 import Markdown from "@/components/Utilities/Markdown";
 import {Command} from "@/types/prompts/Command";
 import {answerCorrectnessCommand, hintCommand} from "@/prompts";
+import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
 interface Props {
     question: MultipleChoiceQuestionType,
@@ -19,19 +20,18 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, promptWithCommand, 
 
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+    const { height, width } = useViewportDimensions();
 
     const onClick = (option: string, index: number) => {
         if (selectedIndex == null) {
             setSelectedIndex(index);
             promptWithCommand(answerCorrectnessCommand(option, question.question));
-
-            // If the answer is correct, trigger confetti
-        if (index === question.answerIndex) {
-            const buttonRef = buttonRefs.current[index];
-            if (buttonRef) {
-                triggerConfettiFromButton(buttonRef);
+            if (index === question.answerIndex) {
+                const buttonRef = buttonRefs.current[index];
+                if (buttonRef) {
+                    triggerConfettiFromButton(buttonRef);
+                }
             }
-        }
         }
     };
 
@@ -44,7 +44,7 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, promptWithCommand, 
             startVelocity: 25,
             spread: 360,
             gravity: 0.6,
-            origin: { x: x / window.innerWidth, y: y / window.innerHeight },
+            origin: { x: x / width, y: y / height },
             colors: ["#4caf50"]
         });
     }
