@@ -6,15 +6,16 @@ import {MultipleChoiceQuestion as MultipleChoiceQuestionType} from "@/types/prom
 
 import confetti from 'canvas-confetti';
 import Markdown from "@/components/Utilities/Markdown";
+import {Command} from "@/types/prompts/Command";
+import {answerCorrectnessCommand, hintCommand} from "@/prompts";
 
 interface Props {
     question: MultipleChoiceQuestionType,
-    onAnswer: (answer: string) => void,
-    askForHint: () => void
+    promptWithCommand: (command: Command<any>) => void,
     answered: boolean
 }
 
-const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHint, answered }) => {
+const MultipleChoiceQuestion: React.FC<Props> = ({ question, promptWithCommand, answered }) => {
 
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -22,7 +23,7 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHin
     const onClick = (option: string, index: number) => {
         if (selectedIndex == null) {
             setSelectedIndex(index);
-            onAnswer(option);
+            promptWithCommand(answerCorrectnessCommand(option, question.question));
 
             // If the answer is correct, trigger confetti
         if (index === question.answerIndex) {
@@ -104,7 +105,7 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHin
             <Button
                 variant={'outline'}
                 colorScheme={'brand'}
-                onClick={askForHint}
+                onClick={() => promptWithCommand(hintCommand)}
                 isDisabled={answered}
             >
                 Hint

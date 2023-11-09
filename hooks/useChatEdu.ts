@@ -3,14 +3,7 @@ import {FormEvent, useEffect, useState} from "react";
 import {Message, nanoid} from "ai";
 import {useChat} from "ai/react";
 
-import {
-    answerCorrectnessCommand,
-    hintCommand,
-    multipleChoiceCommand,
-    studyGuideCommand,
-    understandingQuestionCommand,
-    applicationQuestionCommand
-} from "@/prompts";
+import {answerCorrectnessCommand,} from "@/prompts";
 import {answerCorrectnessResponseTag, incorrectTag} from "@/prompts/commands/answerCorrectness";
 import {getPrePrompt, getPrompt} from "@/prompts";
 import {questionResponseTagSuffix} from "@/prompts/tags";
@@ -37,6 +30,7 @@ const useOpenAi = (notes: Note[]) => {
                 ...correctMapping,
                 [currentQuestion?.id || ""]: !message.content.includes(incorrectTag)
             })
+            setCurrentQuestion(null);
         }
         scrollToBottom();
     }
@@ -87,60 +81,29 @@ const useOpenAi = (notes: Note[]) => {
         setPromptType(PromptTypes.REGULAR)
     }, [notes])
 
-    const promptWithContext = async (prompt: Command<any>) => {
-        if(prompt.promptType !== PromptTypes.HINT) {
-            setPromptType(prompt.promptType);
+    const promptWithCommand = async (command: Command<any>) => {
+        if(command.promptType !== PromptTypes.HINT) {
+            setPromptType(command.promptType);
         }
         setMessages([
             ...messages,
             {
                 id: nanoid(),
-                content: getPrePrompt(prompt),
+                content: getPrePrompt(command),
                 role: 'system',
             }
         ])
         await append({
             id: nanoid(),
-            content: getPrompt(prompt),
+            content: getPrompt(command),
             role: 'user',
         });
-    }
-
-    const askMultipleChoiceQuestion = async () => {
-        await promptWithContext(multipleChoiceCommand);
-    }
-
-    const answerMultipleChoiceQuestion = async (answer: string) => {
-        await promptWithContext(answerCorrectnessCommand(currentQuestion?.content || "", answer))
-        setCurrentQuestion(null);
-    }
-
-    const askApplicationQuestion = async () => {
-        await promptWithContext(applicationQuestionCommand);
-    }
-
-    const askUnderstandingQuestion = async () => {
-        await promptWithContext(understandingQuestionCommand);
-    }
-
-    const askForHint = async () => {
-        await promptWithContext(hintCommand)
-    }
-
-    const answerFreeFormQuestion = async (text: string) => {
-        await promptWithContext(answerCorrectnessCommand(currentQuestion?.content || "", text));
-        setCurrentQuestion(null);
-    }
-
-    const generateStudyGuide = async () => {
-        await promptWithContext(studyGuideCommand)
-        setPromptType(PromptTypes.REGULAR)
     }
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         if(promptType == PromptTypes.TEXT_BASED) {
             e.preventDefault();
-            await answerFreeFormQuestion(input);
+            await promptWithCommand(answerCorrectnessCommand(input, currentQuestion?.content || ""));
             setInput('');
         } else {
             handleSubmit(e)
@@ -155,12 +118,7 @@ const useOpenAi = (notes: Note[]) => {
         isLoading,
         handleInputChange,
         onSubmit,
-        askMultipleChoiceQuestion,
-        askUnderstandingQuestion,
-        askApplicationQuestion,
-        generateStudyGuide,
-        answerMultipleChoiceQuestion,
-        askForHint,
+        promptWithCommand,
         setMessageBottomRef
     };
 }

@@ -8,16 +8,23 @@ import {SlOptionsVertical} from "react-icons/sl";
 
 import Action from "@/components/Home/Chat/Action";
 
+import {
+    studyGuideCommand,
+    multipleChoiceCommand,
+    understandingQuestionCommand,
+    applicationQuestionCommand,
+} from "@/prompts";
+
+import {Command} from "@/types/prompts/Command";
+
+
 interface Props {
-    askMultipleChoice: () => Promise<void>;
-    askUnderstanding: () => Promise<void>;
-    askApplication: () => Promise<void>;
-    generateStudyGuide: () => Promise<void>;
+    promptWithCommand: (command: Command<any>) => void;
     disabled: boolean;
     showMessage: boolean;
 }
 
-const Actions: React.FC<Props> = ({ askMultipleChoice, askUnderstanding, askApplication, generateStudyGuide, disabled, showMessage }) => {
+const Actions: React.FC<Props> = ({ promptWithCommand, disabled, showMessage }) => {
     return (
         <VStack>
             {
@@ -41,25 +48,25 @@ const Actions: React.FC<Props> = ({ askMultipleChoice, askUnderstanding, askAppl
                 <Action
                     label={"Study Guide"}
                     icon={FaLeaf}
-                    onClick={generateStudyGuide}
+                    onClick={() => promptWithCommand(studyGuideCommand)}
                     disabled={disabled}
                 />
                 <Action
                     label={"Multiple Choice"}
                     icon={SlOptionsVertical}
-                    onClick={askMultipleChoice}
+                    onClick={() => promptWithCommand(multipleChoiceCommand)}
                     disabled={disabled}
                 />
                 <Action
                     label={"Understanding Question"}
                     icon={MdQuestionAnswer}
-                    onClick={askUnderstanding}
+                    onClick={() => promptWithCommand(understandingQuestionCommand)}
                     disabled={disabled}
                 />
                 <Action
                     label={"Application Questions"}
                     icon={MdQuestionAnswer}
-                    onClick={askApplication}
+                    onClick={() => promptWithCommand(applicationQuestionCommand)}
                     disabled={disabled}
                 />
             </Stack>

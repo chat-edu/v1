@@ -26,12 +26,7 @@ const Chat: React.FC<Props> = ({ notes }) => {
         isLoading,
         handleInputChange,
         onSubmit,
-        askMultipleChoiceQuestion,
-        askUnderstandingQuestion,
-        askApplicationQuestion,
-        generateStudyGuide,
-        answerMultipleChoiceQuestion,
-        askForHint,
+        promptWithCommand,
         setMessageBottomRef
     } = useChatEdu(notes);
 
@@ -59,8 +54,7 @@ const Chat: React.FC<Props> = ({ notes }) => {
             >
                 <Messages
                     messages={messages}
-                    onMultipleChoiceAnswer={answerMultipleChoiceQuestion}
-                    askForHint={askForHint}
+                    promptWithCommand={promptWithCommand}
                     correctAnswers={correctMapping}
                     isLoading={isLoading}
                 />
@@ -68,15 +62,12 @@ const Chat: React.FC<Props> = ({ notes }) => {
                     notes={notes}
                     value={input}
                     isLoading={isLoading}
-                    handleChange={handleInputChange}
-                    handleSubmit={onSubmit}
-                    askMultipleChoice={askMultipleChoiceQuestion}
-                    askUnderstanding={askUnderstandingQuestion}
-                    askApplication={askApplicationQuestion}
-                    generateStudyGuide={generateStudyGuide}
                     promptType={promptType}
                     showMessage={messages.length === 0}
                     correctAnswers={correctMapping}
+                    handleChange={handleInputChange}
+                    handleSubmit={onSubmit}
+                    promptWithCommand={promptWithCommand}
                 />
             </Flex>
         </Container>

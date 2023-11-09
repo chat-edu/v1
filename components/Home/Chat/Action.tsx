@@ -43,10 +43,11 @@ const Action: React.FC<Props> = ({ label, icon, onClick, disabled }) => {
                 <Icon
                     as={icon}
                     color={'brand.500'}
-                    boxSize={{
-                        base: 4,
-                        md: 6
+                    display={{
+                        base: 'none',
+                        md: 'block'
                     }}
+                    boxSize={6}
                 />
                 <VStack
                     align={'flex-start'}

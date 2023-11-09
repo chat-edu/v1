@@ -6,16 +6,16 @@ import {Box, Flex, Text, VStack} from "@chakra-ui/react";
 
 import Message from "@/components/Home/Chat/Message";
 import Welcome from "@/components/Welcome";
+import {Command} from "@/types/prompts/Command";
 
 interface Props {
     messages: MessageInterface[],
     isLoading: boolean,
-    onMultipleChoiceAnswer: (answer: string) => void,
-    askForHint: () => void,
+    promptWithCommand: (command: Command<any>) => void,
     correctAnswers: { [key: string]: boolean }
 }
 
-const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHint, correctAnswers }) => {
+const Messages: React.FC<Props> = ({ messages, promptWithCommand, correctAnswers }) => {
 
     return (
         <Box
@@ -43,8 +43,7 @@ const Messages: React.FC<Props> = ({ messages, onMultipleChoiceAnswer, askForHin
                                 <Message
                                     key={message.id}
                                     message={message}
-                                    onMultipleChoiceAnswer={onMultipleChoiceAnswer}
-                                    askForHint={askForHint}
+                                    promptWithCommand={promptWithCommand}
                                     isCorrect={correctAnswers[message.id]}
                                 />
                             ))
