@@ -105,7 +105,7 @@ const useOpenAi = (notes: Note[]) => {
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         if(promptType == PromptTypes.TEXT_BASED) {
             e.preventDefault();
-            await promptWithCommand(answerCorrectnessCommand(input, currentQuestion?.content || ""));
+            await promptWithCommand(answerCorrectnessCommand(currentQuestion?.content || "", input));
             setInput('');
         } else {
             handleSubmit(e)
