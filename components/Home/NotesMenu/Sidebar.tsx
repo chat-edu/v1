@@ -27,7 +27,7 @@ const Sidebar: React.FC<Props> = ({ selectedNotes, addNote, removeNote }) => {
     return (
         <Card
             display={{base: 'none', md: 'flex'}}
-            h={`calc(100vh - ${navbarHeight}px)`}
+            h={window.innerHeight - navbarHeight}
             w={isOpen ? `${openWebSidebarWidth}px` : `${closedWebSidebarWidth}px`}
             minW={isOpen ? `${openWebSidebarWidth}px` : `${closedWebSidebarWidth}px`}
             rounded={'none'}

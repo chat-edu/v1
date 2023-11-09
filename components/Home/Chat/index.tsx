@@ -36,8 +36,8 @@ const Chat: React.FC<Props> = ({ notes }) => {
             maxW={'6xl'}
             p={0}
             h={{
-                base: `calc(100vh - ${navbarHeight + mobileHeaderHeight}px)`,
-                md: `calc(100vh - ${navbarHeight}px)`
+                base: window.innerHeight - navbarHeight - mobileHeaderHeight,
+                md: window.innerHeight - navbarHeight
             }}
         >
             <Flex

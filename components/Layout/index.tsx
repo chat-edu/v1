@@ -18,9 +18,11 @@ const Layout: React.FC<Props> = ({ children, authGate }) => {
 
     const { loading, isConnected } = useAuth();
 
+    if(typeof window === 'undefined') return null;
+
     return (
         <Box
-            h={'100vh'}
+            h={window.innerHeight}
             backgroundImage={!isConnected ? 'url(http://localhost:3000/background.png)' : undefined}
             backgroundSize={'cover'}
         >
@@ -30,8 +32,8 @@ const Layout: React.FC<Props> = ({ children, authGate }) => {
                 gap={4}
                 w={'100%'}
                 h={{
-                    base: `calc(100vh - ${navbarHeight + mobileHeaderHeight}px)`,
-                    md: `calc(100vh - ${navbarHeight}px)`
+                    base: window.innerHeight - navbarHeight - mobileHeaderHeight,
+                    md: window.innerHeight - navbarHeight
                 }}
                 position={'relative'}
             >
