@@ -23,14 +23,14 @@ const SubjectsAccordion: React.FC<Props> = ({ selectedNotes, addNote, removeNote
     const [openSubjects, setOpenSubjects] = React.useState<{[key: string]: boolean}>({});
 
     useEffect(() => {
-        // create an object where the key is the subject id and the value is true if the subject is already open or if it is undefined
+        if(loading) return;
         setOpenSubjects(subjects.reduce((acc, subject) => {
             return {
                 ...acc,
                 [subject.id]: openSubjects[subject.id] ?? true
             }
         }, {}))
-    }, [subjects])
+    }, [subjects, loading])
 
     if(loading) return (
         <Skeleton
@@ -60,6 +60,7 @@ const SubjectsAccordion: React.FC<Props> = ({ selectedNotes, addNote, removeNote
             w={'100%'}
             index={subjects.reduce((acc, subject, index) => {
                 if(openSubjects[subject.id]) {
+                    console.log('open', index)
                     return [...acc, index]
                 }
                 return acc;

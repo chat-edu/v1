@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Stack, Text, VStack} from "@chakra-ui/react";
+import {SimpleGrid, Text, VStack} from "@chakra-ui/react";
 
 import {FaLeaf} from "react-icons/fa";
 import {MdQuestionAnswer} from "react-icons/md";
@@ -26,7 +26,9 @@ interface Props {
 
 const Actions: React.FC<Props> = ({ promptWithCommand, disabled, showMessage }) => {
     return (
-        <VStack>
+        <VStack
+            px={2}
+        >
             {
                 showMessage && (
                     <Text
@@ -40,10 +42,10 @@ const Actions: React.FC<Props> = ({ promptWithCommand, disabled, showMessage }) 
                     </Text>
                 )
             }
-            <Stack
+            <SimpleGrid
                 w={'100%'}
-                spacing={{ base: 2, md: 4 }}
-                flexDirection={{ base: "row", md: "row" }}
+                spacing={{ base: 2, xl: 4 }}
+                columns={{ base: 2, xl: 4 }}
             >
                 <Action
                     label={"Study Guide"}
@@ -58,18 +60,18 @@ const Actions: React.FC<Props> = ({ promptWithCommand, disabled, showMessage }) 
                     disabled={disabled}
                 />
                 <Action
-                    label={"Understanding Question"}
+                    label={"Understanding"}
                     icon={MdQuestionAnswer}
                     onClick={() => promptWithCommand(understandingQuestionCommand)}
                     disabled={disabled}
                 />
                 <Action
-                    label={"Application Questions"}
+                    label={"Application"}
                     icon={MdQuestionAnswer}
                     onClick={() => promptWithCommand(applicationQuestionCommand)}
                     disabled={disabled}
                 />
-            </Stack>
+            </SimpleGrid>
         </VStack>
     );
 };

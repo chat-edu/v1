@@ -18,7 +18,10 @@ const QuestionCorrectness: React.FC<Props> = ({ correctness }) => {
 
     return (
         <HStack
-            spacing={4}
+            spacing={{
+                base: 2,
+                md: 4
+            }}
         >
             {
                 correctness.correct === Correctness.Correct && (

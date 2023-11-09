@@ -38,6 +38,10 @@ const StudyGuide: React.FC<Props> = ({ studyGuide}) => {
                 position={'absolute'}
                 top={0}
                 right={0}
+                size={{
+                    base: 'sm',
+                    md: 'md'
+                }}
             />
             <Markdown>
                 {studyGuide.content}

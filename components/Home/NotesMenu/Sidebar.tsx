@@ -12,8 +12,9 @@ import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
 import {Note} from "@/types/Note";
 
-export const openWebSidebarWidth = 400;
-export const closedWebSidebarWidth = 72;
+const openWebSidebarWidthLg = 400;
+const openWebSidebarWidthMd = 300;
+const closedWebSidebarWidth = 72;
 
 interface Props {
     selectedNotes: Note[],
@@ -31,8 +32,14 @@ const Sidebar: React.FC<Props> = ({ selectedNotes, addNote, removeNote }) => {
         <Card
             display={{base: 'none', md: 'flex'}}
             h={height - navbarHeight}
-            w={isOpen ? `${openWebSidebarWidth}px` : `${closedWebSidebarWidth}px`}
-            minW={isOpen ? `${openWebSidebarWidth}px` : `${closedWebSidebarWidth}px`}
+            w={{
+                md: isOpen ? `${openWebSidebarWidthMd}px` : `${closedWebSidebarWidth}px`,
+                lg: isOpen ? `${openWebSidebarWidthLg}px` : `${openWebSidebarWidthMd}px`
+            }}
+            minW={{
+                md: isOpen ? `${openWebSidebarWidthMd}px` : `${closedWebSidebarWidth}px`,
+                lg: isOpen ? `${openWebSidebarWidthLg}px` : `${openWebSidebarWidthMd}px`
+            }}
             rounded={'none'}
             gap={4}
             overflow={'auto'}

@@ -55,7 +55,11 @@ const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmi
             />
             <Card
                 bg={inputBoxColor}
-                p={4}
+                roundedBottom={{
+                    base: 'none',
+                    md: 'md'
+                }}
+                roundedTop={'md'}
             >
                 <form
                     onSubmit={handleSubmit}
@@ -109,6 +113,11 @@ const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmi
                                 focusBorderColor={'brand.500'}
                                 flex={1}
                                 isDisabled={promptType === PromptTypes.MULTIPLE_CHOICE || isLoading}
+                                rows={1}
+                                size={{
+                                    base: 'sm',
+                                    md: 'md'
+                                }}
                             />
                         </FormControl>
                         <Button
@@ -116,6 +125,10 @@ const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmi
                             colorScheme={'brand'}
                             flexShrink={0}
                             isDisabled={promptType === PromptTypes.MULTIPLE_CHOICE || isLoading}
+                            size={{
+                                base: 'sm',
+                                md: 'md'
+                            }}
                         >
                             Send
                         </Button>

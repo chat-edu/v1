@@ -24,7 +24,7 @@ const Action: React.FC<Props> = ({ label, icon, onClick, disabled }) => {
             cursor={disabled ? "not-allowed" : 'pointer'}
             p={{
                 base: 2,
-                md: 4
+                lg: 4
             }}
             _hover={disabled ? undefined : {
                 boxShadow: 'lg',
@@ -36,28 +36,31 @@ const Action: React.FC<Props> = ({ label, icon, onClick, disabled }) => {
             borderWidth={2}
         >
             <HStack
-                spacing={4}
+                spacing={{
+                    base: 2,
+                    sm: 4
+                }}
                 h={'100%'}
                 alignItems={'center'}
             >
                 <Icon
                     as={icon}
                     color={'brand.500'}
-                    display={{
-                        base: 'none',
-                        md: 'block'
+                    boxSize={{
+                        base: 4,
+                        md: 6
                     }}
-                    boxSize={6}
                 />
                 <VStack
                     align={'flex-start'}
                 >
                     <Text
                         fontSize={{
-                            base: '2xs',
+                            base: 'xs',
                             md: 'md'
                         }}
                         fontWeight={'bold'}
+                        textAlign={'center'}
                     >
                         {label}
                     </Text>

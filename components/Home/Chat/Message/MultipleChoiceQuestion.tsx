@@ -65,9 +65,26 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, promptWithCommand, 
                 alignItems={'flex-start'}
                 flex={1}
             >
-                <Markdown>
-                    {`***${question.question}***`}
-                </Markdown>
+                <HStack
+                    justifyContent={'space-between'}
+                    gap={4}
+                >
+                    <Markdown>
+                        {`***${question.question}***`}
+                    </Markdown>
+                    <Button
+                        variant={'outline'}
+                        colorScheme={'brand'}
+                        onClick={() => promptWithCommand(hintCommand)}
+                        isDisabled={answered}
+                        size={{
+                            base: 'sm',
+                            md: 'md'
+                        }}
+                    >
+                        Hint
+                    </Button>
+                </HStack>
                 <VStack
                     w={'100%'}
                 >
@@ -102,14 +119,6 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, promptWithCommand, 
                     }
                 </VStack>
             </VStack>
-            <Button
-                variant={'outline'}
-                colorScheme={'brand'}
-                onClick={() => promptWithCommand(hintCommand)}
-                isDisabled={answered}
-            >
-                Hint
-            </Button>
         </HStack>
     );
 };

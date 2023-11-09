@@ -23,6 +23,7 @@ const Messages: React.FC<Props> = ({ messages, promptWithCommand, correctAnswers
             flex={1}
             display={'flex'}
             flexDirection={'column'}
+            px={2}
         >
             <Flex
                 flex={1}

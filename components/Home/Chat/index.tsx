@@ -6,7 +6,7 @@ import InputBox from "@/components/Home/Chat/InputBox";
 import Messages from "@/components/Home/Chat/Messages";
 
 import {mobileHeaderHeight} from "@/components/Home/NotesMenu/MobileHeader";
-import {navbarHeight} from "@/components/Navbar";
+import {mobileNavbarHeight, navbarHeight} from "@/components/Navbar";
 
 import useChatEdu from "@/hooks/useChatEdu";
 
@@ -39,13 +39,13 @@ const Chat: React.FC<Props> = ({ notes }) => {
             maxW={'6xl'}
             p={0}
             h={{
-                base: height - navbarHeight - mobileHeaderHeight,
+                base: height - mobileNavbarHeight - mobileHeaderHeight,
                 md: height - navbarHeight
             }}
         >
             <Flex
                 p={{
-                    base: 2,
+                    base: 0,
                     md: 4
                 }}
                 flexDirection={'column'}
