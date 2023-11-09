@@ -69,6 +69,8 @@ const useOpenAi = (notes: Note[]) => {
             `)}
         `;
 
+        console.log(context(content));
+
         setMessages([
             {
                 id: nanoid(),

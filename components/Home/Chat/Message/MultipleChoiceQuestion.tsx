@@ -25,7 +25,7 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, promptWithCommand, 
     const onClick = (option: string, index: number) => {
         if (selectedIndex == null) {
             setSelectedIndex(index);
-            promptWithCommand(answerCorrectnessCommand(option, question.question));
+            promptWithCommand(answerCorrectnessCommand(question.question, option));
             if (index === question.answerIndex) {
                 const buttonRef = buttonRefs.current[index];
                 if (buttonRef) {
