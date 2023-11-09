@@ -3,10 +3,11 @@ import React from 'react';
 import {Box, Flex, Skeleton} from "@chakra-ui/react";
 
 import NotConnected from "@/components/Layout/NotConnected";
-import Navbar, { navbarHeight } from "@/components/Navbar";
+import Navbar, { navbarHeight, mobileNavbarHeight } from "@/components/Navbar";
 import {mobileHeaderHeight} from "@/components/Home/NotesMenu/MobileHeader";
 
 import useAuth from "@/hooks/auth/useAuth";
+import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
 
 interface Props {
@@ -18,9 +19,11 @@ const Layout: React.FC<Props> = ({ children, authGate }) => {
 
     const { loading, isConnected } = useAuth();
 
+    const { height } = useViewportDimensions();
+
     return (
         <Box
-            h={'100vh'}
+            h={height}
             backgroundImage={!isConnected ? 'url(http://localhost:3000/background.png)' : undefined}
             backgroundSize={'cover'}
         >
@@ -30,8 +33,8 @@ const Layout: React.FC<Props> = ({ children, authGate }) => {
                 gap={4}
                 w={'100%'}
                 h={{
-                    base: `calc(100vh - ${navbarHeight + mobileHeaderHeight}px)`,
-                    md: `calc(100vh - ${navbarHeight}px)`
+                    base: height - mobileNavbarHeight - mobileHeaderHeight,
+                    md: height - navbarHeight
                 }}
                 position={'relative'}
             >

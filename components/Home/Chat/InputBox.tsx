@@ -16,7 +16,7 @@ import {
 
 import Actions from "@/components/Home/Chat/Actions";
 
-import {PromptTypes} from "@/types/prompts/Command";
+import {Command, PromptTypes} from "@/types/prompts/Command";
 
 import {Note} from "@/types/Note";
 
@@ -24,19 +24,15 @@ interface Props {
     value: string,
     isLoading: boolean,
     handleChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>,
-
     handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
     notes: Note[],
-    askMultipleChoice: () => Promise<void>;
-    askUnderstanding: () => Promise<void>;
-    askApplication: () => Promise<void>;
-    generateStudyGuide: () => Promise<void>;
+    promptWithCommand: (command: Command<any>) => void,
     promptType: PromptTypes
     showMessage: boolean;
     correctAnswers: { [key: string]: boolean };
 }
 
-const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmit, askMultipleChoice, askUnderstanding, askApplication, generateStudyGuide, promptType, showMessage, correctAnswers }) => {
+const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmit, promptWithCommand, promptType, showMessage, correctAnswers }) => {
 
     const inputBoxColor = useColorModeValue("white", "#2D2D2D")
 
@@ -53,16 +49,17 @@ const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmi
            pt={4}
         >
             <Actions
-                askMultipleChoice={askMultipleChoice}
-                askUnderstanding={askUnderstanding}
-                askApplication={askApplication}
-                generateStudyGuide={generateStudyGuide}
+                promptWithCommand={promptWithCommand}
                 disabled={promptType === PromptTypes.TEXT_BASED || promptType === PromptTypes.MULTIPLE_CHOICE || promptType === PromptTypes.HINT || isLoading}
                 showMessage={showMessage}
             />
             <Card
                 bg={inputBoxColor}
-                p={4}
+                roundedBottom={{
+                    base: 'none',
+                    md: 'md'
+                }}
+                roundedTop={'md'}
             >
                 <form
                     onSubmit={handleSubmit}
@@ -116,6 +113,11 @@ const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmi
                                 focusBorderColor={'brand.500'}
                                 flex={1}
                                 isDisabled={promptType === PromptTypes.MULTIPLE_CHOICE || isLoading}
+                                rows={1}
+                                size={{
+                                    base: 'sm',
+                                    md: 'md'
+                                }}
                             />
                         </FormControl>
                         <Button
@@ -123,6 +125,10 @@ const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmi
                             colorScheme={'brand'}
                             flexShrink={0}
                             isDisabled={promptType === PromptTypes.MULTIPLE_CHOICE || isLoading}
+                            size={{
+                                base: 'sm',
+                                md: 'md'
+                            }}
                         >
                             Send
                         </Button>

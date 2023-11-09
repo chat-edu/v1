@@ -6,13 +6,15 @@ import {VscLayoutSidebarLeft, VscLayoutSidebarLeftOff} from "react-icons/vsc";
 
 import AddSubject from "@/components/Home/NotesMenu/AddSubject";
 import SubjectsAccordion from "@/components/Home/NotesMenu/SubjectsAccordion";
-
 import {navbarHeight} from "@/components/Navbar";
+
+import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
 import {Note} from "@/types/Note";
 
-export const openWebSidebarWidth = 400;
-export const closedWebSidebarWidth = 72;
+const openWebSidebarWidthLg = 400;
+const openWebSidebarWidthMd = 300;
+const closedWebSidebarWidth = 72;
 
 interface Props {
     selectedNotes: Note[],
@@ -24,12 +26,20 @@ const Sidebar: React.FC<Props> = ({ selectedNotes, addNote, removeNote }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
+    const { height } = useViewportDimensions();
+
     return (
         <Card
             display={{base: 'none', md: 'flex'}}
-            h={`calc(100vh - ${navbarHeight}px)`}
-            w={isOpen ? `${openWebSidebarWidth}px` : `${closedWebSidebarWidth}px`}
-            minW={isOpen ? `${openWebSidebarWidth}px` : `${closedWebSidebarWidth}px`}
+            h={height - navbarHeight}
+            w={{
+                md: isOpen ? `${openWebSidebarWidthMd}px` : `${closedWebSidebarWidth}px`,
+                lg: isOpen ? `${openWebSidebarWidthLg}px` : `${openWebSidebarWidthMd}px`
+            }}
+            minW={{
+                md: isOpen ? `${openWebSidebarWidthMd}px` : `${closedWebSidebarWidth}px`,
+                lg: isOpen ? `${openWebSidebarWidthLg}px` : `${openWebSidebarWidthMd}px`
+            }}
             rounded={'none'}
             gap={4}
             overflow={'auto'}

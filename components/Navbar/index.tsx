@@ -8,13 +8,17 @@ import ColorModeToggle from "@/components/Navbar/ColorModeToggle";
 import Image from 'next/image';
 
 export const navbarHeight = 80;
+export const mobileNavbarHeight = 60;
 
 const Navbar = () => {
   return (
       <Card
         p={2}
         rounded={'none'}
-        h={`${navbarHeight}px`}
+        h={{
+            base: `${mobileNavbarHeight}px`,
+            md: `${navbarHeight}px`
+        }}
         display={'flex'}
         justifyContent={'center'}
       >
@@ -26,7 +30,12 @@ const Navbar = () => {
             rounded='md'
             px={4}
         >
-            <Image src="/logo.png" alt="ChatEDU Logo" width={40} height={40} />
+            <Image
+                src="/logo.png"
+                alt="ChatEDU Logo"
+                width={40}
+                height={40}
+            />
             <Heading
                 size='md'
             >

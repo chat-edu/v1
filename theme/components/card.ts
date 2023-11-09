@@ -7,7 +7,10 @@ const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpe
 const baseStyle = definePartsStyle((props) => ({
     container: {
         backgroundColor: mode("white", "#2D2D2D")(props),
-        p: 4,
+        p: {
+            base: 2,
+            md: 4,
+        },
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",

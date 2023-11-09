@@ -6,11 +6,12 @@ import InputBox from "@/components/Home/Chat/InputBox";
 import Messages from "@/components/Home/Chat/Messages";
 
 import {mobileHeaderHeight} from "@/components/Home/NotesMenu/MobileHeader";
-import {navbarHeight} from "@/components/Navbar";
+import {mobileNavbarHeight, navbarHeight} from "@/components/Navbar";
 
 import useChatEdu from "@/hooks/useChatEdu";
 
 import {Note} from "@/types/Note";
+import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
 interface Props {
     notes: Note[]
@@ -26,14 +27,11 @@ const Chat: React.FC<Props> = ({ notes }) => {
         isLoading,
         handleInputChange,
         onSubmit,
-        askMultipleChoiceQuestion,
-        askUnderstandingQuestion,
-        askApplicationQuestion,
-        generateStudyGuide,
-        answerMultipleChoiceQuestion,
-        askForHint,
+        promptWithCommand,
         setMessageBottomRef
     } = useChatEdu(notes);
+
+    const { height } = useViewportDimensions();
 
     return (
         <Container
@@ -41,13 +39,13 @@ const Chat: React.FC<Props> = ({ notes }) => {
             maxW={'6xl'}
             p={0}
             h={{
-                base: `calc(100vh - ${navbarHeight + mobileHeaderHeight}px)`,
-                md: `calc(100vh - ${navbarHeight}px)`
+                base: height - mobileNavbarHeight - mobileHeaderHeight,
+                md: height - navbarHeight
             }}
         >
             <Flex
                 p={{
-                    base: 2,
+                    base: 0,
                     md: 4
                 }}
                 flexDirection={'column'}
@@ -59,8 +57,7 @@ const Chat: React.FC<Props> = ({ notes }) => {
             >
                 <Messages
                     messages={messages}
-                    onMultipleChoiceAnswer={answerMultipleChoiceQuestion}
-                    askForHint={askForHint}
+                    promptWithCommand={promptWithCommand}
                     correctAnswers={correctMapping}
                     isLoading={isLoading}
                 />
@@ -68,15 +65,12 @@ const Chat: React.FC<Props> = ({ notes }) => {
                     notes={notes}
                     value={input}
                     isLoading={isLoading}
-                    handleChange={handleInputChange}
-                    handleSubmit={onSubmit}
-                    askMultipleChoice={askMultipleChoiceQuestion}
-                    askUnderstanding={askUnderstandingQuestion}
-                    askApplication={askApplicationQuestion}
-                    generateStudyGuide={generateStudyGuide}
                     promptType={promptType}
                     showMessage={messages.length === 0}
                     correctAnswers={correctMapping}
+                    handleChange={handleInputChange}
+                    handleSubmit={onSubmit}
+                    promptWithCommand={promptWithCommand}
                 />
             </Flex>
         </Container>

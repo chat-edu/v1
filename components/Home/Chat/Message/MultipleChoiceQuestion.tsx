@@ -1,35 +1,37 @@
 import React, { useState, useRef } from 'react';
 
-import {Button, HStack, Text, VStack} from "@chakra-ui/react";
+import {Button, HStack, VStack} from "@chakra-ui/react";
 
 import {MultipleChoiceQuestion as MultipleChoiceQuestionType} from "@/types/prompts/MultipleChoiceQuestion";
 
 import confetti from 'canvas-confetti';
+import Markdown from "@/components/Utilities/Markdown";
+import {Command} from "@/types/prompts/Command";
+import {answerCorrectnessCommand, hintCommand} from "@/prompts";
+import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
 interface Props {
     question: MultipleChoiceQuestionType,
-    onAnswer: (answer: string) => void,
-    askForHint: () => void
+    promptWithCommand: (command: Command<any>) => void,
     answered: boolean
 }
 
-const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHint, answered }) => {
+const MultipleChoiceQuestion: React.FC<Props> = ({ question, promptWithCommand, answered }) => {
 
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+    const { height, width } = useViewportDimensions();
 
     const onClick = (option: string, index: number) => {
         if (selectedIndex == null) {
             setSelectedIndex(index);
-            onAnswer(option);
-
-            // If the answer is correct, trigger confetti
-        if (index === question.answerIndex) {
-            const buttonRef = buttonRefs.current[index];
-            if (buttonRef) {
-                triggerConfettiFromButton(buttonRef);
+            promptWithCommand(answerCorrectnessCommand(question.question, option));
+            if (index === question.answerIndex) {
+                const buttonRef = buttonRefs.current[index];
+                if (buttonRef) {
+                    triggerConfettiFromButton(buttonRef);
+                }
             }
-        }
         }
     };
 
@@ -42,7 +44,7 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHin
             startVelocity: 25,
             spread: 360,
             gravity: 0.6,
-            origin: { x: x / window.innerWidth, y: y / window.innerHeight },
+            origin: { x: x / width, y: y / height },
             colors: ["#4caf50"]
         });
     }
@@ -63,15 +65,26 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHin
                 alignItems={'flex-start'}
                 flex={1}
             >
-                <Text
-                    fontSize={{
-                        base: 'sm',
-                        md: 'lg'
-                    }}
-                    fontWeight={'bold'}
+                <HStack
+                    justifyContent={'space-between'}
+                    gap={4}
                 >
-                    {question.question}
-                </Text>
+                    <Markdown>
+                        {`***${question.question}***`}
+                    </Markdown>
+                    <Button
+                        variant={'outline'}
+                        colorScheme={'brand'}
+                        onClick={() => promptWithCommand(hintCommand)}
+                        isDisabled={answered}
+                        size={{
+                            base: 'sm',
+                            md: 'md'
+                        }}
+                    >
+                        Hint
+                    </Button>
+                </HStack>
                 <VStack
                     w={'100%'}
                 >
@@ -98,20 +111,14 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, onAnswer, askForHin
                                 onClick={() => onClick(option, index)}
                                 isDisabled={answered}
                             >
-                                {option}
+                                <Markdown>
+                                    {option}
+                                </Markdown>
                             </Button>
                         ))
                     }
                 </VStack>
             </VStack>
-            <Button
-                variant={'outline'}
-                colorScheme={'brand'}
-                onClick={askForHint}
-                isDisabled={answered}
-            >
-                Hint
-            </Button>
         </HStack>
     );
 };

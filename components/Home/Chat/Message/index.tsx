@@ -30,10 +30,11 @@ import {
     answerCorrectnessDefaults
 } from "@/prompts";
 
+import {Command} from "@/types/prompts/Command";
+
 interface Props {
     message: MessageInterface,
-    onMultipleChoiceAnswer: (answer: string) => void,
-    askForHint: () => void,
+    promptWithCommand: (command: Command<any>) => void,
     isCorrect?: boolean
 }
 
@@ -59,7 +60,7 @@ const getRoleJustifyContent = (role: string) => {
     }
 }
 
-const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForHint, isCorrect }) => {
+const Message: React.FC<Props> = ({ message, promptWithCommand, isCorrect }) => {
 
     const { colorMode } = useColorMode();
 
@@ -77,7 +78,7 @@ const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForHint,
                 bg={getRoleBgColor(message.role, colorMode)}
             >
                 {
-                    getMessageComponent(message, onMultipleChoiceAnswer, askForHint, isCorrect !== undefined)
+                    getMessageComponent(message, promptWithCommand, isCorrect !== undefined)
                 }
             </Card>
         </Flex>
@@ -86,8 +87,7 @@ const Message: React.FC<Props> = ({ message, onMultipleChoiceAnswer, askForHint,
 
 const getMessageComponent = (
     message: MessageInterface,
-    onMultpleChoiceAnswer: (answer: string) => void,
-    askForHint: () => void,
+    promptWithCommand: (command: Command<any>) => void,
     answered: boolean
 ) => {
     const messageParts = message.content.split(':');
@@ -102,8 +102,7 @@ const getMessageComponent = (
             return (
                 <MultipleChoiceQuestion
                     question={parseResponse(multipleChoiceCommand, message)}
-                    onAnswer={onMultpleChoiceAnswer}
-                    askForHint={askForHint}
+                    promptWithCommand={promptWithCommand}
                     answered={answered}
                 />
             );
@@ -111,7 +110,7 @@ const getMessageComponent = (
             return (
                 <TextBasedQuestion
                     textBasedQuestion={parseResponse(understandingQuestionCommand, message)}
-                    askForHint={askForHint}
+                    promptWithCommand={promptWithCommand}
                     answered={answered}
                 />
             );
@@ -119,7 +118,7 @@ const getMessageComponent = (
             return (
                 <TextBasedQuestion
                     textBasedQuestion={parseResponse(applicationQuestionCommand, message)}
-                    askForHint={askForHint}
+                    promptWithCommand={promptWithCommand}
                     answered={answered}
                 />
             );

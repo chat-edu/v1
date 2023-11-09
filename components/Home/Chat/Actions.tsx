@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Stack, Text, VStack} from "@chakra-ui/react";
+import {SimpleGrid, Text, VStack} from "@chakra-ui/react";
 
 import {FaLeaf} from "react-icons/fa";
 import {MdQuestionAnswer} from "react-icons/md";
@@ -8,18 +8,27 @@ import {SlOptionsVertical} from "react-icons/sl";
 
 import Action from "@/components/Home/Chat/Action";
 
+import {
+    studyGuideCommand,
+    multipleChoiceCommand,
+    understandingQuestionCommand,
+    applicationQuestionCommand,
+} from "@/prompts";
+
+import {Command} from "@/types/prompts/Command";
+
+
 interface Props {
-    askMultipleChoice: () => Promise<void>;
-    askUnderstanding: () => Promise<void>;
-    askApplication: () => Promise<void>;
-    generateStudyGuide: () => Promise<void>;
+    promptWithCommand: (command: Command<any>) => void;
     disabled: boolean;
     showMessage: boolean;
 }
 
-const Actions: React.FC<Props> = ({ askMultipleChoice, askUnderstanding, askApplication, generateStudyGuide, disabled, showMessage }) => {
+const Actions: React.FC<Props> = ({ promptWithCommand, disabled, showMessage }) => {
     return (
-        <VStack>
+        <VStack
+            px={2}
+        >
             {
                 showMessage && (
                     <Text
@@ -33,36 +42,36 @@ const Actions: React.FC<Props> = ({ askMultipleChoice, askUnderstanding, askAppl
                     </Text>
                 )
             }
-            <Stack
+            <SimpleGrid
                 w={'100%'}
-                spacing={{ base: 2, md: 4 }}
-                flexDirection={{ base: "row", md: "row" }}
+                spacing={{ base: 2, xl: 4 }}
+                columns={{ base: 2, xl: 4 }}
             >
                 <Action
                     label={"Study Guide"}
                     icon={FaLeaf}
-                    onClick={generateStudyGuide}
+                    onClick={() => promptWithCommand(studyGuideCommand)}
                     disabled={disabled}
                 />
                 <Action
                     label={"Multiple Choice"}
                     icon={SlOptionsVertical}
-                    onClick={askMultipleChoice}
+                    onClick={() => promptWithCommand(multipleChoiceCommand)}
                     disabled={disabled}
                 />
                 <Action
-                    label={"Understanding Question"}
+                    label={"Understanding"}
                     icon={MdQuestionAnswer}
-                    onClick={askUnderstanding}
+                    onClick={() => promptWithCommand(understandingQuestionCommand)}
                     disabled={disabled}
                 />
                 <Action
-                    label={"Application Questions"}
+                    label={"Application"}
                     icon={MdQuestionAnswer}
-                    onClick={askApplication}
+                    onClick={() => promptWithCommand(applicationQuestionCommand)}
                     disabled={disabled}
                 />
-            </Stack>
+            </SimpleGrid>
         </VStack>
     );
 };
