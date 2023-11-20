@@ -7,6 +7,8 @@ export const addUser = async (id: string) =>
             isOnboarded: true,
         }),
     })
+        .then(async (res) => (await res.json()) as boolean)
+        .then((res) => res);
 
 export const updateUserScore = async (userId: string, changeAmount: number) =>
     fetch(`/api/users/${userId}/update`, {
@@ -15,3 +17,5 @@ export const updateUserScore = async (userId: string, changeAmount: number) =>
             changeAmount,
         })
     })
+        .then(async (res) => (await res.json()) as boolean)
+        .then((res) => res);

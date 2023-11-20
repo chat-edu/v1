@@ -16,11 +16,11 @@ export const findNotebooksByUserId = async (userId: string): Promise<NotebookInp
     find(await getNotebookContainer(), notebooksByUserIdQuery(userId));
 
 // Add Notebook
-export const addNotebook = async (notebook: NotebookInput): Promise<NotebookInput> =>
+export const addNotebook = async (notebook: NotebookInput) =>
     add(await getNotebookContainer(), notebook);
 
 // Update Notebook
-export const updateNotebook = async (id: string, updatedFields: Partial<NotebookInput>): Promise<NotebookInput> =>
+export const updateNotebook = async (id: string, updatedFields: Partial<NotebookInput>) =>
     update(await getNotebookContainer(), id, updatedFields);
 
 // Get Notebook

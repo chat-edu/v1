@@ -15,14 +15,13 @@ export const findNotesByNotebookId = async (notebookId: string): Promise<NoteInp
     find(await getNotesContainer(), notesByNotebookQuery(notebookId));
 
 // Add Note
-export const addNote = async (note: NoteInput): Promise<NoteInput> =>
+export const addNote = async (note: NoteInput) =>
     add(await getNotesContainer(), note);
 
 // Update Note
-export const updateNote = async (id: string, notebookId: string, updatedFields: Partial<NoteInput>): Promise<NoteInput> => {
+export const updateNote = async (id: string, notebookId: string, updatedFields: Partial<NoteInput>) => {
     const note = await getNote(id, notebookId);
     const updatedNote = { ...note, ...updatedFields };
-
     return update(await getNotesContainer(), id, updatedNote);
 };
 

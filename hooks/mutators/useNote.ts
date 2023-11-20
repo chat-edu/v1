@@ -1,18 +1,40 @@
-import useAuth from "@/hooks/auth/useAuth";
+import useAuth from "@/hooks/auth/useAuth"
+
+import {useToast} from "@chakra-ui/react";
 
 import {deleteNote as deleteNoteService} from "@/services/notes";
 
-import {Note} from "@/types/Note";
 import {emitNotesChangedEvent} from "@/eventEmitters/notesEventEmitter";
+
+import {Note} from "@/types/Note";
 
 const useNote = (note: Note) => {
 
     const { user } = useAuth();
+
+    const toast = useToast();
     
     const deleteNote = async () => {
         if(!user) return;
-        await deleteNoteService(note.id, note.notebookId)
-        emitNotesChangedEvent(note.notebookId);
+        const success = await deleteNoteService(note.id, note.notebookId);
+        if(success) {
+            toast({
+                title: "Note Deleted",
+                description: `Note ${note.title} was deleted.`,
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+            });
+            emitNotesChangedEvent(note.notebookId);
+        } else {
+            toast({
+                title: "Note Deletion Failed",
+                description: `Note ${note.title} could not be deleted.`,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            });
+        }
     }
 
     return {

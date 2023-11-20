@@ -1,14 +1,18 @@
+import {useEffect} from "react";
+
 import * as Yup from 'yup';
 
 import {useFormik} from "formik";
 
-import { addNotebook } from "@/services/notebooks";
+import {useToast} from "@chakra-ui/react";
 
 import useAuth from "@/hooks/auth/useAuth";
 
-import {NotebookInput} from "@/types/Notebook";
-import {useEffect} from "react";
+import { addNotebook } from "@/services/notebooks";
+
 import {emitNotebooksChangedEvent} from "@/eventEmitters/notebooksEventEmitter";
+
+import {NotebookInput} from "@/types/Notebook";
 
 const NotebookSchema: Yup.ObjectSchema<NotebookInput> = Yup.object().shape({
     name: Yup.string()
@@ -22,6 +26,8 @@ const NotebookSchema: Yup.ObjectSchema<NotebookInput> = Yup.object().shape({
 const useAddNotebook = () => {
 
     const { user } = useAuth();
+
+    const toast = useToast();
 
     const {
         values,
@@ -39,8 +45,25 @@ const useAddNotebook = () => {
         validationSchema: NotebookSchema,
         onSubmit: async notebook => {
             if(!user) return;
-            await addNotebook(notebook);
-            emitNotebooksChangedEvent(notebook.userId);
+            const success = await addNotebook(notebook);
+            if(success) {
+                emitNotebooksChangedEvent(notebook.userId);
+                toast({
+                    title: "Notebook Created",
+                    description: `Notebook ${notebook.name} was created.`,
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                });
+            } else {
+                toast({
+                    title: "Notebook Creation Failed",
+                    description: `Notebook ${notebook.name} could not be created.`,
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                });
+            }
             resetForm();
         },
     });

@@ -6,7 +6,7 @@ import {useCallback, useEffect} from "react";
 
 const useNotes = (notebookId: string) => {
 
-    const [notes, loading, error, fetchNotes] = useContainerData<Note>(`/api/notes/${notebookId}`);
+    const [notes, loading, error, fetchNotes] = useContainerData<Note>(notebookId == "" ? "" : `/api/notes/${notebookId}`);
 
     const handleNotesChanged = useCallback(async (changedNotebookId: string) => {
         if(changedNotebookId === notebookId) {

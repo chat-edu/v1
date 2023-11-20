@@ -7,10 +7,12 @@ import {useFormik} from "formik";
 import { addNote } from "@/services/notes";
 
 import useAuth from "@/hooks/auth/useAuth";
+import {useToast} from "@chakra-ui/react";
+
+import {emitNotesChangedEvent} from "@/eventEmitters/notesEventEmitter";
 
 import {NoteInput} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
-import {emitNotesChangedEvent} from "@/eventEmitters/notesEventEmitter";
 
 const NoteSchema: Yup.ObjectSchema<NoteInput> = Yup.object().shape({
     title: Yup.string()
@@ -29,6 +31,8 @@ const useAddNote = (initNotebook?: Notebook) => {
     const { user } = useAuth();
 
     const [notebook, setNotebook] = useState<Notebook | null>(initNotebook || null);
+
+    const toast = useToast();
 
     useEffect(() => {
         setNotebook(initNotebook || null)
@@ -51,8 +55,25 @@ const useAddNote = (initNotebook?: Notebook) => {
         validationSchema: NoteSchema,
         onSubmit: async note => {
             if(!user) return;
-            await addNote(note);
-            emitNotesChangedEvent(note.notebookId);
+            const success = await addNote(note);
+            if(success) {
+                emitNotesChangedEvent(note.notebookId);
+                toast({
+                    title: "Note Added",
+                    description: "Your note has been added.",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                })
+            } else {
+                toast({
+                    title: "Error",
+                    description: "There was an error adding your note.",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                })
+            }
             resetForm();
         },
     });

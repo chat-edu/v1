@@ -13,11 +13,11 @@ export const findAllUsers = async (): Promise<User[]> =>
     find(await getUserContainer(), allUsersQuery);
 
 // Add User
-export const addUser = async (user: User): Promise<User> =>
+export const addUser = async (user: User) =>
     add(await getUserContainer(), user);
 
 // Update User Score
-export const updateUserScore = async (id: string, changeAmount: number): Promise<User> => {
+export const updateUserScore = async (id: string, changeAmount: number) => {
     const user = await getUser(id);
     const updatedUser = { ...user, score: user.score + changeAmount };
     return replace(await getUserContainer(), id, updatedUser);
