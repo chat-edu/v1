@@ -6,13 +6,14 @@ import Welcome from "@/components/Welcome";
 import NotebookOnboarding from "@/components/Home/Onboarding/NotebookOnboarding";
 import NotesOnboarding from "@/components/Home/Onboarding/NotesOnboarding";
 
-import useNotebooks from "@/hooks/queries/useNotebooks";
 import useNotes from "@/hooks/queries/useNotes";
+import useUserNotebooks from "@/hooks/queries/useUserNotebooks";
 
 import {addUser} from "@/services/user";
 
-import {User} from "@firebase/auth";
 import {emitUsersChangedEvent} from "@/eventEmitters/userEventEmitter";
+
+import {User} from "@firebase/auth";
 
 interface Props {
     user: User
@@ -20,7 +21,7 @@ interface Props {
 
 const Onboarding: React.FC<Props> = ({ user }) => {
 
-    const { notebooks, loading: notebooksLoading } = useNotebooks(user.uid);
+    const { notebooks, loading: notebooksLoading } = useUserNotebooks(user.uid);
 
     const notebook = notebooks.length > 0 ? notebooks[0] : null;
 

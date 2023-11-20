@@ -6,7 +6,7 @@ import Notebook from "@/components/Home/NotesMenu/Notebook";
 import AddNotebookButton from "@/components/Home/AddNotebook/AddNotebookButton";
 
 import useAuth from "@/hooks/auth/useAuth";
-import useNotebooks from "@/hooks/queries/useNotebooks";
+import useUserNotebooks from "@/hooks/queries/useUserNotebooks";
 
 import {Note} from "@/types/Note";
 
@@ -21,7 +21,7 @@ const NotebooksAccordion: React.FC<Props> = ({ selectedNotes, addNote, removeNot
 
     const { user } = useAuth();
 
-    const { notebooks, loading } = useNotebooks(user?.uid);
+    const { notebooks, loading } = useUserNotebooks(user?.uid || "");
 
     const [openNotebooks, setOpenNotebooks] = React.useState<{[key: string]: boolean}>({});
 

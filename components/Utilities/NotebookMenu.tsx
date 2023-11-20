@@ -2,7 +2,8 @@ import React from 'react';
 
 import AutoCompleteMenu from "@/components/Utilities/AutoCompleteMenu";
 
-import useNotebooks from "@/hooks/queries/useNotebooks";
+import useAuth from "@/hooks/auth/useAuth";
+import useUserNotebooks from "@/hooks/queries/useUserNotebooks";
 
 import { Notebook } from "@/types/Notebook";
 
@@ -18,7 +19,9 @@ interface Props {
 
 const NotebookMenu: React.FC<Props> = ({ label, notebook, placeholder, setNotebook, onBlur, error, closeButton }) => {
 
-    const { notebooks } = useNotebooks();
+    const { user } = useAuth();
+
+    const { notebooks } = useUserNotebooks(user?.uid || "");
 
     return (
         <AutoCompleteMenu

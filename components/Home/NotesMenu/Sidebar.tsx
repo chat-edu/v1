@@ -34,11 +34,11 @@ const Sidebar: React.FC<Props> = ({ selectedNotes, addNote, removeNote }) => {
             h={height - navbarHeight}
             w={{
                 md: isOpen ? `${openWebSidebarWidthMd}px` : `${closedWebSidebarWidth}px`,
-                lg: isOpen ? `${openWebSidebarWidthLg}px` : `${openWebSidebarWidthMd}px`
+                lg: isOpen ? `${openWebSidebarWidthLg}px` : `${closedWebSidebarWidth}px`
             }}
             minW={{
                 md: isOpen ? `${openWebSidebarWidthMd}px` : `${closedWebSidebarWidth}px`,
-                lg: isOpen ? `${openWebSidebarWidthLg}px` : `${openWebSidebarWidthMd}px`
+                lg: isOpen ? `${openWebSidebarWidthLg}px` : `${closedWebSidebarWidth}px`
             }}
             rounded={'none'}
             gap={4}

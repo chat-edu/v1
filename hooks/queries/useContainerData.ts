@@ -8,7 +8,6 @@ const useContainerData = <T>(url: string) => {
 
     const fetchData = useCallback(async () => {
         if(url === '') return;
-        setLoading(true);
         await fetch(url, {
             method: 'GET',
         })
