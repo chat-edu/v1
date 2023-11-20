@@ -12,6 +12,7 @@ import useNotes from "@/hooks/queries/useNotes";
 import {addUser} from "@/services/user";
 
 import {User} from "@firebase/auth";
+import {emitUsersChangedEvent} from "@/eventEmitters/userEventEmitter";
 
 interface Props {
     user: User
@@ -24,6 +25,11 @@ const Onboarding: React.FC<Props> = ({ user }) => {
     const notebook = notebooks.length > 0 ? notebooks[0] : null;
 
     const { notes, loading: notesLoading } = useNotes(notebook?.id || ' ');
+
+    const onStartLearning = async () => {
+        await addUser(user.uid);
+        emitUsersChangedEvent(user.uid)
+    }
 
     return (
         <VStack
@@ -82,7 +88,7 @@ const Onboarding: React.FC<Props> = ({ user }) => {
                     <Divider />
                     <Button
                         colorScheme={'brand'}
-                        onClick={() => addUser(user.uid)}
+                        onClick={onStartLearning}
                         isDisabled={notebooks.length === 0 || notes.length === 0}
                     >
                         Start Learning
