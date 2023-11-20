@@ -1,11 +1,8 @@
 import {useState} from "react";
 
 import {Note} from "@/types/Note";
-import useSubjects from "@/hooks/queries/useSubjects";
 
 const useHome = () => {
-
-    const { subjects, loading } = useSubjects();
 
     const [notes, setNotes] = useState<Note[]>([]);
 
@@ -19,8 +16,6 @@ const useHome = () => {
 
     return {
         notes,
-        subjects,
-        loading,
         addNote,
         removeNote
     }

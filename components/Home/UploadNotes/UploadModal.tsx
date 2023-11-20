@@ -12,21 +12,21 @@ import {
 
 import TextareaInput from "@/components/Utilities/TextareaInput";
 import TextInput from "@/components/Utilities/TextInput";
-import SubjectMenu from "@/components/Utilities/SubjectMenu";
+import NotebookMenu from "@/components/Utilities/NotebookMenu";
 
 import useAddNote from "@/hooks/mutators/useAddNote";
 
-import {Subject} from "@/types/Subject";
+import { Notebook } from "@/types/Notebook";
 
 interface Props {
     isOpen: boolean;
     onClose: () => void;
-    initSubject?: Subject
+    initNotebook?: Notebook
 }
 
-const UploadModal: React.FC<Props> = ({ isOpen, onClose , initSubject}) => {
+const UploadModal: React.FC<Props> = ({ isOpen, onClose , initNotebook}) => {
 
-    const { values, setFieldValue, touched, setFieldTouched, disabled, submitForm, updateSubject, errors, subject } = useAddNote(initSubject);
+    const { values, setFieldValue, touched, setFieldTouched, disabled, submitForm, updateNotebook, errors, notebook } = useAddNote(initNotebook);
 
     const onSubmit = async () => {
         await submitForm();
@@ -48,12 +48,12 @@ const UploadModal: React.FC<Props> = ({ isOpen, onClose , initSubject}) => {
                         direction={'column'}
                         gap={4}
                     >
-                        <SubjectMenu
-                            label={"Course"}
-                            course={subject}
-                            setCourse={updateSubject}
-                            onBlur={() => setFieldTouched('courseId', true)}
-                            error={touched.courseId && errors.courseId || undefined}
+                        <NotebookMenu
+                            label={"Notebook"}
+                            notebook={notebook}
+                            setNotebook={updateNotebook}
+                            onBlur={() => setFieldTouched('notebookId', true)}
+                            error={touched.notebookId && errors.notebookId || undefined}
                         />
                         <TextInput
                             label={"Title"}

@@ -1,21 +1,32 @@
-import {useCollectionData} from "react-firebase-hooks/firestore";
+import useContainerData from "@/hooks/queries/useContainerData";
 
-import {query} from "@firebase/firestore";
+import {Note} from "@/types/Note";
+import {subscribeToNotesChangedEvent, unsubscribeFromNotesChangedEvent} from "@/eventEmitters/notesEventEmitter";
+import {useCallback, useEffect} from "react";
 
-import useAuth from "@/hooks/auth/useAuth";
+const useNotes = (notebookId: string) => {
 
-import notesCollection from "@/firebase/firestore/converters/notesConverter";
+    const [notes, loading, error, fetchNotes] = useContainerData<Note>(notebookId == "" ? "" : `/api/notes/${notebookId}`);
 
-const useNotes = (courseId: string) => {
+    const handleNotesChanged = useCallback(async (changedNotebookId: string) => {
+        if(changedNotebookId === notebookId) {
+            await fetchNotes();
+        }
+    }, [fetchNotes, notebookId])
 
-    const { user } = useAuth();
+    useEffect(() => {
+        subscribeToNotesChangedEvent(handleNotesChanged);
+        return () => {
+            unsubscribeFromNotesChangedEvent(handleNotesChanged)
+        };
+    }, [handleNotesChanged]);
 
-    const [notes, loading, error] = useCollectionData(query(notesCollection(user?.uid || "a", courseId)));
 
     return {
         notes: notes || [],
         loading,
         error,
+        fetchNotes
     }
 }
 
