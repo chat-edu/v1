@@ -1,20 +1,21 @@
-import {useDocumentData} from "react-firebase-hooks/firestore";
-
 import useAuth from "@/hooks/auth/useAuth";
 
-import {userDocument} from "@/firebase/firestore/converters/usersConverter";
+import useItemData from "@/hooks/queries/useItemData";
+
+import {User} from "@/types/User";
 
 const useUser = () => {
 
     const { user } = useAuth();
 
-    const [userData, loading, error] = useDocumentData(userDocument(user?.uid || "a"));
+    const [userData, loading, error, fetchUserData] = useItemData<User>(`/api/users/${user?.uid}`);
 
     return {
         user,
         userData,
         loading,
         error,
+        fetchUserData
     }
 }
 

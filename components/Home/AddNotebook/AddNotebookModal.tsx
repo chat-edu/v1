@@ -8,7 +8,7 @@ import {
     ModalHeader,
     ModalOverlay
 } from "@chakra-ui/react";
-import useAddSubject from "@/hooks/mutators/useAddSubject";
+import useAddNotebook from "@/hooks/mutators/useAddNotebook";
 import TextInput from "@/components/Utilities/TextInput";
 
 interface Props {
@@ -16,9 +16,9 @@ interface Props {
     onClose: () => void;
 }
 
-const AddSubjectModal: React.FC<Props> = ({ isOpen, onClose }) => {
+const AddNotebookModal: React.FC<Props> = ({ isOpen, onClose }) => {
 
-    const { setFieldTouched, setFieldValue, values, touched, errors, disabled, submitForm } = useAddSubject();
+    const { setFieldTouched, setFieldValue, values, touched, errors, disabled, submitForm } = useAddNotebook();
 
     const onSubmit = async () => {
         await submitForm();
@@ -33,13 +33,13 @@ const AddSubjectModal: React.FC<Props> = ({ isOpen, onClose }) => {
         >
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Add Subject</ModalHeader>
+                <ModalHeader>Add Notebook</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
                     <TextInput
-                        label={'Subject Name'}
+                        label={'Notebook Name'}
                         placeholder={'Ex: CS 2201'}
-                        helperText={'Enter the name of the subject'}
+                        helperText={'Enter the name of the notebook'}
                         value={values.name}
                         onChange={(name) => setFieldValue('name', name)}
                         onBlur={() => setFieldTouched('name')}
@@ -60,4 +60,4 @@ const AddSubjectModal: React.FC<Props> = ({ isOpen, onClose }) => {
     );
 };
 
-export default AddSubjectModal;
+export default AddNotebookModal;

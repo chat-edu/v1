@@ -1,11 +1,15 @@
 import {useState} from "react";
 
+import useNotebooks from "@/hooks/queries/useNotebooks";
+import useAuth from "@/hooks/auth/useAuth";
+
 import {Note} from "@/types/Note";
-import useSubjects from "@/hooks/queries/useSubjects";
 
 const useHome = () => {
 
-    const { subjects, loading } = useSubjects();
+    const { user } = useAuth();
+
+    const { notebooks, loading } = useNotebooks(user?.uid);
 
     const [notes, setNotes] = useState<Note[]>([]);
 
@@ -19,7 +23,7 @@ const useHome = () => {
 
     return {
         notes,
-        subjects,
+        notebooks,
         loading,
         addNote,
         removeNote

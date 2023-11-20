@@ -3,30 +3,31 @@ import React, { useRef, useState } from 'react';
 import { IconButton, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter, Button } from "@chakra-ui/react";
 import { SmallCloseIcon } from "@chakra-ui/icons";
 
-import useSubject from "@/hooks/mutators/useSubject";
-import { Subject } from "@/types/Subject";
+import useNotebook from "@/hooks/mutators/useNotebook";
+
+import { Notebook } from "@/types/Notebook";
 
 interface Props {
-    subject: Subject
+    notebook: Notebook
 }
 
-const DeleteSubject: React.FC<Props> = ({ subject }) => {
-    
-    const { deleteSubject } = useSubject(subject);
+const DeleteNotebook: React.FC<Props> = ({ notebook }) => {
+
+    const { deleteNotebook } = useNotebook(notebook);
 
     const [isOpen, setIsOpen] = useState(false);
     const onClose = () => setIsOpen(false);
     const cancelRef = useRef<HTMLButtonElement>(null);
 
     const handleDelete = () => {
-        deleteSubject();
+        deleteNotebook();
         onClose();
     };
 
     return (
         <>
             <IconButton
-                aria-label={'Delete Course'}
+                aria-label={'Delete Notebook'}
                 icon={<SmallCloseIcon />}
                 onClick={() => setIsOpen(true)}
                 colorScheme={'red'}
@@ -41,11 +42,11 @@ const DeleteSubject: React.FC<Props> = ({ subject }) => {
                 <AlertDialogOverlay>
                     <AlertDialogContent>
                         <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                            Delete Course
+                            Delete Notebook
                         </AlertDialogHeader>
 
                         <AlertDialogBody>
-                            Are you sure you want to delete this course?
+                            Are you sure you want to delete this notebook?
                         </AlertDialogBody>
 
                         <AlertDialogFooter>
@@ -63,4 +64,4 @@ const DeleteSubject: React.FC<Props> = ({ subject }) => {
     );
 };
 
-export default DeleteSubject;
+export default DeleteNotebook;

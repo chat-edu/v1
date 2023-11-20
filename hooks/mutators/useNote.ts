@@ -1,8 +1,9 @@
 import useAuth from "@/hooks/auth/useAuth";
 
-import {removeNote} from "@/services/notes";
+import {deleteNote as deleteNoteService} from "@/services/notes";
 
 import {Note} from "@/types/Note";
+import {emitNotesChangedEvent} from "@/eventEmitters/notesEventEmitter";
 
 const useNote = (note: Note) => {
 
@@ -10,7 +11,8 @@ const useNote = (note: Note) => {
     
     const deleteNote = async () => {
         if(!user) return;
-        await removeNote(user.uid, note.courseId, note.id)
+        await deleteNoteService(note.id, note.notebookId)
+        emitNotesChangedEvent(note.notebookId);
     }
 
     return {

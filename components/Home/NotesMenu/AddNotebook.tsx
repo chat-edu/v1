@@ -7,22 +7,22 @@ import {
 
 import {AddIcon} from "@chakra-ui/icons";
 
-import AddSubjectModal from "@/components/Home/AddSubject/AddSubjectModal";
+import AddNotebookModal from "@/components/Home/AddNotebook/AddNotebookModal";
 
-const AddSubject = () => {
+const AddNotebook = () => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
         <>
             <IconButton
-                aria-label={'Add Subject'}
+                aria-label={'Add Notebook'}
                 icon={<AddIcon />}
                 onClick={onOpen}
                 variant={'ghost'}
                 colorScheme={'brand'}
             />
-            <AddSubjectModal
+            <AddNotebookModal
                 isOpen={isOpen}
                 onClose={onClose}
             />
@@ -30,4 +30,4 @@ const AddSubject = () => {
     );
 };
 
-export default AddSubject;
+export default AddNotebook;

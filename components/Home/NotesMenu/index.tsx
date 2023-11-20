@@ -11,8 +11,6 @@ interface Props {
     notes: Note[];
 }
 
-
-
 const NotesMenu: React.FC<Props> = ({ addNote, removeNote, notes }) => {
 
     return (

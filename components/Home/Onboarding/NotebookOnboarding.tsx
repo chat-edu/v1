@@ -2,16 +2,16 @@ import React from 'react';
 
 import {Heading, HStack, Text, VStack} from "@chakra-ui/react";
 
-import AddSubjectButton from "@/components/Home/AddSubject/AddSubjectButton";
+import AddNotebookButton from "@/components/Home/AddNotebook/AddNotebookButton";
 
-import {Subject} from "@/types/Subject";
+import { Notebook } from "@/types/Notebook";
 import {CheckIcon} from "@chakra-ui/icons";
 
 interface Props {
-    subject: Subject | null
+    notebook: Notebook | null
 }
 
-const SubjectOnboarding: React.FC<Props> = ({ subject }) => {
+const NotebookOnboarding: React.FC<Props> = ({ notebook }) => {
     return (
         <VStack>
             <Heading
@@ -20,7 +20,7 @@ const SubjectOnboarding: React.FC<Props> = ({ subject }) => {
                     md: 'md'
                 }}
             >
-                Subjects
+                Notebooks
             </Heading>
             <Text
                 fontSize={{
@@ -28,11 +28,11 @@ const SubjectOnboarding: React.FC<Props> = ({ subject }) => {
                     md: 'md'
                 }}
             >
-                Your notes are organized by Subject - get started by adding a subject now:
+                Your notes are organized in Notebooks - get started by creating a Notebook now:
             </Text>
             {
-                subject === null ? (
-                    <AddSubjectButton />
+                notebook === null ? (
+                    <AddNotebookButton />
                 ) : (
                     <HStack
                         spacing={2}
@@ -46,7 +46,7 @@ const SubjectOnboarding: React.FC<Props> = ({ subject }) => {
                         <Text
                             fontWeight={'bold'}
                         >
-                            {subject.name} Created
+                            {notebook.name} Created
                         </Text>
                     </HStack>
                 )
@@ -56,4 +56,4 @@ const SubjectOnboarding: React.FC<Props> = ({ subject }) => {
     );
 };
 
-export default SubjectOnboarding;
+export default NotebookOnboarding;

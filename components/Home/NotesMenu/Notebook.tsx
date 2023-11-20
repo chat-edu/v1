@@ -15,25 +15,25 @@ import {
 import {SmallAddIcon} from "@chakra-ui/icons";
 
 import UploadNotes from "@/components/Home/UploadNotes";
-import DeleteSubject from "@/components/Home/NotesMenu/DeleteSubject";
+import DeleteNotebook from "@/components/Home/NotesMenu/DeleteNotebook";
 import Note from "@/components/Home/NotesMenu/Note";
 
 import useNotes from "@/hooks/queries/useNotes";
 
-import {Subject as SubjectType} from "@/types/Subject";
+import {Notebook as NotebookType} from "@/types/Notebook";
 import {Note as NoteType} from "@/types/Note";
 
 interface Props {
-    subject: SubjectType,
+    notebook: NotebookType,
     selectedNotes: NoteType[],
     addNote: (note: NoteType) => void
     removeNote: (id: string) => void,
     closeSidebar?: () => void
 }
 
-const Subject: React.FC<Props> = ({ subject, selectedNotes,  addNote, removeNote, closeSidebar }) => {
+const Notebook: React.FC<Props> = ({ notebook, selectedNotes,  addNote, removeNote, closeSidebar }) => {
 
-    const { notes, loading } = useNotes(subject.id);
+    const { notes, loading } = useNotes(notebook.id);
 
     return (
         <AccordionItem>
@@ -46,13 +46,13 @@ const Subject: React.FC<Props> = ({ subject, selectedNotes,  addNote, removeNote
                         justifyContent={'space-between'}
                     >
                         <Text>
-                            {subject.name}
+                            {notebook.name}
                         </Text>
                         <AccordionIcon />
                     </HStack>
                 </AccordionButton>
-                <DeleteSubject
-                    subject={subject}
+                <DeleteNotebook
+                    notebook={notebook}
                 />
             </HStack>
             <AccordionPanel>
@@ -105,7 +105,7 @@ const Subject: React.FC<Props> = ({ subject, selectedNotes,  addNote, removeNote
                     <UploadNotes
                         text={"Add Note"}
                         icon={<SmallAddIcon />}
-                        subject={subject}
+                        notebook={notebook}
                         buttonProps={{
                             w: '100%',
                         }}
@@ -116,4 +116,4 @@ const Subject: React.FC<Props> = ({ subject, selectedNotes,  addNote, removeNote
     );
 };
 
-export default Subject;
+export default Notebook;

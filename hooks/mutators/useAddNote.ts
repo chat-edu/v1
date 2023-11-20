@@ -9,7 +9,8 @@ import { addNote } from "@/services/notes";
 import useAuth from "@/hooks/auth/useAuth";
 
 import {NoteInput} from "@/types/Note";
-import {Subject} from "@/types/Subject";
+import {Notebook} from "@/types/Notebook";
+import {emitNotesChangedEvent} from "@/eventEmitters/notesEventEmitter";
 
 const NoteSchema: Yup.ObjectSchema<NoteInput> = Yup.object().shape({
     title: Yup.string()
@@ -18,20 +19,20 @@ const NoteSchema: Yup.ObjectSchema<NoteInput> = Yup.object().shape({
     content: Yup.string()
         .required('Content is Required')
         .min(1, 'Content is Required'),
-    courseId: Yup.string()
-        .required('Course ID is Required')
+    notebookId: Yup.string()
+        .required('Notebook ID is Required')
         .min(1, 'Course ID is Required'),
 });
 
-const useAddNote = (initSubject?: Subject) => {
+const useAddNote = (initNotebook?: Notebook) => {
 
     const { user } = useAuth();
 
-    const [subject, setSubject] = useState<Subject | null>(initSubject || null);
+    const [notebook, setNotebook] = useState<Notebook | null>(initNotebook || null);
 
     useEffect(() => {
-        setSubject(initSubject || null)
-    }, [initSubject])
+        setNotebook(initNotebook || null)
+    }, [initNotebook])
 
     const {
         values,
@@ -45,33 +46,34 @@ const useAddNote = (initSubject?: Subject) => {
         initialValues: {
             title: '',
             content: '',
-            courseId: subject?.id || '',
+            notebookId: notebook?.id || '',
         },
         validationSchema: NoteSchema,
         onSubmit: async note => {
             if(!user) return;
-            await addNote(user.uid, note);
+            await addNote(note);
+            emitNotesChangedEvent(note.notebookId);
             resetForm();
         },
     });
 
     useEffect(() => {
-        setFieldValue('courseId', subject?.id || '');
-    }, [setFieldValue, subject]);
+        setFieldValue('notebookId', notebook?.id || '');
+    }, [setFieldValue, notebook]);
 
-    const updateSubject = (subject: Subject | null) => {
-        setSubject(subject);
+    const updateNotebook = (notebook: Notebook | null) => {
+        setNotebook(notebook);
     }
 
     return {
-        subject,
+        notebook,
         values,
         errors,
         touched,
         setFieldValue,
         setFieldTouched,
         submitForm,
-        updateSubject,
+        updateNotebook,
         resetForm,
         disabled: Object.keys(errors).length > 0,
     }

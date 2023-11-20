@@ -3,9 +3,9 @@ import React from 'react';
 import {Button, ButtonProps, useDisclosure} from "@chakra-ui/react";
 import {SmallAddIcon} from "@chakra-ui/icons";
 
-import AddSubjectModal from "@/components/Home/AddSubject/AddSubjectModal";
+import AddNotebookModal from "@/components/Home/AddNotebook/AddNotebookModal";
 
-const AddSubjectButton: React.FC<ButtonProps> = (buttonProps) => {
+const AddNotebookButton: React.FC<ButtonProps> = (buttonProps) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -17,9 +17,9 @@ const AddSubjectButton: React.FC<ButtonProps> = (buttonProps) => {
                 leftIcon={<SmallAddIcon />}
                 {...buttonProps}
             >
-                Add Subject
+                Add Notebook
             </Button>
-            <AddSubjectModal
+            <AddNotebookModal
                 isOpen={isOpen}
                 onClose={onClose}
             />
@@ -27,4 +27,4 @@ const AddSubjectButton: React.FC<ButtonProps> = (buttonProps) => {
     );
 };
 
-export default AddSubjectButton;
+export default AddNotebookButton;

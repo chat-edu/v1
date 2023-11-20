@@ -2,12 +2,13 @@ import React, {useEffect} from 'react';
 
 import {Accordion, Skeleton, Text, VStack} from "@chakra-ui/react";
 
-import Subject from "@/components/Home/NotesMenu/Subject";
+import Notebook from "@/components/Home/NotesMenu/Notebook";
+import AddNotebookButton from "@/components/Home/AddNotebook/AddNotebookButton";
 
-import useSubjects from "@/hooks/queries/useSubjects";
+import useAuth from "@/hooks/auth/useAuth";
+import useNotebooks from "@/hooks/queries/useNotebooks";
 
 import {Note} from "@/types/Note";
-import AddSubjectButton from "@/components/Home/AddSubject/AddSubjectButton";
 
 interface Props {
     selectedNotes: Note[];
@@ -16,21 +17,23 @@ interface Props {
     closeSidebar?: () => void;
 }
 
-const SubjectsAccordion: React.FC<Props> = ({ selectedNotes, addNote, removeNote, closeSidebar }) => {
+const NotebooksAccordion: React.FC<Props> = ({ selectedNotes, addNote, removeNote, closeSidebar }) => {
 
-    const { subjects, loading } = useSubjects();
+    const { user } = useAuth();
 
-    const [openSubjects, setOpenSubjects] = React.useState<{[key: string]: boolean}>({});
+    const { notebooks, loading } = useNotebooks(user?.uid);
+
+    const [openNotebooks, setOpenNotebooks] = React.useState<{[key: string]: boolean}>({});
 
     useEffect(() => {
         if(loading) return;
-        setOpenSubjects(subjects.reduce((acc, subject) => {
+        setOpenNotebooks(notebooks.reduce((acc, notebook) => {
             return {
                 ...acc,
-                [subject.id]: openSubjects[subject.id] ?? true
+                [notebook.id]: openNotebooks[notebook.id] ?? true
             }
         }, {}))
-    }, [subjects, loading])
+    }, [notebooks, loading])
 
     if(loading) return (
         <Skeleton
@@ -38,7 +41,7 @@ const SubjectsAccordion: React.FC<Props> = ({ selectedNotes, addNote, removeNote
         />
     );
 
-    if(subjects.length === 0) return (
+    if(notebooks.length === 0) return (
         <VStack
             alignItems={'start'}
         >
@@ -46,9 +49,9 @@ const SubjectsAccordion: React.FC<Props> = ({ selectedNotes, addNote, removeNote
                 fontSize={'lg'}
                 fontWeight={'medium'}
             >
-                No Subjects
+                No Notebooks
             </Text>
-            <AddSubjectButton
+            <AddNotebookButton
                 w={'100%'}
             />
         </VStack>
@@ -58,27 +61,26 @@ const SubjectsAccordion: React.FC<Props> = ({ selectedNotes, addNote, removeNote
         <Accordion
             allowMultiple
             w={'100%'}
-            index={subjects.reduce((acc, subject, index) => {
-                if(openSubjects[subject.id]) {
-                    console.log('open', index)
+            index={notebooks.reduce((acc, notebook, index) => {
+                if(openNotebooks[notebook.id]) {
                     return [...acc, index]
                 }
                 return acc;
             }, [] as number[])}
             onChange={(index: number[]) => {
-                setOpenSubjects(subjects.reduce((acc, subject, i) => {
+                setOpenNotebooks(notebooks.reduce((acc, notebook, i) => {
                     return {
                         ...acc,
-                        [subject.id]: index.includes(i)
+                        [notebook.id]: index.includes(i)
                     }
                 }, {}))
             }}
         >
             {
-                subjects.map((subject) => (
-                    <Subject
-                        key={subject.id}
-                        subject={subject}
+                notebooks.map((notebook) => (
+                    <Notebook
+                        key={notebook.id}
+                        notebook={notebook}
                         selectedNotes={selectedNotes}
                         addNote={addNote}
                         removeNote={removeNote}
@@ -90,4 +92,4 @@ const SubjectsAccordion: React.FC<Props> = ({ selectedNotes, addNote, removeNote
     );
 };
 
-export default SubjectsAccordion;
+export default NotebooksAccordion;

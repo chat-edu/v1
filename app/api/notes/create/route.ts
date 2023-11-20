@@ -12,7 +12,7 @@ export async function POST(request: Request) {
 
     // add the notebook
     return Response.json(await addNote({
-        title: note.name,
+        title: note.title,
         notebookId: note.notebookId,
         content: note.content,
     }));

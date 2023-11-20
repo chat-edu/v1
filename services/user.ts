@@ -1,13 +1,17 @@
-import {updateDoc, increment, setDoc} from "@firebase/firestore";
-import {userDocument} from "@/firebase/firestore/documents";
-
-export const setUserDoc = async (userId: string) =>
-    setDoc(userDocument(userId), {
-        isOnboarded: true,
-        score: 0,
+export const addUser = async (id: string) =>
+    fetch(`/api/users/create`, {
+        method: "POST",
+        body: JSON.stringify({
+            id,
+            score: 0,
+            isOnboarded: true,
+        }),
     })
 
 export const updateUserScore = async (userId: string, changeAmount: number) =>
-    updateDoc(userDocument(userId), {
-        score: increment(changeAmount)
+    fetch(`/api/users/${userId}/update`, {
+        method: "POST",
+        body: JSON.stringify({
+            changeAmount,
+        })
     })

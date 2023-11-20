@@ -4,8 +4,8 @@ import {Box, Card, Heading, HStack, IconButton, useDisclosure} from "@chakra-ui/
 
 import {VscLayoutSidebarLeft, VscLayoutSidebarLeftOff} from "react-icons/vsc";
 
-import AddSubject from "@/components/Home/NotesMenu/AddSubject";
-import SubjectsAccordion from "@/components/Home/NotesMenu/SubjectsAccordion";
+import AddNotebook from "@/components/Home/NotesMenu/AddNotebook";
+import NotebooksAccordion from "@/components/Home/NotesMenu/NotebooksAccordion";
 import {navbarHeight} from "@/components/Navbar";
 
 import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
@@ -57,10 +57,10 @@ const Sidebar: React.FC<Props> = ({ selectedNotes, addNote, removeNote }) => {
                     <Heading
                         size={'md'}
                     >
-                        Subjects
+                        Notebooks
                     </Heading>
                     <HStack>
-                        <AddSubject />
+                        <AddNotebook />
                         <IconButton
                             aria-label={'CloseSidebar'}
                             icon={<VscLayoutSidebarLeftOff />}
@@ -72,7 +72,7 @@ const Sidebar: React.FC<Props> = ({ selectedNotes, addNote, removeNote }) => {
                     flex={1}
                     w={'100%'}
                 >
-                    <SubjectsAccordion
+                    <NotebooksAccordion
                         selectedNotes={selectedNotes}
                         addNote={addNote}
                         removeNote={removeNote}

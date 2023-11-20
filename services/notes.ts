@@ -1,21 +1,18 @@
-import {addDoc, deleteDoc, updateDoc} from "@firebase/firestore";
+import { NoteInput} from "@/types/Note";
 
-import {notesCollection} from "@/firebase/firestore/collections";
-import {noteDocument} from "@/firebase/firestore/documents";
-
-import {Note, NoteInput} from "@/types/Note";
-
-// adds a course document to the courses collection
-export const addNote = async (userId: string, note: NoteInput) =>
-    addDoc(notesCollection(userId, note.courseId), note)
-
-
-// updates a chunk document in the chunks collection
-export const updateNote = async (userId: string, note: Note) =>
-    updateDoc(noteDocument(userId, note.courseId, note.id), {
-        content: note.content,
+export const addNote = async (note: NoteInput) =>
+    fetch(`/api/notes/create`, {
+        method: "POST",
+        body: JSON.stringify(note),
     })
 
-// removes a section from a course's sections array
-export const removeNote = async (userId: string, courseId: string, noteId: string) =>
-    deleteDoc(noteDocument(userId, courseId, noteId))
+export const updateNote = async (noteId: string, note: NoteInput) =>
+    fetch(`/api/notes/${note.notebookId}/${noteId}/update`, {
+        method: "POST",
+        body: JSON.stringify(note),
+    });
+
+export const deleteNote = async (noteId: string, notebookId: string) =>
+    fetch(`/api/notes/${notebookId}/${noteId}/delete`, {
+        method: "GET",
+    });
