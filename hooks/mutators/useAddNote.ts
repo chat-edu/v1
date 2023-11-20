@@ -7,9 +7,12 @@ import {useFormik} from "formik";
 import { addNote } from "@/services/notes";
 
 import useAuth from "@/hooks/auth/useAuth";
+import {useToast} from "@chakra-ui/react";
+
+import {emitNotesChangedEvent} from "@/eventEmitters/notesEventEmitter";
 
 import {NoteInput} from "@/types/Note";
-import {Subject} from "@/types/Subject";
+import {Notebook} from "@/types/Notebook";
 
 const NoteSchema: Yup.ObjectSchema<NoteInput> = Yup.object().shape({
     title: Yup.string()
@@ -18,20 +21,22 @@ const NoteSchema: Yup.ObjectSchema<NoteInput> = Yup.object().shape({
     content: Yup.string()
         .required('Content is Required')
         .min(1, 'Content is Required'),
-    courseId: Yup.string()
-        .required('Course ID is Required')
+    notebookId: Yup.string()
+        .required('Notebook ID is Required')
         .min(1, 'Course ID is Required'),
 });
 
-const useAddNote = (initSubject?: Subject) => {
+const useAddNote = (initNotebook?: Notebook) => {
 
     const { user } = useAuth();
 
-    const [subject, setSubject] = useState<Subject | null>(initSubject || null);
+    const [notebook, setNotebook] = useState<Notebook | null>(initNotebook || null);
+
+    const toast = useToast();
 
     useEffect(() => {
-        setSubject(initSubject || null)
-    }, [initSubject])
+        setNotebook(initNotebook || null)
+    }, [initNotebook])
 
     const {
         values,
@@ -45,33 +50,51 @@ const useAddNote = (initSubject?: Subject) => {
         initialValues: {
             title: '',
             content: '',
-            courseId: subject?.id || '',
+            notebookId: notebook?.id || '',
         },
         validationSchema: NoteSchema,
         onSubmit: async note => {
             if(!user) return;
-            await addNote(user.uid, note);
+            const success = await addNote(note);
+            if(success) {
+                emitNotesChangedEvent(note.notebookId);
+                toast({
+                    title: "Note Added",
+                    description: "Your note has been added.",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                })
+            } else {
+                toast({
+                    title: "Error",
+                    description: "There was an error adding your note.",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                })
+            }
             resetForm();
         },
     });
 
     useEffect(() => {
-        setFieldValue('courseId', subject?.id || '');
-    }, [setFieldValue, subject]);
+        setFieldValue('notebookId', notebook?.id || '');
+    }, [setFieldValue, notebook]);
 
-    const updateSubject = (subject: Subject | null) => {
-        setSubject(subject);
+    const updateNotebook = (notebook: Notebook | null) => {
+        setNotebook(notebook);
     }
 
     return {
-        subject,
+        notebook,
         values,
         errors,
         touched,
         setFieldValue,
         setFieldTouched,
         submitForm,
-        updateSubject,
+        updateNotebook,
         resetForm,
         disabled: Object.keys(errors).length > 0,
     }

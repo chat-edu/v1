@@ -1,20 +1,39 @@
-import {useDocumentData} from "react-firebase-hooks/firestore";
+import {useCallback, useEffect} from "react";
 
 import useAuth from "@/hooks/auth/useAuth";
+import useItemData from "@/hooks/queries/useItemData";
 
-import {userDocument} from "@/firebase/firestore/converters/usersConverter";
+import {subscribeToUsersChangedEvent, unsubscribeFromUsersChangedEvent} from "@/eventEmitters/userEventEmitter";
+
+import {User} from "@/types/User";
+
 
 const useUser = () => {
 
     const { user } = useAuth();
 
-    const [userData, loading, error] = useDocumentData(userDocument(user?.uid || "a"));
+    const [userData, loading, error, fetchUserData] = useItemData<User>(
+        user?.uid === undefined ? "" : `/api/users/${user?.uid}`);
+
+    const handleUserChanged = useCallback(async (changedUserId: string) => {
+        if(changedUserId === user?.uid) {
+            await fetchUserData();
+        }
+    }, [fetchUserData, user?.uid])
+
+    useEffect(() => {
+        subscribeToUsersChangedEvent(handleUserChanged);
+        return () => {
+            unsubscribeFromUsersChangedEvent(handleUserChanged)
+        };
+    }, [handleUserChanged]);
 
     return {
         user,
         userData,
         loading,
         error,
+        fetchUserData
     }
 }
 

@@ -37,7 +37,7 @@ const MobileHeader: React.FC<Props> = ({ notes, addNote, removeNote}) => {
                         fontSize={'sm'}
                         fontWeight={'semibold'}
                     >
-                        Courses
+                        Notebooks
                     </Text>
                     <Text
                         fontSize={'sm'}

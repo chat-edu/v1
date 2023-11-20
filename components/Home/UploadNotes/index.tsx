@@ -4,16 +4,16 @@ import {Button, ButtonProps, useDisclosure} from "@chakra-ui/react";
 
 import UploadModal from "@/components/Home/UploadNotes/UploadModal";
 
-import {Subject} from "@/types/Subject";
+import { Notebook } from "@/types/Notebook";
 
 interface Props {
     text: string;
     icon: React.ReactElement;
     buttonProps?: ButtonProps;
-    subject?: Subject
+    notebook?: Notebook
 }
 
-const UploadNotes: React.FC<Props> = ({ text, icon, buttonProps, subject }) => {
+const UploadNotes: React.FC<Props> = ({ text, icon, buttonProps, notebook }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -30,7 +30,7 @@ const UploadNotes: React.FC<Props> = ({ text, icon, buttonProps, subject }) => {
             <UploadModal
                 isOpen={isOpen}
                 onClose={onClose}
-                initSubject={subject}
+                initNotebook={notebook}
             />
         </>
     );

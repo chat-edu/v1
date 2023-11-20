@@ -17,8 +17,8 @@ import {
 
 import {BiNote} from "react-icons/bi";
 
-import AddSubject from "@/components/Home/NotesMenu/AddSubject";
-import SubjectsAccordion from "@/components/Home/NotesMenu/SubjectsAccordion";
+import AddNotebook from "@/components/Home/NotesMenu/AddNotebook";
+import NotebooksAccordion from "@/components/Home/NotesMenu/NotebooksAccordion";
 
 import {Note} from "@/types/Note";
 
@@ -56,9 +56,9 @@ const MobileSidebar: React.FC<Props> = ({ selectedNotes, addNote, removeNote }) 
                             <Heading
                                 size={'md'}
                             >
-                                Subjects
+                                Notebooks
                             </Heading>
-                            <AddSubject />
+                            <AddNotebook />
                         </HStack>
                     </DrawerHeader>
 
@@ -67,7 +67,7 @@ const MobileSidebar: React.FC<Props> = ({ selectedNotes, addNote, removeNote }) 
                             flex={1}
                             w={'100%'}
                         >
-                            <SubjectsAccordion
+                            <NotebooksAccordion
                                 selectedNotes={selectedNotes}
                                 addNote={addNote}
                                 removeNote={removeNote}

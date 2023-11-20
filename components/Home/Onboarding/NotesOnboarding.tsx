@@ -6,17 +6,17 @@ import {BiUpload} from "react-icons/bi";
 
 import UploadNotes from "@/components/Home/UploadNotes";
 
-import {Subject} from "@/types/Subject";
+import { Notebook } from "@/types/Notebook";
 import {Note} from "@/types/Note";
 import {CheckIcon} from "@chakra-ui/icons";
 
 interface Props {
-    subject: Subject | null,
+    notebook: Notebook | null,
     notes: Note[]
 }
 
 
-const NotesOnboarding: React.FC<Props> = ({ subject, notes }) => {
+const NotesOnboarding: React.FC<Props> = ({ notebook, notes }) => {
     return (
         <VStack>
             <Heading
@@ -55,7 +55,7 @@ const NotesOnboarding: React.FC<Props> = ({ subject, notes }) => {
                 ) : <UploadNotes
                     text={'Upload Notes'}
                     icon={<BiUpload />}
-                    subject={subject || undefined}
+                    notebook={notebook || undefined}
                 />
             }
 

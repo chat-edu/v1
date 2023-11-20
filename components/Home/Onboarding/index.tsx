@@ -3,13 +3,15 @@ import React from 'react';
 import {Button, Card, Divider, Skeleton, Text, VStack} from "@chakra-ui/react";
 
 import Welcome from "@/components/Welcome";
-import SubjectOnboarding from "@/components/Home/Onboarding/SubjectOnboarding";
+import NotebookOnboarding from "@/components/Home/Onboarding/NotebookOnboarding";
 import NotesOnboarding from "@/components/Home/Onboarding/NotesOnboarding";
 
-import useSubjects from "@/hooks/queries/useSubjects";
 import useNotes from "@/hooks/queries/useNotes";
+import useUserNotebooks from "@/hooks/queries/useUserNotebooks";
 
-import {setUserDoc} from "@/services/user";
+import {addUser} from "@/services/user";
+
+import {emitUsersChangedEvent} from "@/eventEmitters/userEventEmitter";
 
 import {User} from "@firebase/auth";
 
@@ -19,11 +21,16 @@ interface Props {
 
 const Onboarding: React.FC<Props> = ({ user }) => {
 
-    const { subjects, loading: subjectsLoading } = useSubjects();
+    const { notebooks, loading: notebooksLoading } = useUserNotebooks(user.uid);
 
-    const subject = subjects.length > 0 ? subjects[0] : null;
+    const notebook = notebooks.length > 0 ? notebooks[0] : null;
 
-    const { notes, loading: notesLoading } = useNotes(subject?.id || ' ');
+    const { notes, loading: notesLoading } = useNotes(notebook?.id || ' ');
+
+    const onStartLearning = async () => {
+        await addUser(user.uid);
+        emitUsersChangedEvent(user.uid)
+    }
 
     return (
         <VStack
@@ -62,10 +69,10 @@ const Onboarding: React.FC<Props> = ({ user }) => {
                     </Text>
                     <Divider />
                     {
-                        subjectsLoading ? (
+                        notebooksLoading ? (
                             <Skeleton />
                         ) : (
-                            <SubjectOnboarding subject={subject} />
+                            <NotebookOnboarding notebook={notebook} />
                         )
                     }
                     <Divider />
@@ -74,7 +81,7 @@ const Onboarding: React.FC<Props> = ({ user }) => {
                             <Skeleton />
                         ) : (
                             <NotesOnboarding
-                                subject={subject}
+                                notebook={notebook}
                                 notes={notes}
                             />
                         )
@@ -82,8 +89,8 @@ const Onboarding: React.FC<Props> = ({ user }) => {
                     <Divider />
                     <Button
                         colorScheme={'brand'}
-                        onClick={() => setUserDoc(user.uid)}
-                        isDisabled={subjects.length === 0 || notes.length === 0}
+                        onClick={onStartLearning}
+                        isDisabled={notebooks.length === 0 || notes.length === 0}
                     >
                         Start Learning
                     </Button>

@@ -1,7 +1,7 @@
 export interface NoteInput {
     title: string;
     content: string;
-    courseId: string;
+    notebookId: string;
 }
 
 export interface Note extends NoteInput {
