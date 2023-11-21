@@ -31,8 +31,7 @@ const Navbar = () => {
             <Image
                 src={'/logo.png'}
                 alt="ChatEDU Logo"
-                width={40}
-                height={40}
+                boxSize={'40px'}
             />
             <Heading
                 size='md'
