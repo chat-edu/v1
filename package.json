@@ -24,8 +24,8 @@
     "framer-motion": "^10.16.4",
     "next": "14.0.0",
     "openai": "^4.14.1",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
     "react-icons": "^4.11.0",
     "react-markdown": "^8.0.0",
@@ -37,8 +37,8 @@
   "devDependencies": {
     "@types/canvas-confetti": "^1.6.2",
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "^18.2.38",
+    "@types/react-dom": "^18.2.16",
     "eslint": "^8",
     "eslint-config-next": "14.0.0",
     "typescript": "^5"
