@@ -24,7 +24,6 @@ const Layout: React.FC<Props> = ({ children, authGate }) => {
     return (
         <Box
             h={height}
-            backgroundImage={!isConnected ? 'url(http://localhost:3000/background.png)' : undefined}
             backgroundSize={'cover'}
         >
             <Navbar />

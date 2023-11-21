@@ -1,11 +1,9 @@
 import React from 'react'
 
-import {Card, Flex, Heading, HStack, Text} from '@chakra-ui/react'
+import {Card, Flex, Heading, HStack, Text, Image} from '@chakra-ui/react'
 
 import AuthButton from '@/components/Navbar/AuthButton'
 import ColorModeToggle from "@/components/Navbar/ColorModeToggle";
-
-import Image from 'next/image';
 
 export const navbarHeight = 80;
 export const mobileNavbarHeight = 60;
@@ -33,8 +31,7 @@ const Navbar = () => {
             <Image
                 src={'/logo.png'}
                 alt="ChatEDU Logo"
-                width={40}
-                height={40}
+                boxSize={'40px'}
             />
             <Heading
                 size='md'
