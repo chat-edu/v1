@@ -1,7 +1,6 @@
 {
   "name": "chat-edu",
   "version": "0.1.0",
-  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -17,7 +16,6 @@
     "@choc-ui/chakra-autocomplete": "^5.2.8",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@vercel/analytics": "^1.1.1",
     "ai": "^2.2.20",
     "canvas-confetti": "^1.9.0",
     "chakra-ui-markdown-renderer": "^4.1.0",
