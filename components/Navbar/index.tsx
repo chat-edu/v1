@@ -31,7 +31,7 @@ const Navbar = () => {
             px={4}
         >
             <Image
-                src="/logo.png"
+                src={'/logo.png'}
                 alt="ChatEDU Logo"
                 width={40}
                 height={40}
