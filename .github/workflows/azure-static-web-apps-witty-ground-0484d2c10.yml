@@ -50,7 +50,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Set Application Settings
         run: |
-          az staticwebapp appsettings set --name ChatEDU --resource-group Sandbox \
+          az staticwebapp appsettings set --name chatedu-client --resource-group ChatEDU \
           --setting-names \
           OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
           GPT_MODEL_ID=${{ secrets.GPT_MODEL_ID }} \
