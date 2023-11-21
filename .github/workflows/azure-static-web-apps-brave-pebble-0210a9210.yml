@@ -14,7 +14,6 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
-    environment: Production
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       GPT_MODEL_ID: ${{ secrets.GPT_MODEL_ID }}
