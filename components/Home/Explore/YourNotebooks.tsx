@@ -23,9 +23,7 @@ const YourNotebooks = () => {
                 w={'100%'}
                 justify={'space-between'}
             >
-                <Heading
-                    size={'lg'}
-                >
+                <Heading>
                     Your Notebooks
                 </Heading>
                 <AddNotebookButton />
@@ -34,9 +32,7 @@ const YourNotebooks = () => {
                 notebooks={notebooks}
                 loading={loading}
                 noNotebooksComponent={
-                    <VStack
-                        w={'100%'}
-                    >
+                    <VStack>
                         <Text>
                             {"You don't have any notebooks yet"}
                         </Text>

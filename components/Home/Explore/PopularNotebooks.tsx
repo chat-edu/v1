@@ -8,22 +8,19 @@ import useNotebooks from "@/hooks/queries/useNotebooks";
 
 const PopularNotebooks = () => {
 
-    const { notebooks, loading } = useNotebooks("top");
+    const { notebooks, loading } = useNotebooks();
 
     return (
         <VStack
             spacing={4}
             align={'start'}
         >
-            <Heading
-                size={'lg'}
-            >
+            <Heading>
                 Popular Notebooks
             </Heading>
             <NotebookGrid
                 notebooks={notebooks}
                 loading={loading}
-                ranked
             />
         </VStack>
     );
