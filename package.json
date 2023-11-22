@@ -19,7 +19,6 @@
     "ai": "^2.2.20",
     "canvas-confetti": "^1.9.0",
     "chakra-ui-markdown-renderer": "^4.1.0",
-    "firebase": "^10.5.2",
     "formik": "^2.4.5",
     "framer-motion": "^10.16.4",
     "next": "13.4.19",
