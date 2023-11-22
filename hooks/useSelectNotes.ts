@@ -10,7 +10,7 @@ const useSelectNotes = () => {
         setSelectedNotes([...selectedNotes, note]);
     };
 
-    const removeNote = (id: Note["id"]) => {
+    const removeNote = (id: string) => {
         setSelectedNotes(selectedNotes.filter((note) => note.id !== id));
     }
 

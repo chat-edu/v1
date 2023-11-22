@@ -9,7 +9,7 @@ import MobileHeader from "@/components/Notebook/NotebookMenu/MobileHeader";
 interface Props {
     notebook: Notebook
     addNote: (note: Note) => void;
-    removeNote: (id: Note["id"]) => void;
+    removeNote: (id: string) => void;
     selectedNotes: Note[];
 }
 

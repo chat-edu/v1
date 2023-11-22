@@ -1,27 +1,56 @@
 import React from 'react';
 
-import Explore from "@/components/Home/Explore";
-import useAuth from "@/hooks/useAuth";
-import useUser from "@/hooks/queries/useUser";
-import {Skeleton} from "@chakra-ui/react";
+import {Skeleton, Stack, VStack} from "@chakra-ui/react";
+
+import Sidebar from "@/components/Home/NotesMenu";
+import Chat from "@/components/Chat";
 import Onboarding from "@/components/Home/Onboarding";
+
+import useSelectNotes from "@/hooks/useSelectNotes";
+import useUser from "@/hooks/queries/useUser";
 
 const Home = () => {
 
-    const { user } = useAuth();
+    const { userData, user, loading: userLoading } = useUser();
 
-    const { userData, loading } = useUser(user?.id || '');
+    const { selectedNotes, addNote, removeNote } = useSelectNotes();
 
-    if (loading) {
-        return <Skeleton />
-    }
-
-    if(!userData) {
-        return <Onboarding />
-    }
+    if(!user) return;
 
     return (
-        <Explore />
+        <VStack
+            flex={1}
+            w={'100%'}
+            spacing={4}
+        >
+            {
+                userLoading ? (
+                    <Skeleton />
+                ) : (
+                    userData?.isOnboarded ? (
+                        <Stack
+                            w={'100%'}
+                            flex={1}
+                            gap={0}
+                            direction={{base: 'column', md: 'row'}}
+                        >
+                            <Sidebar
+                                addNote={addNote}
+                                removeNote={removeNote}
+                                notes={selectedNotes}
+                            />
+                            <Chat
+                                notes={selectedNotes}
+                            />
+                        </Stack>
+                    ) : (
+                        <Onboarding
+                            userId={user.id}
+                        />
+                    )
+                )
+            }
+        </VStack>
     );
 };
 

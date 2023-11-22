@@ -22,7 +22,7 @@ interface Props {
     notebook: Notebook,
     selectedNotes: Note[],
     addNote: (note: Note) => void;
-    removeNote: (id: Note["id"]) => void
+    removeNote: (id: string) => void
 }
 
 const Sidebar: React.FC<Props> = ({ notebook, selectedNotes, addNote, removeNote }) => {

@@ -13,7 +13,7 @@ interface Props {
     notebook: Notebook;
     selectedNotes: Note[];
     addNote: (note: Note) => void;
-    removeNote: (id: Note["id"]) => void;
+    removeNote: (id: string) => void;
 }
 
 const MobileHeader: React.FC<Props> = ({ notebook, selectedNotes, addNote, removeNote}) => {
