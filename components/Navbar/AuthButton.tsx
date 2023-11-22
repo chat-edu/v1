@@ -10,13 +10,15 @@ import {
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 
+import { signOut } from 'next-auth/react'
+
 import AuthProviderIconButtons from "@/components/AuthButtons/AuthProviderIconButtons";
 
 import useAuth from "@/hooks/auth/useAuth";
 
 const AuthButton = () => {
 
-    const { isConnected, user, onSignOut } = useAuth();
+    const { isConnected, user } = useAuth();
 
     if(!isConnected) {
         return (
@@ -54,7 +56,7 @@ const AuthButton = () => {
                 </MenuButton>
                 <MenuList>
                     <MenuItem
-                        onClick={() => onSignOut()}
+                        onClick={() => signOut()}
                     >
                         Sign Out
                     </MenuItem>
