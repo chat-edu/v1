@@ -15,7 +15,7 @@ import {
     applicationQuestionCommand,
 } from "@/prompts";
 
-import {Command} from "@/types/prompts/Command";
+import {Command} from "@/types/commands/Command";
 
 
 interface Props {

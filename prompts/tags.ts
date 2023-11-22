@@ -7,14 +7,16 @@ export enum ResponseTags {
     APPLICATION = `Application ${questionResponseTagSuffix}`,
     ANSWER_CORRECTNESS = `Answer Correctness Response`,
     HINT = `Hint Response`,
-    STUDY_GUIDE = `Study Guide Response`
+    STUDY_GUIDE = `Study Guide Response`,
+    PLAIN_TEXT = `Plain Text Response`
 }
 
-export enum PromptTags {
+export enum CommandTags {
     MULTIPLE_CHOICE = `Multiple Choice ${promptTagSuffix}`,
     UNDERSTANDING = `Understanding ${promptTagSuffix}`,
     APPLICATION = `Application ${promptTagSuffix}`,
     ANSWER_CORRECTNESS = `Answer Correctness ${promptTagSuffix}`,
     HINT = `Hint ${promptTagSuffix}`,
-    STUDY_GUIDE = `Study Guide ${promptTagSuffix}`
+    STUDY_GUIDE = `Study Guide ${promptTagSuffix}`,
+    PLAIN_TEXT = `Plain Text ${promptTagSuffix}`
 }

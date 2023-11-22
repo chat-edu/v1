@@ -10,6 +10,9 @@ import {MdQuestionAnswer} from "react-icons/md";
 import {FaLeaf} from "react-icons/fa";
 import {BsFillLightbulbFill} from "react-icons/bs";
 
+// @ts-ignore
+import jsonAutocomplete from "json-autocomplete";
+
 import StudyGuide from "@/components/Home/Chat/Message/StudyGuide";
 import MultipleChoiceQuestion from "@/components/Home/Chat/Message/MultipleChoiceQuestion";
 import TextBasedQuestion from "@/components/Home/Chat/Message/TextBasedQuestion";
@@ -20,7 +23,7 @@ import Hint from "@/components/Home/Chat/Message/Hint";
 
 import {
     ResponseTags,
-    PromptTags,
+    CommandTags,
     parseResponse,
     studyGuideCommand,
     hintCommand,
@@ -30,7 +33,7 @@ import {
     answerCorrectnessDefaults
 } from "@/prompts";
 
-import {Command} from "@/types/prompts/Command";
+import {Command} from "@/types/commands/Command";
 
 interface Props {
     message: MessageInterface,
@@ -90,18 +93,33 @@ const getMessageComponent = (
     promptWithCommand: (command: Command<any>) => void,
     answered: boolean
 ) => {
-    const messageParts = message.content.split(':');
-    switch (messageParts[0]) {
+    // const messageContent = jsonAutocomplete(message.content) as string;
+    let tag: string;
+    let content: any;
+    try {
+        let parsed;
+        try {
+            parsed = JSON.parse(message.content);
+        } catch (e) {
+            parsed = JSON.parse(jsonAutocomplete(message.content) as string);
+        }
+        tag = parsed.tag;
+        content = parsed.content;
+    } catch (e) {
+        return null;
+    }
+    if(!content) return null;
+    switch (tag) {
         case ResponseTags.STUDY_GUIDE:
             return (
                 <StudyGuide
-                    studyGuide={parseResponse(studyGuideCommand, message)}
+                    studyGuide={parseResponse(studyGuideCommand, content)}
                 />
             );
         case ResponseTags.MULTIPLE_CHOICE:
             return (
                 <MultipleChoiceQuestion
-                    question={parseResponse(multipleChoiceCommand, message)}
+                    question={parseResponse(multipleChoiceCommand, content)}
                     promptWithCommand={promptWithCommand}
                     answered={answered}
                 />
@@ -109,7 +127,7 @@ const getMessageComponent = (
         case ResponseTags.UNDERSTANDING:
             return (
                 <TextBasedQuestion
-                    textBasedQuestion={parseResponse(understandingQuestionCommand, message)}
+                    textBasedQuestion={parseResponse(understandingQuestionCommand, content)}
                     promptWithCommand={promptWithCommand}
                     answered={answered}
                 />
@@ -117,7 +135,7 @@ const getMessageComponent = (
         case ResponseTags.APPLICATION:
             return (
                 <TextBasedQuestion
-                    textBasedQuestion={parseResponse(applicationQuestionCommand, message)}
+                    textBasedQuestion={parseResponse(applicationQuestionCommand, content)}
                     promptWithCommand={promptWithCommand}
                     answered={answered}
                 />
@@ -125,58 +143,58 @@ const getMessageComponent = (
         case ResponseTags.ANSWER_CORRECTNESS:
             return (
                 <QuestionCorrectness
-                    correctness={parseResponse(answerCorrectnessDefaults, message)}
+                    correctness={parseResponse(answerCorrectnessDefaults, content)}
                 />
             );
         case ResponseTags.HINT:
             return (
                 <Hint
-                    hint={parseResponse(hintCommand, message)}
+                    hint={parseResponse(hintCommand, content)}
                 />
             );
-        case PromptTags.HINT:
+        case CommandTags.HINT:
             return (
                 <ActionPrompt
                     title={"Hint"}
                     icon={BsFillLightbulbFill}
                 />
             );
-        case PromptTags.MULTIPLE_CHOICE:
+        case CommandTags.MULTIPLE_CHOICE:
             return (
                 <ActionPrompt
                     title={"Multiple Choice Question"}
                     icon={SlOptionsVertical}
                 />
             );
-        case PromptTags.STUDY_GUIDE:
+        case CommandTags.STUDY_GUIDE:
             return (
                 <ActionPrompt
                     title={"Study Guide"}
                     icon={FaLeaf}
                 />
             );
-        case PromptTags.UNDERSTANDING:
+        case CommandTags.UNDERSTANDING:
             return (
                 <ActionPrompt
                     title={"Understanding Question"}
                     icon={MdQuestionAnswer}
                 />
             );
-        case PromptTags.APPLICATION:
+        case CommandTags.APPLICATION:
             return (
                 <ActionPrompt
                     title={"Application Question"}
                     icon={MdQuestionAnswer}
                 />
             );
-        case PromptTags.ANSWER_CORRECTNESS:
+        case CommandTags.ANSWER_CORRECTNESS:
             return (
-                <TextMessage content={messageParts[1].trim()} />
+                <TextMessage content={(content || "").trim()} />
             );
         default:
             return (
                 <TextMessage
-                    content={message.content}
+                    content={content}
                 />
             )
     }

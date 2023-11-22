@@ -2,7 +2,7 @@ import React from 'react'
 
 import Markdown from "@/components/Utilities/Markdown";
 
-import {StudyGuide as StudyGuideType} from "@/types/prompts/StudyGuide";
+import {StudyGuide as StudyGuideType} from "@/types/commands/StudyGuide";
 import {Box, IconButton, useClipboard, useToast} from "@chakra-ui/react";
 import {CopyIcon} from "@chakra-ui/icons";
 
@@ -12,7 +12,7 @@ interface Props {
 
 const StudyGuide: React.FC<Props> = ({ studyGuide}) => {
 
-    const { onCopy } = useClipboard(studyGuide.content)
+    const { onCopy } = useClipboard(studyGuide.studyGuide)
 
     const toast = useToast();
 
@@ -44,7 +44,7 @@ const StudyGuide: React.FC<Props> = ({ studyGuide}) => {
                 }}
             />
             <Markdown>
-                {studyGuide.content}
+                {studyGuide.studyGuide}
             </Markdown>
         </Box>
     );

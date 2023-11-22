@@ -5,7 +5,7 @@ import {HStack, Icon, Text, VStack} from "@chakra-ui/react";
 import {MdExposurePlus1} from "react-icons/md";
 import {AiOutlineExclamationCircle} from "react-icons/ai";
 
-import {AnswerCorrectness, Correctness} from "@/types/prompts/AnswerCorrectness";
+import {AnswerCorrectness} from "@/types/commands/AnswerCorrectness";
 import Markdown from "@/components/Utilities/Markdown";
 
 interface Props {
@@ -13,8 +13,6 @@ interface Props {
 }
 
 const QuestionCorrectness: React.FC<Props> = ({ correctness }) => {
-
-    if(correctness.correct === Correctness.Unknown) return null;
 
     return (
         <HStack
@@ -24,7 +22,7 @@ const QuestionCorrectness: React.FC<Props> = ({ correctness }) => {
             }}
         >
             {
-                correctness.correct === Correctness.Correct && (
+                correctness.correct != undefined && correctness.correct && (
                     <Icon
                         as={MdExposurePlus1}
                         color={'brand.500'}
@@ -33,7 +31,7 @@ const QuestionCorrectness: React.FC<Props> = ({ correctness }) => {
                 )
             }
             {
-                correctness.correct === Correctness.Incorrect && (
+                correctness.correct != undefined && !correctness.correct && (
                     <Icon
                         as={AiOutlineExclamationCircle}
                         color={'red.500'}
@@ -45,16 +43,20 @@ const QuestionCorrectness: React.FC<Props> = ({ correctness }) => {
                 align={'start'}
                 spacing={0}
             >
-                <Text
-                    fontSize={{
-                        base: 'xs',
-                        md: 'md'
-                    }}
-                    color={correctness.correct == Correctness.Correct ? 'green.500' : 'red.500'}
-                    fontWeight={'semibold'}
-                >
-                    {correctness.correct == Correctness.Correct ? 'Correct!' : 'Incorrect!'}
-                </Text>
+                {
+                    correctness.correct != undefined && (
+                        <Text
+                            fontSize={{
+                                base: 'xs',
+                                md: 'md'
+                            }}
+                            color={correctness.correct ? 'green.500' : 'red.500'}
+                            fontWeight={'semibold'}
+                        >
+                            {correctness.correct ? 'Correct!' : 'Incorrect!'}
+                        </Text>
+                    )
+                }
                 <Markdown>
                     {correctness.explanation}
                 </Markdown>

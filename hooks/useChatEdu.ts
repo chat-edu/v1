@@ -4,17 +4,18 @@ import {Message, nanoid} from "ai";
 import {useChat} from "ai/react";
 
 import {answerCorrectnessCommand,} from "@/prompts";
-import {answerCorrectnessResponseTag, incorrectTag} from "@/prompts/commands/answerCorrectness";
+import {answerCorrectnessResponseTag} from "@/prompts/commands/answerCorrectness";
 import {getPrePrompt, getPrompt} from "@/prompts";
 import {questionResponseTagSuffix} from "@/prompts/tags";
 import {context} from "@/prompts/context";
 
-import {Command, PromptTypes} from "@/types/prompts/Command";
+import {Command, CommandTypes} from "@/types/commands/Command";
 import {Note} from "@/types/Note";
+import {plainTextCommand} from "@/prompts/commands/plainText";
 
 const useChatEdu = (notes: Note[]) => {
 
-    const [promptType, setPromptType] = useState<PromptTypes>(PromptTypes.REGULAR);
+    const [promptType, setPromptType] = useState<CommandTypes>(CommandTypes.REGULAR);
 
     const [currentQuestion, setCurrentQuestion] = useState<Message | null>(null);
 
@@ -23,12 +24,12 @@ const useChatEdu = (notes: Note[]) => {
     const [messageBottomRef, setMessageBottomRef] = useState<HTMLDivElement | null>(null);
 
     const onFinish =  (message: Message) => {
-        if(!currentQuestion && message.content.includes(`${questionResponseTagSuffix}: `)) {
+        if(!currentQuestion && message.content.includes(`${questionResponseTagSuffix}`)) {
             setCurrentQuestion(message);
         } else if(message.content.includes(answerCorrectnessResponseTag)) {
             setCorrectMapping({
                 ...correctMapping,
-                [currentQuestion?.id || ""]: !message.content.includes(incorrectTag)
+                [currentQuestion?.id || ""]: JSON.parse(message.content).content.correct
             })
             setCurrentQuestion(null);
         }
@@ -48,12 +49,11 @@ const useChatEdu = (notes: Note[]) => {
         input,
         setInput,
         handleInputChange,
-        handleSubmit,
         setMessages,
         append,
         isLoading
     } = useChat({
-        api: '/api/chat',
+        api: process.env.NEXT_PUBLIC_CHAT_ENDPOINT as string,
         onFinish,
     });
 
@@ -78,11 +78,11 @@ const useChatEdu = (notes: Note[]) => {
         ])
         setCurrentQuestion(null);
         setCorrectMapping({});
-        setPromptType(PromptTypes.REGULAR)
+        setPromptType(CommandTypes.REGULAR)
     }, [notes])
 
     const promptWithCommand = async (command: Command<any>) => {
-        if(command.promptType !== PromptTypes.HINT) {
+        if(command.promptType !== CommandTypes.HINT) {
             setPromptType(command.promptType);
         }
         setMessages([
@@ -95,18 +95,20 @@ const useChatEdu = (notes: Note[]) => {
         ])
         await append({
             id: nanoid(),
-            content: getPrompt(command),
+            content: JSON.stringify(getPrompt(command)),
             role: 'user',
         });
     }
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        if(promptType == PromptTypes.TEXT_BASED) {
+        if(promptType == CommandTypes.TEXT_BASED) {
             e.preventDefault();
             await promptWithCommand(answerCorrectnessCommand(currentQuestion?.content || "", input));
             setInput('');
         } else {
-            handleSubmit(e)
+            e.preventDefault();
+            await promptWithCommand(plainTextCommand(input));
+            setInput('');
         }
     }
 

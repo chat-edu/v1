@@ -1,22 +1,29 @@
-import {Command} from "@/types/prompts/Command";
-import {PromptResponse} from "@/types/prompts/PromptResponse";
-import {Message} from "ai";
+import {Command} from "@/types/commands/Command";
+import {JsonCommand} from "@/types/commands/JsonCommand";
 
 export const getPrePrompt = (prompt: Command<any>): string => `
     Content: ${prompt.responseDescription}
     
-    Format: prompts should be in markdown, using headings, bold, italics, and lists, and math expressions where appropriate.
-
-    Template: Responses MUST use the following template EXACTLY . <> indicates a placeholder. Do NOT include the <> in your response, but ensure that the placeholder's description is satisfied. Make sure to start with ${prompt.responseTag} followed by a colon (:).
+    Responses are to be in JSON format. the 'content' field is to be filled exactly as specified. The first part of each field is its type. The part after the colon is the description of the field.
     
-    ${prompt.responseTag}: <${prompt.responseFormatting}>
+    <> indicates a placeholder. Do NOT include the <> in your response, but ensure that the placeholder's description is satisfied. Items wrapped in "" must be included as is.
+    
+    JSON Template: {
+        tag: "${prompt.responseTag}",
+        content: ${JSON.stringify(prompt.responseFormatting)}
+    }
 `;
 
-export const getPrompt = (prompt: Command<any>): string => {
-    return `${prompt.promptTag}: ${prompt.promptContent}`;
+export const getPrompt = (prompt: Command<any>): JsonCommand => {
+    return {
+        tag: prompt.promptTag,
+        content: prompt.promptContent
+    }
 }
 
-export const parseResponse = <ResponseType extends PromptResponse>(
+export const parseResponse = <ResponseType>(
     prompt: Command<ResponseType>,
-    message: Message,
-): ResponseType => prompt.parseResponse(message.content.split(`${prompt.responseTag}: `)[1], message.id);
+    content: object,
+): ResponseType => {
+    return content as ResponseType;
+};
