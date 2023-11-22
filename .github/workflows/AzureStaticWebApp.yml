@@ -27,6 +27,9 @@ jobs:
       AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      NEXT_PUBLIC_DOCUMENT_INTELLIGENCE_KEY: ${{ secrets.NEXT_PUBLIC_DOCUMENT_INTELLIGENCE_KEY }}
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -63,7 +66,8 @@ jobs:
           AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }} \
           AZURE_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }} \
           NEXTAUTH_SECRET=${{ secrets.AZURE_CLIENT_SECRET }} \
-          NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}
+          NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} \
+          NEXT_PUBLIC_DOCUMENT_INTELLIGENCE_KEY=${{ secrets.NEXT_PUBLIC_DOCUMENT_INTELLIGENCE_KEY }} \
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

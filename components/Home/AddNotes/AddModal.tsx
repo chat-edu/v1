@@ -24,7 +24,7 @@ interface Props {
     initNotebook?: Notebook
 }
 
-const UploadModal: React.FC<Props> = ({ isOpen, onClose , initNotebook}) => {
+const AddModal: React.FC<Props> = ({ isOpen, onClose , initNotebook}) => {
 
     const { values, setFieldValue, touched, setFieldTouched, disabled, submitForm, updateNotebook, errors, notebook } = useAddNote(initNotebook);
 
@@ -89,4 +89,4 @@ const UploadModal: React.FC<Props> = ({ isOpen, onClose , initNotebook}) => {
     );
 };
 
-export default UploadModal;
+export default AddModal;
