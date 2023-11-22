@@ -5,7 +5,7 @@ import {Accordion, Skeleton, Text, VStack} from "@chakra-ui/react";
 import Notebook from "@/components/Home/NotesMenu/Notebook";
 import AddNotebookButton from "@/components/Home/AddNotebook/AddNotebookButton";
 
-import useAuth from "@/hooks/auth/useAuth";
+import useAuth from "@/hooks/useAuth";
 import useUserNotebooks from "@/hooks/queries/useUserNotebooks";
 
 import {Note} from "@/types/Note";

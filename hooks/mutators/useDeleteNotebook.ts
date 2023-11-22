@@ -1,6 +1,6 @@
 import {useToast} from "@chakra-ui/react";
 
-import useAuth from "@/hooks/auth/useAuth";
+import useAuth from "@/hooks/useAuth";
 
 import { deleteNotebook as deleteNotebookService } from '@/services/notebooks'
 
@@ -8,7 +8,7 @@ import {emitNotebooksChangedEvent} from "@/eventEmitters/notebooksEventEmitter";
 
 import {Notebook} from "@/types/Notebook";
 
-const useNotebook = (notebook: Notebook) => {
+const useDeleteNotebook = (notebook: Notebook) => {
 
     const { user } = useAuth();
 
@@ -43,4 +43,4 @@ const useNotebook = (notebook: Notebook) => {
     }
 }
 
-export default useNotebook
+export default useDeleteNotebook

@@ -2,19 +2,18 @@ import React from 'react';
 
 import {Skeleton, Stack, VStack} from "@chakra-ui/react";
 
-import HomeLanding from "@/components/Home/HomeLanding";
 import Sidebar from "@/components/Home/NotesMenu";
-import Chat from "@/components/Home/Chat";
-
-import useHome from "@/hooks/home/useHome";
-import useUser from "@/hooks/queries/useUser";
+import Chat from "@/components/Chat";
 import Onboarding from "@/components/Home/Onboarding";
+
+import useSelectNotes from "@/hooks/useSelectNotes";
+import useUser from "@/hooks/queries/useUser";
 
 const Home = () => {
 
     const { userData, user, loading: userLoading } = useUser();
 
-    const { notes, addNote, removeNote } = useHome();
+    const { selectedNotes, addNote, removeNote } = useSelectNotes();
 
     if(!user) return;
 
@@ -38,17 +37,11 @@ const Home = () => {
                             <Sidebar
                                 addNote={addNote}
                                 removeNote={removeNote}
-                                notes={notes}
+                                notes={selectedNotes}
                             />
-                            {
-                                notes.length > 0 ? (
-                                    <Chat
-                                        notes={notes}
-                                    />
-                                ) : (
-                                    <HomeLanding />
-                                )
-                            }
+                            <Chat
+                                notes={selectedNotes}
+                            />
                         </Stack>
                     ) : (
                         <Onboarding

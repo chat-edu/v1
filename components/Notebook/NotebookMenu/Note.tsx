@@ -26,7 +26,7 @@ import {Note as NoteType} from "@/types/Note";
 interface Props {
     note: NoteType,
     addNote: (note: NoteType) => void
-    removeNote: (noteId: NoteType["id"]) => void
+    removeNote: (id: string) => void
 }
 
 const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
@@ -58,7 +58,7 @@ const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
                         }
                     }}
                 >
-                    {note.name}
+                    {note.title}
                 </Checkbox>
                 <HStack>
                     <IconButton
@@ -77,7 +77,7 @@ const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
             >
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>{note.name}</ModalHeader>
+                    <ModalHeader>{note.title}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
                         <Markdown>

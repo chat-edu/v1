@@ -13,13 +13,13 @@ import {BsFillLightbulbFill} from "react-icons/bs";
 // @ts-ignore
 import jsonAutocomplete from "json-autocomplete";
 
-import StudyGuide from "@/components/Home/Chat/Message/StudyGuide";
-import MultipleChoiceQuestion from "@/components/Home/Chat/Message/MultipleChoiceQuestion";
-import TextBasedQuestion from "@/components/Home/Chat/Message/TextBasedQuestion";
-import TextMessage from "@/components/Home/Chat/Message/TextMessage";
-import QuestionCorrectness from "@/components/Home/Chat/Message/QuestionCorrectness";
-import ActionPrompt from "@/components/Home/Chat/Message/ActionPrompt";
-import Hint from "@/components/Home/Chat/Message/Hint";
+import StudyGuide from "@/components/Chat/Message/StudyGuide";
+import MultipleChoiceQuestion from "@/components/Chat/Message/MultipleChoiceQuestion";
+import TextBasedQuestion from "@/components/Chat/Message/TextBasedQuestion";
+import TextMessage from "@/components/Chat/Message/TextMessage";
+import QuestionCorrectness from "@/components/Chat/Message/QuestionCorrectness";
+import ActionPrompt from "@/components/Chat/Message/ActionPrompt";
+import Hint from "@/components/Chat/Message/Hint";
 
 import {
     ResponseTags,
