@@ -4,7 +4,7 @@ import {Card, Text, VStack} from "@chakra-ui/react";
 
 import Welcome from "@/components/Welcome";
 
-import SignInWithGoogleButton from "@/components/Navbar/SignInWithGoogleButton";
+import AuthProviderButtons from "@/components/AuthButtons/AuthProviderButtons";
 
 const NotConnected = () => {
 
@@ -26,9 +26,9 @@ const NotConnected = () => {
                                 md: 'md'
                             }}
                         >
-                            Get started by logging in with your Google account
+                            Get started by logging in
                         </Text>
-                        <SignInWithGoogleButton />
+                        <AuthProviderButtons />
                     </VStack>
                 </VStack>
             </Card>

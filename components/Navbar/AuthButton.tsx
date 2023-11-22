@@ -10,17 +10,19 @@ import {
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 
-import SignInWithGoogleButton from "@/components/Navbar/SignInWithGoogleButton";
+import { signOut } from 'next-auth/react'
+
+import AuthProviderIconButtons from "@/components/AuthButtons/AuthProviderIconButtons";
 
 import useAuth from "@/hooks/auth/useAuth";
 
 const AuthButton = () => {
 
-    const { isConnected, user, onSignOut } = useAuth();
+    const { isConnected, user } = useAuth();
 
     if(!isConnected) {
         return (
-            <SignInWithGoogleButton />
+            <AuthProviderIconButtons />
         )
     }
 
@@ -34,8 +36,8 @@ const AuthButton = () => {
                     icon={
                         <Avatar
                             size={'sm'}
-                            name={user?.displayName || ""}
-                            src={user?.photoURL || ""}
+                            name={user?.name || ""}
+                            src={user?.image || ""}
                         />
                     }
                 />
@@ -44,17 +46,17 @@ const AuthButton = () => {
                     as={Button}
                     leftIcon={<Avatar
                         size={'sm'}
-                        name={user?.displayName || ""}
-                        src={user?.photoURL || ""}
+                        name={user?.name || ""}
+                        src={user?.image || ""}
                     />}
                     rightIcon={<ChevronDownIcon />}
 
                 >
-                    {user?.displayName}
+                    {user?.name}
                 </MenuButton>
                 <MenuList>
                     <MenuItem
-                        onClick={() => onSignOut()}
+                        onClick={() => signOut()}
                     >
                         Sign Out
                     </MenuItem>

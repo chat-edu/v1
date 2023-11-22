@@ -40,7 +40,7 @@ const useAddNotebook = () => {
     } = useFormik<NotebookInput>({
         initialValues: {
             name: '',
-            userId: user?.uid || '',
+            userId: user?.id || '',
         },
         validationSchema: NotebookSchema,
         onSubmit: async notebook => {
@@ -70,7 +70,7 @@ const useAddNotebook = () => {
 
     useEffect(() => {
         if(user) {
-            setFieldValue('userId', user.uid);
+            setFieldValue('userId', user.id);
         }
     }, [setFieldValue, user]);
 

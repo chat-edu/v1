@@ -21,7 +21,7 @@ const NotebooksAccordion: React.FC<Props> = ({ selectedNotes, addNote, removeNot
 
     const { user } = useAuth();
 
-    const { notebooks, loading } = useUserNotebooks(user?.uid || "");
+    const { notebooks, loading } = useUserNotebooks(user?.id || "");
 
     const [openNotebooks, setOpenNotebooks] = React.useState<{[key: string]: boolean}>({});
 
