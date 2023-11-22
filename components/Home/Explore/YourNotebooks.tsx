@@ -23,7 +23,9 @@ const YourNotebooks = () => {
                 w={'100%'}
                 justify={'space-between'}
             >
-                <Heading>
+                <Heading
+                    size={'lg'}
+                >
                     Your Notebooks
                 </Heading>
                 <AddNotebookButton />
