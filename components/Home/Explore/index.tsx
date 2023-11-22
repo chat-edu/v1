@@ -4,6 +4,7 @@ import {Container} from "@chakra-ui/react";
 
 import YourNotebooks from "@/components/Home/Explore/YourNotebooks";
 import PopularNotebooks from "@/components/Home/Explore/PopularNotebooks";
+import ExploreHeader from "@/components/Home/Explore/ExploreHeader";
 
 const Explore = () => {
     return (
@@ -20,6 +21,7 @@ const Explore = () => {
                 md: 8
             }}
         >
+            <ExploreHeader />
             <YourNotebooks />
             <PopularNotebooks />
         </Container>

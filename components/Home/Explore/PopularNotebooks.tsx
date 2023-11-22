@@ -15,7 +15,9 @@ const PopularNotebooks = () => {
             spacing={4}
             align={'start'}
         >
-            <Heading>
+            <Heading
+                size={'lg'}
+            >
                 Popular Notebooks
             </Heading>
             <NotebookGrid
