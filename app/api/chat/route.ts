@@ -24,5 +24,13 @@ export async function POST(req: Request) {
 
   // @ts-ignore
   const stream = OpenAIStream(response);
-  return new StreamingTextResponse(stream);
+  return new StreamingTextResponse(
+      stream, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
+      }
+  );
 }
