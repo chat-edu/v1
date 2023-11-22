@@ -52,7 +52,7 @@ const Home = () => {
                         </Stack>
                     ) : (
                         <Onboarding
-                            user={user}
+                            userId={user.id}
                         />
                     )
                 )

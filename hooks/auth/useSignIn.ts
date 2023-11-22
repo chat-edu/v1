@@ -1,52 +1,19 @@
-import auth from "@/firebase/auth";
+import {useSession, signIn} from "next-auth/react";
 
-import {useAuthState, useSignInWithGoogle} from "react-firebase-hooks/auth";
-
-import {useToast} from "@chakra-ui/react";
-import {useEffect, useState} from "react";
-import {User} from "@firebase/auth";
+import {AuthProviders} from "@/types/AuthProviderButton";
 
 const useLogin = () => {
 
-    const [rawUser, loading, error] = useAuthState(auth);
+    const { data: session, status } = useSession();
 
-    const [user, setUser] = useState<User | null| undefined>(rawUser);
-
-    useEffect(() => {
-        setUser(rawUser);
-    }, [rawUser]);
-
-    const [signIn] = useSignInWithGoogle(auth)
-
-    const toast = useToast();
-
-    const onSignIn = async () => {
-        await signIn()
-            .then((_result) => {
-                toast({
-                    title: "Success",
-                    description: "Signed in successfully",
-                    status: "success",
-                    duration: 5000,
-                    isClosable: true,
-                })
-            })
-            .catch((error) => {
-                toast({
-                    title: "Error",
-                    description: error.message,
-                    status: "error",
-                    duration: 5000,
-                    isClosable: true,
-                })
-            })
+    const onSignIn = async (provider: AuthProviders) => {
+        await signIn(provider)
     }
 
     return {
-        user,
+        user: session?.user,
         onSignIn,
-        loading,
-        error
+        loading: status === "loading",
     }
 }
 

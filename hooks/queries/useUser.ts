@@ -13,13 +13,13 @@ const useUser = () => {
     const { user } = useAuth();
 
     const [userData, loading, error, fetchUserData] = useItemData<User>(
-        user?.uid === undefined ? "" : `/api/users/${user?.uid}`);
+        user?.id === undefined ? "" : `/api/users/${user?.id}`);
 
     const handleUserChanged = useCallback(async (changedUserId: string) => {
-        if(changedUserId === user?.uid) {
+        if(changedUserId === user?.id) {
             await fetchUserData();
         }
-    }, [fetchUserData, user?.uid])
+    }, [fetchUserData, user?.id])
 
     useEffect(() => {
         subscribeToUsersChangedEvent(handleUserChanged);

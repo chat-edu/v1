@@ -13,23 +13,21 @@ import {addUser} from "@/services/user";
 
 import {emitUsersChangedEvent} from "@/eventEmitters/userEventEmitter";
 
-import {User} from "@firebase/auth";
-
 interface Props {
-    user: User
+    userId: string
 }
 
-const Onboarding: React.FC<Props> = ({ user }) => {
+const Onboarding: React.FC<Props> = ({ userId }) => {
 
-    const { notebooks, loading: notebooksLoading } = useUserNotebooks(user.uid);
+    const { notebooks, loading: notebooksLoading } = useUserNotebooks(userId);
 
     const notebook = notebooks.length > 0 ? notebooks[0] : null;
 
     const { notes, loading: notesLoading } = useNotes(notebook?.id || ' ');
 
     const onStartLearning = async () => {
-        await addUser(user.uid);
-        emitUsersChangedEvent(user.uid)
+        await addUser(userId);
+        emitUsersChangedEvent(userId)
     }
 
     return (

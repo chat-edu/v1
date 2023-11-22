@@ -21,7 +21,7 @@ const NotebookMenu: React.FC<Props> = ({ label, notebook, placeholder, setNotebo
 
     const { user } = useAuth();
 
-    const { notebooks } = useUserNotebooks(user?.uid || "");
+    const { notebooks } = useUserNotebooks(user?.id || "");
 
     return (
         <AutoCompleteMenu
