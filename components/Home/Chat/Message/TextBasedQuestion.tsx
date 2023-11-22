@@ -4,8 +4,8 @@ import {Box, Button, HStack} from "@chakra-ui/react";
 
 import Markdown from "@/components/Utilities/Markdown";
 
-import {TextBasedQuestion as TextBasedQuestionType} from "@/types/prompts/TextBasedQuestion";
-import {Command} from "@/types/prompts/Command";
+import {TextBasedQuestion as TextBasedQuestionType} from "@/types/commands/TextBasedQuestion";
+import {Command} from "@/types/commands/Command";
 import {hintCommand} from "@/prompts";
 
 interface Props {

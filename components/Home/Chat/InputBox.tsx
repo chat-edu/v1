@@ -16,7 +16,7 @@ import {
 
 import Actions from "@/components/Home/Chat/Actions";
 
-import {Command, PromptTypes} from "@/types/prompts/Command";
+import {Command, CommandTypes} from "@/types/commands/Command";
 
 import {Note} from "@/types/Note";
 
@@ -27,7 +27,7 @@ interface Props {
     handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
     notes: Note[],
     promptWithCommand: (command: Command<any>) => void,
-    promptType: PromptTypes
+    promptType: CommandTypes
     showMessage: boolean;
     correctAnswers: { [key: string]: boolean };
 }
@@ -50,7 +50,7 @@ const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmi
         >
             <Actions
                 promptWithCommand={promptWithCommand}
-                disabled={promptType === PromptTypes.TEXT_BASED || promptType === PromptTypes.MULTIPLE_CHOICE || promptType === PromptTypes.HINT || isLoading}
+                disabled={promptType === CommandTypes.TEXT_BASED || promptType === CommandTypes.MULTIPLE_CHOICE || promptType === CommandTypes.HINT || isLoading}
                 showMessage={showMessage}
             />
             <Card
@@ -105,14 +105,14 @@ const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmi
                             flex={1}
                         >
                             <FormLabel>
-                                {promptType === PromptTypes.TEXT_BASED ? 'Answer' : 'Ask ChatEDU'}
+                                {promptType === CommandTypes.TEXT_BASED ? 'Answer' : 'Ask ChatEDU'}
                             </FormLabel>
                             <Textarea
                                 value={value}
                                 onChange={handleChange}
                                 focusBorderColor={'brand.500'}
                                 flex={1}
-                                isDisabled={promptType === PromptTypes.MULTIPLE_CHOICE || isLoading}
+                                isDisabled={promptType === CommandTypes.MULTIPLE_CHOICE || isLoading}
                                 rows={1}
                                 size={{
                                     base: 'sm',
@@ -124,11 +124,12 @@ const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmi
                             type={'submit'}
                             colorScheme={'brand'}
                             flexShrink={0}
-                            isDisabled={promptType === PromptTypes.MULTIPLE_CHOICE || isLoading}
+                            isDisabled={promptType === CommandTypes.MULTIPLE_CHOICE || isLoading}
                             size={{
                                 base: 'sm',
                                 md: 'md'
                             }}
+                            isLoading={isLoading}
                         >
                             Send
                         </Button>

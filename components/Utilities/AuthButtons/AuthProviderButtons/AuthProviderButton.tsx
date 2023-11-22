@@ -21,6 +21,9 @@ const AuthProviderButton: React.FC<Props> = ({ provider }) => {
                 />
             }
             onClick={() => signIn(provider.provider)}
+            w={'100%'}
+            justifyContent={'flex-start'}
+            variant={'outline'}
         >
             {provider.title}
         </Button>

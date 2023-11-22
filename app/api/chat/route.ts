@@ -15,6 +15,9 @@ export async function POST(req: Request) {
 
   const response = await openai.chat.completions.create({
     model: process.env.GPT_MODEL_ID as string,
+    response_format: {
+      type: 'json_object'
+    },
     stream: true,
     messages: messages,
   });

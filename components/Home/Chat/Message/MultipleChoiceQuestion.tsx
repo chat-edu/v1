@@ -2,11 +2,14 @@ import React, { useState, useRef } from 'react';
 
 import {Button, HStack, VStack} from "@chakra-ui/react";
 
-import {MultipleChoiceQuestion as MultipleChoiceQuestionType} from "@/types/prompts/MultipleChoiceQuestion";
+import {
+    MultipleChoiceKey,
+    MultipleChoiceQuestion as MultipleChoiceQuestionType
+} from "@/types/commands/MultipleChoiceQuestion";
 
 import confetti from 'canvas-confetti';
 import Markdown from "@/components/Utilities/Markdown";
-import {Command} from "@/types/prompts/Command";
+import {Command} from "@/types/commands/Command";
 import {answerCorrectnessCommand, hintCommand} from "@/prompts";
 import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
@@ -18,15 +21,16 @@ interface Props {
 
 const MultipleChoiceQuestion: React.FC<Props> = ({ question, promptWithCommand, answered }) => {
 
-    const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+    const [selectedOption, setSelectedOption] = useState<MultipleChoiceKey | null>(null);
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
     const { height, width } = useViewportDimensions();
 
-    const onClick = (option: string, index: number) => {
-        if (selectedIndex == null) {
-            setSelectedIndex(index);
-            promptWithCommand(answerCorrectnessCommand(question.question, option));
-            if (index === question.answerIndex) {
+    const onClick = (option: MultipleChoiceKey, index: number) => {
+        if (selectedOption == null) {
+            setSelectedOption(option);
+            // @ts-ignore
+            promptWithCommand(answerCorrectnessCommand(question.question, question.options[option]));
+            if (option === question.answer) {
                 const buttonRef = buttonRefs.current[index];
                 if (buttonRef) {
                     triggerConfettiFromButton(buttonRef);
@@ -49,10 +53,10 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, promptWithCommand, 
         });
     }
 
-    const buttonColorScheme = (index: number) => (
-        selectedIndex == index
-            ? (index == question.answerIndex ? 'green' : 'red')
-            : (answered && index == question.answerIndex ? 'green' : undefined)
+    const buttonColorScheme = (key: MultipleChoiceKey) => (
+        selectedOption == key
+            ? (key == question.answer ? 'green' : 'red')
+            : (answered && key == question.answer ? 'green' : undefined)
     )
 
     return (
@@ -89,7 +93,7 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, promptWithCommand, 
                     w={'100%'}
                 >
                     {
-                        question.options.map((option, index) => (
+                        Object.keys(question.options || {}).map((option, index) => (
                             <Button
                                 ref={(el: HTMLButtonElement | null) => buttonRefs.current[index] = el}
                                 variant={'outline'}
@@ -107,12 +111,15 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, promptWithCommand, 
                                     md: 'md'
                                 }}
                                 fontWeight={'normal'}
-                                colorScheme={buttonColorScheme(index)}
-                                onClick={() => onClick(option, index)}
+                                colorScheme={buttonColorScheme(option as MultipleChoiceKey)}
+                                onClick={() => onClick(option as MultipleChoiceKey, index)}
                                 isDisabled={answered}
                             >
                                 <Markdown>
-                                    {option}
+                                    {
+                                        // @ts-ignore
+                                        question.options[option]
+                                    }
                                 </Markdown>
                             </Button>
                         ))

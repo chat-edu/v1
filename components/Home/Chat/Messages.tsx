@@ -6,7 +6,7 @@ import {Box, Flex, Text, VStack} from "@chakra-ui/react";
 
 import Message from "@/components/Home/Chat/Message";
 import Welcome from "@/components/Welcome";
-import {Command} from "@/types/prompts/Command";
+import {Command} from "@/types/commands/Command";
 
 interface Props {
     messages: MessageInterface[],
@@ -67,7 +67,6 @@ const Messages: React.FC<Props> = ({ messages, promptWithCommand, correctAnswers
                                 </Text>
                             </VStack>
                         )
-
                     }
                 </VStack>
             </Flex>

@@ -2,12 +2,17 @@ import React from 'react';
 
 import {VStack} from "@chakra-ui/react";
 
-import AuthProviderButton from "@/components/AuthButtons/AuthProviderButtons/AuthProviderButton";
-import authProviderButtons from "@/components/AuthButtons/buttons";
+import AuthProviderButton from "@/components/Utilities/AuthButtons/AuthProviderButtons/AuthProviderButton";
+import authProviderButtons from "@/components/Utilities/AuthButtons/buttons";
 
 const AuthProviderButtons = () => {
     return (
-        <VStack>
+        <VStack
+            w={{
+                base: '100%',
+                md: '75%'
+            }}
+        >
             {
                 authProviderButtons.map(providerButton => (
                     <AuthProviderButton

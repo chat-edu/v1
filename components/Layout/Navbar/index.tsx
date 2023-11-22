@@ -2,8 +2,8 @@ import React from 'react'
 
 import {Card, Flex, Heading, HStack, Text, Image} from '@chakra-ui/react'
 
-import AuthButton from '@/components/Navbar/AuthButton'
-import ColorModeToggle from "@/components/Navbar/ColorModeToggle";
+import AuthButton from '@/components/Layout/Navbar/AuthButton'
+import ColorModeToggle from "@/components/Layout/Navbar/ColorModeToggle";
 
 export const navbarHeight = 80;
 export const mobileNavbarHeight = 60;

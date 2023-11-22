@@ -4,7 +4,7 @@ import {HStack, Icon, Text, useColorModeValue, VStack} from "@chakra-ui/react";
 
 import {AiOutlineInfoCircle} from "react-icons/ai";
 
-import {Hint} from "@/types/prompts/Hint";
+import {Hint} from "@/types/commands/Hint";
 import Markdown from "@/components/Utilities/Markdown";
 
 interface Props {
