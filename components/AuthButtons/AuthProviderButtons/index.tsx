@@ -7,7 +7,12 @@ import authProviderButtons from "@/components/AuthButtons/buttons";
 
 const AuthProviderButtons = () => {
     return (
-        <VStack>
+        <VStack
+            w={{
+                base: '100%',
+                md: '75%'
+            }}
+        >
             {
                 authProviderButtons.map(providerButton => (
                     <AuthProviderButton
