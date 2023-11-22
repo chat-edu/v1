@@ -61,7 +61,9 @@ jobs:
           GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} \
           GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }} \
           AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }} \
-          AZURE_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }} \
+          NEXTAUTH_SECRET=${{ secrets.AZURE_CLIENT_SECRET }} \
+          NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
