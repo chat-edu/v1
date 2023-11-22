@@ -9,8 +9,6 @@ import { addNote } from "@/services/notes";
 import useAuth from "@/hooks/auth/useAuth";
 import {useToast} from "@chakra-ui/react";
 
-import {emitNotesChangedEvent} from "@/eventEmitters/notesEventEmitter";
-
 import {NoteInput} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
 
@@ -57,7 +55,6 @@ const useAddNote = (initNotebook?: Notebook) => {
             if(!user) return;
             const success = await addNote(note);
             if(success) {
-                emitNotesChangedEvent(note.notebookId);
                 toast({
                     title: "Note Added",
                     description: "Your note has been added.",

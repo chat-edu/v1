@@ -4,8 +4,6 @@ import {useToast} from "@chakra-ui/react";
 
 import {deleteNote as deleteNoteService} from "@/services/notes";
 
-import {emitNotesChangedEvent} from "@/eventEmitters/notesEventEmitter";
-
 import {Note} from "@/types/Note";
 
 const useNote = (note: Note) => {
@@ -25,7 +23,6 @@ const useNote = (note: Note) => {
                 duration: 5000,
                 isClosable: true,
             });
-            emitNotesChangedEvent(note.notebookId);
         } else {
             toast({
                 title: "Note Deletion Failed",

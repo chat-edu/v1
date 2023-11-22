@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@azure/ai-form-recognizer": "^5.0.0",
     "@azure/cosmos": "^4.0.0",
+    "@azure/identity": "^4.0.0",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/next-js": "^2.1.5",
     "@chakra-ui/react": "^2.8.1",
@@ -35,6 +37,7 @@
   },
   "devDependencies": {
     "@types/canvas-confetti": "^1.6.2",
+    "@types/formidable": "^3.4.5",
     "@types/node": "^20",
     "@types/react": "^18.2.38",
     "@types/react-dom": "^18.2.16",

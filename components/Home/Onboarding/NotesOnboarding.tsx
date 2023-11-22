@@ -4,7 +4,7 @@ import {Heading, HStack, Text, VStack} from "@chakra-ui/react";
 
 import {BiUpload} from "react-icons/bi";
 
-import UploadNotes from "@/components/Home/UploadNotes";
+import AddNotes from "@/components/Home/AddNotes";
 
 import { Notebook } from "@/types/Notebook";
 import {Note} from "@/types/Note";
@@ -52,7 +52,7 @@ const NotesOnboarding: React.FC<Props> = ({ notebook, notes }) => {
                             {notes[0].title} Uploaded
                         </Text>
                     </HStack>
-                ) : <UploadNotes
+                ) : <AddNotes
                     text={'Upload Notes'}
                     icon={<BiUpload />}
                     notebook={notebook || undefined}
