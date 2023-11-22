@@ -2,8 +2,8 @@ import React from 'react';
 
 import {Container, Flex} from "@chakra-ui/react";
 
-import InputBox from "@/components/Home/Chat/InputBox";
-import Messages from "@/components/Home/Chat/Messages";
+import InputBox from "@/components/Chat/InputBox";
+import Messages from "@/components/Chat/Messages";
 
 import {mobileHeaderHeight} from "@/components/Home/NotesMenu/MobileHeader";
 import {mobileNavbarHeight, navbarHeight} from "@/components/Layout/Navbar";
@@ -12,6 +12,7 @@ import useChatEdu from "@/hooks/useChatEdu";
 
 import {Note} from "@/types/Note";
 import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
+import ChatLanding from "@/components/Chat/ChatLanding";
 
 interface Props {
     notes: Note[]
@@ -32,6 +33,10 @@ const Chat: React.FC<Props> = ({ notes }) => {
     } = useChatEdu(notes);
 
     const { height } = useViewportDimensions();
+
+    if(notes.length === 0) return (
+        <ChatLanding />
+    )
 
     return (
         <Container

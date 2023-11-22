@@ -4,7 +4,7 @@ import {Message as MessageInterface} from "ai";
 
 import {Box, Flex, Text, VStack} from "@chakra-ui/react";
 
-import Message from "@/components/Home/Chat/Message";
+import Message from "@/components/Chat/Message";
 import Welcome from "@/components/Welcome";
 import {Command} from "@/types/commands/Command";
 

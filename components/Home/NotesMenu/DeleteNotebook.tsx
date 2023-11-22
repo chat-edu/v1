@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import { IconButton, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter, Button } from "@chakra-ui/react";
 import { SmallCloseIcon } from "@chakra-ui/icons";
 
-import useNotebook from "@/hooks/mutators/useNotebook";
+import useDeleteNotebook from "@/hooks/mutators/useDeleteNotebook";
 
 import { Notebook } from "@/types/Notebook";
 
@@ -13,7 +13,7 @@ interface Props {
 
 const DeleteNotebook: React.FC<Props> = ({ notebook }) => {
 
-    const { deleteNotebook } = useNotebook(notebook);
+    const { deleteNotebook } = useDeleteNotebook(notebook);
 
     const [isOpen, setIsOpen] = useState(false);
     const onClose = () => setIsOpen(false);

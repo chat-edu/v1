@@ -1,4 +1,4 @@
-import useAuth from "@/hooks/auth/useAuth"
+import useAuth from "@/hooks/useAuth"
 
 import {useToast} from "@chakra-ui/react";
 
@@ -6,7 +6,7 @@ import {deleteNote as deleteNoteService} from "@/services/notes";
 
 import {Note} from "@/types/Note";
 
-const useNote = (note: Note) => {
+const useDeleteNote = (note: Note) => {
 
     const { user } = useAuth();
 
@@ -39,4 +39,4 @@ const useNote = (note: Note) => {
     }
 }
 
-export default useNote;
+export default useDeleteNote;

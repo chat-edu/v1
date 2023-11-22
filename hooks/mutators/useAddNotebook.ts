@@ -6,7 +6,7 @@ import {useFormik} from "formik";
 
 import {useToast} from "@chakra-ui/react";
 
-import useAuth from "@/hooks/auth/useAuth";
+import useAuth from "@/hooks/useAuth";
 
 import { addNotebook } from "@/services/notebooks";
 
