@@ -67,7 +67,6 @@ const Messages: React.FC<Props> = ({ messages, promptWithCommand, correctAnswers
                                 </Text>
                             </VStack>
                         )
-
                     }
                 </VStack>
             </Flex>

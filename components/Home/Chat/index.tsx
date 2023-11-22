@@ -6,7 +6,7 @@ import InputBox from "@/components/Home/Chat/InputBox";
 import Messages from "@/components/Home/Chat/Messages";
 
 import {mobileHeaderHeight} from "@/components/Home/NotesMenu/MobileHeader";
-import {mobileNavbarHeight, navbarHeight} from "@/components/Navbar";
+import {mobileNavbarHeight, navbarHeight} from "@/components/Layout/Navbar";
 
 import useChatEdu from "@/hooks/useChatEdu";
 

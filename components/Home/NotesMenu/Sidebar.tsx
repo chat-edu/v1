@@ -6,7 +6,7 @@ import {VscLayoutSidebarLeft, VscLayoutSidebarLeftOff} from "react-icons/vsc";
 
 import AddNotebook from "@/components/Home/NotesMenu/AddNotebook";
 import NotebooksAccordion from "@/components/Home/NotesMenu/NotebooksAccordion";
-import {navbarHeight} from "@/components/Navbar";
+import {navbarHeight} from "@/components/Layout/Navbar";
 
 import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 

@@ -129,6 +129,7 @@ const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmi
                                 base: 'sm',
                                 md: 'md'
                             }}
+                            isLoading={isLoading}
                         >
                             Send
                         </Button>

@@ -4,7 +4,7 @@ import {Card, VStack} from "@chakra-ui/react";
 
 import Welcome from "@/components/Welcome";
 
-import AuthProviderButtons from "@/components/AuthButtons/AuthProviderButtons";
+import AuthProviderButtons from "@/components/Utilities/AuthButtons/AuthProviderButtons";
 
 const NotConnected = () => {
 

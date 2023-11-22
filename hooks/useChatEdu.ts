@@ -12,7 +12,7 @@ import {context} from "@/prompts/context";
 import {Command, PromptTypes} from "@/types/prompts/Command";
 import {Note} from "@/types/Note";
 
-const useOpenAi = (notes: Note[]) => {
+const useChatEdu = (notes: Note[]) => {
 
     const [promptType, setPromptType] = useState<PromptTypes>(PromptTypes.REGULAR);
 
@@ -123,4 +123,4 @@ const useOpenAi = (notes: Note[]) => {
     };
 }
 
-export default useOpenAi;
+export default useChatEdu;

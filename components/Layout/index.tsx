@@ -3,7 +3,7 @@ import React from 'react';
 import {Box, Flex, Skeleton} from "@chakra-ui/react";
 
 import NotConnected from "@/components/Layout/NotConnected";
-import Navbar, { navbarHeight, mobileNavbarHeight } from "@/components/Navbar";
+import Navbar, { navbarHeight, mobileNavbarHeight } from "@/components/Layout/Navbar";
 import {mobileHeaderHeight} from "@/components/Home/NotesMenu/MobileHeader";
 
 import useAuth from "@/hooks/auth/useAuth";
