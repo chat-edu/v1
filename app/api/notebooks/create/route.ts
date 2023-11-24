@@ -1,4 +1,4 @@
-import { addNotebook } from "@/cosmosPostgres/services/notebooks";
+import { addNotebook } from "@/cosmos/services/notebooks";
 
 export async function POST(request: Request) {
     const notebook = (await request.json());

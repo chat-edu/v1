@@ -18,8 +18,8 @@ jobs:
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       GPT_MODEL_ID: ${{ secrets.GPT_MODEL_ID }}
-      COSMOS_ENDPOINT: ${{ secrets.COSMOS_ENDPOINT }}
-      COSMOS_KEY: ${{ secrets.COSMOS_KEY }}
+      COSMOS_POSTGRES_HOST: ${{ secrets.COSMOS_POSTGRES_HOST }}
+      COSMOS_POSTGRES_PASSWORD: ${{ secrets.COSMOS_POSTGRES_USER }}
       GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
       GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
       GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
@@ -59,8 +59,8 @@ jobs:
           --setting-names \
           OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
           GPT_MODEL_ID=${{ secrets.GPT_MODEL_ID }} \
-          COSMOS_ENDPOINT=${{ secrets.COSMOS_ENDPOINT }} \
-          COSMOS_KEY=${{ secrets.COSMOS_KEY }} \
+          COSMOS_POSTGRES_HOST=${{ secrets.COSMOS_POSTGRES_HOST }} \
+          COSMOS_POSTGRES_PASSWORD=${{ secrets.COSMOS_POSTGRES_PASSWORD }} \
           GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} \
           GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} \
           GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }} \

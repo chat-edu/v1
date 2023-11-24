@@ -20,7 +20,7 @@ const handler = NextAuth({
                 session.user.id = token.sub || "";
             }
             return session;
-        },
+        }
     }
 })
 

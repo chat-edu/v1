@@ -1,4 +1,4 @@
-import {addUser} from "@/cosmosPostgres/services/user";
+import {addUser} from "@/cosmos/services/user";
 
 import {User} from "@/types/User";
 

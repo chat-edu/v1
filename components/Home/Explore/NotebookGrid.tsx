@@ -9,13 +9,22 @@ import {Notebook} from "@/types/Notebook";
 interface Props {
     notebooks: Notebook[]
     loading: boolean,
-    noNotebooksComponent?: React.ReactNode
+    noNotebooksComponent?: React.ReactNode,
+    ranked?: boolean
 }
 
-const NotebookGrid: React.FC<Props> = ({ notebooks, loading, noNotebooksComponent}) => {
+const NotebookGrid: React.FC<Props> = ({ notebooks, loading, noNotebooksComponent, ranked}) => {
     if(loading) {
         return (
             <Skeleton />
+        )
+    }
+
+    if(notebooks.length === 0) {
+        return noNotebooksComponent || (
+            <Text>
+                No notebooks found
+            </Text>
         )
     }
 
@@ -33,21 +42,13 @@ const NotebookGrid: React.FC<Props> = ({ notebooks, loading, noNotebooksComponen
             }}
         >
             {
-                notebooks.length > 0 ? (
-                    notebooks.map(notebook => (
-                        <NotebookCard
-                            key={notebook.id}
-                            notebook={notebook}
-                        />
-                    ))
-                ) : (
-                    noNotebooksComponent || (
-                        <Text>
-                            No notebooks found
-                        </Text>
-                    )
-                )
-
+                notebooks.map((notebook, index) => (
+                    <NotebookCard
+                        key={notebook.id}
+                        notebook={notebook}
+                        rank={ranked ? index + 1 : undefined}
+                    />
+                ))
             }
         </SimpleGrid>
     );

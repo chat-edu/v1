@@ -1,6 +1,6 @@
-import {add, del, find, get, update} from "@/cosmosPostgres/services/base";
+import {add, del, find, get, update} from "@/cosmos/services/base";
 
-import {USERS_TABLE} from "@/cosmosPostgres/constants/tables";
+import {USERS_TABLE} from "@/cosmos/constants/tables";
 
 import {User} from "@/types/User";
 
@@ -13,15 +13,15 @@ export const addUser = async (user: User): Promise<boolean> => {
 };
 
 export const updateUser = async (id: string, updatedFields: Partial<User>): Promise<boolean> => {
-    return update(USERS_TABLE, id, updatedFields);
+    return update(USERS_TABLE, [id], updatedFields);
 };
 
 export const getUser = async (id: string): Promise<User | null> => {
-    return get(USERS_TABLE, id, transform);
+    return get(USERS_TABLE, [id], transform);
 };
 
 export const deleteUser = async (id: string): Promise<boolean> => {
-    return del(USERS_TABLE, id);
+    return del(USERS_TABLE, [id]);
 };
 
 const transform = (row: User): User => row;

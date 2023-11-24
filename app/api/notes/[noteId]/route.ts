@@ -1,4 +1,4 @@
-import {getNote} from "@/cosmosPostgres/services/notes";
+import {getNote} from "@/cosmos/services/notes";
 
 import {NextRequest} from "next/server";
 

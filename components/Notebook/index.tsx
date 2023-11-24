@@ -1,10 +1,15 @@
 import React from 'react';
+
 import {Skeleton, Text} from "@chakra-ui/react";
-import useNotebook from "@/hooks/queries/useNotebook";
+
 import NotebookLayout from "@/components/Notebook/NotebookLayout";
 
+import useNotebook from "@/hooks/queries/useNotebook";
+
+import {Notebook as NotebookType} from "@/types/Notebook";
+
 interface Props {
-    notebookId: string
+    notebookId: NotebookType["id"]
 }
 
 const Notebook: React.FC<Props> = ({ notebookId }) => {

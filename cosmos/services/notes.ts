@@ -1,6 +1,6 @@
-import { add, del, find, get, update } from "@/cosmosPostgres/services/base";
+import { add, del, find, get, update } from "@/cosmos/services/base";
 
-import { NOTES_TABLE } from "@/cosmosPostgres/constants/tables";
+import { NOTES_TABLE } from "@/cosmos/constants/tables";
 
 import {Note, NoteRow, NoteRowInput} from "@/types/Note";
 
@@ -18,18 +18,18 @@ export const addNote = async (note: NoteRowInput): Promise<boolean> => {
 // Update Note
 export const updateNote = async (id: number, updatedFields: Partial<NoteRowInput>): Promise<boolean> => {
     // Assuming 'id' uniquely identifies a note
-    return update(NOTES_TABLE, id, updatedFields);
+    return update(NOTES_TABLE, [id], updatedFields);
 };
 
 // Get Note by ID
 export const getNote = async (id: number): Promise<Note | null> => {
-    return get<NoteRow, Note>(NOTES_TABLE, id, transformRowToNote);
+    return get<NoteRow, Note>(NOTES_TABLE, [id], transformRowToNote);
 };
 
 // Delete Note
 export const deleteNote = async (id: number): Promise<boolean> => {
     // Assuming 'id' uniquely identifies a note
-    return del(NOTES_TABLE, id);
+    return del(NOTES_TABLE, [id]);
 };
 
 const transformRowToNote = (row: NoteRow): Note => ({
