@@ -1,4 +1,4 @@
-import {getPool} from "@/cosmosPostgres/citus";
+import {getPool} from "@/cosmos/citus";
 
 import {QueryResultRow} from "pg";
 
@@ -34,18 +34,22 @@ export const add = async (tableName: string, input: object): Promise<boolean> =>
     }
 };
 
+// make an update function for when the id is a composite key
 export const update = async(
     tableName: string,
-    id: string | number,
+    id: any[],
     updatedFields: object,
-    idColumnName: string = 'id'
+    idColumnNames: string[] = ['id']
 ): Promise<boolean> => {
-    const client = await getPool().connect();
+const client = await getPool().connect();
     try {
         const updates = Object.keys(updatedFields).map((key, index) => `${key} = $${index + 1}`);
-        const values = [...Object.values(updatedFields), id];
-        const queryText = `UPDATE ${tableName} SET ${updates.join(', ')} WHERE ${idColumnName} = $${values.length}`;
-
+        const values = [...Object.values(updatedFields), ...id];
+        const queryText = `
+            UPDATE ${tableName} 
+            SET ${updates.join(', ')} 
+            WHERE ${idColumnNames.map((idColumnName, index) => `${idColumnName} = $${index + 1 + Object.values(updatedFields).length}`).join(' AND ')}
+        `;
         await client.query(queryText, values);
         return true;
     } catch (error) {
@@ -56,31 +60,38 @@ export const update = async(
     }
 };
 
+// make a get function for when the id is a composite key
 export const get = async <RowType extends QueryResultRow, ReturnType>(
     tableName: string,
-    id: string | number,
+    id: any[],
     transform: (row: RowType) => ReturnType,
-    idColumnName: string = 'id'
+    idColumnNames: string[] = ['id']
 ): Promise<ReturnType | null> => {
     const client = await getPool().connect();
     try {
-        const queryText = `SELECT * FROM ${tableName} WHERE ${idColumnName} = $1`;
-        const { rows } = await client.query<RowType>(queryText, [id]);
+        const queryText = `
+            SELECT * FROM ${tableName} 
+            WHERE ${idColumnNames.map((idColumnName, index) => `${idColumnName} = $${index + 1}`).join(' AND ')}
+        `;
+        const { rows } = await client.query<RowType>(queryText, id);
         return rows && rows.length ? transform(rows[0]) : null;
     } finally {
         client.release();
     }
-};
+}
 
 export const del = async (
     tableName: string,
-    id: string | number,
-    idColumnName: string = 'id'
+    id: any[],
+    idColumnNames: string[] = ['id']
 ): Promise<boolean> => {
     const client = await getPool().connect();
     try {
-        const queryText = `DELETE FROM ${tableName} WHERE ${idColumnName} = $1`;
-        await client.query(queryText, [id]);
+        const queryText = `
+            DELETE FROM ${tableName} 
+            WHERE ${idColumnNames.map((idColumnName, index) => `${idColumnName} = $${index + 1}`).join(' AND ')}
+        `;
+        await client.query(queryText, id);
         return true;
     } catch (error) {
         console.error('Error in delete operation:', error);
@@ -88,4 +99,4 @@ export const del = async (
     } finally {
         client.release();
     }
-};
+}

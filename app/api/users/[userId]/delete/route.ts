@@ -1,4 +1,4 @@
-import {deleteUser} from "@/cosmosPostgres/services/user";
+import {deleteUser} from "@/cosmos/services/user";
 
 import {UserIdParams} from "@/app/api/users/[userId]/UserIdParams";
 

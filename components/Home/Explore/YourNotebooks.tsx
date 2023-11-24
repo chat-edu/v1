@@ -32,7 +32,9 @@ const YourNotebooks = () => {
                 notebooks={notebooks}
                 loading={loading}
                 noNotebooksComponent={
-                    <VStack>
+                    <VStack
+                        w={'100%'}
+                    >
                         <Text>
                             {"You don't have any notebooks yet"}
                         </Text>
