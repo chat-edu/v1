@@ -1,10 +1,10 @@
 import React from 'react';
 
-import {Card, Text, VStack} from "@chakra-ui/react";
+import {Card, VStack} from "@chakra-ui/react";
 
 import Welcome from "@/components/Welcome";
 
-import SignInWithGoogleButton from "@/components/Navbar/SignInWithGoogleButton";
+import AuthProviderButtons from "@/components/Utilities/AuthButtons/AuthProviderButtons";
 
 const NotConnected = () => {
 
@@ -16,20 +16,12 @@ const NotConnected = () => {
             <Card
                 p={16}
             >
-                <VStack>
+                <VStack
+                    w={'100%'}
+                    spacing={8}
+                >
                     <Welcome />
-                    <VStack>
-                        <Text
-                            textAlign={'center'}
-                            fontSize={{
-                                base: 'xs',
-                                md: 'md'
-                            }}
-                        >
-                            Get started by logging in with your Google account
-                        </Text>
-                        <SignInWithGoogleButton />
-                    </VStack>
+                    <AuthProviderButtons />
                 </VStack>
             </Card>
         </VStack>

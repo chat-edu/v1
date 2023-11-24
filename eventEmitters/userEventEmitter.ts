@@ -10,10 +10,10 @@ export const emitUsersChangedEvent = (userId: string) => {
     usersEventEmitter.emit(usersChangedEventName, userId);
 }
 
-export const subscribeToUsersChangedEvent = (callback: (notebookId: string) => void) => {
+export const subscribeToUsersChangedEvent = (callback: (userId: string) => void) => {
     usersEventEmitter.on(usersChangedEventName, callback);
 }
 
-export const unsubscribeFromUsersChangedEvent = (callback: (notebookId: string) => void) => {
+export const unsubscribeFromUsersChangedEvent = (callback: (userId: string) => void) => {
     usersEventEmitter.off(usersChangedEventName, callback);
 }

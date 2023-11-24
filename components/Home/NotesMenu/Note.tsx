@@ -18,7 +18,7 @@ import {AiFillEye} from "react-icons/ai";
 
 import Markdown from "@/components/Utilities/Markdown";
 
-import useNote from "@/hooks/mutators/useNote";
+import useDeleteNote from "@/hooks/mutators/useDeleteNote";
 
 import {Note as NoteType} from "@/types/Note";
 
@@ -26,14 +26,14 @@ import {Note as NoteType} from "@/types/Note";
 interface Props {
     note: NoteType,
     addNote: (note: NoteType) => void
-    removeNote: (id: string) => void
+    removeNote: (noteId: NoteType["id"]) => void
 }
 
 const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const { deleteNote } = useNote(note);
+    const { deleteNote } = useDeleteNote(note);
 
     const onDelete = async () => {
         await deleteNote();
@@ -49,7 +49,7 @@ const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
             >
                 <Checkbox
                     key={note.id}
-                    value={note.id}
+                    // value={note.id}
                     onChange={(e) => {
                         if(e.target.checked) {
                             addNote(note);
@@ -58,7 +58,7 @@ const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
                         }
                     }}
                 >
-                    {note.title}
+                    {note.name}
                 </Checkbox>
                 <HStack>
                     <IconButton
@@ -77,7 +77,7 @@ const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
             >
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>{note.title}</ModalHeader>
+                    <ModalHeader>{note.name}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
                         <Markdown>

@@ -1,0 +1,19 @@
+import {deleteNote} from "@/cosmos/services/notes";
+
+import {NextRequest} from "next/server";
+
+import {NoteIdParams} from "@/app/api/notes/[noteId]/NoteIdParams";
+
+export const GET = async (request: NextRequest, {params}: {params: NoteIdParams}) => {
+    // get the notebookId from the query string
+    const {noteId} = params;
+
+    // if there is no notebookId, return an empty array
+    if (!noteId) {
+        return Response.json(false);
+    }
+
+    await deleteNote(noteId);
+
+    return Response.json(true);
+}

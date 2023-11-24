@@ -1,32 +1,27 @@
-import { USERS_CONTAINER } from "@/cosmos/constants";
-import {add, del, find, get, getContainer, replace} from "@/cosmos/services/base";
-import {allUsersQuery} from "@/cosmos/queries";
+import {add, del, find, get, update} from "@/cosmos/services/base";
 
-import { User } from "@/types/User";
+import {USERS_TABLE} from "@/cosmos/constants/tables";
 
-const partitionKey = undefined;
+import {User} from "@/types/User";
 
-export const getUserContainer = async () => getContainer(USERS_CONTAINER, partitionKey);
-
-// Find Users
-export const findAllUsers = async (): Promise<User[]> =>
-    find(await getUserContainer(), allUsersQuery);
-
-// Add User
-export const addUser = async (user: User) =>
-    add(await getUserContainer(), user);
-
-// Update User Score
-export const updateUserScore = async (id: string, changeAmount: number) => {
-    const user = await getUser(id);
-    const updatedUser = { ...user, score: user.score + changeAmount };
-    return replace(await getUserContainer(), id, updatedUser);
+export const findAllUsers = async (): Promise<User[]> => {
+    return find('SELECT * FROM Users;', [], transform);
 };
 
-// Get User
-export const getUser = async (id: string): Promise<User> =>
-    get<User>(await getUserContainer(), id);
+export const addUser = async (user: User): Promise<boolean> => {
+    return add(USERS_TABLE, user);
+};
 
-// Delete User
-export const deleteUser = async (id: string) =>
-    del(await getUserContainer(), id);
+export const updateUser = async (id: string, updatedFields: Partial<User>): Promise<boolean> => {
+    return update(USERS_TABLE, [id], updatedFields);
+};
+
+export const getUser = async (id: string): Promise<User | null> => {
+    return get(USERS_TABLE, [id], transform);
+};
+
+export const deleteUser = async (id: string): Promise<boolean> => {
+    return del(USERS_TABLE, [id]);
+};
+
+const transform = (row: User): User => row;

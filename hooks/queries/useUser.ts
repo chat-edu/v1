@@ -1,6 +1,5 @@
 import {useCallback, useEffect} from "react";
 
-import useAuth from "@/hooks/auth/useAuth";
 import useItemData from "@/hooks/queries/useItemData";
 
 import {subscribeToUsersChangedEvent, unsubscribeFromUsersChangedEvent} from "@/eventEmitters/userEventEmitter";
@@ -8,18 +7,16 @@ import {subscribeToUsersChangedEvent, unsubscribeFromUsersChangedEvent} from "@/
 import {User} from "@/types/User";
 
 
-const useUser = () => {
-
-    const { user } = useAuth();
+const useUser = (userId: string) => {
 
     const [userData, loading, error, fetchUserData] = useItemData<User>(
-        user?.uid === undefined ? "" : `/api/users/${user?.uid}`);
+        userId === undefined ? "" : `/api/users/${userId}`);
 
     const handleUserChanged = useCallback(async (changedUserId: string) => {
-        if(changedUserId === user?.uid) {
+        if(changedUserId === userId) {
             await fetchUserData();
         }
-    }, [fetchUserData, user?.uid])
+    }, [fetchUserData, userId])
 
     useEffect(() => {
         subscribeToUsersChangedEvent(handleUserChanged);
@@ -29,7 +26,6 @@ const useUser = () => {
     }, [handleUserChanged]);
 
     return {
-        user,
         userData,
         loading,
         error,

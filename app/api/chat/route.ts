@@ -15,11 +15,22 @@ export async function POST(req: Request) {
 
   const response = await openai.chat.completions.create({
     model: process.env.GPT_MODEL_ID as string,
+    response_format: {
+      type: 'json_object'
+    },
     stream: true,
     messages: messages,
   });
 
   // @ts-ignore
   const stream = OpenAIStream(response);
-  return new StreamingTextResponse(stream);
+  return new StreamingTextResponse(
+      stream, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
+      }
+  );
 }

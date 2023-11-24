@@ -14,9 +14,10 @@ import {
 } from "@chakra-ui/react";
 import {SmallAddIcon} from "@chakra-ui/icons";
 
-import UploadNotes from "@/components/Home/UploadNotes";
+import AddNotes from "@/components/Home/AddNotes";
 import DeleteNotebook from "@/components/Home/NotesMenu/DeleteNotebook";
 import Note from "@/components/Home/NotesMenu/Note";
+import UploadNotes from "@/components/Home/UploadNotes";
 
 import useNotes from "@/hooks/queries/useNotes";
 
@@ -27,7 +28,7 @@ interface Props {
     notebook: NotebookType,
     selectedNotes: NoteType[],
     addNote: (note: NoteType) => void
-    removeNote: (id: string) => void,
+    removeNote: (id: NoteType["id"]) => void,
     closeSidebar?: () => void
 }
 
@@ -102,13 +103,16 @@ const Notebook: React.FC<Props> = ({ notebook, selectedNotes,  addNote, removeNo
                             </Button>
                         )
                     }
-                    <UploadNotes
+                    <AddNotes
                         text={"Add Note"}
                         icon={<SmallAddIcon />}
                         notebook={notebook}
                         buttonProps={{
                             w: '100%',
                         }}
+                    />
+                    <UploadNotes
+                        notebookId={notebook.id}
                     />
                 </VStack>
             </AccordionPanel>

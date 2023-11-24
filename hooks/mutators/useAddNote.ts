@@ -6,22 +6,20 @@ import {useFormik} from "formik";
 
 import { addNote } from "@/services/notes";
 
-import useAuth from "@/hooks/auth/useAuth";
+import useAuth from "@/hooks/useAuth";
 import {useToast} from "@chakra-ui/react";
-
-import {emitNotesChangedEvent} from "@/eventEmitters/notesEventEmitter";
 
 import {NoteInput} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
 
 const NoteSchema: Yup.ObjectSchema<NoteInput> = Yup.object().shape({
-    title: Yup.string()
+    name: Yup.string()
         .required('Title is Required')
         .min(1, 'Title is Required'),
     content: Yup.string()
         .required('Content is Required')
         .min(1, 'Content is Required'),
-    notebookId: Yup.string()
+    notebookId: Yup.number()
         .required('Notebook ID is Required')
         .min(1, 'Course ID is Required'),
 });
@@ -48,16 +46,15 @@ const useAddNote = (initNotebook?: Notebook) => {
         resetForm,
     } = useFormik<NoteInput>({
         initialValues: {
-            title: '',
+            name: '',
             content: '',
-            notebookId: notebook?.id || '',
+            notebookId: notebook?.id || 0,
         },
         validationSchema: NoteSchema,
         onSubmit: async note => {
             if(!user) return;
             const success = await addNote(note);
             if(success) {
-                emitNotesChangedEvent(note.notebookId);
                 toast({
                     title: "Note Added",
                     description: "Your note has been added.",
@@ -79,7 +76,7 @@ const useAddNote = (initNotebook?: Notebook) => {
     });
 
     useEffect(() => {
-        setFieldValue('notebookId', notebook?.id || '');
+        setFieldValue('notebookId', notebook?.id || 0);
     }, [setFieldValue, notebook]);
 
     const updateNotebook = (notebook: Notebook | null) => {

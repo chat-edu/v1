@@ -6,7 +6,7 @@ import {VscLayoutSidebarLeft, VscLayoutSidebarLeftOff} from "react-icons/vsc";
 
 import AddNotebook from "@/components/Home/NotesMenu/AddNotebook";
 import NotebooksAccordion from "@/components/Home/NotesMenu/NotebooksAccordion";
-import {navbarHeight} from "@/components/Navbar";
+import {navbarHeight} from "@/components/Layout/Navbar";
 
 import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
@@ -19,7 +19,7 @@ const closedWebSidebarWidth = 72;
 interface Props {
     selectedNotes: Note[],
     addNote: (note: Note) => void;
-    removeNote: (id: string) => void
+    removeNote: (id: Note["id"]) => void
 }
 
 const Sidebar: React.FC<Props> = ({ selectedNotes, addNote, removeNote }) => {

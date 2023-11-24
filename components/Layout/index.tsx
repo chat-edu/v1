@@ -3,10 +3,10 @@ import React from 'react';
 import {Box, Flex, Skeleton} from "@chakra-ui/react";
 
 import NotConnected from "@/components/Layout/NotConnected";
-import Navbar, { navbarHeight, mobileNavbarHeight } from "@/components/Navbar";
+import Navbar, { navbarHeight, mobileNavbarHeight } from "@/components/Layout/Navbar";
 import {mobileHeaderHeight} from "@/components/Home/NotesMenu/MobileHeader";
 
-import useAuth from "@/hooks/auth/useAuth";
+import useAuth from "@/hooks/useAuth";
 import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
 
@@ -24,7 +24,6 @@ const Layout: React.FC<Props> = ({ children, authGate }) => {
     return (
         <Box
             h={height}
-            backgroundImage={!isConnected ? 'url(http://localhost:3000/background.png)' : undefined}
             backgroundSize={'cover'}
         >
             <Navbar />

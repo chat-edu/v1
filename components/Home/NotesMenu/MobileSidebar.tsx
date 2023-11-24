@@ -26,7 +26,7 @@ import {Note} from "@/types/Note";
 interface Props {
     selectedNotes: Note[],
     addNote: (note: Note) => void;
-    removeNote: (id: string) => void
+    removeNote: (id: Note["id"]) => void
 }
 
 const MobileSidebar: React.FC<Props> = ({ selectedNotes, addNote, removeNote }) => {

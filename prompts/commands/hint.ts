@@ -1,23 +1,20 @@
-import {PromptTags, ResponseTags} from "@/prompts/tags";
+import {CommandTags, ResponseTags} from "@/prompts/tags";
 
-import {Command, PromptTypes} from "@/types/prompts/Command";
-import {Hint} from "@/types/prompts/Hint";
+import {Command, CommandTypes} from "@/types/commands/Command";
+import {Hint} from "@/types/commands/Hint";
+import {Stringified} from "@/types/utilities/Stringified";
 
 const hintResponseDescription = 'Hints should be helpful but should not give away the answer. Do NOT too much information as the user should still be able to solve the problem on their own.';
-const hintResponseFormat = '<content>';
+const hintResponseFormat: Stringified<Hint> = {
+    hint: ': string <hint>'
+};
 const hintPromptContent = 'Please provide a hint for the user.';
 
 export const hintCommand: Command<Hint> = {
     responseTag: ResponseTags.HINT,
     responseDescription: hintResponseDescription,
     responseFormatting: hintResponseFormat,
-    promptTag: PromptTags.HINT,
+    promptTag: CommandTags.HINT,
     promptContent: hintPromptContent,
-    promptType: PromptTypes.HINT,
-    parseResponse: (content: string, id: string): Hint => {
-        return {
-            id,
-            hint: content
-        }
-    }
+    promptType: CommandTypes.HINT
 }

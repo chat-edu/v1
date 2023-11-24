@@ -1,0 +1,84 @@
+name: Azure Static Web Apps CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
+
+jobs:
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    environment: Production
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      GPT_MODEL_ID: ${{ secrets.GPT_MODEL_ID }}
+      COSMOS_POSTGRES_HOST: ${{ secrets.COSMOS_POSTGRES_HOST }}
+      COSMOS_POSTGRES_PASSWORD: ${{ secrets.COSMOS_POSTGRES_USER }}
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+      GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      NEXT_PUBLIC_DOCUMENT_INTELLIGENCE_KEY: ${{ secrets.NEXT_PUBLIC_DOCUMENT_INTELLIGENCE_KEY }}
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+      NEXT_PUBLIC_CHAT_ENDPOINT: ${{ secrets.NEXT_PUBLIC_CHAT_ENDPOINT }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          lfs: false
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WITTY_GROUND_0484D2C10 }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          action: "upload"
+          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          app_location: "/" # App source code path
+          api_location: "" # Api source code path - optional
+          output_location: "" # Built app content directory - optional
+          ###### End of Repository/Build Configurations ######
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Set Application Settings
+        run: |
+          az staticwebapp appsettings set --name chatedu-client --resource-group ChatEDU \
+          --setting-names \
+          OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
+          GPT_MODEL_ID=${{ secrets.GPT_MODEL_ID }} \
+          COSMOS_POSTGRES_HOST=${{ secrets.COSMOS_POSTGRES_HOST }} \
+          COSMOS_POSTGRES_PASSWORD=${{ secrets.COSMOS_POSTGRES_PASSWORD }} \
+          GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} \
+          GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} \
+          GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }} \
+          AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }} \
+          AZURE_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }} \
+          NEXTAUTH_SECRET=${{ secrets.AZURE_CLIENT_SECRET }} \
+          NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} \
+          NEXT_PUBLIC_DOCUMENT_INTELLIGENCE_KEY=${{ secrets.NEXT_PUBLIC_DOCUMENT_INTELLIGENCE_KEY }} \
+          NEXT_PUBLIC_CHAT_ENDPOINT=${{ secrets.NEXT_PUBLIC_CHAT_ENDPOINT }} \
+
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close Pull Request Job
+    steps:
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WITTY_GROUND_0484D2C10 }}
+          action: "close"

@@ -1,1 +1,0 @@
-export const DATABASE_ID = "chat-edu";

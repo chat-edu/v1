@@ -1,38 +1,43 @@
 import React from 'react';
 
-import {Button, ButtonProps, useDisclosure} from "@chakra-ui/react";
+import {HStack, IconButton} from "@chakra-ui/react";
+import {CheckIcon} from "@chakra-ui/icons";
 
-import UploadModal from "@/components/Home/UploadNotes/UploadModal";
+import FileInput from "@/components/Utilities/FIleInput";
 
-import { Notebook } from "@/types/Notebook";
+import useUploadNote from "@/hooks/mutators/useUploadNote";
+
+import {Notebook} from "@/types/Notebook";
 
 interface Props {
-    text: string;
-    icon: React.ReactElement;
-    buttonProps?: ButtonProps;
-    notebook?: Notebook
+    notebookId: Notebook["id"]
 }
 
-const UploadNotes: React.FC<Props> = ({ text, icon, buttonProps, notebook }) => {
+const UploadNotes: React.FC<Props> = ({ notebookId }) => {
 
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const { file, loading, updateFile, uploadNote } = useUploadNote(notebookId);
 
     return (
-        <>
-            <Button
-                colorScheme={'brand'}
-                leftIcon={icon}
-                onClick={onOpen}
-                {...buttonProps}
-            >
-                {text}
-            </Button>
-            <UploadModal
-                isOpen={isOpen}
-                onClose={onClose}
-                initNotebook={notebook}
+        <HStack
+            w={'100%'}
+        >
+            <FileInput
+                setFile={updateFile}
+                text={file ? file.name : 'Upload Notes'}
+                accept={'application/pdf'}
             />
-        </>
+            {
+                file && (
+                    <IconButton
+                        aria-label={'Upload Notes'}
+                        icon={<CheckIcon />}
+                        onClick={uploadNote}
+                        flexShrink={0}
+                        isLoading={loading}
+                    />
+                )
+            }
+        </HStack>
     );
 };
 

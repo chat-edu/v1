@@ -5,7 +5,7 @@ import {Accordion, Skeleton, Text, VStack} from "@chakra-ui/react";
 import Notebook from "@/components/Home/NotesMenu/Notebook";
 import AddNotebookButton from "@/components/Home/AddNotebook/AddNotebookButton";
 
-import useAuth from "@/hooks/auth/useAuth";
+import useAuth from "@/hooks/useAuth";
 import useUserNotebooks from "@/hooks/queries/useUserNotebooks";
 
 import {Note} from "@/types/Note";
@@ -13,7 +13,7 @@ import {Note} from "@/types/Note";
 interface Props {
     selectedNotes: Note[];
     addNote: (note: Note) => void;
-    removeNote: (id: string) => void;
+    removeNote: (id: Note["id"]) => void;
     closeSidebar?: () => void;
 }
 
@@ -21,7 +21,7 @@ const NotebooksAccordion: React.FC<Props> = ({ selectedNotes, addNote, removeNot
 
     const { user } = useAuth();
 
-    const { notebooks, loading } = useUserNotebooks(user?.uid || "");
+    const { notebooks, loading } = useUserNotebooks(user?.id || "");
 
     const [openNotebooks, setOpenNotebooks] = React.useState<{[key: string]: boolean}>({});
 
