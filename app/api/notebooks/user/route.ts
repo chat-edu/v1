@@ -1,4 +1,4 @@
-import {findNotebooksByUserId} from "@/cosmosPostgres/services/notebooks";
+import {findNotebooksByUserId} from "@/cosmos/services/notebooks";
 import {NextRequest} from "next/server";
 
 export const GET = async (request: NextRequest) => {
