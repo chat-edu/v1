@@ -14,7 +14,7 @@ import {
     useColorModeValue
 } from "@chakra-ui/react";
 
-import Actions from "@/components/Home/Chat/Actions";
+import Actions from "@/components/Chat/Actions";
 
 import {Command, CommandTypes} from "@/types/commands/Command";
 

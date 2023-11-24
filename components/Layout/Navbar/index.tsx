@@ -4,6 +4,7 @@ import {Card, Flex, Heading, HStack, Text, Image} from '@chakra-ui/react'
 
 import AuthButton from '@/components/Layout/Navbar/AuthButton'
 import ColorModeToggle from "@/components/Layout/Navbar/ColorModeToggle";
+import Link from "next/link";
 
 export const navbarHeight = 80;
 export const mobileNavbarHeight = 60;
@@ -26,13 +27,18 @@ const Navbar = () => {
             gap={4}
             bg='navbar.500'
             rounded='md'
-            px={4}
+            px={{
+                base: 2,
+                md: 4
+            }}
         >
-            <Image
-                src={'/logo.png'}
-                alt="ChatEDU Logo"
-                boxSize={'40px'}
-            />
+            <Link href={'/'}>
+                <Image
+                    src={'/logo.png'}
+                    alt="ChatEDU Logo"
+                    boxSize={'40px'}
+                />
+            </Link>
             <Heading
                 size='md'
             >

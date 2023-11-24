@@ -14,7 +14,7 @@ import { signOut } from 'next-auth/react'
 
 import AuthProviderIconButtons from "@/components/Utilities/AuthButtons/AuthProviderIconButtons";
 
-import useAuth from "@/hooks/auth/useAuth";
+import useAuth from "@/hooks/useAuth";
 
 const AuthButton = () => {
 

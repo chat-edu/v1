@@ -6,7 +6,7 @@ import {FaLeaf} from "react-icons/fa";
 import {MdQuestionAnswer} from "react-icons/md";
 import {SlOptionsVertical} from "react-icons/sl";
 
-import Action from "@/components/Home/Chat/Action";
+import Action from "@/components/Chat/Action";
 
 import {
     studyGuideCommand,
