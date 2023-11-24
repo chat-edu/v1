@@ -11,7 +11,7 @@ export const getPool = () => {
             host: process.env.COSMOS_POSTGRES_HOST as string,
             port: 5432,
             user: 'citus',
-            password: process.env.COSMOS_POSTGRES_PASSWORD,
+            password: process.env.COSMOS_POSTGRES_PASSWORD as string,
             database: 'citus',
             ssl: true,
         });
