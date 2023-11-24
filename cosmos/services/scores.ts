@@ -1,29 +1,58 @@
-import {add, del, find, get, update} from "@/cosmos/services/base";
+import {getPool} from "@/cosmos/citus";
+import {del, find, get} from "@/cosmos/services/base";
 
-import { SCORES_TABLE } from "@/cosmos/constants/tables";
-
-import {Score, ScoreRow, ScoreRowInput} from "@/types/Score";
+import {NotebookScore, NotebookScoreRow, Score, ScoreRow, UserScore, UserScoreRow} from "@/types/Score";
 
 // Find Scores
 export const findAllScores = async (): Promise<Score[]> => {
     const queryText = 'SELECT * FROM Scores;';
-    return find<ScoreRow, Score>(queryText, [], transformScore);
+    return find(queryText, [], transformScore);
 };
 
-// Add Score
-export const addScore = async (score: ScoreRowInput): Promise<boolean> => {
-    return add(SCORES_TABLE, score);
-};
+export const findScoresByUserId = async (userId: string): Promise<NotebookScore[]> => {
+    const queryText = `
+        SELECT Scores.*, Notebooks.name AS notebook_name
+        FROM Scores
+        INNER JOIN Notebooks ON Scores.notebook_id = Notebooks.id
+        WHERE Scores.user_id = $1;
+    `;
+    return find(queryText, [userId], transformNotebookScore);
+}
 
-// Update Score
-export const updateScore = async (userId: string, notebookId: number, newScore: number): Promise<boolean> => {
-    return update(SCORES_TABLE, [userId, notebookId], {score: newScore});
+export const findScoresByNotebookId = async (notebookId: number): Promise<UserScore[]> => {
+    const queryText = `
+        SELECT Scores.*, Users.username
+        FROM Scores
+        INNER JOIN Users ON Scores.user_id = Users.id
+        WHERE notebook_id = $1
+        ORDER BY score DESC;
+    `;
+    return find(queryText, [notebookId], transformUserScore);
+}
+
+export const updateScore = async (userId: string, notebookId: number, incrementAmount: number): Promise<boolean> => {
+    const client = await getPool().connect();
+    try {
+        const queryText = `
+            INSERT INTO Scores (user_id, notebook_id, score)
+            VALUES ($1, $2, $3)
+            ON CONFLICT (user_id, notebook_id)
+            DO UPDATE SET score = Scores.score + EXCLUDED.score;
+        `;
+        await client.query(queryText, [userId, notebookId, incrementAmount]);
+        return true;
+    } catch (error) {
+        console.error('Error in updateScore operation:', error);
+        return false;
+    } finally {
+        client.release();
+    }
 };
 
 // Get Score by User ID and Notebook ID
 export const getScore = async (userId: string, notebookId: number): Promise<Score | null> => {
-    const queryText = 'SELECT * FROM Scores WHERE user_id = $1 AND notebook_id = $2;';
-    return get<ScoreRow, Score>(queryText, [userId, notebookId], transformScore);
+    const query = 'SELECT * FROM Scores WHERE user_id = $1 AND notebook_id = $2;';
+    return get(query, [userId, notebookId], transformScore);
 };
 
 // Delete Score
@@ -34,8 +63,17 @@ export const deleteScore = async (userId: string, notebookId: number): Promise<b
 
 // Transform function to convert database rows to Score type
 const transformScore = (row: ScoreRow): Score => ({
-    id: row.id,
     userId: row.user_id,
     notebookId: row.notebook_id,
     score: row.score
+});
+
+const transformUserScore = (row: UserScoreRow): UserScore => ({
+    ...transformScore(row),
+    username: row.username
+})
+
+const transformNotebookScore = (row: NotebookScoreRow): NotebookScore => ({
+    ...transformScore(row),
+    notebookName: row.notebook_name
 });

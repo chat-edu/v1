@@ -17,7 +17,8 @@ export const updateUser = async (id: string, updatedFields: Partial<User>): Prom
 };
 
 export const getUser = async (id: string): Promise<User | null> => {
-    return get(USERS_TABLE, [id], transform);
+    const query = 'SELECT * FROM Users WHERE id = $1;';
+    return get(query, [id], transform);
 };
 
 export const deleteUser = async (id: string): Promise<boolean> => {

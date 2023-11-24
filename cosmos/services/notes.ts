@@ -23,7 +23,8 @@ export const updateNote = async (id: number, updatedFields: Partial<NoteRowInput
 
 // Get Note by ID
 export const getNote = async (id: number): Promise<Note | null> => {
-    return get<NoteRow, Note>(NOTES_TABLE, [id], transformRowToNote);
+    const query = 'SELECT * FROM Notes WHERE id = $1;';
+    return get(query, [id], transformRowToNote);
 };
 
 // Delete Note

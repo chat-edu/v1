@@ -7,6 +7,7 @@ import {VscLayoutSidebarLeft, VscLayoutSidebarLeftOff} from "react-icons/vsc";
 import NotesSelect from "@/components/Notebook/NotebookMenu/NotesSelect";
 import NotebookMenuHeader from "@/components/Notebook/NotebookMenu/NotebookMenuHeader";
 import {navbarHeight} from "@/components/Layout/Navbar";
+import NotebookLeaderboard from "@/components/Notebook/NotebookMenu/NotebookLeaderboard";
 
 import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
@@ -53,8 +54,11 @@ const Sidebar: React.FC<Props> = ({ notebook, selectedNotes, addNote, removeNote
                 w={'100%'}
                 flexDir={'column'}
                 gap={4}
+                h={'100%'}
             >
-                <HStack>
+                <HStack
+                    align={'start'}
+                >
                     <NotebookMenuHeader
                         notebook={notebook}
                     />
@@ -66,8 +70,9 @@ const Sidebar: React.FC<Props> = ({ notebook, selectedNotes, addNote, removeNote
                     />
                 </HStack>
                 <Box
-                    flex={1}
+                    h={'100%'}
                     w={'100%'}
+                    overflow={'auto'}
                 >
                     <NotesSelect
                         notebook={notebook}
@@ -76,6 +81,9 @@ const Sidebar: React.FC<Props> = ({ notebook, selectedNotes, addNote, removeNote
                         removeNote={removeNote}
                     />
                 </Box>
+                <NotebookLeaderboard
+                    notebookId={notebook.id}
+                />
             </Box>
             <IconButton
                 display={isOpen ? 'none' : 'flex'}

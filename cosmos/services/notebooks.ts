@@ -28,22 +28,23 @@ export const findNotebooksByUserId = async (userId: string): Promise<Notebook[]>
     return find(queryText, [userId], transformNotebook);
 };
 
-// sort the notebooks by their score, descending, then by their number of notes
+// sort the notebooks by their score, descending, then by their number of notes if there is a tie
 // use the scores table to determine the aggregate score for each notebook
 export const findTopNotebooks = async (limit: number): Promise<TopNotebook[]> => {
     const queryText = `
-      SELECT
-        n.*,
-        u.name AS user_name,
-        SUM(s.score) AS total_score,
-        COUNT(nt.id) AS num_notes
-      FROM Notebooks n
-      JOIN Users u ON n.user_id = u.id
-      LEFT JOIN Scores s ON n.id = s.notebook_id
-      LEFT JOIN Notes nt ON n.id = nt.notebook_id
-      GROUP BY n.id, u.name
-      ORDER BY total_score DESC, num_notes DESC
-      LIMIT $1;
+        SELECT
+            n.*,
+            u.name AS user_name,
+            COALESCE(SUM(s.score), 0) AS total_score,
+            COUNT(nt.id) AS num_notes
+        FROM Notebooks n
+            JOIN Users u ON n.user_id = u.id
+            LEFT JOIN Scores s ON n.id = s.notebook_id
+            LEFT JOIN Notes nt ON n.id = nt.notebook_id
+        GROUP BY n.id, u.name
+        ORDER BY total_score DESC, num_notes DESC
+        LIMIT $1;
+
     `;
     return find(queryText, [limit], transformTopNotebook);
 }
@@ -58,7 +59,18 @@ export const updateNotebook = async (id: number, updatedFields: Partial<Notebook
 };
 
 export const getNotebook = async (id: number): Promise<Notebook | null> => {
-    return get(NOTEBOOKS_TABLE, [id], transformNotebook);
+    const query = `
+        SELECT
+            n.*,
+            u.name AS user_name,
+            COUNT(nt.id) AS num_notes
+        FROM Notebooks n
+        JOIN Users u ON n.user_id = u.id
+        LEFT JOIN Notes nt ON n.id = nt.notebook_id
+        WHERE n.id = $1
+        GROUP BY n.id, u.name;
+    `
+    return get(query, [id], transformNotebook);
 };
 
 export const deleteNotebook = async (id: number): Promise<boolean> => {

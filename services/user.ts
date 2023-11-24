@@ -7,13 +7,3 @@ export const addUser = async (user: User) =>
     })
         .then(async (res) => (await res.json()) as boolean)
         .then((res) => res);
-
-export const updateUserScore = async (userId: string, changeAmount: number) =>
-    fetch(`/api/users/${userId}/update`, {
-        method: "POST",
-        body: JSON.stringify({
-            changeAmount,
-        })
-    })
-        .then(async (res) => (await res.json()) as boolean)
-        .then((res) => res);

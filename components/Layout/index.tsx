@@ -4,7 +4,7 @@ import {Box, Flex, Skeleton} from "@chakra-ui/react";
 
 import NotConnected from "@/components/Layout/NotConnected";
 import Navbar, { navbarHeight, mobileNavbarHeight } from "@/components/Layout/Navbar";
-import {mobileHeaderHeight} from "@/components/Home/NotesMenu/MobileHeader";
+import {mobileHeaderHeight} from "@/components/Notebook/NotebookMenu/MobileHeader";
 
 import useAuth from "@/hooks/useAuth";
 import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";

@@ -10,10 +10,10 @@ interface Props {
     notebooks: Notebook[]
     loading: boolean,
     noNotebooksComponent?: React.ReactNode,
-    ranked?: boolean
+    rightComponent?: (index: number) => React.ReactNode
 }
 
-const NotebookGrid: React.FC<Props> = ({ notebooks, loading, noNotebooksComponent, ranked}) => {
+const NotebookGrid: React.FC<Props> = ({ notebooks, loading, noNotebooksComponent, rightComponent}) => {
     if(loading) {
         return (
             <Skeleton />
@@ -46,7 +46,7 @@ const NotebookGrid: React.FC<Props> = ({ notebooks, loading, noNotebooksComponen
                     <NotebookCard
                         key={notebook.id}
                         notebook={notebook}
-                        rank={ranked ? index + 1 : undefined}
+                        rightComponent={rightComponent ? rightComponent(index) : undefined}
                     />
                 ))
             }

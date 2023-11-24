@@ -10,7 +10,7 @@ import {Notebook} from "@/types/Notebook";
 
 interface Props {
     notebook: Notebook,
-    rank?: number
+    rightComponent?: React.ReactNode,
 }
 
 const tags = [
@@ -18,7 +18,7 @@ const tags = [
     'Machine Learning',
 ]
 
-const NotebookCard: React.FC<Props> = ({ notebook, rank }) => {
+const NotebookCard: React.FC<Props> = ({ notebook, rightComponent }) => {
 
     return (
         <Link
@@ -34,7 +34,7 @@ const NotebookCard: React.FC<Props> = ({ notebook, rank }) => {
             >
                 <HStack
                     w={'100%'}
-                    align={'start'}
+                    h={'100%'}
                 >
                     <VStack
                         flex={1}
@@ -66,7 +66,6 @@ const NotebookCard: React.FC<Props> = ({ notebook, rank }) => {
                         <Text
                             fontSize={{
                                 base: 'sm',
-                                // md: 'md'
                             }}
                             opacity={0.7}
                         >
@@ -76,16 +75,7 @@ const NotebookCard: React.FC<Props> = ({ notebook, rank }) => {
                             {notebook.numNotes} note{notebook.numNotes === 1 ? '' : 's'}
                         </Text>
                     </VStack>
-                    {
-                        rank && (
-                            <Text
-                                fontWeight={'bold'}
-                                color={rank <= 3 ? 'brand.500' : undefined}
-                            >
-                                #{rank}
-                            </Text>
-                        )
-                    }
+                    {rightComponent}
                 </HStack>
             </ClickableCard>
         </Link>

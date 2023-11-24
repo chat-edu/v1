@@ -62,18 +62,13 @@ const client = await getPool().connect();
 
 // make a get function for when the id is a composite key
 export const get = async <RowType extends QueryResultRow, ReturnType>(
-    tableName: string,
-    id: any[],
+    query: string,
+    values: any[],
     transform: (row: RowType) => ReturnType,
-    idColumnNames: string[] = ['id']
 ): Promise<ReturnType | null> => {
     const client = await getPool().connect();
     try {
-        const queryText = `
-            SELECT * FROM ${tableName} 
-            WHERE ${idColumnNames.map((idColumnName, index) => `${idColumnName} = $${index + 1}`).join(' AND ')}
-        `;
-        const { rows } = await client.query<RowType>(queryText, id);
+        const { rows } = await client.query<RowType>(query, values);
         return rows && rows.length ? transform(rows[0]) : null;
     } finally {
         client.release();

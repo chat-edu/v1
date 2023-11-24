@@ -32,6 +32,7 @@ const NotebookLayout: React.FC<Props> = ({ notebook }) => {
                 selectedNotes={selectedNotes}
             />
             <Chat
+                notebookId={notebook.id}
                 notes={selectedNotes}
             />
         </Stack>

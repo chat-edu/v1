@@ -11,7 +11,7 @@ import {
 import {SmallAddIcon} from "@chakra-ui/icons";
 
 import AddNotes from "@/components/Home/AddNotes";
-import Note from "@/components/Home/NotesMenu/Note";
+import Note from "@/components/Notebook/NotebookMenu/NotesSelect/Note";
 import UploadNotes from "@/components/Home/UploadNotes";
 
 import useAuth from "@/hooks/useAuth";
@@ -43,6 +43,11 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                 align={'start'}
                 spacing={2}
             >
+                <Text
+                    fontWeight={'bold'}
+                >
+                    Topics
+                </Text>
                 {
                     loading ? (
                         <Skeleton />

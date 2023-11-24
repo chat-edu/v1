@@ -49,7 +49,6 @@ const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
             >
                 <Checkbox
                     key={note.id}
-                    value={note.id}
                     onChange={(e) => {
                         if(e.target.checked) {
                             addNote(note);
