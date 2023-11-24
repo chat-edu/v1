@@ -1,4 +1,4 @@
-import {getUser} from "@/cosmos/services/user";
+import {getUser} from "@/cosmosPostgres/services/user";
 
 import {UserIdParams} from "@/app/api/users/[userId]/UserIdParams";
 

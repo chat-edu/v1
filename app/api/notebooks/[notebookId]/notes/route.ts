@@ -1,4 +1,4 @@
-import {findNotesByNotebookId} from "@/cosmos/services/notes";
+import {findNotesByNotebookId} from "@/cosmosPostgres/services/notes";
 
 import {NextRequest} from "next/server";
 
