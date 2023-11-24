@@ -1,23 +1,34 @@
 import React from 'react';
 
-import {Button, Card, Divider, Text, VStack} from "@chakra-ui/react";
+import {Button, Card, Divider, Skeleton, Text, VStack} from "@chakra-ui/react";
 
 import Welcome from "@/components/Welcome";
+import NotebookOnboarding from "@/components/Home/Onboarding/NotebookOnboarding";
+import NotesOnboarding from "@/components/Home/Onboarding/NotesOnboarding";
 
-import useCreateUser from "@/hooks/mutators/useCreateUser";
-import TextInput from "@/components/Utilities/TextInput";
+import useNotes from "@/hooks/queries/useNotes";
+import useUserNotebooks from "@/hooks/queries/useUserNotebooks";
 
-const Onboarding: React.FC = () => {
+import {addUser} from "@/services/user";
 
-    const {
-        values,
-        errors,
-        touched,
-        setFieldTouched,
-        setFieldValue,
-        submitForm,
-        disabled
-    } = useCreateUser();
+import {emitUsersChangedEvent} from "@/eventEmitters/userEventEmitter";
+
+interface Props {
+    userId: string
+}
+
+const Onboarding: React.FC<Props> = ({ userId }) => {
+
+    const { notebooks, loading: notebooksLoading } = useUserNotebooks(userId);
+
+    const notebook = notebooks.length > 0 ? notebooks[0] : null;
+
+    const { notes, loading: notesLoading } = useNotes(notebook?.id || 0);
+
+    const onStartLearning = async () => {
+        await addUser(userId);
+        emitUsersChangedEvent(userId)
+    }
 
     return (
         <VStack
@@ -55,18 +66,29 @@ const Onboarding: React.FC = () => {
                         ChatEDU is a platform that allows you to create study guides, ask questions, and answer practice problems based on your notes.
                     </Text>
                     <Divider />
-                    <TextInput
-                        label={'Username'}
-                        placeholder={'Username'}
-                        value={values.username}
-                        onChange={(value) => setFieldValue('username', value)}
-                        onBlur={() => setFieldTouched('username')}
-                        error={touched.username ? errors.username : undefined}
-                    />
+                    {
+                        notebooksLoading ? (
+                            <Skeleton />
+                        ) : (
+                            <NotebookOnboarding notebook={notebook} />
+                        )
+                    }
+                    <Divider />
+                    {
+                        notesLoading ? (
+                            <Skeleton />
+                        ) : (
+                            <NotesOnboarding
+                                notebook={notebook}
+                                notes={notes}
+                            />
+                        )
+                    }
+                    <Divider />
                     <Button
                         colorScheme={'brand'}
-                        onClick={submitForm}
-                        isDisabled={disabled}
+                        onClick={onStartLearning}
+                        isDisabled={notebooks.length === 0 || notes.length === 0}
                     >
                         Start Learning
                     </Button>

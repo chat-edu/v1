@@ -1,16 +1,6 @@
-export interface Score {
-    id: number;
-    userId: string;
-    notebookId: number;
+interface ScoreRow {
+    id: string;
     score: number;
-}
-
-export interface ScoreRowInput {
     user_id: string;
-    notebook_id: number;
-    score: number;
-}
-
-export interface ScoreRow extends ScoreRowInput {
-    id: number;
+    notebook_id: string;
 }

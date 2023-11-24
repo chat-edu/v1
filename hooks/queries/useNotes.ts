@@ -9,7 +9,7 @@ import {Notebook} from "@/types/Notebook";
 
 const useNotes = (notebookId: Notebook["id"]) => {
 
-    const [notes, loading, error, fetchNotes] = useContainerData<Note>(`/api/notebooks/${notebookId}/notes`);
+    const [notes, loading, error, fetchNotes] = useContainerData<Note>(notebookId == 0 ? "" : `/api/notes/${notebookId}`);
 
     const handleNotesChanged = useCallback(async (changedNotebookId: number) => {
         if(changedNotebookId === notebookId) {

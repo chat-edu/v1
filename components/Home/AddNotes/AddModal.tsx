@@ -41,7 +41,7 @@ const AddModal: React.FC<Props> = ({ isOpen, onClose , initNotebook}) => {
         >
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Add Notes</ModalHeader>
+                <ModalHeader>Upload Notes</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
                     <Flex
@@ -56,11 +56,11 @@ const AddModal: React.FC<Props> = ({ isOpen, onClose , initNotebook}) => {
                             error={touched.notebookId && errors.notebookId || undefined}
                         />
                         <TextInput
-                            label={"Name"}
-                            placeholder={"Enter your name here..."}
+                            label={"Title"}
+                            placeholder={"Enter your title here..."}
                             value={values.name}
-                            onChange={(title) => setFieldValue('name', title)}
-                            onBlur={() => setFieldTouched('name', true)}
+                            onChange={(title) => setFieldValue('title', title)}
+                            onBlur={() => setFieldTouched('title', true)}
                             error={touched.name && errors.name || undefined}
                             helperText={"Ex: Lecture 1"}
                         />
