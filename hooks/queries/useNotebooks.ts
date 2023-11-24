@@ -2,8 +2,8 @@ import useContainerData from "@/hooks/queries/useContainerData";
 
 import {Notebook} from "@/types/Notebook";
 
-const useNotebooks = () => {
-    const [notebooks, loading, error, fetchNotebooks] = useContainerData<Notebook>(`/api/notebooks`);
+const useNotebooks = (extension?: string) => {
+    const [notebooks, loading, error, fetchNotebooks] = useContainerData<Notebook>(`/api/notebooks${extension ? `/${extension}` : ""}`);
 
     return {
         notebooks: notebooks || [],

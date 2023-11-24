@@ -1,5 +1,7 @@
-import { NoteInput} from "@/types/Note";
 import {emitNotesChangedEvent} from "@/eventEmitters/notesEventEmitter";
+
+import {Note, NoteInput} from "@/types/Note";
+import {Notebook} from "@/types/Notebook";
 
 export const addNote = async (note: NoteInput) =>
     fetch(`/api/notes/create`, {
@@ -12,7 +14,7 @@ export const addNote = async (note: NoteInput) =>
         })
         .then((res) => res);
 
-export const updateNote = async (noteId: string, note: NoteInput) =>
+export const updateNote = async (noteId: number, note: NoteInput) =>
     fetch(`/api/notes/${note.notebookId}/${noteId}/update`, {
         method: "POST",
         body: JSON.stringify(note),
@@ -23,7 +25,7 @@ export const updateNote = async (noteId: string, note: NoteInput) =>
         })
         .then((res) => res);
 
-export const deleteNote = async (noteId: string, notebookId: string) =>
+export const deleteNote = async (noteId: Note["id"], notebookId: Notebook["id"]) =>
     fetch(`/api/notes/${notebookId}/${noteId}/delete`, {
         method: "GET",
     })

@@ -19,7 +19,7 @@ const closedWebSidebarWidth = 72;
 interface Props {
     selectedNotes: Note[],
     addNote: (note: Note) => void;
-    removeNote: (id: string) => void
+    removeNote: (id: Note["id"]) => void
 }
 
 const Sidebar: React.FC<Props> = ({ selectedNotes, addNote, removeNote }) => {

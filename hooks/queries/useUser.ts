@@ -9,8 +9,7 @@ import {User} from "@/types/User";
 
 const useUser = (userId: string) => {
 
-    const [userData, loading, error, fetchUserData] = useItemData<User>(
-        userId === undefined ? "" : `/api/users/${userId}`);
+    const [userData, loading, error, fetchUserData] = useItemData<User>(`/api/users/${userId}`);
 
     const handleUserChanged = useCallback(async (changedUserId: string) => {
         if(changedUserId === userId) {

@@ -49,7 +49,7 @@ const NotesOnboarding: React.FC<Props> = ({ notebook, notes }) => {
                         <Text
                             fontWeight={'bold'}
                         >
-                            {notes[0].title} Uploaded
+                            {notes[0].name} Uploaded
                         </Text>
                     </HStack>
                 ) : <AddNotes

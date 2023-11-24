@@ -1,34 +1,40 @@
-import {PartitionKeyDefinition, PartitionKeyKind} from '@azure/cosmos';
+import { add, del, find, get, update } from "@/cosmos/services/base";
 
-import { NOTES_CONTAINER } from "@/cosmos/constants";
-import {add, del, find, get, getContainer, update} from "@/cosmos/services/base";
+import { NOTES_TABLE } from "@/cosmos/constants/tables";
 
-import { NoteInput } from "@/types/Note";
-import {notesByNotebookQuery} from "@/cosmos/queries";
+import {Note, NoteRow, NoteRowInput} from "@/types/Note";
 
-const partitionKeyDefinition: PartitionKeyDefinition = { kind: PartitionKeyKind.Hash, paths: ["/notebookId"] };
-
-export const getNotesContainer = async () => getContainer(NOTES_CONTAINER, partitionKeyDefinition);
-
-// Find Notes
-export const findNotesByNotebookId = async (notebookId: string): Promise<NoteInput[]> =>
-    find(await getNotesContainer(), notesByNotebookQuery(notebookId));
-
-// Add Note
-export const addNote = async (note: NoteInput) =>
-    add(await getNotesContainer(), note);
-
-// Update Note
-export const updateNote = async (id: string, notebookId: string, updatedFields: Partial<NoteInput>) => {
-    const note = await getNote(id, notebookId);
-    const updatedNote = { ...note, ...updatedFields };
-    return update(await getNotesContainer(), id, updatedNote);
+// Find Notes by Notebook ID
+export const findNotesByNotebookId = async (notebookId: number): Promise<Note[]> => {
+    const queryText = 'SELECT * FROM Notes WHERE notebook_id = $1;';
+    return find<NoteRow, Note>(queryText, [notebookId], transformRowToNote);
 };
 
-// Get Note
-export const getNote = async (id: string, notebookId: string): Promise<NoteInput> =>
-    get<NoteInput>(await getNotesContainer(), id, notebookId);
+// Add Note
+export const addNote = async (note: NoteRowInput): Promise<boolean> => {
+    return add(NOTES_TABLE, note);
+};
+
+// Update Note
+export const updateNote = async (id: number, updatedFields: Partial<NoteRowInput>): Promise<boolean> => {
+    // Assuming 'id' uniquely identifies a note
+    return update(NOTES_TABLE, [id], updatedFields);
+};
+
+// Get Note by ID
+export const getNote = async (id: number): Promise<Note | null> => {
+    return get<NoteRow, Note>(NOTES_TABLE, [id], transformRowToNote);
+};
 
 // Delete Note
-export const deleteNote = async (id: string, notebookId: string) =>
-    del(await getNotesContainer(), id, notebookId);
+export const deleteNote = async (id: number): Promise<boolean> => {
+    // Assuming 'id' uniquely identifies a note
+    return del(NOTES_TABLE, [id]);
+};
+
+const transformRowToNote = (row: NoteRow): Note => ({
+    id: row.id,
+    notebookId: row.notebook_id,
+    content: row.content,
+    name: row.name,
+});

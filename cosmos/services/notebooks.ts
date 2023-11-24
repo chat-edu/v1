@@ -1,32 +1,79 @@
-import { NOTEBOOKS_CONTAINER } from "@/cosmos/constants";
-import {add, del, find, get, getContainer, update} from "@/cosmos/services/base";
-import {allNotebooksQuery, notebooksByUserIdQuery} from "@/cosmos/queries";
+import { add, del, find, get, update } from "@/cosmos/services/base";
 
-import {NotebookInput} from "@/types/Notebook";
+import { NOTEBOOKS_TABLE } from "@/cosmos/constants/tables";
 
-const partitionKey = undefined;
+import {Notebook, NotebookRow, NotebookRowInput, TopNotebook, TopNotebookRow} from "@/types/Notebook";
 
-export const getNotebookContainer = async () => getContainer(NOTEBOOKS_CONTAINER, partitionKey);
+export const findAllNotebooks = async (): Promise<Notebook[]> => {
+    const queryText = `
+        SELECT 
+            notebooks.*, 
+            users.name as user_name, 
+            count(notes.id) as num_notes 
+        FROM notebooks 
+        JOIN users ON notebooks.user_id = users.id 
+        LEFT JOIN notes ON notes.notebook_id = notebooks.id 
+        GROUP BY notebooks.id, users.id;
+    `;
+    return find(queryText, [], transformNotebook);
+};
 
-// Find Notebooks
-export const findAllNotebooks = async (): Promise<NotebookInput[]> =>
-    find(await getNotebookContainer(), allNotebooksQuery);
+export const findNotebooksByUserId = async (userId: string): Promise<Notebook[]> => {
+    const queryText = `
+        SELECT notebooks.*, users.name as user_name, count(notes.id) as num_notes 
+        FROM notebooks JOIN users ON notebooks.user_id = users.id LEFT JOIN notes ON notes.notebook_id = notebooks.id 
+        WHERE notebooks.user_id = $1 
+        GROUP BY notebooks.id, users.id;
+    `;
+    return find(queryText, [userId], transformNotebook);
+};
 
-export const findNotebooksByUserId = async (userId: string): Promise<NotebookInput[]> =>
-    find(await getNotebookContainer(), notebooksByUserIdQuery(userId));
+// sort the notebooks by their score, descending, then by their number of notes
+// use the scores table to determine the aggregate score for each notebook
+export const findTopNotebooks = async (limit: number): Promise<TopNotebook[]> => {
+    const queryText = `
+      SELECT
+        n.*,
+        u.name AS user_name,
+        SUM(s.score) AS total_score,
+        COUNT(nt.id) AS num_notes
+      FROM Notebooks n
+      JOIN Users u ON n.user_id = u.id
+      LEFT JOIN Scores s ON n.id = s.notebook_id
+      LEFT JOIN Notes nt ON n.id = nt.notebook_id
+      GROUP BY n.id, u.name
+      ORDER BY total_score DESC, num_notes DESC
+      LIMIT $1;
+    `;
+    return find(queryText, [limit], transformTopNotebook);
+}
 
-// Add Notebook
-export const addNotebook = async (notebook: NotebookInput) =>
-    add(await getNotebookContainer(), notebook);
 
-// Update Notebook
-export const updateNotebook = async (id: string, updatedFields: Partial<NotebookInput>) =>
-    update(await getNotebookContainer(), id, updatedFields);
+export const addNotebook = async (notebook: NotebookRowInput): Promise<boolean> => {
+    return add(NOTEBOOKS_TABLE, notebook);
+};
 
-// Get Notebook
-export const getNotebook = async (id: string): Promise<NotebookInput> =>
-    get<NotebookInput>(await getNotebookContainer(), id);
+export const updateNotebook = async (id: number, updatedFields: Partial<NotebookRowInput>): Promise<boolean> => {
+    return update(NOTEBOOKS_TABLE, [id], updatedFields);
+};
 
-// Delete Notebook
-export const deleteNotebook = async (id: string) =>
-    del(await getNotebookContainer(), id);
+export const getNotebook = async (id: number): Promise<Notebook | null> => {
+    return get(NOTEBOOKS_TABLE, [id], transformNotebook);
+};
+
+export const deleteNotebook = async (id: number): Promise<boolean> => {
+    return del(NOTEBOOKS_TABLE, [id]);
+};
+
+const transformNotebook = (row: NotebookRow): Notebook => ({
+    id: row.id,
+    name: row.name,
+    userId: row.user_id,
+    userName: row.user_name,
+    numNotes: parseInt(row.num_notes),
+})
+
+const transformTopNotebook = (row: TopNotebookRow): TopNotebook => ({
+    ...transformNotebook(row),
+    totalScore: parseInt(row.total_score || "0"),
+})

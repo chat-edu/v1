@@ -1,5 +1,6 @@
 export interface User {
     id: string;
-    isOnboarded: boolean;
-    score: number;
+    name: string;
+    email: string;
+    username: string;
 }

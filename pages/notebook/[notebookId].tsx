@@ -25,7 +25,7 @@ const NotebookPage: NextPage = () => {
                 authGate
             >
                 <Notebook
-                    notebookId={notebookId as string}
+                    notebookId={parseInt(notebookId as string)}
                 />
             </Layout>
         </>

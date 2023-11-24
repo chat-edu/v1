@@ -6,8 +6,10 @@ import {addNote} from "@/services/notes";
 
 import documentAnalysisClient from "@/documentIntelligence/client";
 
+import {Notebook} from "@/types/Notebook";
 
-const useUploadNote = (notebookId: string) => {
+
+const useUploadNote = (notebookId: Notebook["id"]) => {
 
     const toast = useToast();
 
@@ -38,7 +40,7 @@ const useUploadNote = (notebookId: string) => {
         }, '');
 
         const success = await addNote({
-            title: file.name,
+            name: file.name,
             notebookId,
             content: allText,
         })

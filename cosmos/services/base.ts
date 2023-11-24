@@ -1,48 +1,102 @@
-import {Container, ItemDefinition, PartitionKey, PartitionKeyDefinition, SqlQuerySpec} from '@azure/cosmos';
+import {getPool} from "@/cosmos/citus";
 
-import getCosmosDb from "@/cosmos/database";
+import {QueryResultRow} from "pg";
 
-export const getContainer = async (id: string, partitionKey?: PartitionKeyDefinition) =>
-    (await (await getCosmosDb()).containers.createIfNotExists({id, partitionKey})).container
+export const find = async <RowType extends QueryResultRow, ReturnType>(
+    queryText: string,
+    values: any[],
+    transform: (row: RowType) => ReturnType
+): Promise<ReturnType[]> => {
+    const client = await getPool().connect();
+    try {
+        const { rows } = await client.query<RowType>(queryText, values);
+        return rows.map(transform);
+    } finally {
+        client.release();
+    }
+};
 
-export const find = async <T>(container: Container, querySpec: SqlQuerySpec): Promise<T[]> =>
-    (await container.items.query(querySpec).fetchAll()).resources as T[];
+export const add = async (tableName: string, input: object): Promise<boolean> => {
+    const client = await getPool().connect();
+    try {
+        const columns = Object.keys(input).join(', ');
+        const values = Object.values(input);
+        const valuePlaceholders = values.map((_, index) => `$${index + 1}`).join(', ');
 
-export const add = async <T extends ItemDefinition>(container: Container, input: T): Promise<boolean> =>
-    container.items.create(input)
-        .then(() => true)
-        .catch(() => false);
+        const queryText = `INSERT INTO ${tableName} (${columns}) VALUES (${valuePlaceholders}) RETURNING *`;
+        await client.query(queryText, values);
+        return true;
+    } catch (error) {
+        console.error('Error in add operation:', error);
+        return false;
+    } finally {
+        client.release();
+    }
+};
 
-
-
-export const update = async <T extends ItemDefinition>(
-    container: Container,
-    id: string,
-    updatedFields: Partial<T>,
-    partitionKey?: PartitionKey,
+// make an update function for when the id is a composite key
+export const update = async(
+    tableName: string,
+    id: any[],
+    updatedFields: object,
+    idColumnNames: string[] = ['id']
 ): Promise<boolean> => {
-    const doc = await get<T>(container, id, partitionKey);
-    const updatedDoc = { ...doc, ...updatedFields };
-    return replace(container, id, updatedDoc, partitionKey)
-        .then(() => true)
-        .catch(() => false);
+const client = await getPool().connect();
+    try {
+        const updates = Object.keys(updatedFields).map((key, index) => `${key} = $${index + 1}`);
+        const values = [...Object.values(updatedFields), ...id];
+        const queryText = `
+            UPDATE ${tableName} 
+            SET ${updates.join(', ')} 
+            WHERE ${idColumnNames.map((idColumnName, index) => `${idColumnName} = $${index + 1 + Object.values(updatedFields).length}`).join(' AND ')}
+        `;
+        await client.query(queryText, values);
+        return true;
+    } catch (error) {
+        console.error('Error in update operation:', error);
+        return false;
+    } finally {
+        client.release();
+    }
+};
+
+// make a get function for when the id is a composite key
+export const get = async <RowType extends QueryResultRow, ReturnType>(
+    tableName: string,
+    id: any[],
+    transform: (row: RowType) => ReturnType,
+    idColumnNames: string[] = ['id']
+): Promise<ReturnType | null> => {
+    const client = await getPool().connect();
+    try {
+        const queryText = `
+            SELECT * FROM ${tableName} 
+            WHERE ${idColumnNames.map((idColumnName, index) => `${idColumnName} = $${index + 1}`).join(' AND ')}
+        `;
+        const { rows } = await client.query<RowType>(queryText, id);
+        return rows && rows.length ? transform(rows[0]) : null;
+    } finally {
+        client.release();
+    }
 }
 
-
-export const replace = async <T extends ItemDefinition>(
-    container: Container,
-    id: string,
-    updatedDoc: T,
-    partitionKey?: PartitionKey,
-): Promise<boolean> =>
-    container.item(id, partitionKey).replace(updatedDoc)
-        .then(() => true)
-        .catch(() => false);
-
-export const get = async <T>(container: Container, id: string, partitionKey?: PartitionKey): Promise<T> =>
-    (await container.item(id, partitionKey).read()).resource as T;
-
-export const del = async (container: Container, id: string, partitionKey?: PartitionKey): Promise<boolean> =>
-    container.item(id, partitionKey).delete()
-        .then(() => true)
-        .catch(() => false);
+export const del = async (
+    tableName: string,
+    id: any[],
+    idColumnNames: string[] = ['id']
+): Promise<boolean> => {
+    const client = await getPool().connect();
+    try {
+        const queryText = `
+            DELETE FROM ${tableName} 
+            WHERE ${idColumnNames.map((idColumnName, index) => `${idColumnName} = $${index + 1}`).join(' AND ')}
+        `;
+        await client.query(queryText, id);
+        return true;
+    } catch (error) {
+        console.error('Error in delete operation:', error);
+        return false;
+    } finally {
+        client.release();
+    }
+}

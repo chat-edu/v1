@@ -1,3 +1,3 @@
 export interface NotebookIdParams {
-    notebookId: string;
+    notebookId: number;
 }

@@ -28,7 +28,7 @@ interface Props {
     notebook: NotebookType,
     selectedNotes: NoteType[],
     addNote: (note: NoteType) => void
-    removeNote: (id: string) => void,
+    removeNote: (id: NoteType["id"]) => void,
     closeSidebar?: () => void
 }
 

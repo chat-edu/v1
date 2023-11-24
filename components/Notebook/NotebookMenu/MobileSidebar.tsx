@@ -21,12 +21,11 @@ import NotebookMenuHeader from "@/components/Notebook/NotebookMenu/NotebookMenuH
 import {Note} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
 
-
 interface Props {
     notebook: Notebook,
     selectedNotes: Note[],
     addNote: (note: Note) => void;
-    removeNote: (id: string) => void
+    removeNote: (id: Note["id"]) => void
 }
 
 const MobileSidebar: React.FC<Props> = ({ notebook, selectedNotes, addNote, removeNote }) => {

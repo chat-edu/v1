@@ -1,12 +1,16 @@
 import React from 'react';
 
-import useUploadNote from "@/hooks/mutators/useUploadNote";
-import FileInput from "@/components/Utilities/FIleInput";
 import {HStack, IconButton} from "@chakra-ui/react";
 import {CheckIcon} from "@chakra-ui/icons";
 
+import FileInput from "@/components/Utilities/FIleInput";
+
+import useUploadNote from "@/hooks/mutators/useUploadNote";
+
+import {Notebook} from "@/types/Notebook";
+
 interface Props {
-    notebookId: string
+    notebookId: Notebook["id"]
 }
 
 const UploadNotes: React.FC<Props> = ({ notebookId }) => {
