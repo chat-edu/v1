@@ -1,4 +1,4 @@
-import {updateNotebook} from "@/cosmos/services/notebooks";
+import {updateNotebook} from "@/cosmosPostgres/services/notebooks";
 
 import {NotebookIdParams} from "@/app/api/notebooks/[notebookId]/NotebookIdParams";
 import {NotebookRowInput} from "@/types/Notebook";
