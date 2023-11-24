@@ -58,10 +58,10 @@ const AddModal: React.FC<Props> = ({ isOpen, onClose , initNotebook}) => {
                         <TextInput
                             label={"Title"}
                             placeholder={"Enter your title here..."}
-                            value={values.title}
+                            value={values.name}
                             onChange={(title) => setFieldValue('title', title)}
                             onBlur={() => setFieldTouched('title', true)}
-                            error={touched.title && errors.title || undefined}
+                            error={touched.name && errors.name || undefined}
                             helperText={"Ex: Lecture 1"}
                         />
                         <TextareaInput

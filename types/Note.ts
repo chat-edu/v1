@@ -1,10 +1,21 @@
+import {Notebook} from "@/types/Notebook";
+
 export interface NoteInput {
-    title: string;
+    name: string;
     content: string;
-    notebookId: string;
+    notebookId: Notebook["id"];
 }
 
 export interface Note extends NoteInput {
-    id: string;
-    score: number;
+    id: number;
+}
+
+export interface NoteRowInput {
+    name: string;
+    content: string;
+    notebook_id: Notebook["id"];
+}
+
+export interface NoteRow extends NoteRowInput {
+    id: number;
 }

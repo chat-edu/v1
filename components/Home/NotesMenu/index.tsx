@@ -7,7 +7,7 @@ import {Note} from "@/types/Note";
 
 interface Props {
     addNote: (note: Note) => void;
-    removeNote: (id: string) => void;
+    removeNote: (id: Note["id"]) => void;
     notes: Note[];
 }
 

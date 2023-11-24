@@ -23,7 +23,7 @@ const Onboarding: React.FC<Props> = ({ userId }) => {
 
     const notebook = notebooks.length > 0 ? notebooks[0] : null;
 
-    const { notes, loading: notesLoading } = useNotes(notebook?.id || ' ');
+    const { notes, loading: notesLoading } = useNotes(notebook?.id || 0);
 
     const onStartLearning = async () => {
         await addUser(userId);

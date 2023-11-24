@@ -18,7 +18,7 @@ const useNote = (note: Note) => {
         if(success) {
             toast({
                 title: "Note Deleted",
-                description: `Note ${note.title} was deleted.`,
+                description: `Note ${note.name} was deleted.`,
                 status: "success",
                 duration: 5000,
                 isClosable: true,
@@ -26,7 +26,7 @@ const useNote = (note: Note) => {
         } else {
             toast({
                 title: "Note Deletion Failed",
-                description: `Note ${note.title} could not be deleted.`,
+                description: `Note ${note.name} could not be deleted.`,
                 status: "error",
                 duration: 5000,
                 isClosable: true,

@@ -1,17 +1,14 @@
-import { addNotebook } from "@/cosmos/services/notebooks";
+import { addNotebook } from "@/cosmosPostgres/services/notebooks";
 
 export async function POST(request: Request) {
-    // parse the request body
     const notebook = (await request.json());
 
-    // check if the request body contains a notebook
-    if(!notebook) return Response.json({error: "No notebook provided"});
-    if(!notebook.name) return Response.json({error: "No notebook name provided"});
-    if(!notebook.userId) return Response.json({error: "No notebook userId provided"});
+    if(!notebook) return Response.json(false);
+    if(!notebook.name) return Response.json(false);
+    if(!notebook.userId) return Response.json(false);
 
-    // add the notebook
     return Response.json(await addNotebook({
         name: notebook.name,
-        userId: notebook.userId,
+        user_id: notebook.userId,
     }));
 }

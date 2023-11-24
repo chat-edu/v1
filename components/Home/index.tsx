@@ -28,7 +28,7 @@ const Home = () => {
                 userLoading ? (
                     <Skeleton />
                 ) : (
-                    userData?.isOnboarded ? (
+                    userData ? (
                         <Stack
                             w={'100%'}
                             flex={1}

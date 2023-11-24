@@ -10,7 +10,7 @@ const useHome = () => {
         setNotes([...notes, note]);
     };
 
-    const removeNote = (id: string) => {
+    const removeNote = (id: number) => {
         setNotes(notes.filter((note) => note.id !== id));
     }
 

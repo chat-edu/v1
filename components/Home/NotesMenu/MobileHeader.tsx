@@ -11,7 +11,7 @@ export const mobileHeaderHeight = 60;
 interface Props {
     notes: Note[];
     addNote: (note: Note) => void;
-    removeNote: (id: string) => void;
+    removeNote: (id: Note["id"]) => void;
 }
 
 const MobileHeader: React.FC<Props> = ({ notes, addNote, removeNote}) => {

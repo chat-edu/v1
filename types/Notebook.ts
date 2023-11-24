@@ -4,5 +4,14 @@ export interface NotebookInput {
 }
 
 export interface Notebook extends NotebookInput {
-    id: string;
+    id: number;
+}
+
+export interface NotebookRowInput {
+    name: string;
+    user_id: string;
+}
+
+export interface NotebookRow extends NotebookRowInput {
+    id: number;
 }

@@ -1,14 +1,17 @@
-import useContainerData from "@/hooks/queries/useContainerData";
-
-import {Note} from "@/types/Note";
-import {subscribeToNotesChangedEvent, unsubscribeFromNotesChangedEvent} from "@/eventEmitters/notesEventEmitter";
 import {useCallback, useEffect} from "react";
 
-const useNotes = (notebookId: string) => {
+import useContainerData from "@/hooks/queries/useContainerData";
 
-    const [notes, loading, error, fetchNotes] = useContainerData<Note>(notebookId == "" ? "" : `/api/notes/${notebookId}`);
+import {subscribeToNotesChangedEvent, unsubscribeFromNotesChangedEvent} from "@/eventEmitters/notesEventEmitter";
 
-    const handleNotesChanged = useCallback(async (changedNotebookId: string) => {
+import {Note} from "@/types/Note";
+import {Notebook} from "@/types/Notebook";
+
+const useNotes = (notebookId: Notebook["id"]) => {
+
+    const [notes, loading, error, fetchNotes] = useContainerData<Note>(notebookId == 0 ? "" : `/api/notes/${notebookId}`);
+
+    const handleNotesChanged = useCallback(async (changedNotebookId: number) => {
         if(changedNotebookId === notebookId) {
             await fetchNotes();
         }

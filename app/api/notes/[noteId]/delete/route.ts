@@ -1,19 +1,19 @@
-import {deleteNote} from "@/cosmos/services/notes";
+import {deleteNote} from "@/cosmosPostgres/services/notes";
 
 import {NextRequest} from "next/server";
 
-import {NoteIdParams} from "@/app/api/notes/[notebookId]/[noteId]/NoteIdParams";
+import {NoteIdParams} from "@/app/api/notes/[noteId]/NoteIdParams";
 
 export const GET = async (request: NextRequest, {params}: {params: NoteIdParams}) => {
     // get the notebookId from the query string
-    const {notebookId, noteId} = params;
+    const {noteId} = params;
 
     // if there is no notebookId, return an empty array
-    if (!notebookId || !noteId) {
+    if (!noteId) {
         return Response.json(false);
     }
 
-    await deleteNote(noteId, notebookId);
+    await deleteNote(noteId);
 
     return Response.json(true);
 }
