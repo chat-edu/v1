@@ -4,26 +4,20 @@ import {Button, Card, Divider, Text, VStack} from "@chakra-ui/react";
 
 import Welcome from "@/components/Welcome";
 
-import useAuth from "@/hooks/useAuth";
-
-import {addUser} from "@/services/user";
-
-import {emitUsersChangedEvent} from "@/eventEmitters/userEventEmitter";
+import useCreateUser from "@/hooks/mutators/useCreateUser";
+import TextInput from "@/components/Utilities/TextInput";
 
 const Onboarding: React.FC = () => {
 
-    const { user } = useAuth();
-
-    const onStartLearning = async () => {
-        if(!user) return;
-        await addUser({
-            id: user.id || '',
-            email: user.email || '',
-            name: user.name || '',
-            username: '',
-        });
-        emitUsersChangedEvent(user.id)
-    }
+    const {
+        values,
+        errors,
+        touched,
+        setFieldTouched,
+        setFieldValue,
+        submitForm,
+        disabled
+    } = useCreateUser();
 
     return (
         <VStack
@@ -61,9 +55,18 @@ const Onboarding: React.FC = () => {
                         ChatEDU is a platform that allows you to create study guides, ask questions, and answer practice problems based on your notes.
                     </Text>
                     <Divider />
+                    <TextInput
+                        label={'Username'}
+                        placeholder={'Username'}
+                        value={values.username}
+                        onChange={(value) => setFieldValue('username', value)}
+                        onBlur={() => setFieldTouched('username')}
+                        error={touched.username ? errors.username : undefined}
+                    />
                     <Button
                         colorScheme={'brand'}
-                        onClick={onStartLearning}
+                        onClick={submitForm}
+                        isDisabled={disabled}
                     >
                         Start Learning
                     </Button>

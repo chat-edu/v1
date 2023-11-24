@@ -1,0 +1,98 @@
+import { useEffect } from 'react';
+
+import {useToast} from "@chakra-ui/react";
+
+import * as Yup from "yup";
+
+import {useFormik} from "formik";
+
+import { addUser } from "@/services/user";
+
+import useAuth from "@/hooks/useAuth";
+
+import {User} from "@/types/User";
+import {emitUsersChangedEvent} from "@/eventEmitters/userEventEmitter";
+
+const UserSchema: Yup.ObjectSchema<User> = Yup.object().shape({
+    name: Yup.string()
+        .required('Name is Required')
+        .min(1, 'Name is Required'),
+    email: Yup.string()
+        .required('Email is Required')
+        .min(1, 'Email is Required'),
+    username: Yup.string()
+        .required('Username is Required')
+        .min(1, 'Username is Required'),
+    id: Yup.string()
+        .required('ID is Required')
+        .min(1, 'ID is Required'),
+});
+
+const useAddUser = () => {
+    const { user } = useAuth();
+
+    const toast = useToast();
+
+    const {
+        values,
+        errors,
+        touched,
+        setFieldValue,
+        setFieldTouched,
+        submitForm,
+        resetForm,
+    } = useFormik<User>({
+        initialValues: {
+            name: user?.name || '',
+            email: user?.email || '',
+            username: '',
+            id: user?.id || '',
+        },
+        validationSchema: UserSchema,
+        onSubmit: async user => {
+            if(!user) return;
+            const success = await addUser(user);
+            if(success) {
+                emitUsersChangedEvent(user.id);
+                toast({
+                    title: "User Added",
+                    description: "Your user has been added.",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                });
+                resetForm();
+            } else {
+                toast({
+                    title: "User Not Added",
+                    description: "Your user has not been added.",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                });
+            }
+        }
+    });
+
+    useEffect(() => {
+        if (user) {
+            setFieldValue('name', user.name);
+            setFieldValue('email', user.email);
+            setFieldValue('id', user.id);
+        }
+    }, [setFieldValue, user]);
+
+
+    return {
+        values,
+        errors,
+        touched,
+        setFieldValue,
+        setFieldTouched,
+        submitForm,
+        resetForm,
+        disabled: Object.keys(errors).length > 0,
+    }
+}
+
+export default useAddUser;
