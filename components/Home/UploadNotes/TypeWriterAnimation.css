@@ -202,3 +202,20 @@
   *:before, *:after {
     box-sizing: inherit;
   }
+  
+  .modal-header-custom {
+    text-align: center;
+    font-size: 1.5em; /* Adjust size as needed */
+    font-weight: bold;
+}
+
+.subtext-custom {
+    text-align: center;
+    font-size: 1.6em; /* Adjust size as needed */
+    font-weight: bold;
+    margin: 20px; /* Adds some spacing below the text */
+}
+
+.modal-body-custom {
+  text-align: center;
+}
