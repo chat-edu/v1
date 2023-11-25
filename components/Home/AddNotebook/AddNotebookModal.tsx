@@ -29,7 +29,9 @@ const AddNotebookModal: React.FC<Props> = ({ isOpen, onClose }) => {
         <Modal
             isOpen={isOpen}
             onClose={onClose}
-            size={'xl'}
+            size={'3xl'}
+            scrollBehavior={'inside'}
+            isCentered={true}
         >
             <ModalOverlay />
             <ModalContent>

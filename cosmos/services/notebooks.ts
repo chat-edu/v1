@@ -2,13 +2,20 @@ import { add, del, find, get, update } from "@/cosmos/services/base";
 
 import { NOTEBOOKS_TABLE } from "@/cosmos/constants/tables";
 
-import {Notebook, NotebookRow, NotebookRowInput, TopNotebook, TopNotebookRow} from "@/types/Notebook";
+import {
+    Notebook,
+    NotebookRow,
+    NotebookRowInput,
+    NotebookWithTotalScore,
+    NotebookWithTotalScoreRow, RankedNotebook,
+    RankedNotebookRow
+} from "@/types/Notebook";
 
 export const findAllNotebooks = async (): Promise<Notebook[]> => {
     const queryText = `
         SELECT 
             notebooks.*, 
-            users.name as user_name, 
+            users.username as username, 
             count(notes.id) as num_notes 
         FROM notebooks 
         JOIN users ON notebooks.user_id = users.id 
@@ -20,7 +27,7 @@ export const findAllNotebooks = async (): Promise<Notebook[]> => {
 
 export const findNotebooksByUserId = async (userId: string): Promise<Notebook[]> => {
     const queryText = `
-        SELECT notebooks.*, users.name as user_name, count(notes.id) as num_notes 
+        SELECT notebooks.*, users.username as username, count(notes.id) as num_notes 
         FROM notebooks JOIN users ON notebooks.user_id = users.id LEFT JOIN notes ON notes.notebook_id = notebooks.id 
         WHERE notebooks.user_id = $1 
         GROUP BY notebooks.id, users.id;
@@ -30,23 +37,53 @@ export const findNotebooksByUserId = async (userId: string): Promise<Notebook[]>
 
 // sort the notebooks by their score, descending, then by their number of notes if there is a tie
 // use the scores table to determine the aggregate score for each notebook
-export const findTopNotebooks = async (limit: number): Promise<TopNotebook[]> => {
+export const findTopNotebooks = async (limit: number): Promise<NotebookWithTotalScore[]> => {
     const queryText = `
         SELECT
             n.*,
-            u.name AS user_name,
+            u.username AS username,
             COALESCE(SUM(s.score), 0) AS total_score,
             COUNT(nt.id) AS num_notes
         FROM Notebooks n
             JOIN Users u ON n.user_id = u.id
             LEFT JOIN Scores s ON n.id = s.notebook_id
             LEFT JOIN Notes nt ON n.id = nt.notebook_id
-        GROUP BY n.id, u.name
+        GROUP BY n.id, u.username
         ORDER BY total_score DESC, num_notes DESC
         LIMIT $1;
 
     `;
-    return find(queryText, [limit], transformTopNotebook);
+    return find(queryText, [limit], transformNotebookWithTotalScore);
+}
+
+export const getRankedNotebook = async (notebookId: number): Promise<RankedNotebook | null> => {
+    const query = `
+        WITH RankedNotebooks AS (
+            SELECT
+                n.id AS id,
+                n.name AS name,
+                u.username AS username,
+                SUM(s.score) AS total_score,
+                RANK() OVER (ORDER BY COALESCE(SUM(s.score), 0) DESC) AS rank,
+                COALESCE(COUNT(nt.id), 0) AS num_notes
+            FROM Notebooks n
+            LEFT JOIN Scores s ON n.id = s.notebook_id
+            LEFT JOIN Notes nt ON n.id = nt.notebook_id
+            JOIN Users u ON n.user_id = u.id
+            GROUP BY n.id, u.username, n.name
+        )
+        SELECT
+            id,
+            username,
+            name,
+            total_score,
+            rank,
+            username,
+            num_notes
+        FROM RankedNotebooks
+        WHERE id = $1;
+    `
+    return get(query, [notebookId], transformRankedNotebook);
 }
 
 
@@ -62,7 +99,7 @@ export const getNotebook = async (id: number): Promise<Notebook | null> => {
     const query = `
         SELECT
             n.*,
-            u.name AS user_name,
+            u.name AS username,
             COUNT(nt.id) AS num_notes
         FROM Notebooks n
         JOIN Users u ON n.user_id = u.id
@@ -81,11 +118,16 @@ const transformNotebook = (row: NotebookRow): Notebook => ({
     id: row.id,
     name: row.name,
     userId: row.user_id,
-    userName: row.user_name,
+    username: row.username,
     numNotes: parseInt(row.num_notes),
 })
 
-const transformTopNotebook = (row: TopNotebookRow): TopNotebook => ({
+const transformNotebookWithTotalScore = (row: NotebookWithTotalScoreRow): NotebookWithTotalScore => ({
     ...transformNotebook(row),
     totalScore: parseInt(row.total_score || "0"),
 })
+
+const transformRankedNotebook = (row: RankedNotebookRow): RankedNotebook => ({
+    ...transformNotebookWithTotalScore(row),
+    rank: parseInt(row.rank),
+});

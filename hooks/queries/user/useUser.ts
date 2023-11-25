@@ -1,6 +1,6 @@
 import {useCallback, useEffect} from "react";
 
-import useItemData from "@/hooks/queries/useItemData";
+import useItemData from "@/hooks/queries/utilities/useItemData";
 
 import {subscribeToUsersChangedEvent, unsubscribeFromUsersChangedEvent} from "@/eventEmitters/userEventEmitter";
 

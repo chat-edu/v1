@@ -15,7 +15,7 @@ import Note from "@/components/Notebook/NotebookMenu/NotesSelect/Note";
 import UploadNotes from "@/components/Home/UploadNotes";
 
 import useAuth from "@/hooks/useAuth";
-import useNotes from "@/hooks/queries/useNotes";
+import useNotes from "@/hooks/queries/notebook/useNotes";
 
 import {Notebook as NotebookType} from "@/types/Notebook";
 import {Note as NoteType} from "@/types/Note";
@@ -65,6 +65,7 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                                             <Note
                                                 key={note.id}
                                                 note={note}
+                                                notebook={notebook}
                                                 addNote={addNote}
                                                 removeNote={removeNote}
                                             />

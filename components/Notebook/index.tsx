@@ -4,7 +4,7 @@ import {Skeleton, Text} from "@chakra-ui/react";
 
 import NotebookLayout from "@/components/Notebook/NotebookLayout";
 
-import useNotebook from "@/hooks/queries/useNotebook";
+import useNotebook from "@/hooks/queries/notebooks/useNotebook";
 
 import {Notebook as NotebookType} from "@/types/Notebook";
 

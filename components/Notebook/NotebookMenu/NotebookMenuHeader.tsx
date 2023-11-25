@@ -24,7 +24,7 @@ const NotebookMenuHeader: React.FC<Props> = ({ notebook }) => {
                 fontWeight={'semibold'}
                 color={'gray.500'}
             >
-                By {notebook.userName}
+                By {notebook.username}
             </Text>
         </VStack>
     );

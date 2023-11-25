@@ -1,9 +1,9 @@
 import React from 'react';
 
-import useNotebookLeaderboard from "@/hooks/queries/useNotebookLeaderboard";
+import useNotebookLeaderboard from "@/hooks/queries/notebook/useNotebookLeaderboard";
 import {Notebook} from "@/types/Notebook";
 import {Skeleton, Text, VStack} from "@chakra-ui/react";
-import NotebookLeaderboardRow from "@/components/Notebook/NotebookMenu/NotebookLeaderboard/NotebookLeaderboardRow";
+import NotebookLeaderboardRow from "@/components/NotebookUtilities/NotebookLeaderboard/NotebookLeaderboardRow";
 
 interface Props {
     notebookId: Notebook["id"]

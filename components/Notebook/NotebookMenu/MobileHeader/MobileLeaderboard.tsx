@@ -16,7 +16,7 @@ import {
 import {FaTrophy} from "react-icons/fa";
 
 import NotebookMenuHeader from "@/components/Notebook/NotebookMenu/NotebookMenuHeader";
-import NotebookLeaderboard from "@/components/Notebook/NotebookMenu/NotebookLeaderboard";
+import NotebookLeaderboard from "@/components/NotebookUtilities/NotebookLeaderboard";
 
 import {Notebook} from "@/types/Notebook";
 

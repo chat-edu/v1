@@ -8,10 +8,6 @@ export interface UserScore extends Score {
     username: string;
 }
 
-export interface NotebookScore extends Score {
-    notebookName: string;
-}
-
 export interface ScoreRow {
     user_id: string;
     notebook_id: number;
@@ -20,8 +16,4 @@ export interface ScoreRow {
 
 export interface UserScoreRow extends ScoreRow {
     username: string;
-}
-
-export interface NotebookScoreRow extends ScoreRow {
-    notebook_name: string;
 }

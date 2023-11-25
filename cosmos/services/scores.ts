@@ -1,23 +1,13 @@
 import {getPool} from "@/cosmos/citus";
 import {del, find, get} from "@/cosmos/services/base";
 
-import {NotebookScore, NotebookScoreRow, Score, ScoreRow, UserScore, UserScoreRow} from "@/types/Score";
+import {Score, ScoreRow, UserScore, UserScoreRow} from "@/types/Score";
 
 // Find Scores
 export const findAllScores = async (): Promise<Score[]> => {
     const queryText = 'SELECT * FROM Scores;';
     return find(queryText, [], transformScore);
 };
-
-export const findScoresByUserId = async (userId: string): Promise<NotebookScore[]> => {
-    const queryText = `
-        SELECT Scores.*, Notebooks.name AS notebook_name
-        FROM Scores
-        INNER JOIN Notebooks ON Scores.notebook_id = Notebooks.id
-        WHERE Scores.user_id = $1;
-    `;
-    return find(queryText, [userId], transformNotebookScore);
-}
 
 export const findScoresByNotebookId = async (notebookId: number): Promise<UserScore[]> => {
     const queryText = `
@@ -72,8 +62,3 @@ const transformUserScore = (row: UserScoreRow): UserScore => ({
     ...transformScore(row),
     username: row.username
 })
-
-const transformNotebookScore = (row: NotebookScoreRow): NotebookScore => ({
-    ...transformScore(row),
-    notebookName: row.notebook_name
-});

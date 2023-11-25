@@ -1,56 +1,79 @@
 import React from 'react';
 
-import {SimpleGrid, Skeleton, Text} from "@chakra-ui/react";
+import {Heading, HStack, SimpleGrid, Skeleton, Text, VStack} from "@chakra-ui/react";
 
 import NotebookCard from "@/components/Home/Explore/NotebookCard";
 
 import {Notebook} from "@/types/Notebook";
 
-interface Props {
-    notebooks: Notebook[]
+interface Props<NotebookType extends Notebook> {
+    heading: string,
+    notebooks: NotebookType[]
     loading: boolean,
+    onClick: (notebook: NotebookType) => void,
+    headingRightComponent?: React.ReactNode,
     noNotebooksComponent?: React.ReactNode,
-    rightComponent?: (index: number) => React.ReactNode
+    rightComponent?: (notebook: NotebookType, index: number) => React.ReactNode
 }
 
-const NotebookGrid: React.FC<Props> = ({ notebooks, loading, noNotebooksComponent, rightComponent}) => {
-    if(loading) {
-        return (
-            <Skeleton />
-        )
-    }
-
-    if(notebooks.length === 0) {
-        return noNotebooksComponent || (
-            <Text>
-                No notebooks found
-            </Text>
-        )
-    }
-
+const NotebookGrid = <NotebookType extends Notebook>({ heading, headingRightComponent, notebooks, loading, onClick, noNotebooksComponent, rightComponent}: Props<NotebookType>) => {
     return (
-        <SimpleGrid
-            columns={{
-                base: 1,
-                md: 2,
-                lg: 3
-            }}
-            w={'100%'}
-            gap={{
-                base: 2,
-                md: 4
-            }}
+        <VStack
+            spacing={4}
+            align={'start'}
         >
+            <HStack
+                w={'100%'}
+                justify={'space-between'}
+            >
+                <Heading
+                    size={{
+                        base: 'md',
+                        md: 'lg'
+                    }}
+                >
+                    {heading}
+                </Heading>
+                {headingRightComponent}
+            </HStack>
             {
-                notebooks.map((notebook, index) => (
-                    <NotebookCard
-                        key={notebook.id}
-                        notebook={notebook}
-                        rightComponent={rightComponent ? rightComponent(index) : undefined}
-                    />
-                ))
+                loading ? (
+                    <Skeleton />
+                ) : (
+                    notebooks.length === 0 ? (
+                        noNotebooksComponent || (
+                            <Text>
+                                No notebooks found
+                            </Text>
+                        )
+                    ) : (
+                        <SimpleGrid
+                            columns={{
+                                base: 1,
+                                md: 2,
+                                lg: 3
+                            }}
+                            w={'100%'}
+                            gap={{
+                                base: 2,
+                                md: 4
+                            }}
+                        >
+                            {
+                                notebooks.map((notebook, index) => (
+                                    <NotebookCard
+                                        key={notebook.id}
+                                        notebook={notebook}
+                                        rightComponent={rightComponent ? rightComponent(notebook, index) : undefined}
+                                        onClick={() => onClick(notebook)}
+                                    />
+                                ))
+                            }
+                        </SimpleGrid>
+                    )
+                )
             }
-        </SimpleGrid>
+        </VStack>
     );
 };
 

@@ -7,7 +7,7 @@ import {VscLayoutSidebarLeft, VscLayoutSidebarLeftOff} from "react-icons/vsc";
 import NotesSelect from "@/components/Notebook/NotebookMenu/NotesSelect";
 import NotebookMenuHeader from "@/components/Notebook/NotebookMenu/NotebookMenuHeader";
 import {navbarHeight} from "@/components/Layout/Navbar";
-import NotebookLeaderboard from "@/components/Notebook/NotebookMenu/NotebookLeaderboard";
+import NotebookLeaderboard from "@/components/NotebookUtilities/NotebookLeaderboard";
 
 import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 

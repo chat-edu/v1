@@ -1,4 +1,4 @@
-import {findScoresByUserId} from "@/cosmos/services/scores";
+import {findScoresByUserId} from "@/cosmos/services/user";
 
 import {NextRequest} from "next/server";
 import {UserIdParams} from "@/app/api/users/[userId]/UserIdParams";

@@ -1,53 +1,45 @@
 import React from 'react';
 
-import {Heading, Text, VStack} from "@chakra-ui/react";
+import {Text, VStack} from "@chakra-ui/react";
 
 import NotebookGrid from "@/components/Home/Explore/NotebookGrid";
 
-import useNotebooks from "@/hooks/queries/useNotebooks";
+import useNotebooks from "@/hooks/queries/notebooks/useNotebooks";
 
-import {TopNotebook} from "@/types/Notebook";
+import {NotebookWithTotalScore} from "@/types/Notebook";
 
-const PopularNotebooks = () => {
+interface Props {
+    onClick: (notebook: NotebookWithTotalScore) => void
+}
 
-    const { notebooks, loading } = useNotebooks<TopNotebook>("top");
+const PopularNotebooks: React.FC<Props> = ({ onClick }) => {
+
+    const { notebooks, loading } = useNotebooks<NotebookWithTotalScore>("top");
 
     return (
-        <VStack
-            spacing={4}
-            align={'start'}
-        >
-            <Heading
-                size={{
-                    base: 'md',
-                    md: 'lg'
-                }}
-            >
-                Popular Notebooks
-            </Heading>
-            <NotebookGrid
-                notebooks={notebooks}
-                loading={loading}
-                rightComponent={(index) => (
-                    <VStack
-                        justifyContent={'space-between'}
-                        align={'end'}
-                        h={'100%'}
+        <NotebookGrid
+            heading={'Popular Notebooks'}
+            notebooks={notebooks}
+            loading={loading}
+            onClick={onClick}
+            rightComponent={(_, index) => (
+                <VStack
+                    justifyContent={'space-between'}
+                    align={'end'}
+                    h={'100%'}
+                >
+                    <Text
+                        fontWeight={'bold'}
+                        color={index < 3 ? 'brand.500' : undefined}
                     >
-                        <Text
-                            fontWeight={'bold'}
-                            color={index < 3 ? 'brand.500' : undefined}
-                        >
-                            #{index + 1}
-                        </Text>
-                        <Text>
-                            {notebooks[index].totalScore} points
-                        </Text>
-                    </VStack>
-                )
-            }
-            />
-        </VStack>
+                        #{index + 1}
+                    </Text>
+                    <Text>
+                        Total Score: {notebooks[index].totalScore}
+                    </Text>
+                </VStack>
+            )}
+        />
     );
 };
 
