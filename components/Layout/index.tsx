@@ -1,9 +1,10 @@
 import React from 'react';
 
-import {Box, Flex, Skeleton} from "@chakra-ui/react";
+import {Box, Flex} from "@chakra-ui/react";
 
 import NotConnected from "@/components/Layout/NotConnected";
 import Navbar, { navbarHeight, mobileNavbarHeight } from "@/components/Layout/Navbar";
+import Loading from "@/components/Utilities/Loading";
 import {mobileHeaderHeight} from "@/components/Notebook/NotebookMenu/MobileHeader";
 
 import useAuth from "@/hooks/useAuth";
@@ -11,7 +12,7 @@ import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
 
 interface Props {
-    children: React.ReactNode,
+    children: React.ReactElement,
     authGate?: boolean
 }
 
@@ -39,15 +40,15 @@ const Layout: React.FC<Props> = ({ children, authGate }) => {
             >
                 {
                     authGate ? (
-                        loading ? (
-                            <Skeleton />
-                        ) : (
-                            isConnected ? (
-                                children
-                            ) : (
-                                <NotConnected />
-                            )
-                        )
+                        <Loading loading={loading}>
+                            {
+                                isConnected ? (
+                                    children
+                                ) : (
+                                    <NotConnected />
+                                )
+                            }
+                        </Loading>
                     ) : (
                         children
                     )
