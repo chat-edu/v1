@@ -30,10 +30,12 @@ const Note: React.FC<Props> = ({ note, notebook }) => {
             <ClickableCard
                 onClick={onOpen}
                 overflowWrap={'break-word'}
+                justifyContent={'center'}
             >
                 <Text
                     overflowWrap={'break-word'}
                     maxW={'100%'}
+                    fontWeight={'semibold'}
                 >
                     {note.name.length > maxCharacters ? `${note.name.substring(0, maxCharacters)}...` : note.name}
                 </Text>

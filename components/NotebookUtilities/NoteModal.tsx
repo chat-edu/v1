@@ -30,7 +30,7 @@ const NoteModal: React.FC<Props> = ({ note, notebook, isOpen, onClose }) => {
     const { deleteNote, isAllowed } = useDeleteNote(note, notebook);
 
     const onDelete = async () => {
-        if(!isAllowed) return;
+        console.log(isAllowed)
         await deleteNote();
         onClose();
     }

@@ -26,7 +26,7 @@ export const updateNote = async (noteId: number, note: NoteInput) =>
         .then((res) => res);
 
 export const deleteNote = async (noteId: Note["id"], notebookId: Notebook["id"]) =>
-    fetch(`/api/notes/${notebookId}/${noteId}/delete`, {
+    fetch(`/api/notes/${noteId}/delete`, {
         method: "GET",
     })
         .then(async (res) => {

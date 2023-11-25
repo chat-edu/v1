@@ -8,12 +8,14 @@ import useNotes from "@/hooks/queries/notebook/useNotes";
 
 import {Notebook} from "@/types/Notebook";
 import Loading from "@/components/Utilities/Loading";
+import AddNoteCard from "@/components/Home/AddNote/AddNoteCard";
 
 interface Props {
-    notebook: Notebook
+    notebook: Notebook,
+    allowAddNote?: boolean
 }
 
-const NotesDisplay: React.FC<Props> = ({ notebook }) => {
+const NotesDisplay: React.FC<Props> = ({ notebook, allowAddNote }) => {
 
     const { notes, loading } = useNotes(notebook.id);
 
@@ -32,7 +34,7 @@ const NotesDisplay: React.FC<Props> = ({ notebook }) => {
                 h={'50px'}
             >
                 {
-                    notes.length > 0 ? (
+                    notes.length > 0 || allowAddNote ? (
                         <SimpleGrid
                             columns={{
                                 base: 2,
@@ -41,6 +43,9 @@ const NotesDisplay: React.FC<Props> = ({ notebook }) => {
                             }}
                             spacing={4}
                         >
+                            <AddNoteCard
+                                notebook={notebook}
+                            />
                             {
                                 notes.map((note) => (
                                     <Note

@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import {SmallAddIcon} from "@chakra-ui/icons";
 
-import AddNotes from "@/components/Home/AddNotes";
+import AddNoteButton from "@/components/Home/AddNote/AddNoteButton";
 import Note from "@/components/Notebook/NotebookMenu/NotesSelect/Note";
 import UploadNotes from "@/components/Home/UploadNotes";
 
@@ -97,7 +97,7 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                         <VStack
                             w={'100%'}
                         >
-                            <AddNotes
+                            <AddNoteButton
                                 text={"Add Note"}
                                 icon={<SmallAddIcon />}
                                 notebook={notebook}
