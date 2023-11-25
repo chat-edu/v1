@@ -32,7 +32,7 @@ const YourUsedNotebooks: React.FC<Props> = ({ user, onClick }) => {
             rightComponent={(notebook) => {
                 return (
                     <Text>
-                        {`@${user.username}'s`} Score: {notebook.userScore}
+                        Score: {notebook.userScore}
                     </Text>
                 )
             }}

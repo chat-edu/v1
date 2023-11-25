@@ -37,5 +37,5 @@ export interface RankedNotebookRow extends NotebookRow {
 }
 
 export interface NotebookScoreRow extends NotebookRow {
-    score: number;
+    score: string;
 }
