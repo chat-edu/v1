@@ -6,15 +6,15 @@ import NotebookGrid from "@/components/Home/Explore/NotebookGrid";
 
 import useNotebooks from "@/hooks/queries/notebooks/useNotebooks";
 
-import {NotebookWithTotalScore} from "@/types/Notebook";
+import {RankedNotebook} from "@/types/Notebook";
 
 interface Props {
-    onClick: (notebook: NotebookWithTotalScore) => void
+    onClick: (notebook: RankedNotebook) => void
 }
 
 const PopularNotebooks: React.FC<Props> = ({ onClick }) => {
 
-    const { notebooks, loading } = useNotebooks<NotebookWithTotalScore>("top");
+    const { notebooks, loading } = useNotebooks<RankedNotebook>("top");
 
     return (
         <NotebookGrid
@@ -22,7 +22,7 @@ const PopularNotebooks: React.FC<Props> = ({ onClick }) => {
             notebooks={notebooks}
             loading={loading}
             onClick={onClick}
-            rightComponent={(_, index) => (
+            rightComponent={(notebook) => (
                 <VStack
                     justifyContent={'space-between'}
                     align={'end'}
@@ -30,12 +30,12 @@ const PopularNotebooks: React.FC<Props> = ({ onClick }) => {
                 >
                     <Text
                         fontWeight={'bold'}
-                        color={index < 3 ? 'brand.500' : undefined}
+                        color={notebook.rank < 3 ? 'brand.500' : undefined}
                     >
-                        #{index + 1}
+                        #{notebook.rank}
                     </Text>
                     <Text>
-                        Total Score: {notebooks[index].totalScore}
+                        Total Score: {notebook.totalScore}
                     </Text>
                 </VStack>
             )}

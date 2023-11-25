@@ -3,6 +3,7 @@ import React from 'react';
 import {Heading, Text, VStack} from "@chakra-ui/react";
 
 import {Notebook} from "@/types/Notebook";
+import UsernameText from "@/components/Utilities/UsernameText";
 
 interface Props {
     notebook: Notebook
@@ -24,7 +25,7 @@ const NotebookMenuHeader: React.FC<Props> = ({ notebook }) => {
                 fontWeight={'semibold'}
                 color={'gray.500'}
             >
-                By {notebook.username}
+                By<UsernameText username={notebook.username} />
             </Text>
         </VStack>
     );

@@ -6,6 +6,7 @@ import ClickableCard from "@/components/Utilities/ClickableCard";
 import NotebookTags from "@/components/NotebookUtilities/NotebookTags";
 
 import {Notebook} from "@/types/Notebook";
+import UsernameText from "@/components/Utilities/UsernameText";
 
 interface Props {
     notebook: Notebook,
@@ -48,7 +49,7 @@ const NotebookCard: React.FC<Props> = ({ notebook, rightComponent, onClick }) =>
                         }}
                         opacity={0.7}
                     >
-                        By {notebook.username}
+                        By<UsernameText username={notebook.username} />
                     </Text>
                     <Text>
                         {notebook.numNotes} note{notebook.numNotes === 1 ? '' : 's'}

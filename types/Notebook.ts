@@ -11,11 +11,8 @@ export interface Notebook extends NotebookInput {
     numNotes: number;
 }
 
-export interface NotebookWithTotalScore extends Notebook {
+export interface RankedNotebook extends Notebook {
     totalScore: number;
-}
-
-export interface RankedNotebook extends NotebookWithTotalScore {
     rank: number;
 }
 
@@ -34,11 +31,8 @@ export interface NotebookRow extends NotebookRowInput {
     num_notes: string;
 }
 
-export interface NotebookWithTotalScoreRow extends NotebookRow {
+export interface RankedNotebookRow extends NotebookRow {
     total_score: string;
-}
-
-export interface RankedNotebookRow extends NotebookWithTotalScoreRow {
     rank: string;
 }
 

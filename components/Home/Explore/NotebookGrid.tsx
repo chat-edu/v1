@@ -5,6 +5,7 @@ import {Heading, HStack, SimpleGrid, Skeleton, Text, VStack} from "@chakra-ui/re
 import NotebookCard from "@/components/Home/Explore/NotebookCard";
 
 import {Notebook} from "@/types/Notebook";
+import AddNotebookCard from "@/components/Home/AddNotebook/AddNotebookCard";
 
 interface Props<NotebookType extends Notebook> {
     heading: string,
@@ -13,10 +14,11 @@ interface Props<NotebookType extends Notebook> {
     onClick: (notebook: NotebookType) => void,
     headingRightComponent?: React.ReactNode,
     noNotebooksComponent?: React.ReactNode,
-    rightComponent?: (notebook: NotebookType, index: number) => React.ReactNode
+    rightComponent?: (notebook: NotebookType, index: number) => React.ReactNode,
+    addNotebook?: boolean
 }
 
-const NotebookGrid = <NotebookType extends Notebook>({ heading, headingRightComponent, notebooks, loading, onClick, noNotebooksComponent, rightComponent}: Props<NotebookType>) => {
+const NotebookGrid = <NotebookType extends Notebook>({ heading, headingRightComponent, notebooks, loading, onClick, noNotebooksComponent, rightComponent, addNotebook}: Props<NotebookType>) => {
     return (
         <VStack
             spacing={4}
@@ -40,7 +42,7 @@ const NotebookGrid = <NotebookType extends Notebook>({ heading, headingRightComp
                 loading ? (
                     <Skeleton />
                 ) : (
-                    notebooks.length === 0 ? (
+                    notebooks.length === 0 && !addNotebook ? (
                         noNotebooksComponent || (
                             <Text>
                                 No notebooks found
@@ -59,6 +61,11 @@ const NotebookGrid = <NotebookType extends Notebook>({ heading, headingRightComp
                                 md: 4
                             }}
                         >
+                            {
+                                addNotebook && (
+                                    <AddNotebookCard />
+                                )
+                            }
                             {
                                 notebooks.map((notebook, index) => (
                                     <NotebookCard

@@ -2,11 +2,11 @@ import React from 'react';
 
 import {Text} from "@chakra-ui/react";
 
-import AddNotebookButton from "@/components/Home/AddNotebook/AddNotebookButton";
 import NotebookGrid from "@/components/Home/Explore/NotebookGrid";
 
 import useUserNotebooks from "@/hooks/queries/notebooks/useUserNotebooks";
 import useAuth from "@/hooks/useAuth";
+
 import {Notebook} from "@/types/Notebook";
 
 interface Props {
@@ -22,7 +22,6 @@ const YourNotebooks: React.FC<Props> = ({ onClick }) => {
     return (
         <NotebookGrid
             heading={'Your Notebooks'}
-            headingRightComponent={<AddNotebookButton />}
             notebooks={notebooks}
             loading={loading}
             onClick={onClick}
@@ -31,6 +30,7 @@ const YourNotebooks: React.FC<Props> = ({ onClick }) => {
                     {"You don't have any notebooks yet"}
                 </Text>
             }
+            addNotebook
         />
     );
 };

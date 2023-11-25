@@ -15,7 +15,6 @@ interface Props {
 
 const NotebookLayout: React.FC<Props> = ({ notebook }) => {
 
-
     const { selectedNotes, addNote, removeNote } = useSelectNotes()
 
     return (

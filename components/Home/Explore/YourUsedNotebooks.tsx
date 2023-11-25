@@ -27,7 +27,7 @@ const YourUsedNotebooks: React.FC<Props> = ({ onClick }) => {
             onClick={onClick}
             noNotebooksComponent={
                 <Text>
-                    {"You don't have any notebooks yet"}
+                    {"You haven't used any notebooks yet"}
                 </Text>
             }
             rightComponent={(notebook) => {

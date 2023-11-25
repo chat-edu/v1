@@ -18,6 +18,7 @@ import NotebookTags from "@/components/NotebookUtilities/NotebookTags";
 import NotebookLeaderboard from "@/components/NotebookUtilities/NotebookLeaderboard";
 import NotesDisplay from "@/components/Home/NotebookModal/NotesDisplay";
 import useNotebookRank from "@/hooks/queries/notebook/useNotebookRank";
+import UsernameText from "@/components/Utilities/UsernameText";
 
 
 interface Props {
@@ -65,7 +66,7 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                                 fontSize={'sm'}
                                 opacity={0.7}
                             >
-                                By @{notebook.username}
+                                By<UsernameText username={notebook.username} />
                             </Text>
                         </VStack>
                         {

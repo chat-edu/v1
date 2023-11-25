@@ -6,8 +6,7 @@ import {
     Notebook,
     NotebookRow,
     NotebookRowInput,
-    NotebookWithTotalScore,
-    NotebookWithTotalScoreRow, RankedNotebook,
+    RankedNotebook,
     RankedNotebookRow
 } from "@/types/Notebook";
 
@@ -37,23 +36,36 @@ export const findNotebooksByUserId = async (userId: string): Promise<Notebook[]>
 
 // sort the notebooks by their score, descending, then by their number of notes if there is a tie
 // use the scores table to determine the aggregate score for each notebook
-export const findTopNotebooks = async (limit: number): Promise<NotebookWithTotalScore[]> => {
+export const findTopNotebooks = async (limit: number): Promise<RankedNotebook[]> => {
     const queryText = `
-        SELECT
-            n.*,
-            u.username AS username,
-            COALESCE(SUM(s.score), 0) AS total_score,
-            COUNT(nt.id) AS num_notes
-        FROM Notebooks n
-            JOIN Users u ON n.user_id = u.id
-            LEFT JOIN Scores s ON n.id = s.notebook_id
-            LEFT JOIN Notes nt ON n.id = nt.notebook_id
-        GROUP BY n.id, u.username
-        ORDER BY total_score DESC, num_notes DESC
-        LIMIT $1;
 
+        WITH RankedNotebooks AS (
+            SELECT
+                n.id AS id,
+                n.name AS name,
+                u.username AS username,
+                COALESCE(SUM(s.score), 0) AS total_score,
+                RANK() OVER (ORDER BY COALESCE(SUM(s.score), 0) DESC) AS rank,
+                COALESCE(COUNT(nt.id), 0) AS num_notes
+            FROM Notebooks n
+                     LEFT JOIN Scores s ON n.id = s.notebook_id
+                     LEFT JOIN Notes nt ON n.id = nt.notebook_id
+                     JOIN Users u ON n.user_id = u.id
+            GROUP BY n.id, u.username, n.name
+        )
+        SELECT
+            id,
+            username,
+            name,
+            total_score,
+            rank,
+            username,
+            num_notes
+        FROM RankedNotebooks
+        ORDER BY rank
+        LIMIT $1;
     `;
-    return find(queryText, [limit], transformNotebookWithTotalScore);
+    return find(queryText, [limit], transformRankedNotebook);
 }
 
 export const getRankedNotebook = async (notebookId: number): Promise<RankedNotebook | null> => {
@@ -63,7 +75,7 @@ export const getRankedNotebook = async (notebookId: number): Promise<RankedNoteb
                 n.id AS id,
                 n.name AS name,
                 u.username AS username,
-                SUM(s.score) AS total_score,
+                COALESCE(SUM(s.score), 0) AS total_score,
                 RANK() OVER (ORDER BY COALESCE(SUM(s.score), 0) DESC) AS rank,
                 COALESCE(COUNT(nt.id), 0) AS num_notes
             FROM Notebooks n
@@ -74,7 +86,6 @@ export const getRankedNotebook = async (notebookId: number): Promise<RankedNoteb
         )
         SELECT
             id,
-            username,
             name,
             total_score,
             rank,
@@ -99,13 +110,13 @@ export const getNotebook = async (id: number): Promise<Notebook | null> => {
     const query = `
         SELECT
             n.*,
-            u.name AS username,
+            u.username AS username,
             COUNT(nt.id) AS num_notes
         FROM Notebooks n
         JOIN Users u ON n.user_id = u.id
         LEFT JOIN Notes nt ON n.id = nt.notebook_id
         WHERE n.id = $1
-        GROUP BY n.id, u.name;
+        GROUP BY n.id, u.username;
     `
     return get(query, [id], transformNotebook);
 };
@@ -120,14 +131,10 @@ const transformNotebook = (row: NotebookRow): Notebook => ({
     userId: row.user_id,
     username: row.username,
     numNotes: parseInt(row.num_notes),
-})
-
-const transformNotebookWithTotalScore = (row: NotebookWithTotalScoreRow): NotebookWithTotalScore => ({
-    ...transformNotebook(row),
-    totalScore: parseInt(row.total_score || "0"),
-})
+});
 
 const transformRankedNotebook = (row: RankedNotebookRow): RankedNotebook => ({
-    ...transformNotebookWithTotalScore(row),
+    ...transformNotebook(row),
+    totalScore: parseInt(row.total_score),
     rank: parseInt(row.rank),
 });
