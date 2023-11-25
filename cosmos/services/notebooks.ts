@@ -38,33 +38,37 @@ export const findNotebooksByUserId = async (userId: string): Promise<Notebook[]>
 // use the scores table to determine the aggregate score for each notebook
 export const findTopNotebooks = async (limit: number): Promise<RankedNotebook[]> => {
     const queryText = `
-
         WITH RankedNotebooks AS (
             SELECT
                 n.id AS id,
-                n.name AS name,
+                n.user_id AS user_id,
                 u.username AS username,
-                u.id AS user_id,
+                n.name AS name,
                 COALESCE(SUM(s.score), 0) AS total_score,
-                RANK() OVER (ORDER BY COALESCE(SUM(s.score), 0) DESC) AS rank,
-                COALESCE(COUNT(nt.id), 0) AS num_notes
+                RANK() OVER (ORDER BY COALESCE(SUM(s.score), 0) DESC) AS rank
             FROM Notebooks n
                      LEFT JOIN Scores s ON n.id = s.notebook_id
-                     LEFT JOIN Notes nt ON n.id = nt.notebook_id
                      JOIN Users u ON n.user_id = u.id
-            GROUP BY n.id, u.username, n.name, u.id
-        )
+            GROUP BY n.id, u.username, u.id
+        ),
+             NoteCount AS (
+                 SELECT
+                     notebook_id,
+                     COUNT(id) AS num_notes
+                 FROM Notes
+                 GROUP BY notebook_id
+             )
         SELECT
-            id,
-            user_id,
-            username,
-            name,
-            total_score,
-            rank,
-            username,
-            num_notes
-        FROM RankedNotebooks
-        ORDER BY rank
+            rn.id,
+            rn.user_id,
+            rn.username,
+            rn.name,
+            rn.total_score,
+            rn.rank,
+            COALESCE(nc.num_notes, 0) AS num_notes
+        FROM RankedNotebooks rn
+                 LEFT JOIN NoteCount nc ON rn.id = nc.notebook_id
+        ORDER BY rn.rank
         LIMIT $1;
     `;
     return find(queryText, [limit], transformRankedNotebook);

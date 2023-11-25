@@ -58,13 +58,29 @@ export const deleteUser = async (id: string): Promise<boolean> => {
 // finds the top users by score. Include rank in the row select
 export const findScoresByUserId = async (userId: string): Promise<NotebookScore[]> => {
     const queryText = `
+        WITH NoteCount AS (
+            SELECT
+                notebook_id,
+                COUNT(id) AS num_notes
+            FROM Notes
+            GROUP BY notebook_id
+        )
         SELECT
-            Users.id AS user_id,
-            Users.username,
-            Notebooks.id,
-            Notebooks.name,
-            Scores.score,
+            n.id,
+            n.name,
+            n.user_id,
+            u.username,
+            s.score,
+            COALESCE(nc.num_notes, 0) AS num_notes
+        FROM Notebooks n
+            LEFT JOIN Users u ON n.user_id = u.id
+            LEFT JOIN Scores s ON n.id = s.notebook_id AND s.user_id = $1
+            LEFT JOIN NoteCount nc ON n.id = nc.notebook_id
+        WHERE s.score > 0
+        ORDER BY s.score DESC
+
     `;
+
     return find(queryText, [userId], transformNotebookScore);
 }
 
@@ -87,6 +103,6 @@ const transformNotebookScore = (row: NotebookScoreRow): NotebookScore => ({
     username: row.username,
     id: row.id,
     name: row.name,
-    userScore: row.score,
+    userScore: parseInt(row.score || '0'),
     numNotes: parseInt(row.num_notes || '0')
 });

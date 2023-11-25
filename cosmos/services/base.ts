@@ -9,7 +9,13 @@ export const find = async <RowType extends QueryResultRow, ReturnType>(
 ): Promise<ReturnType[]> => {
     const client = await getPool().connect();
     try {
-        const { rows } = await client.query<RowType>(queryText, values);
+        const { rows } = await client.query<RowType>(queryText, values)
+            .then((result) => result)
+            .catch((error) => {
+                console.log(queryText, values);
+                console.error('Error in find operation:', error);
+                return { rows: [] };
+            });
         return rows.map(transform);
     } finally {
         client.release();
