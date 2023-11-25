@@ -31,6 +31,7 @@ const YourNotebooks: React.FC<Props> = ({ onClick }) => {
                 </Text>
             }
             addNotebook
+            authGate
         />
     );
 };

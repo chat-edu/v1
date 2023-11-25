@@ -18,9 +18,7 @@ const UsersPage: NextPage = () => {
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png" />
                 <link rel="apple-touch-icon" sizes="192x192" href="/apple-touch-icon-192x192.png" />
             </Head>
-            <Layout
-                authGate
-            >
+            <Layout>
                 <Users />
             </Layout>
         </>

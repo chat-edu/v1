@@ -15,7 +15,7 @@ interface Props {
 
 const PopularNotebooks: React.FC<Props> = ({ onClick }) => {
 
-    const { notebooks, loading } = useNotebooks<RankedNotebook>("top");
+    const { notebooks, loading } = useNotebooks<RankedNotebook>("top?limit=6");
 
     return (
         <NotebookGrid

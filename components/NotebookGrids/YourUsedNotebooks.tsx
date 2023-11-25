@@ -19,6 +19,8 @@ const YourUsedNotebooks: React.FC<Props> = ({ onClick }) => {
 
     const { notebookScores, loading } = useUsedNotebooks(user?.id || "");
 
+    if(!user) return null;
+
     return (
         <NotebookGrid
             heading={'Your Recent Notebooks'}
@@ -37,6 +39,7 @@ const YourUsedNotebooks: React.FC<Props> = ({ onClick }) => {
                     </Text>
                 )
             }}
+            authGate
         />
     );
 };

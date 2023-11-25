@@ -3,7 +3,7 @@ import React from 'react';
 import {
     Checkbox,
     HStack,
-    IconButton,
+    IconButton, Text,
     useDisclosure
 } from "@chakra-ui/react";
 
@@ -13,6 +13,7 @@ import NoteModal from "@/components/NotebookUtilities/NoteModal";
 
 import {Note as NoteType} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
+import useAuth from "@/hooks/useAuth";
 
 interface Props {
     notebook: Notebook
@@ -23,6 +24,8 @@ interface Props {
 
 const Note: React.FC<Props> = ({ note, notebook, addNote, removeNote }) => {
 
+    const { user } = useAuth();
+
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
@@ -32,18 +35,27 @@ const Note: React.FC<Props> = ({ note, notebook, addNote, removeNote }) => {
                 w={'100%'}
                 justifyContent={'space-between'}
             >
-                <Checkbox
-                    key={note.id}
-                    onChange={(e) => {
-                        if(e.target.checked) {
-                            addNote(note);
-                        } else {
-                            removeNote(note.id);
-                        }
-                    }}
-                >
-                    {note.name}
-                </Checkbox>
+                {
+                    user ? (
+                        <Checkbox
+                            key={note.id}
+                            onChange={(e) => {
+                                if(e.target.checked) {
+                                    addNote(note);
+                                } else {
+                                    removeNote(note.id);
+                                }
+                            }}
+                        >
+                            {note.name}
+                        </Checkbox>
+                    ) : (
+                        <Text>
+                            {note.name}
+                        </Text>
+                    )
+                }
+
                 <HStack>
                     <IconButton
                         aria-label={"View Note"}

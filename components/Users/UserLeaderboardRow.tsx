@@ -4,15 +4,21 @@ import {UserScore} from "@/types/User";
 import {Card, HStack, Image, Text, VStack} from "@chakra-ui/react";
 import UsernameText from "@/components/Utilities/UsernameText";
 import Medal from "@/components/Utilities/Medal";
+import useAuth from "@/hooks/useAuth";
 
 interface Props {
     userScore: UserScore
 }
 
 const UserLeaderboardRow: React.FC<Props> = ({ userScore }) => {
+
+    const { user } = useAuth();
+
     return (
         <Card
             w={'100%'}
+            borderWidth={userScore.id === user?.id ? 2 : 0}
+            borderColor={'brand.500'}
         >
             <HStack
                 w={'100%'}
