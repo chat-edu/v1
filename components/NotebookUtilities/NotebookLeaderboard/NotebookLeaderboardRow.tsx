@@ -3,6 +3,7 @@ import React from 'react';
 import {HStack, Text} from "@chakra-ui/react";
 
 import {UserScore} from "@/types/Score";
+import UsernameText from "@/components/Utilities/UsernameText";
 
 interface Props {
     userScore: UserScore,
@@ -25,11 +26,10 @@ const NotebookLeaderboardRow: React.FC<Props> = ({ userScore, rank }) => {
                 >
                     #{rank}
                 </Text>
-                <Text
-                    fontWeight={'semibold'}
-                >
-                    @{userScore.username}
-                </Text>
+                <UsernameText
+                    username={userScore.username}
+                    id={userScore.userId}
+                />
             </HStack>
             <Text>
                 {userScore.score}

@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Text, VStack} from "@chakra-ui/react";
 
-import NotebookGrid from "@/components/Home/Explore/NotebookGrid";
+import NotebookGrid from "@/components/NotebookGrids/NotebookGrid";
 
 import useNotebooks from "@/hooks/queries/notebooks/useNotebooks";
 

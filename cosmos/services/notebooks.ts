@@ -44,6 +44,7 @@ export const findTopNotebooks = async (limit: number): Promise<RankedNotebook[]>
                 n.id AS id,
                 n.name AS name,
                 u.username AS username,
+                u.id AS user_id,
                 COALESCE(SUM(s.score), 0) AS total_score,
                 RANK() OVER (ORDER BY COALESCE(SUM(s.score), 0) DESC) AS rank,
                 COALESCE(COUNT(nt.id), 0) AS num_notes
@@ -51,10 +52,11 @@ export const findTopNotebooks = async (limit: number): Promise<RankedNotebook[]>
                      LEFT JOIN Scores s ON n.id = s.notebook_id
                      LEFT JOIN Notes nt ON n.id = nt.notebook_id
                      JOIN Users u ON n.user_id = u.id
-            GROUP BY n.id, u.username, n.name
+            GROUP BY n.id, u.username, n.name, u.id
         )
         SELECT
             id,
+            user_id,
             username,
             name,
             total_score,

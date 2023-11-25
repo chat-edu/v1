@@ -23,6 +23,7 @@ const NotebookGrid = <NotebookType extends Notebook>({ heading, headingRightComp
         <VStack
             spacing={4}
             align={'start'}
+            w={'100%'}
         >
             <HStack
                 w={'100%'}

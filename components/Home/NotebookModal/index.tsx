@@ -66,7 +66,7 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                                 fontSize={'sm'}
                                 opacity={0.7}
                             >
-                                By<UsernameText username={notebook.username} />
+                                By<UsernameText username={notebook.username} id={notebook.userId} />
                             </Text>
                         </VStack>
                         {

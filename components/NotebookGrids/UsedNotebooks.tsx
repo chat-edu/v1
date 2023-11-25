@@ -2,38 +2,37 @@ import React from 'react';
 
 import {Text} from "@chakra-ui/react";
 
-import NotebookGrid from "@/components/Home/Explore/NotebookGrid";
+import NotebookGrid from "@/components/NotebookGrids/NotebookGrid";
 
-import useAuth from "@/hooks/useAuth";
 import useUsedNotebooks from "@/hooks/queries/notebooks/useUsedNotebooks";
 
 import {Notebook} from "@/types/Notebook";
+import {User} from "@/types/User";
 
 interface Props {
+    user: User
     onClick: (notebook: Notebook) => void
 }
 
-const YourUsedNotebooks: React.FC<Props> = ({ onClick }) => {
+const YourUsedNotebooks: React.FC<Props> = ({ user, onClick }) => {
 
-    const { user } = useAuth();
-
-    const { notebookScores, loading } = useUsedNotebooks(user?.id || "");
+    const { notebookScores, loading } = useUsedNotebooks(user.id);
 
     return (
         <NotebookGrid
-            heading={'Your Recent Notebooks'}
+            heading={`@${user.username}'s Recent Notebooks`}
             notebooks={notebookScores}
             loading={loading}
             onClick={onClick}
             noNotebooksComponent={
                 <Text>
-                    {"You haven't used any notebooks yet"}
+                    {`@${user.username} hasn't used any notebooks yet`}
                 </Text>
             }
             rightComponent={(notebook) => {
                 return (
                     <Text>
-                        Your Score: {notebook.userScore}
+                        {`@${user.username}'s`} Score: {notebook.userScore}
                     </Text>
                 )
             }}
