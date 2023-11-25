@@ -7,9 +7,13 @@ import UserLeaderboardRow from "@/components/Users/UserLeaderboardRow";
 import useTopUsers from "@/hooks/queries/user/useTopUsers";
 import Loading from "@/components/Utilities/Loading";
 
-const UsersLeaderboard: React.FC = () => {
+interface Props {
+    limit?: number
+}
 
-    const { userScores, loading } = useTopUsers()
+const UsersLeaderboard: React.FC<Props> = ({ limit }) => {
+
+    const { userScores, loading } = useTopUsers(limit);
 
     return (
         <VStack

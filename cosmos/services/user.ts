@@ -10,7 +10,7 @@ export const findAllUsers = async (): Promise<User[]> => {
 };
 
 // gets all users and sots them by their score
-export const findAllUsersByScore = async (): Promise<User[]> => {
+export const findAllUsersByScore = async (limit: number): Promise<User[]> => {
     const queryText = `
         WITH RankedUsers AS (
             SELECT
@@ -33,8 +33,9 @@ export const findAllUsersByScore = async (): Promise<User[]> => {
             rank
         FROM RankedUsers
         ORDER BY rank
+        LIMIT $1;
     `;
-    return find(queryText, [], transformUserScore);
+    return find(queryText, [limit], transformUserScore);
 }
 
 export const addUser = async (user: User): Promise<boolean> => {
