@@ -1,4 +1,4 @@
-import useItemData from "@/hooks/queries/useItemData";
+import useItemData from "@/hooks/queries/utilities/useItemData";
 
 import {Notebook} from "@/types/Notebook";
 

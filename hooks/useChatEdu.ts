@@ -3,17 +3,24 @@ import {FormEvent, useEffect, useState} from "react";
 import {Message, nanoid} from "ai";
 import {useChat} from "ai/react";
 
-import {answerCorrectnessCommand,} from "@/prompts";
+import useAuth from "@/hooks/useAuth";
+
+import {updateScore} from "@/services/score";
+
+import {answerCorrectnessCommand} from "@/prompts";
 import {answerCorrectnessResponseTag} from "@/prompts/commands/answerCorrectness";
 import {getPrePrompt, getPrompt} from "@/prompts";
 import {questionResponseTagSuffix} from "@/prompts/tags";
+import {plainTextCommand} from "@/prompts/commands/plainText";
 import {context} from "@/prompts/context";
 
 import {Command, CommandTypes} from "@/types/commands/Command";
 import {Note} from "@/types/Note";
-import {plainTextCommand} from "@/prompts/commands/plainText";
+import {Notebook} from "@/types/Notebook";
 
-const useChatEdu = (notes: Note[]) => {
+const useChatEdu = (notebookId: Notebook["id"], notes: Note[]) => {
+
+    const { user } = useAuth();
 
     const [promptType, setPromptType] = useState<CommandTypes>(CommandTypes.REGULAR);
 
@@ -27,10 +34,14 @@ const useChatEdu = (notes: Note[]) => {
         if(!currentQuestion && message.content.includes(`${questionResponseTagSuffix}`)) {
             setCurrentQuestion(message);
         } else if(message.content.includes(answerCorrectnessResponseTag)) {
+            const correct = JSON.parse(message.content).content.correct;
             setCorrectMapping({
                 ...correctMapping,
-                [currentQuestion?.id || ""]: JSON.parse(message.content).content.correct
+                [currentQuestion?.id || ""]: correct
             })
+            if(correct && user) {
+                updateScore(notebookId, user.id, 1)
+            }
             setCurrentQuestion(null);
         }
         scrollToBottom();
@@ -62,13 +73,11 @@ const useChatEdu = (notes: Note[]) => {
     }, [messages])
 
     useEffect(() => {
-
         const content = `
             ${notes.map((note) => `
                 ${note.content}
             `)}
         `;
-
         setMessages([
             {
                 id: nanoid(),
@@ -101,15 +110,11 @@ const useChatEdu = (notes: Note[]) => {
     }
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        if(promptType == CommandTypes.TEXT_BASED) {
-            e.preventDefault();
-            await promptWithCommand(answerCorrectnessCommand(currentQuestion?.content || "", input));
-            setInput('');
-        } else {
-            e.preventDefault();
-            await promptWithCommand(plainTextCommand(input));
-            setInput('');
-        }
+        e.preventDefault();
+        await promptWithCommand(promptType == CommandTypes.TEXT_BASED
+            ? answerCorrectnessCommand(currentQuestion?.content || "", input)
+            : plainTextCommand(input));
+        setInput('');
     }
 
     return {

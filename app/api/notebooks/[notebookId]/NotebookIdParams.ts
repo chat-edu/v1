@@ -1,3 +1,5 @@
+import {Notebook} from "@/types/Notebook";
+
 export interface NotebookIdParams {
-    notebookId: number;
+    notebookId: Notebook["id"]
 }

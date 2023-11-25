@@ -2,7 +2,8 @@ import React from 'react';
 
 import {Card, HStack, Text, VStack} from "@chakra-ui/react";
 
-import MobileSidebar from "@/components/Notebook/NotebookMenu/MobileSidebar";
+import MobileSidebar from "@/components/Notebook/NotebookMenu/MobileHeader/MobileSidebar";
+import MobileLeaderboard from "@/components/Notebook/NotebookMenu/MobileHeader/MobileLeaderboard";
 
 import {Note} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
@@ -48,12 +49,17 @@ const MobileHeader: React.FC<Props> = ({ notebook, selectedNotes, addNote, remov
                         {selectedNotes.length} notes selected
                     </Text>
                 </VStack>
-                <MobileSidebar
-                    notebook={notebook}
-                    selectedNotes={selectedNotes}
-                    addNote={addNote}
-                    removeNote={removeNote}
-                />
+                <HStack>
+                    <MobileSidebar
+                        notebook={notebook}
+                        selectedNotes={selectedNotes}
+                        addNote={addNote}
+                        removeNote={removeNote}
+                    />
+                    <MobileLeaderboard
+                        notebook={notebook}
+                    />
+                </HStack>
             </HStack>
         </Card>
     );

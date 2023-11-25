@@ -78,7 +78,6 @@ const MobileSidebar: React.FC<Props> = ({ notebook, selectedNotes, addNote, remo
                 </DrawerContent>
             </Drawer>
         </>
-
     );
 };
 

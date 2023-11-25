@@ -2,7 +2,7 @@ import React from 'react';
 
 import Explore from "@/components/Home/Explore";
 import useAuth from "@/hooks/useAuth";
-import useUser from "@/hooks/queries/useUser";
+import useUser from "@/hooks/queries/user/useUser";
 import {Skeleton} from "@chakra-ui/react";
 import Onboarding from "@/components/Home/Onboarding";
 

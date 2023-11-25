@@ -3,7 +3,7 @@ import React from 'react';
 import AutoCompleteMenu from "@/components/Utilities/AutoCompleteMenu";
 
 import useAuth from "@/hooks/useAuth";
-import useUserNotebooks from "@/hooks/queries/useUserNotebooks";
+import useUserNotebooks from "@/hooks/queries/notebooks/useUserNotebooks";
 
 import { Notebook } from "@/types/Notebook";
 

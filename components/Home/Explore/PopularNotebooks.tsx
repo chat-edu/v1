@@ -1,29 +1,45 @@
 import React from 'react';
 
-import {Heading, VStack} from "@chakra-ui/react";
+import {Text, VStack} from "@chakra-ui/react";
 
 import NotebookGrid from "@/components/Home/Explore/NotebookGrid";
 
-import useNotebooks from "@/hooks/queries/useNotebooks";
+import useNotebooks from "@/hooks/queries/notebooks/useNotebooks";
 
-const PopularNotebooks = () => {
+import {RankedNotebook} from "@/types/Notebook";
 
-    const { notebooks, loading } = useNotebooks("top");
+interface Props {
+    onClick: (notebook: RankedNotebook) => void
+}
+
+const PopularNotebooks: React.FC<Props> = ({ onClick }) => {
+
+    const { notebooks, loading } = useNotebooks<RankedNotebook>("top");
 
     return (
-        <VStack
-            spacing={4}
-            align={'start'}
-        >
-            <Heading>
-                Popular Notebooks
-            </Heading>
-            <NotebookGrid
-                notebooks={notebooks}
-                loading={loading}
-                ranked
-            />
-        </VStack>
+        <NotebookGrid
+            heading={'Popular Notebooks'}
+            notebooks={notebooks}
+            loading={loading}
+            onClick={onClick}
+            rightComponent={(notebook) => (
+                <VStack
+                    justifyContent={'space-between'}
+                    align={'end'}
+                    h={'100%'}
+                >
+                    <Text
+                        fontWeight={'bold'}
+                        color={notebook.rank < 3 ? 'brand.500' : undefined}
+                    >
+                        #{notebook.rank}
+                    </Text>
+                    <Text>
+                        Total Score: {notebook.totalScore}
+                    </Text>
+                </VStack>
+            )}
+        />
     );
 };
 

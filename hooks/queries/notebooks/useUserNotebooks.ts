@@ -1,6 +1,6 @@
 import {useCallback, useEffect} from "react";
 
-import useContainerData from "@/hooks/queries/useContainerData";
+import useContainerData from "@/hooks/queries/utilities/useContainerData";
 import {
     subscribeToNotebooksChangedEvent,
     unsubscribeFromNotebooksChangedEvent

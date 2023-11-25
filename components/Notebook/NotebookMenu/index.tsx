@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Sidebar from "@/components/Notebook/NotebookMenu/Sidebar";
+import MobileHeader from "@/components/Notebook/NotebookMenu/MobileHeader";
 
 import {Note} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
-import MobileHeader from "@/components/Notebook/NotebookMenu/MobileHeader";
 
 interface Props {
     notebook: Notebook

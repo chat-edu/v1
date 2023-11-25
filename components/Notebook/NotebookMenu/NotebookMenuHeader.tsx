@@ -1,38 +1,33 @@
 import React from 'react';
 
-import {Heading, HStack} from "@chakra-ui/react";
-
-import DeleteNotebook from "@/components/Home/NotesMenu/DeleteNotebook";
+import {Heading, Text, VStack} from "@chakra-ui/react";
 
 import {Notebook} from "@/types/Notebook";
-import useAuth from "@/hooks/useAuth";
+import UsernameText from "@/components/Utilities/UsernameText";
 
 interface Props {
     notebook: Notebook
 }
 
 const NotebookMenuHeader: React.FC<Props> = ({ notebook }) => {
-
-    const { user } = useAuth();
-
     return (
-        <HStack
+        <VStack
             w={'100%'}
-            justifyContent={'space-between'}
+            align={'start'}
         >
             <Heading
                 size={'md'}
             >
                 {notebook.name}
             </Heading>
-            {
-                user && user.id === notebook.userId && (
-                    <DeleteNotebook
-                        notebook={notebook}
-                    />
-                )
-            }
-        </HStack>
+            <Text
+                fontSize={'sm'}
+                fontWeight={'semibold'}
+                color={'gray.500'}
+            >
+                By<UsernameText username={notebook.username} />
+            </Text>
+        </VStack>
     );
 };
 

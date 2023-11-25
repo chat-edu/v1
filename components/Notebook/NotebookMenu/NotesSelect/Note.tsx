@@ -4,41 +4,26 @@ import {
     Checkbox,
     HStack,
     IconButton,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    useDisclosure, Button
+    useDisclosure
 } from "@chakra-ui/react";
 
 import {AiFillEye} from "react-icons/ai";
 
-import Markdown from "@/components/Utilities/Markdown";
-
-import useDeleteNote from "@/hooks/mutators/useDeleteNote";
+import NoteModal from "@/components/NotebookUtilities/NoteModal";
 
 import {Note as NoteType} from "@/types/Note";
-
+import {Notebook} from "@/types/Notebook";
 
 interface Props {
+    notebook: Notebook
     note: NoteType,
     addNote: (note: NoteType) => void
     removeNote: (id: NoteType["id"]) => void
 }
 
-const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
+const Note: React.FC<Props> = ({ note, notebook, addNote, removeNote }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-
-    const { deleteNote } = useDeleteNote(note);
-
-    const onDelete = async () => {
-        await deleteNote();
-        onClose();
-    }
 
     return (
         <>
@@ -49,7 +34,6 @@ const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
             >
                 <Checkbox
                     key={note.id}
-                    value={note.id}
                     onChange={(e) => {
                         if(e.target.checked) {
                             addNote(note);
@@ -69,32 +53,12 @@ const Note: React.FC<Props> = ({ note, addNote, removeNote }) => {
                     />
                 </HStack>
             </HStack>
-            <Modal
+            <NoteModal
+                note={note}
+                notebook={notebook}
                 isOpen={isOpen}
                 onClose={onClose}
-                size={'3xl'}
-                scrollBehavior={'inside'}
-            >
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>{note.name}</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        <Markdown>
-                            {note.content}
-                        </Markdown>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button
-                            variant='ghost'
-                            colorScheme='red'
-                            onClick={onDelete}
-                        >
-                            Delete
-                        </Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
+            />
         </>
     );
 };
