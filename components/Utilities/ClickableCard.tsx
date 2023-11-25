@@ -19,7 +19,9 @@ const ClickableCard: React.FC<Props> = ({ onClick, children, darkModeHoverBackgr
         <Card
             cursor={'pointer'}
             _hover={{
-                bg: hoverBackground
+                bg: hoverBackground,
+                transform: 'translateY(-2px)',
+                shadow: 'lg'
             }}
             onClick={onClick}
             transition={'all 0.2s ease-in-out'}

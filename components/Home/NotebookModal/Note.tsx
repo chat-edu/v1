@@ -13,6 +13,8 @@ interface Props {
     notebook: Notebook
 }
 
+const maxCharacters = 32;
+
 const Note: React.FC<Props> = ({ note, notebook }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -27,9 +29,13 @@ const Note: React.FC<Props> = ({ note, notebook }) => {
             />
             <ClickableCard
                 onClick={onOpen}
+                overflowWrap={'break-word'}
             >
-                <Text>
-                    {note.name}
+                <Text
+                    overflowWrap={'break-word'}
+                    maxW={'100%'}
+                >
+                    {note.name.length > maxCharacters ? `${note.name.substring(0, maxCharacters)}...` : note.name}
                 </Text>
             </ClickableCard>
         </>
