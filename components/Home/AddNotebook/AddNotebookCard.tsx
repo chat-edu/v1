@@ -21,7 +21,10 @@ const AddNotebookCard = () => {
                 }}
                 onClick={onOpen}
                 transition={'all 0.2s ease-in-out'}
-                borderWidth={3}
+                borderWidth={{
+                    base: 2,
+                    md: 3
+                }}
                 borderColor={'brand.400'}
                 h={'100%'}
                 w={'100%'}

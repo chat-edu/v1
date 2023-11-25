@@ -4,6 +4,7 @@ import {HStack, Text} from "@chakra-ui/react";
 
 import {UserScore} from "@/types/Score";
 import UsernameText from "@/components/Utilities/UsernameText";
+import Medal from "@/components/Utilities/Medal";
 
 interface Props {
     userScore: UserScore,
@@ -20,12 +21,7 @@ const NotebookLeaderboardRow: React.FC<Props> = ({ userScore, rank }) => {
             justify={'space-between'}
         >
             <HStack>
-                <Text
-                    fontWeight={'medium'}
-                    color={rank <= 3 ? 'brand.500' : undefined}
-                >
-                    #{rank}
-                </Text>
+                <Medal rank={rank} />
                 <UsernameText
                     username={userScore.username}
                     id={userScore.userId}

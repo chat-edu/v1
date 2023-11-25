@@ -7,6 +7,7 @@ import NotebookGrid from "@/components/NotebookGrids/NotebookGrid";
 import useNotebooks from "@/hooks/queries/notebooks/useNotebooks";
 
 import {RankedNotebook} from "@/types/Notebook";
+import Medal from "@/components/Utilities/Medal";
 
 interface Props {
     onClick: (notebook: RankedNotebook) => void
@@ -28,13 +29,23 @@ const PopularNotebooks: React.FC<Props> = ({ onClick }) => {
                     align={'end'}
                     h={'100%'}
                 >
+                    <Medal rank={notebook.rank} />
+                    {/*<Text*/}
+                    {/*    fontWeight={'bold'}*/}
+                    {/*    color={notebook.rank < 3 ? 'brand.500' : undefined}*/}
+                    {/*    fontSize={{*/}
+                    {/*        base: 'md',*/}
+                    {/*        md: 'lg'*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    #{notebook.rank}*/}
+                    {/*</Text>*/}
                     <Text
-                        fontWeight={'bold'}
-                        color={notebook.rank < 3 ? 'brand.500' : undefined}
+                        fontSize={{
+                            base: 'sm',
+                            md: 'md'
+                        }}
                     >
-                        #{notebook.rank}
-                    </Text>
-                    <Text>
                         Total Score: {notebook.totalScore}
                     </Text>
                 </VStack>

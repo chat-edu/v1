@@ -3,6 +3,7 @@ import React from 'react';
 import {UserScore} from "@/types/User";
 import {Card, HStack, Image, Text, VStack} from "@chakra-ui/react";
 import UsernameText from "@/components/Utilities/UsernameText";
+import Medal from "@/components/Utilities/Medal";
 
 interface Props {
     userScore: UserScore
@@ -18,22 +19,29 @@ const UserLeaderboardRow: React.FC<Props> = ({ userScore }) => {
                 justifyContent={'space-between'}
             >
                 <HStack
-                    spacing={4}
+                    spacing={{
+                        base: 2,
+                        md: 4
+                    }}
                 >
-                    <Text>
-                        #{userScore.rank}
-                    </Text>
+                    <Medal rank={userScore.rank} />
                     <Image
                         src={userScore.profilePictureUrl}
                         alt={userScore.username}
-                        boxSize={'50px'}
+                        boxSize={{
+                            base: '40px',
+                            md: '50px'
+                        }}
                     />
                     <VStack
                         align={'start'}
                         spacing={1}
                     >
                         <Text
-                            fontSize={'lg'}
+                            fontSize={{
+                                base: 'sm',
+                                md: 'lg'
+                            }}
                             fontWeight={'bold'}
                         >
                             {userScore.name}
@@ -45,7 +53,10 @@ const UserLeaderboardRow: React.FC<Props> = ({ userScore }) => {
                     </VStack>
                 </HStack>
                 <Text
-                    fontSize={'lg'}
+                    fontSize={{
+                        base: 'sm',
+                        md: 'lg'
+                    }}
                 >
                     Score: {userScore.score}
                 </Text>

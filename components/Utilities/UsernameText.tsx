@@ -32,6 +32,10 @@ const UsernameText: React.FC<Props> = ({ username, id,  ...rest }) => {
                 rounded={'md'}
                 cursor={'pointer'}
                 transition={'all 0.2s ease-in-out'}
+                fontSize={{
+                    base: 'sm',
+                    md: 'md'
+                }}
             >
                 @{username}
             </Text>
