@@ -12,9 +12,11 @@ const useDeleteNote = (note: Note, notebook: Notebook) => {
     const { user } = useAuth();
 
     const toast = useToast();
+
+    const isAllowed = user && user.id === notebook.userId;
     
     const deleteNote = async () => {
-        if(!user || user.id != notebook.userId) return;
+        if(!isAllowed) return;
         const success = await deleteNoteService(note.id, note.notebookId);
         if(success) {
             toast({
@@ -37,7 +39,7 @@ const useDeleteNote = (note: Note, notebook: Notebook) => {
 
     return {
         deleteNote,
-        isAllowed: user && user.id === notebook.userId
+        isAllowed
     }
 }
 

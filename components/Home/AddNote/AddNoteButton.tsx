@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Button, ButtonProps, useDisclosure} from "@chakra-ui/react";
 
-import AddModal from "@/components/Home/AddNotes/AddModal";
+import AddNoteModal from "@/components/Home/AddNote/AddNoteModal";
 
 import { Notebook } from "@/types/Notebook";
 
@@ -27,7 +27,7 @@ const AddNotes: React.FC<Props> = ({ text, icon, buttonProps, notebook }) => {
             >
                 {text}
             </Button>
-            <AddModal
+            <AddNoteModal
                 isOpen={isOpen}
                 onClose={onClose}
                 initNotebook={notebook}

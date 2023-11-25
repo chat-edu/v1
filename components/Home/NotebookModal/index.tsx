@@ -2,23 +2,32 @@ import React from 'react';
 
 import {
     Button,
-    Flex, Heading, HStack,
+    Flex,
+    Heading,
+    HStack,
     Modal,
     ModalBody,
     ModalCloseButton,
     ModalContent,
     ModalFooter,
     ModalHeader,
-    ModalOverlay, Text, VStack
+    ModalOverlay,
+    Text,
+    VStack
 } from "@chakra-ui/react";
 
-import {Notebook} from "@/types/Notebook";
 import Link from "next/link";
+
 import NotebookTags from "@/components/NotebookUtilities/NotebookTags";
 import NotebookLeaderboard from "@/components/NotebookUtilities/NotebookLeaderboard";
 import NotesDisplay from "@/components/Home/NotebookModal/NotesDisplay";
-import useNotebookRank from "@/hooks/queries/notebook/useNotebookRank";
 import UsernameText from "@/components/Utilities/UsernameText";
+
+import useNotebookRank from "@/hooks/queries/notebook/useNotebookRank";
+
+import {Notebook} from "@/types/Notebook";
+import useAuth from "@/hooks/useAuth";
+import DeleteNotebookButton from "@/components/Home/NotebookModal/DeleteNotebookButton";
 
 
 interface Props {
@@ -28,6 +37,8 @@ interface Props {
 }
 
 const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
+
+    const { user } = useAuth();
 
     const { notebookRank, loading } = useNotebookRank(notebook.id);
 
@@ -99,13 +110,17 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                     >
                         <NotesDisplay
                             notebook={notebook}
+                            allowAddNote={user && user.id === notebook.userId}
                         />
                         <NotebookLeaderboard
                             notebookId={notebook.id}
                         />
                     </Flex>
                 </ModalBody>
-                <ModalFooter>
+                <ModalFooter
+                    flexDirection={'column'}
+                    gap={2}
+                >
                     <Link
                         href={`/notebook/${notebook.id}`}
                         style={{
@@ -119,6 +134,14 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                             Start Studying
                         </Button>
                     </Link>
+                    {
+                        user && user.id === notebook.userId && (
+                            <DeleteNotebookButton
+                                notebook={notebook}
+                                onDelete={onClose}
+                            />
+                        )
+                    }
                 </ModalFooter>
             </ModalContent>
         </Modal>

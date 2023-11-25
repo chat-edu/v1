@@ -24,7 +24,7 @@ interface Props {
     initNotebook?: Notebook
 }
 
-const AddModal: React.FC<Props> = ({ isOpen, onClose , initNotebook}) => {
+const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , initNotebook}) => {
 
     const { values, setFieldValue, touched, setFieldTouched, disabled, submitForm, updateNotebook, errors, notebook } = useAddNote(initNotebook);
 
@@ -91,4 +91,4 @@ const AddModal: React.FC<Props> = ({ isOpen, onClose , initNotebook}) => {
     );
 };
 
-export default AddModal;
+export default AddNoteModal;
