@@ -14,8 +14,8 @@ const mdBoxSize = '40px';
 const smFontSize = '10px';
 const mdFontSize = '16px';
 
-const smLeft = '12px';
-const mdLeft = '15px';
+const smLeft = '12.25px';
+const mdLeft = '15.25px';
 
 const NotebookMedal: React.FC<Props> = ({ rank }) => {
 
@@ -25,7 +25,7 @@ const NotebookMedal: React.FC<Props> = ({ rank }) => {
                 base: smBoxSize,
                 md: mdBoxSize
             }}
-            textAlign={'center'}
+            textAlign={'right'}
         >
             #{rank}
         </Text>
@@ -56,6 +56,7 @@ const NotebookMedal: React.FC<Props> = ({ rank }) => {
                     md: mdFontSize
                 }}
                 fontWeight={'bold'}
+                textAlign={'center'}
             >
                 {rank}
             </Text>

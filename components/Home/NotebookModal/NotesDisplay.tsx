@@ -23,6 +23,7 @@ const NotesDisplay: React.FC<Props> = ({ notebook, allowAddNote }) => {
         <VStack
             align={'left'}
             w={'100%'}
+            flex={1}
         >
             <Text
                 fontWeight={'bold'}
@@ -41,11 +42,18 @@ const NotesDisplay: React.FC<Props> = ({ notebook, allowAddNote }) => {
                                 md: 3,
                                 lg: 4
                             }}
-                            spacing={4}
+                            spacing={{
+                                base: 2,
+                                md: 4,
+                            }}
                         >
-                            <AddNoteCard
-                                notebook={notebook}
-                            />
+                            {
+                                allowAddNote && (
+                                    <AddNoteCard
+                                        notebook={notebook}
+                                    />
+                                )
+                            }
                             {
                                 notes.map((note) => (
                                     <Note

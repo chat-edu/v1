@@ -24,11 +24,16 @@ const ExploreHeader = () => {
                     >
                         EDU
                     </Text>
-                    <Text
-                        as='span'
-                    >
-                        , {user?.name?.split(' ')[0]}
-                    </Text>
+                    {
+                        user && user.name && (
+                            <Text
+                                as='span'
+                            >
+                                , {user.name.split(' ')[0]}
+                            </Text>
+                        )
+                    }
+
                 </>
             }
             subheading={
