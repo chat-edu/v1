@@ -2,12 +2,41 @@ import {add, del, find, get, update} from "@/cosmos/services/base";
 
 import {USERS_TABLE} from "@/cosmos/constants/tables";
 
-import {User} from "@/types/User";
+import {User, UserRow, UserScore, UserScoreRow} from "@/types/User";
 import {NotebookScore, NotebookScoreRow} from "@/types/Notebook";
 
 export const findAllUsers = async (): Promise<User[]> => {
     return find('SELECT * FROM Users;', [], transform);
 };
+
+// gets all users and sots them by their score
+export const findAllUsersByScore = async (limit: number): Promise<User[]> => {
+    const queryText = `
+        WITH RankedUsers AS (
+            SELECT
+                u.id AS id,
+                u.name AS name,
+                u.username AS username,
+                u.email AS email,
+                COALESCE(SUM(s.score), 0) AS score,
+                RANK() OVER (ORDER BY COALESCE(SUM(s.score), 0) DESC) AS rank
+            FROM Users u
+            LEFT JOIN Scores s ON u.id = s.user_id
+            GROUP BY u.id, u.username, u.name
+        )
+        SELECT
+            id,
+            name,
+            email,
+            username,
+            score,
+            rank
+        FROM RankedUsers
+        ORDER BY rank
+        LIMIT $1;
+    `;
+    return find(queryText, [limit], transformUserScore);
+}
 
 export const addUser = async (user: User): Promise<boolean> => {
     return add(USERS_TABLE, user);
@@ -26,21 +55,32 @@ export const deleteUser = async (id: string): Promise<boolean> => {
     return del(USERS_TABLE, [id]);
 };
 
+// finds the top users by score. Include rank in the row select
 export const findScoresByUserId = async (userId: string): Promise<NotebookScore[]> => {
     const queryText = `
-        SELECT Users.id AS user_id, Users.username AS username, Notebooks.id, Notebooks.name, Scores.score, COUNT(Notes.id) AS num_notes
-        FROM Scores
-        INNER JOIN Users ON Scores.user_id = Users.id
-        INNER JOIN Notebooks ON Scores.notebook_id = Notebooks.id
-        INNER JOIN Notes ON Notebooks.id = Notes.notebook_id
-        WHERE Scores.user_id = $1
-        GROUP BY Users.id, Notebooks.id, Scores.score
-        ORDER BY score DESC;
+        SELECT
+            Users.id AS user_id,
+            Users.username,
+            Notebooks.id,
+            Notebooks.name,
+            Scores.score,
     `;
     return find(queryText, [userId], transformNotebookScore);
 }
 
-const transform = (row: User): User => row;
+const transform = (user: UserRow): User => ({
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    username: user.username,
+    profilePictureUrl: user.profile_picture_url || `https://api.multiavatar.com/${user.id}.png`,
+});
+
+const transformUserScore = (user: UserScoreRow): UserScore => ({
+    ...transform(user),
+    score: parseInt(user.score || '0'),
+    rank: parseInt(user.rank || '0'),
+})
 
 const transformNotebookScore = (row: NotebookScoreRow): NotebookScore => ({
     userId: row.user_id,

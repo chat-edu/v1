@@ -4,7 +4,6 @@ import {
     Button,
     CheckboxGroup,
     Flex,
-    Skeleton,
     Text,
     VStack,
 } from "@chakra-ui/react";
@@ -19,6 +18,7 @@ import useNotes from "@/hooks/queries/notebook/useNotes";
 
 import {Notebook as NotebookType} from "@/types/Notebook";
 import {Note as NoteType} from "@/types/Note";
+import Loading from "@/components/Utilities/Loading";
 
 interface Props {
     notebook: NotebookType,
@@ -48,10 +48,10 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                 >
                     Topics
                 </Text>
-                {
-                    loading ? (
-                        <Skeleton />
-                    ) : (
+                <Loading
+                    loading={loading}
+                >
+                    {
                         <CheckboxGroup colorScheme='brand'>
                             <VStack
                                 w={'100%'}
@@ -78,8 +78,8 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                                 }
                             </VStack>
                         </CheckboxGroup>
-                    )
-                }
+                    }
+                </Loading>
                 {
                     closeSidebar && selectedNotes.length > 0 && (
                         <Button

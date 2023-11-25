@@ -1,32 +1,18 @@
 import React from 'react';
-import {Heading, HStack, Image, Text, VStack} from "@chakra-ui/react";
+import {Text} from "@chakra-ui/react";
 import useAuth from "@/hooks/useAuth";
+import PageHeader from "@/components/Utilities/PageHeader";
 
 const ExploreHeader = () => {
 
     const { user } = useAuth();
 
     return (
-        <HStack
-            spacing={{
-                base: 4,
-                md: 8
-            }}
-        >
-            <Image
-                src={'/logo.png'}
-                boxSize={'100px'}
-                alt={'Edu Chat Logo'}
-            />
-            <VStack
-                align={'start'}
-            >
-                <Heading
-                    size={{
-                        base: 'lg',
-                        md: 'xl'
-                    }}
-                >
+        <PageHeader
+            imageSrc={'/logo.png'}
+            imageAlt={'Edu Chat Logo'}
+            heading={
+                <>
                     <Text
                         as='span'
                     >
@@ -43,17 +29,12 @@ const ExploreHeader = () => {
                     >
                         , {user?.name?.split(' ')[0]}
                     </Text>
-                </Heading>
-                <Text
-                    fontSize={{
-                        base: 'sm',
-                        md: 'lg'
-                    }}
-                >
-                    Supercharge your learning with AI
-                </Text>
-            </VStack>
-        </HStack>
+                </>
+            }
+            subheading={
+                "Supercharge your learning with AI"
+            }
+        />
     );
 };
 

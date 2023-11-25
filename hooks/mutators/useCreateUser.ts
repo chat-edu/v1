@@ -26,6 +26,9 @@ const UserSchema: Yup.ObjectSchema<User> = Yup.object().shape({
     id: Yup.string()
         .required('ID is Required')
         .min(1, 'ID is Required'),
+    profilePictureUrl: Yup.string()
+        .required('Profile Picture URL is Required')
+        .min(1, 'Profile Picture URL is Required'),
 });
 
 const useAddUser = () => {
@@ -47,6 +50,7 @@ const useAddUser = () => {
             email: user?.email || '',
             username: '',
             id: user?.id || '',
+            profilePictureUrl: `https://api.multiavatar.com/${user?.id || 'default'}.png`,
         },
         validationSchema: UserSchema,
         onSubmit: async user => {
@@ -79,6 +83,7 @@ const useAddUser = () => {
             setFieldValue('name', user.name);
             setFieldValue('email', user.email);
             setFieldValue('id', user.id);
+            setFieldValue('profilePictureUrl', `https://api.multiavatar.com/${user.id}.png`);
         }
     }, [setFieldValue, user]);
 

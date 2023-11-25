@@ -1,12 +1,13 @@
 import React from 'react';
 
-import {SimpleGrid, Skeleton, Text, VStack} from "@chakra-ui/react";
+import {SimpleGrid, Text, VStack} from "@chakra-ui/react";
 
 import Note from "@/components/Home/NotebookModal/Note";
 
 import useNotes from "@/hooks/queries/notebook/useNotes";
 
 import {Notebook} from "@/types/Notebook";
+import Loading from "@/components/Utilities/Loading";
 
 interface Props {
     notebook: Notebook
@@ -26,12 +27,11 @@ const NotesDisplay: React.FC<Props> = ({ notebook }) => {
             >
                 Notes
             </Text>
-            {
-                loading ? (
-                    <Skeleton
-                        h={'50px'}
-                    />
-                ) : (
+            <Loading
+                loading={loading}
+                h={'50px'}
+            >
+                {
                     notes.length > 0 ? (
                         <SimpleGrid
                             columns={{
@@ -56,8 +56,8 @@ const NotesDisplay: React.FC<Props> = ({ notebook }) => {
                             No notes yet
                         </Text>
                     )
-                )
-            }
+                }
+            </Loading>
         </VStack>
     );
 };

@@ -1,11 +1,13 @@
 import React from 'react';
 
-import {Heading, HStack, SimpleGrid, Skeleton, Text, VStack} from "@chakra-ui/react";
+import {SimpleGrid, Text} from "@chakra-ui/react";
 
 import NotebookCard from "@/components/Home/Explore/NotebookCard";
+import AddNotebookCard from "@/components/Home/AddNotebook/AddNotebookCard";
+import Loading from "@/components/Utilities/Loading";
+import SectionBlock from "@/components/Utilities/SectionBlock";
 
 import {Notebook} from "@/types/Notebook";
-import AddNotebookCard from "@/components/Home/AddNotebook/AddNotebookCard";
 
 interface Props<NotebookType extends Notebook> {
     heading: string,
@@ -20,31 +22,15 @@ interface Props<NotebookType extends Notebook> {
 
 const NotebookGrid = <NotebookType extends Notebook>({ heading, headingRightComponent, notebooks, loading, onClick, noNotebooksComponent, rightComponent, addNotebook}: Props<NotebookType>) => {
     return (
-        <VStack
-            spacing={4}
-            align={'start'}
-            w={'100%'}
+        <SectionBlock
+            heading={heading}
+            headingRightComponent={headingRightComponent}
         >
-            <HStack
-                w={'100%'}
-                justify={'space-between'}
+            <Loading
+                loading={loading}
+                h={'50px'}
             >
-                <Heading
-                    size={{
-                        base: 'md',
-                        md: 'lg'
-                    }}
-                >
-                    {heading}
-                </Heading>
-                {headingRightComponent}
-            </HStack>
-            {
-                loading ? (
-                    <Skeleton
-                        h={'50px'}
-                    />
-                ) : (
+                {
                     notebooks.length === 0 && !addNotebook ? (
                         noNotebooksComponent || (
                             <Text>
@@ -81,9 +67,9 @@ const NotebookGrid = <NotebookType extends Notebook>({ heading, headingRightComp
                             }
                         </SimpleGrid>
                     )
-                )
-            }
-        </VStack>
+                }
+            </Loading>
+        </SectionBlock>
     );
 };
 

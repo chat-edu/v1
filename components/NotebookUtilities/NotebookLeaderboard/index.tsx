@@ -1,9 +1,13 @@
 import React from 'react';
 
-import useNotebookLeaderboard from "@/hooks/queries/notebook/useNotebookLeaderboard";
-import {Notebook} from "@/types/Notebook";
-import {Skeleton, Text, VStack} from "@chakra-ui/react";
+import {Text, VStack} from "@chakra-ui/react";
+
 import NotebookLeaderboardRow from "@/components/NotebookUtilities/NotebookLeaderboard/NotebookLeaderboardRow";
+import Loading from "@/components/Utilities/Loading";
+
+import useNotebookLeaderboard from "@/hooks/queries/notebook/useNotebookLeaderboard";
+
+import {Notebook} from "@/types/Notebook";
 
 interface Props {
     notebookId: Notebook["id"]
@@ -27,12 +31,11 @@ const NotebookLeaderboard: React.FC<Props> = ({ notebookId }) => {
                 w={'100%'}
                 align={'start'}
             >
-                {
-                    loading ? (
-                        <Skeleton
-                            h={'50px'}
-                        />
-                    ) : (
+                <Loading
+                    loading={loading}
+                    h={'50px'}
+                >
+                    {
                         userScores.length > 0 ? (
                             userScores.map((userScore, index) => (
                                 <NotebookLeaderboardRow
@@ -46,8 +49,8 @@ const NotebookLeaderboard: React.FC<Props> = ({ notebookId }) => {
                                 No one has used this notebook yet
                             </Text>
                         )
-                    )
-                }
+                    }
+                </Loading>
             </VStack>
         </VStack>
     );
