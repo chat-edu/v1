@@ -29,7 +29,9 @@ const NotebookLeaderboard: React.FC<Props> = ({ notebookId }) => {
             >
                 {
                     loading ? (
-                        <Skeleton />
+                        <Skeleton
+                            h={'50px'}
+                        />
                     ) : (
                         userScores.length > 0 ? (
                             userScores.map((userScore, index) => (

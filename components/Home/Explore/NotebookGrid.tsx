@@ -40,7 +40,9 @@ const NotebookGrid = <NotebookType extends Notebook>({ heading, headingRightComp
             </HStack>
             {
                 loading ? (
-                    <Skeleton />
+                    <Skeleton
+                        h={'50px'}
+                    />
                 ) : (
                     notebooks.length === 0 && !addNotebook ? (
                         noNotebooksComponent || (

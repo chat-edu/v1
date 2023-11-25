@@ -28,7 +28,9 @@ const NotesDisplay: React.FC<Props> = ({ notebook }) => {
             </Text>
             {
                 loading ? (
-                    <Skeleton />
+                    <Skeleton
+                        h={'50px'}
+                    />
                 ) : (
                     notes.length > 0 ? (
                         <SimpleGrid
