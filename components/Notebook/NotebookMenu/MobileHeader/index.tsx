@@ -3,10 +3,10 @@ import React from 'react';
 import {Card, HStack, Text, VStack} from "@chakra-ui/react";
 
 import MobileSidebar from "@/components/Notebook/NotebookMenu/MobileHeader/MobileSidebar";
+import MobileLeaderboard from "@/components/Notebook/NotebookMenu/MobileHeader/MobileLeaderboard";
 
 import {Note} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
-import MobileLeaderboard from "@/components/Notebook/NotebookMenu/MobileHeader/MobileLeaderboard";
 
 export const mobileHeaderHeight = 60;
 
