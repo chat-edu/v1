@@ -2,22 +2,22 @@ import React from 'react';
 
 import {Box, Icon, Text} from "@chakra-ui/react";
 
-import {PiMedalLight} from "react-icons/pi";
+import {SlNotebook} from "react-icons/sl";
 
 interface Props {
     rank: number
 }
 
-const smBoxSize = '35px';
-const mdBoxSize = '50px';
+const smBoxSize = '30px';
+const mdBoxSize = '40px';
 
-const smFontSize = '8px';
-const mdFontSize = '12px';
+const smFontSize = '10px';
+const mdFontSize = '16px';
 
-const smTop = '7px';
-const mdTop = '10px';
+const smLeft = '12px';
+const mdLeft = '15px';
 
-const Medal: React.FC<Props> = ({ rank }) => {
+const NotebookMedal: React.FC<Props> = ({ rank }) => {
 
     if(rank > 3) return (
         <Text
@@ -37,7 +37,7 @@ const Medal: React.FC<Props> = ({ rank }) => {
             color={getRankColor(rank)}
         >
             <Icon
-                as={PiMedalLight}
+                as={SlNotebook}
                 boxSize={{
                     base: smBoxSize,
                     md: mdBoxSize
@@ -45,12 +45,12 @@ const Medal: React.FC<Props> = ({ rank }) => {
             />
             <Text
                 position={'absolute'}
-                top={{
-                    base: smTop,
-                    md: mdTop
+                top='45%'
+                transform={'translateY(-50%)'}
+                left={{
+                    base: smLeft,
+                    md: mdLeft
                 }}
-                left='50%'
-                transform={'translateX(-50%)'}
                 fontSize={{
                     base: smFontSize,
                     md: mdFontSize
@@ -76,4 +76,4 @@ const getRankColor = (rank: number) => {
     }
 }
 
-export default Medal;
+export default NotebookMedal;
