@@ -38,7 +38,7 @@ export const findAllUsersByScore = async (limit: number): Promise<User[]> => {
     return find(queryText, [limit], transformUserScore);
 }
 
-export const addUser = async (user: User): Promise<boolean> => {
+export const addUser = async (user: UserRow): Promise<boolean> => {
     return add(USERS_TABLE, user);
 };
 

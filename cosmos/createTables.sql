@@ -28,3 +28,6 @@ CREATE TABLE IF NOT EXISTS ${SCORE_TABLE} (
     FOREIGN KEY (user_id) REFERENCES ${USER_TABLE}(id) ON DELETE CASCADE,
     FOREIGN KEY (notebook_id) REFERENCES ${NOTEBOOK_TABLE}(id) ON DELETE CASCADE
 );
+
+-- update the user table to include profile_picture_url
+ALTER TABLE ${USER_TABLE} ADD COLUMN IF NOT EXISTS profile_picture_url VARCHAR(255);
