@@ -39,6 +39,7 @@ const NotesDisplay: React.FC<Props> = ({ notebook }) => {
                                 md: 3,
                                 lg: 4
                             }}
+                            spacing={4}
                         >
                             {
                                 notes.map((note) => (
