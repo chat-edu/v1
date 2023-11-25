@@ -49,7 +49,7 @@ const NotebookCard: React.FC<Props> = ({ notebook, rightComponent, onClick }) =>
                         }}
                         opacity={0.7}
                     >
-                        By<UsernameText username={notebook.username} />
+                        By<UsernameText username={notebook.username} id={notebook.userId} />
                     </Text>
                     <Text>
                         {notebook.numNotes} note{notebook.numNotes === 1 ? '' : 's'}

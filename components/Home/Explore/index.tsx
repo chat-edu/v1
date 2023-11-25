@@ -1,36 +1,27 @@
-import React, {useState} from 'react';
+import React from 'react';
 
-import {Container, useDisclosure} from "@chakra-ui/react";
+import {Container} from "@chakra-ui/react";
 
-import YourNotebooks from "@/components/Home/Explore/YourNotebooks";
-import PopularNotebooks from "@/components/Home/Explore/PopularNotebooks";
+import YourNotebooks from "@/components/NotebookGrids/YourNotebooks";
+import PopularNotebooks from "@/components/NotebookGrids/PopularNotebooks";
 import ExploreHeader from "@/components/Home/Explore/ExploreHeader";
-import YourUsedNotebooks from "@/components/Home/Explore/YourUsedNotebooks";
-
-import {Notebook} from "@/types/Notebook";
+import YourUsedNotebooks from "@/components/NotebookGrids/YourUsedNotebooks";
 import NotebookModal from "@/components/Home/NotebookModal";
+
+import useNotebookModal from "@/hooks/utilities/useNotebookModal";
 
 const Explore = () => {
 
-    const [selectedNotebook, setSelectedNotebook] = useState<Notebook | null>(null);
-    const { isOpen, onOpen, onClose } = useDisclosure();
-
-    const selectNotebook = (notebook: Notebook) => {
-        setSelectedNotebook(notebook);
-        onOpen();
-    }
+    const { notebook, selectNotebook, isOpen, closeNotebookModal } = useNotebookModal();
 
     return (
         <>
             {
-                selectedNotebook && (
+                notebook && (
                     <NotebookModal
-                        notebook={selectedNotebook}
+                        notebook={notebook}
                         isOpen={isOpen}
-                        onClose={() => {
-                            onClose();
-                            setSelectedNotebook(null);
-                        }}
+                        onClose={closeNotebookModal}
                     />
                 )
             }

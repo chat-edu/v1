@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Text} from "@chakra-ui/react";
 
-import NotebookGrid from "@/components/Home/Explore/NotebookGrid";
+import NotebookGrid from "@/components/NotebookGrids/NotebookGrid";
 
 import useUserNotebooks from "@/hooks/queries/notebooks/useUserNotebooks";
 import useAuth from "@/hooks/useAuth";
