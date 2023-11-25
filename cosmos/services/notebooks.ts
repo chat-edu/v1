@@ -76,19 +76,32 @@ export const findTopNotebooks = async (limit: number): Promise<RankedNotebook[]>
 
 export const getRankedNotebook = async (notebookId: number): Promise<RankedNotebook | null> => {
     const query = `
-        WITH RankedNotebooks AS (
+        WITH ScoreAggregation AS (
             SELECT
-                n.id AS id,
-                n.name AS name,
-                u.username AS username,
-                COALESCE(SUM(s.score), 0) AS total_score,
-                RANK() OVER (ORDER BY COALESCE(SUM(s.score), 0) DESC) AS rank,
-                COALESCE(COUNT(nt.id), 0) AS num_notes
-            FROM Notebooks n
-            LEFT JOIN Scores s ON n.id = s.notebook_id
-            LEFT JOIN Notes nt ON n.id = nt.notebook_id
-            JOIN Users u ON n.user_id = u.id
-            GROUP BY n.id, u.username, n.name
+                notebook_id,
+                COALESCE(SUM(score), 0) AS total_score
+            FROM Scores
+            GROUP BY notebook_id
+        ),
+        NoteCount AS (
+            SELECT
+                notebook_id,
+                COUNT(id) AS num_notes
+            FROM Notes
+            GROUP BY notebook_id
+         ),
+         RankedNotebooks AS (
+             SELECT
+                 n.id AS id,
+                 n.name AS name,
+                 u.username AS username,
+                 COALESCE(sa.total_score, 0) AS total_score,
+                 COALESCE(nc.num_notes, 0) AS num_notes,
+                 RANK() OVER (ORDER BY COALESCE(sa.total_score, 0) DESC) AS rank
+             FROM Notebooks n
+                      JOIN Users u ON n.user_id = u.id
+                      LEFT JOIN ScoreAggregation sa ON n.id = sa.notebook_id
+                      LEFT JOIN NoteCount nc ON n.id = nc.notebook_id
         )
         SELECT
             id,
