@@ -19,7 +19,12 @@ const UsernameText: React.FC<Props> = ({ username, id,  ...rest }) => {
     }
 
     return (
-        <Link href={`/users/${id}`}>
+        <Link
+            href={`/users/${id}`}
+            style={{
+                wordBreak: 'break-word'
+            }}
+        >
             <Text
                 fontWeight={'semibold'}
                 p={1}

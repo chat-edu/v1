@@ -1,77 +1,120 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-import {useToast} from "@chakra-ui/react";
+import {useDisclosure, useToast} from "@chakra-ui/react";
 
 import {addNote} from "@/services/notes";
-
-import documentAnalysisClient from "@/documentIntelligence/client";
+import {extractTextFromFile} from "@/documentIntelligence/extractText";
 
 import {Notebook} from "@/types/Notebook";
-
+import useSummary from "@/hooks/utilities/useSummary";
+import {TabIndex} from "@/components/Home/UploadNotes/UploadNotesModal/ModalTabs";
 
 const useUploadNote = (notebookId: Notebook["id"]) => {
 
     const toast = useToast();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [file, setFile] = useState<File | null>(null);
-    const [loading, setLoading] = useState(false);
+
+    const [isFileExtracting, setIsFileExtracting] = useState(false);
+    const [extractedText, setExtractedText] = useState('');
+
+    const { isLoading: isSummaryGenerating, summary, summarize } = useSummary(extractedText);
+
+    const [noteName, setNoteName] = useState('');
+
+    const [tabIndex, setTabIndex] = useState<TabIndex>(TabIndex.ExtractedText);
+
+    useEffect(() => {
+        if (!file) {
+            setExtractedText('');
+            setNoteName('');
+        } else {
+            setNoteName(file.name);
+        }
+        setTabIndex(TabIndex.ExtractedText)
+    }, [file])
 
     const updateFile = (file: File) => {
         setFile(file);
     }
 
-    const uploadNote = async () => {
+    const processFile = async () => {
         if (!file) {
             return;
         }
+        setIsFileExtracting(true);
+        onOpen();
+        setExtractedText(await extractTextFromFile(file));
+        setIsFileExtracting(false);
+    }
 
-        setLoading(true);
-
-        const formData = new FormData();
-        formData.append('file', file);
-
-        const poller = await documentAnalysisClient.beginClassifyDocument('prebuilt-read', file)
-
-        const { pages } = await poller.pollUntilDone();
-
-        const allText = (pages || []).reduce((acc, page) => {
-            const pageText = (page.words || []).reduce((pageAcc, word) => pageAcc + word.content + ' ', '');
-            return acc + pageText;
-        }, '');
+    const upload = async (text: string) => {
+        if (!file || !text || !noteName) {
+            return;
+        }
 
         const success = await addNote({
-            name: file.name,
+            name: noteName,
             notebookId,
-            content: allText,
+            content: text,
         })
         if(success) {
             toast({
                 title: "Note Uploaded",
-                description: `Note ${file.name} was uploaded.`,
+                description: `Note ${noteName} was uploaded.`,
                 status: "success",
                 duration: 5000,
                 isClosable: true,
             });
+            setFile(null);
+            onClose();
         } else {
             toast({
                 title: "Note Upload Failed",
-                description: `Note ${file.name} could not be uploaded.`,
+                description: `Note ${noteName} could not be uploaded.`,
                 status: "error",
                 duration: 5000,
                 isClosable: true,
             });
         }
+    }
 
-        setFile(null);
+    const uploadRawText = async () => {
+        await upload(extractedText);
+    }
 
-        setLoading(false);
+    const uploadSummary = async () => {
+        await upload(summary);
+    }
+
+    const generateSummary = async () => {
+        if (!extractedText) {
+            return;
+        }
+        await summarize();
+        setTabIndex(TabIndex.Summary);
     }
 
     return {
         file,
-        loading,
+        isFileExtracting,
+        isSummaryGenerating,
+        isOpen,
+        extractedText,
+        summary,
+        noteName,
+        tabIndex,
+        setTabIndex,
+        setNoteName,
+        generateSummary,
+        onOpen,
+        onClose,
         updateFile,
-        uploadNote,
+        processFile,
+        uploadRawText,
+        uploadSummary,
+        isDisabled: !file || !extractedText || !noteName,
     }
 }
 

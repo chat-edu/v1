@@ -58,6 +58,7 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                                 spacing={2}
                                 align={'start'}
                                 mb={2}
+                                wordBreak={'break-word'}
                             >
                                 {
                                     notes.length > 0 ? (
