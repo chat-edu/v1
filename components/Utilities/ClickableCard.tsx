@@ -15,15 +15,20 @@ const ClickableCard: React.FC<Props> = ({ onClick, children, darkModeHoverBackgr
 
     const hoverBackground = useColorModeValue(lightModeHoverBackground, darkModeHoverBackground);
 
+    const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        e.stopPropagation();
+        onClick();
+    }
+
     return (
         <Card
             cursor={'pointer'}
             _hover={{
                 bg: hoverBackground,
-                transform: 'translateY(-2px)',
+                transform: 'translateY(-4px)',
                 shadow: 'lg'
             }}
-            onClick={onClick}
+            onClick={handleClick}
             transition={'all 0.2s ease-in-out'}
             {...props}
         >

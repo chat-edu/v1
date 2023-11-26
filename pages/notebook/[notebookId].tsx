@@ -5,6 +5,7 @@ import Notebook from "@/components/Notebook";
 
 import {NextPage} from "next";
 import {useRouter} from "next/router";
+import Loading from "@/components/Utilities/Loading";
 
 const NotebookPage: NextPage = () => {
 
@@ -22,9 +23,11 @@ const NotebookPage: NextPage = () => {
                 <link rel="apple-touch-icon" sizes="192x192" href="/apple-touch-icon-192x192.png" />
             </Head>
             <Layout>
-                <Notebook
-                    notebookId={parseInt(notebookId as string)}
-                />
+                <Loading loading={!notebookId}>
+                    <Notebook
+                        notebookId={parseInt(notebookId as string)}
+                    />
+                </Loading>
             </Layout>
         </>
     )
