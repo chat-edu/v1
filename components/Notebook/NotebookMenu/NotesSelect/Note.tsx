@@ -34,6 +34,7 @@ const Note: React.FC<Props> = ({ note, notebook, addNote, removeNote }) => {
                 key={note.id}
                 w={'100%'}
                 justifyContent={'space-between'}
+                maxW={'100%'}
             >
                 {
                     user ? (

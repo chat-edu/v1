@@ -49,6 +49,7 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
             size={'3xl'}
             scrollBehavior={'inside'}
             isCentered={true}
+            autoFocus={false}
         >
             <ModalOverlay />
             <ModalContent>

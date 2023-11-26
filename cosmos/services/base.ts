@@ -74,7 +74,12 @@ export const get = async <RowType extends QueryResultRow, ReturnType>(
 ): Promise<ReturnType | null> => {
     const client = await getPool().connect();
     try {
-        const { rows } = await client.query<RowType>(query, values);
+        const { rows } = await client.query<RowType>(query, values)
+            .catch((error) => {
+                console.log(query, values);
+                console.error('Error in get operation:', error);
+                return { rows: [] };
+            });
         return rows && rows.length ? transform(rows[0]) : null;
     } finally {
         client.release();

@@ -52,7 +52,7 @@ const AddNoteCard: React.FC<Props> = ({ notebook }) => {
             <AddNoteModal
                 isOpen={isOpen}
                 onClose={onClose}
-                initNotebook={notebook}
+                notebook={notebook}
             />
         </>
     );

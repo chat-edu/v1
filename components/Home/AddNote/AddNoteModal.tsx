@@ -12,7 +12,6 @@ import {
 
 import TextareaInput from "@/components/Utilities/TextareaInput";
 import TextInput from "@/components/Utilities/TextInput";
-import NotebookMenu from "@/components/Utilities/NotebookMenu";
 
 import useAddNote from "@/hooks/mutators/useAddNote";
 
@@ -21,12 +20,12 @@ import { Notebook } from "@/types/Notebook";
 interface Props {
     isOpen: boolean;
     onClose: () => void;
-    initNotebook?: Notebook
+    notebook: Notebook
 }
 
-const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , initNotebook}) => {
+const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , notebook}) => {
 
-    const { values, setFieldValue, touched, setFieldTouched, disabled, submitForm, updateNotebook, errors, notebook } = useAddNote(initNotebook);
+    const { values, setFieldValue, touched, setFieldTouched, disabled, submitForm, errors } = useAddNote(notebook);
 
     const onSubmit = async () => {
         await submitForm();
@@ -50,30 +49,23 @@ const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , initNotebook}) => {
                         direction={'column'}
                         gap={4}
                     >
-                        <NotebookMenu
-                            label={"Notebook"}
-                            notebook={notebook}
-                            setNotebook={updateNotebook}
-                            onBlur={() => setFieldTouched('notebookId', true)}
-                            error={touched.notebookId && errors.notebookId || undefined}
-                        />
                         <TextInput
                             label={"Name"}
-                            placeholder={"Enter your name here..."}
+                            placeholder={"Enter the name of this note here..."}
                             value={values.name}
                             onChange={(title) => setFieldValue('name', title)}
                             onBlur={() => setFieldTouched('name', true)}
                             error={touched.name && errors.name || undefined}
-                            helperText={"Ex: Lecture 1"}
+                            helperText={"Ex: Loops"}
                         />
                         <TextareaInput
-                            label={"Notes"}
-                            placeholder={"Enter your notes here..."}
+                            label={"Content"}
+                            placeholder={"Enter the contents of the note here..."}
                             value={values.content}
                             onChange={(content) => setFieldValue('content', content)}
                             onBlur={() => setFieldTouched('content', true)}
                             error={touched.content && errors.content || undefined}
-                            helperText={"Ex: A programming language is a system of notation for writing computer programs. A programming language is usually described in terms of its syntax and semantics."}
+                            helperText={"Ex: A loop is a sequence of instructions that is continually repeated until a certain condition is reached."}
                         />
                     </Flex>
                 </ModalBody>
