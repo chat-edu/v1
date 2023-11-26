@@ -1,4 +1,4 @@
-import {getPool} from "@/cosmos/citus";
+import {getPool} from "@/azure/cosmos/citus";
 
 import {QueryResultRow} from "pg";
 

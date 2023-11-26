@@ -1,6 +1,6 @@
-import { add, del, find, get, update } from "@/cosmos/services/base";
+import { add, del, find, get, update } from "@/azure/cosmos/services/base";
 
-import { NOTEBOOKS_TABLE } from "@/cosmos/constants/tables";
+import { NOTEBOOKS_TABLE } from "@/azure/cosmos/constants/tables";
 
 import {
     Notebook,

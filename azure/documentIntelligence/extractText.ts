@@ -1,4 +1,4 @@
-import documentAnalysisClient from "@/documentIntelligence/client";
+import documentAnalysisClient from "@/azure/documentIntelligence/client";
 
 export const extractTextFromFile = async (file: File) => {
     const formData = new FormData();

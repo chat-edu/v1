@@ -1,4 +1,4 @@
-import {updateNotebook} from "@/cosmos/services/notebooks";
+import {updateNotebook} from "@/azure/cosmos/services/notebooks";
 
 import {NotebookIdParams} from "@/app/api/notebooks/[notebookId]/NotebookIdParams";
 import {NotebookRowInput} from "@/types/Notebook";

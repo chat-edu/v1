@@ -4,7 +4,7 @@ import useContainerData from "@/hooks/queries/utilities/useContainerData";
 import {
     subscribeToNotebooksChangedEvent,
     unsubscribeFromNotebooksChangedEvent
-} from "@/eventEmitters/notebooksEventEmitter";
+} from "@/azure/cosmos/eventEmitters/notebooksEventEmitter";
 
 import {Notebook} from "@/types/Notebook";
 

@@ -1,4 +1,4 @@
-import {deleteNote} from "@/cosmos/services/notes";
+import {deleteNote} from "@/azure/cosmos/services/notes";
 
 import {NextRequest} from "next/server";
 

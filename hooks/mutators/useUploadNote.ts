@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {useDisclosure, useToast} from "@chakra-ui/react";
 
 import {addNote} from "@/services/notes";
-import {extractTextFromFile} from "@/documentIntelligence/extractText";
+import {extractTextFromFile} from "@/azure/documentIntelligence/extractText";
 
 import {Notebook} from "@/types/Notebook";
 import useSummary from "@/hooks/utilities/useSummary";

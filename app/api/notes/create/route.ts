@@ -1,4 +1,4 @@
-import { addNote } from "@/cosmos/services/notes";
+import { addNote } from "@/azure/cosmos/services/notes";
 
 export async function POST(request: Request) {
     // parse the request body

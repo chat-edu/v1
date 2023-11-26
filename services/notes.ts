@@ -1,4 +1,4 @@
-import {emitNotesChangedEvent} from "@/eventEmitters/notesEventEmitter";
+import {emitNotesChangedEvent} from "@/azure/cosmos/eventEmitters/notesEventEmitter";
 
 import {Note, NoteInput} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";

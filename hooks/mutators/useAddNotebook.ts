@@ -10,7 +10,7 @@ import useAuth from "@/hooks/useAuth";
 
 import { addNotebook } from "@/services/notebooks";
 
-import {emitNotebooksChangedEvent} from "@/eventEmitters/notebooksEventEmitter";
+import {emitNotebooksChangedEvent} from "@/azure/cosmos/eventEmitters/notebooksEventEmitter";
 
 import {NotebookInput} from "@/types/Notebook";
 

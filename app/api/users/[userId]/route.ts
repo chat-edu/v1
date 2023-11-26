@@ -1,4 +1,4 @@
-import {getUser} from "@/cosmos/services/user";
+import {getUser} from "@/azure/cosmos/services/user";
 
 import {UserIdParams} from "@/app/api/users/[userId]/UserIdParams";
 

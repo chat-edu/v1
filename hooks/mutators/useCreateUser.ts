@@ -11,7 +11,7 @@ import { addUser } from "@/services/user";
 import useAuth from "@/hooks/useAuth";
 
 import {User} from "@/types/User";
-import {emitUsersChangedEvent} from "@/eventEmitters/userEventEmitter";
+import {emitUsersChangedEvent} from "@/azure/cosmos/eventEmitters/userEventEmitter";
 
 const UserSchema: Yup.ObjectSchema<User> = Yup.object().shape({
     name: Yup.string()

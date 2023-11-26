@@ -1,6 +1,6 @@
-import {add, del, find, get, update} from "@/cosmos/services/base";
+import {add, del, find, get, update} from "@/azure/cosmos/services/base";
 
-import {USERS_TABLE} from "@/cosmos/constants/tables";
+import {USERS_TABLE} from "@/azure/cosmos/constants/tables";
 
 import {User, UserRow, UserScore, UserScoreRow} from "@/types/User";
 import {NotebookScore, NotebookScoreRow} from "@/types/Notebook";

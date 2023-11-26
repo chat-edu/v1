@@ -4,7 +4,7 @@ import useAuth from "@/hooks/useAuth";
 
 import { deleteNotebook as deleteNotebookService } from '@/services/notebooks'
 
-import {emitNotebooksChangedEvent} from "@/eventEmitters/notebooksEventEmitter";
+import {emitNotebooksChangedEvent} from "@/azure/cosmos/eventEmitters/notebooksEventEmitter";
 
 import {Notebook} from "@/types/Notebook";
 

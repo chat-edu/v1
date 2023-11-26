@@ -1,6 +1,6 @@
 import { DocumentAnalysisClient } from "@azure/ai-form-recognizer";
 
-import documentIntelligenceKeyCredential from "@/documentIntelligence/keyCredential";
+import documentIntelligenceKeyCredential from "@/azure/documentIntelligence/keyCredential";
 
 const documentAnalysisClient = new DocumentAnalysisClient(
     'https://chatedu-pdf-parser.cognitiveservices.azure.com/',

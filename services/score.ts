@@ -1,6 +1,6 @@
 import {Notebook} from "@/types/Notebook";
 import {User} from "@/types/User";
-import {emitNotebookLeaderboardChangedEvent} from "@/eventEmitters/notebookLeaderboardEventEmitter";
+import {emitNotebookLeaderboardChangedEvent} from "@/azure/cosmos/eventEmitters/notebookLeaderboardEventEmitter";
 
 export const updateScore = async (
     notebookId: Notebook["id"],

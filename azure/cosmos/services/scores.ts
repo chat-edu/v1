@@ -1,5 +1,5 @@
-import {getPool} from "@/cosmos/citus";
-import {del, find, get} from "@/cosmos/services/base";
+import {getPool} from "@/azure/cosmos/citus";
+import {del, find, get} from "@/azure/cosmos/services/base";
 
 import {Score, ScoreRow, UserScore, UserScoreRow} from "@/types/Score";
 

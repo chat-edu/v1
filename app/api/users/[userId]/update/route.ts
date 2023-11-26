@@ -1,4 +1,4 @@
-import {updateUser} from "@/cosmos/services/user"
+import {updateUser} from "@/azure/cosmos/services/user"
 
 import {UserIdParams} from "@/app/api/users/[userId]/UserIdParams";
 import {User} from "@/types/User";
