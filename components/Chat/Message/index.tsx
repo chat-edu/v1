@@ -93,7 +93,6 @@ const getMessageComponent = (
     promptWithCommand: (command: Command<any>) => void,
     answered: boolean
 ) => {
-    // const messageContent = jsonAutocomplete(message.content) as string;
     let tag: string;
     let content: any;
     try {
@@ -103,7 +102,6 @@ const getMessageComponent = (
         } catch (e) {
             parsed = JSON.parse(jsonAutocomplete(message.content) as string);
         }
-        console.log(parsed)
         tag = parsed.tag;
         content = parsed.content;
     } catch (e) {
