@@ -18,7 +18,10 @@ const Notebook: React.FC<Props> = ({ notebookId }) => {
     const { notebook, loading } = useNotebook(notebookId);
 
     return (
-        <Loading loading={loading}>
+        <Loading
+            loading={loading}
+            h={'100%'}
+        >
             {
                 notebook ? (
                     <NotebookLayout

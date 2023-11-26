@@ -40,7 +40,10 @@ const Layout: React.FC<Props> = ({ children, authGate }) => {
             >
                 {
                     authGate ? (
-                        <Loading loading={loading}>
+                        <Loading
+                            loading={loading}
+                            h={'100%'}
+                        >
                             {
                                 isConnected ? (
                                     children

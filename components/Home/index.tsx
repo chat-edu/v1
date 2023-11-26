@@ -16,6 +16,7 @@ const Home = () => {
     return (
         <Loading
             loading={loading}
+            h={'100%'}
         >
             {
                 userData ? (
