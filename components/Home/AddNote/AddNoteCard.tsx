@@ -31,8 +31,6 @@ const AddNoteCard: React.FC<Props> = ({ notebook }) => {
                     md: 2
                 }}
                 borderColor={'brand.400'}
-                h={'100%'}
-                w={'100%'}
                 flexDirection={'row'}
                 alignItems={'center'}
                 justifyContent={'center'}
