@@ -4,7 +4,6 @@ let pool: Pool;
 
 export const getPool = () => {
     if (!pool) {
-        console.log("No pool available, creating new pool.");
         pool = new Pool({
             max: 300,
             connectionTimeoutMillis: 5000,

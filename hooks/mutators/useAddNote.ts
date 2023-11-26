@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import * as Yup from "yup";
 
@@ -24,17 +24,11 @@ const NoteSchema: Yup.ObjectSchema<NoteInput> = Yup.object().shape({
         .min(1, 'Course ID is Required'),
 });
 
-const useAddNote = (initNotebook?: Notebook) => {
+const useAddNote = (notebook: Notebook) => {
 
     const { user } = useAuth();
 
-    const [notebook, setNotebook] = useState<Notebook | null>(initNotebook || null);
-
     const toast = useToast();
-
-    useEffect(() => {
-        setNotebook(initNotebook || null)
-    }, [initNotebook])
 
     const {
         values,
@@ -79,10 +73,6 @@ const useAddNote = (initNotebook?: Notebook) => {
         setFieldValue('notebookId', notebook?.id || 0);
     }, [setFieldValue, notebook]);
 
-    const updateNotebook = (notebook: Notebook | null) => {
-        setNotebook(notebook);
-    }
-
     return {
         notebook,
         values,
@@ -91,7 +81,6 @@ const useAddNote = (initNotebook?: Notebook) => {
         setFieldValue,
         setFieldTouched,
         submitForm,
-        updateNotebook,
         resetForm,
         disabled: Object.keys(errors).length > 0,
     }

@@ -15,7 +15,6 @@ interface Props {
 
 const NotebookLayout: React.FC<Props> = ({ notebook }) => {
 
-
     const { selectedNotes, addNote, removeNote } = useSelectNotes()
 
     return (
@@ -32,6 +31,7 @@ const NotebookLayout: React.FC<Props> = ({ notebook }) => {
                 selectedNotes={selectedNotes}
             />
             <Chat
+                notebookId={notebook.id}
                 notes={selectedNotes}
             />
         </Stack>

@@ -7,12 +7,17 @@ export interface NotebookInput {
 
 export interface Notebook extends NotebookInput {
     id: number;
-    userName: User["name"];
+    username: User["username"];
     numNotes: number;
 }
 
-export interface TopNotebook extends Notebook {
+export interface RankedNotebook extends Notebook {
     totalScore: number;
+    rank: number;
+}
+
+export interface NotebookScore extends Notebook {
+    userScore: number
 }
 
 export interface NotebookRowInput {
@@ -22,10 +27,15 @@ export interface NotebookRowInput {
 
 export interface NotebookRow extends NotebookRowInput {
     id: number;
-    user_name: string;
+    username: string;
     num_notes: string;
 }
 
-export interface TopNotebookRow extends NotebookRow {
+export interface RankedNotebookRow extends NotebookRow {
     total_score: string;
+    rank: string;
+}
+
+export interface NotebookScoreRow extends NotebookRow {
+    score: string;
 }

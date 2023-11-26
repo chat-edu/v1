@@ -1,10 +1,11 @@
 import React from 'react';
 
-import {Skeleton, Text} from "@chakra-ui/react";
+import {Text} from "@chakra-ui/react";
 
 import NotebookLayout from "@/components/Notebook/NotebookLayout";
+import Loading from "@/components/Utilities/Loading";
 
-import useNotebook from "@/hooks/queries/useNotebook";
+import useNotebook from "@/hooks/queries/notebooks/useNotebook";
 
 import {Notebook as NotebookType} from "@/types/Notebook";
 
@@ -16,21 +17,21 @@ const Notebook: React.FC<Props> = ({ notebookId }) => {
 
     const { notebook, loading } = useNotebook(notebookId);
 
-    if(loading) return (
-        <Skeleton />
-    );
-
-    if(!notebook) return (
-        <Text>
-            Notebook not found
-        </Text>
-    );
-
     return (
-        <NotebookLayout
-            notebook={notebook}
-        />
-    );
+        <Loading loading={loading}>
+            {
+                notebook ? (
+                    <NotebookLayout
+                        notebook={notebook}
+                    />
+                ) : (
+                    <Text>
+                        Notebook not found
+                    </Text>
+                )
+            }
+        </Loading>
+    )
 };
 
 export default Notebook;

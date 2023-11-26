@@ -5,12 +5,16 @@ import {VStack} from "@chakra-ui/react";
 import AuthProviderButton from "@/components/Utilities/AuthButtons/AuthProviderButtons/AuthProviderButton";
 import authProviderButtons from "@/components/Utilities/AuthButtons/buttons";
 
-const AuthProviderButtons = () => {
+interface Props {
+    width?: string
+}
+
+const AuthProviderButtons: React.FC<Props> = ({ width = '75%'}) => {
     return (
         <VStack
             w={{
                 base: '100%',
-                md: '75%'
+                md: width
             }}
         >
             {
