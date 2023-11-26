@@ -10,7 +10,7 @@ interface Props {
     text: string;
     icon: React.ReactElement;
     buttonProps?: ButtonProps;
-    notebook?: Notebook
+    notebook: Notebook
 }
 
 const AddNotes: React.FC<Props> = ({ text, icon, buttonProps, notebook }) => {
@@ -30,7 +30,7 @@ const AddNotes: React.FC<Props> = ({ text, icon, buttonProps, notebook }) => {
             <AddNoteModal
                 isOpen={isOpen}
                 onClose={onClose}
-                initNotebook={notebook}
+                notebook={notebook}
             />
         </>
     );
