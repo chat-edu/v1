@@ -19,7 +19,10 @@ const UsersLeaderboard: React.FC<Props> = ({ limit }) => {
         <VStack
             w={'100%'}
         >
-            <Loading loading={loading}>
+            <Loading
+                loading={loading}
+                h={'500px'}
+            >
                 {
                     userScores.length === 0 ? (
                         <Text>

@@ -23,7 +23,10 @@ const NotebookPage: NextPage = () => {
                 <link rel="apple-touch-icon" sizes="192x192" href="/apple-touch-icon-192x192.png" />
             </Head>
             <Layout>
-                <Loading loading={!notebookId}>
+                <Loading
+                    loading={!notebookId}
+                    h={'100%'}
+                >
                     <Notebook
                         notebookId={parseInt(notebookId as string)}
                     />

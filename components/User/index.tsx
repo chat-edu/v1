@@ -18,10 +18,11 @@ const User: React.FC<Props> = ({ userId }) => {
     const { userData, loading } = useUser(userId);
 
     return (
-        <Container>
-            <Loading 
-                loading={loading}
-            >
+        <Loading
+            loading={loading}
+            h={'100%'}
+        >
+            <Container>
                 {
                     userData ? (
                         <UserDisplay
@@ -31,8 +32,8 @@ const User: React.FC<Props> = ({ userId }) => {
                         <NoUserFound />
                     )
                 }
-            </Loading>
         </Container>
+        </Loading>
     );
 };
 
