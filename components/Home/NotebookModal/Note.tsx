@@ -31,11 +31,13 @@ const Note: React.FC<Props> = ({ note, notebook }) => {
                 onClick={onOpen}
                 overflowWrap={'break-word'}
                 justifyContent={'center'}
+                alignItems={'center'}
             >
                 <Text
                     overflowWrap={'break-word'}
                     maxW={'100%'}
                     fontWeight={'semibold'}
+                    textAlign={'center'}
                 >
                     {note.name.length > maxCharacters ? `${note.name.substring(0, maxCharacters)}...` : note.name}
                 </Text>
