@@ -5,7 +5,7 @@ import {Score, ScoreRow, UserScore, UserScoreRow} from "@/types/Score";
 
 // Find Scores
 export const findAllScores = async (): Promise<Score[]> => {
-    const queryText = 'SELECT * FROM Scores;';
+    const queryText = `SELECT * FROM Scores;`;
     return find(queryText, [], transformScore);
 };
 
