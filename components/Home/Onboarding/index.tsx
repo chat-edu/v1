@@ -3,7 +3,7 @@ import React from 'react';
 import {Button, Card, Divider, Text, VStack} from "@chakra-ui/react";
 
 import Welcome from "@/components/Welcome";
-import TextInput from "@/components/Utilities/TextInput";
+import TextInput from "@/components/Utilities/FormUtilities/TextInput";
 
 import useCreateUser from "@/hooks/mutators/useCreateUser";
 

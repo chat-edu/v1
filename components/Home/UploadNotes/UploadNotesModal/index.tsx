@@ -14,7 +14,7 @@ import {
 import {FaCloudUploadAlt, FaFileUpload, FaMagic} from "react-icons/fa";
 
 import TypewriterAnimation from "@/components/Home/UploadNotes/UploadNotesModal/TypewriterAnimation";
-import TextInput from "@/components/Utilities/TextInput";
+import TextInput from "@/components/Utilities/FormUtilities/TextInput";
 import ModalTabs, {TabIndex} from "@/components/Home/UploadNotes/UploadNotesModal/ModalTabs";
 
 interface Props {

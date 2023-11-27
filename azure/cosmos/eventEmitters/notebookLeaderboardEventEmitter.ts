@@ -1,4 +1,5 @@
 import { EventEmitter } from "events";
+
 import {Notebook} from "@/types/Notebook";
 
 class NotebookLeaderboardEventEmitter extends EventEmitter {}

@@ -3,7 +3,7 @@ import React from 'react';
 import { HStack, IconButton } from "@chakra-ui/react";
 import { CheckIcon } from "@chakra-ui/icons";
 
-import FileInput from "@/components/Utilities/FIleInput";
+import FileInput from "@/components/Utilities/FormUtilities/FIleInput";
 import UploadNotesModal from "@/components/Home/UploadNotes/UploadNotesModal";
 
 import useUploadNote from "@/hooks/mutators/useUploadNote";

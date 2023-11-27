@@ -10,8 +10,8 @@ import {
     ModalCloseButton, Button, Flex,
 } from '@chakra-ui/react'
 
-import TextareaInput from "@/components/Utilities/TextareaInput";
-import TextInput from "@/components/Utilities/TextInput";
+import TextareaInput from "@/components/Utilities/FormUtilities/TextareaInput";
+import TextInput from "@/components/Utilities/FormUtilities/TextInput";
 
 import useAddNote from "@/hooks/mutators/useAddNote";
 

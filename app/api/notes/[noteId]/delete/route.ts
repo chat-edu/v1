@@ -1,10 +1,10 @@
-import {deleteNote} from "@/cosmos/services/notes";
+import {deleteNote} from "@/azure/cosmos/services/notes";
 
 import {NextRequest} from "next/server";
 
 import {NoteIdParams} from "@/app/api/notes/[noteId]/NoteIdParams";
 
-export const GET = async (request: NextRequest, {params}: {params: NoteIdParams}) => {
+export const DELETE = async (request: NextRequest, {params}: {params: NoteIdParams}) => {
     // get the notebookId from the query string
     const {noteId} = params;
 

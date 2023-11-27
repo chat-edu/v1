@@ -1,4 +1,4 @@
-import {findAllUsersByScore} from "@/cosmos/services/user";
+import {findAllUsersByScore} from "@/azure/cosmos/services/user";
 
 import {NextRequest} from "next/server";
 

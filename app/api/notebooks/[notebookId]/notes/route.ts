@@ -1,4 +1,4 @@
-import {findNotesByNotebookId} from "@/cosmos/services/notes";
+import {findNotesByNotebookId} from "@/azure/cosmos/services/notes";
 
 import {NextRequest} from "next/server";
 

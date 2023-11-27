@@ -1,9 +1,9 @@
-import {updateNotebook} from "@/cosmos/services/notebooks";
+import {updateNotebook} from "@/azure/cosmos/services/notebooks";
 
 import {NotebookIdParams} from "@/app/api/notebooks/[notebookId]/NotebookIdParams";
 import {NotebookRowInput} from "@/types/Notebook";
 
-export async function POST(request: Request, {params}: {params: NotebookIdParams}) {
+export const PATCH = async (request: Request, {params}: {params: NotebookIdParams}) => {
     const body = await request.json();
 
     if(!body) Response.json({error: "No body provided"});
