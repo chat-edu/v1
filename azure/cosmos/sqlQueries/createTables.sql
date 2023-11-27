@@ -46,7 +46,10 @@ CREATE TABLE IF NOT EXISTS NotebookTags (
 );
 
 
--- drop the tagtypes, tags, and notebook_tags tables
-drop table ${NOTEBOOK_TAGS_TABLE};
-drop table ${TAGS_TABLE};
-drop table ${TAG_TYPES_TABLE};
+-- DROP ALL TABLES
+DROP TABLE IF EXISTS NotebookTags;
+DROP TABLE IF EXISTS TagTypes;
+DROP TABLE IF EXISTS Scores;
+DROP TABLE IF EXISTS Notes;
+DROP TABLE IF EXISTS Notebooks;
+DROP TABLE IF EXISTS Users;
