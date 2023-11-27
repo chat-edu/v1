@@ -29,7 +29,7 @@ export const findTagTypesWithNoParent = async (): Promise<TagType[]> => {
 
 // UPDATE
 
-export const updateTagType = async (name: string, updatedFields: Partial<TagType>): Promise<TagTypeRow | null> => {
+export const updateTagType = async (name: string, updatedFields: Partial<TagType>): Promise<boolean> => {
     return update<Partial<TagType>, TagTypeRow>(TAG_TYPES_TABLE, [name], updatedFields);
 };
 

@@ -81,7 +81,7 @@ export const findScoresByUserId = async (userId: string): Promise<NotebookScore[
 
 // UPDATE
 
-export const updateUser = async (id: string, updatedFields: Partial<User>): Promise<UserRow | null> => {
+export const updateUser = async (id: string, updatedFields: Partial<User>): Promise<boolean> => {
     return update<Partial<User>, UserRow>(USERS_TABLE, [id], updatedFields);
 };
 

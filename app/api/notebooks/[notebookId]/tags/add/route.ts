@@ -10,13 +10,9 @@ export const POST = async (req: NextRequest, { params }: { params: NotebookIdPar
     if(!body.tag) return Response.json({ error: 'No tag name provided' });
     if(!body.tag_type_name) return Response.json({ error: 'No tag type provided' });
 
-    const notebookTag = await addNotebookTag({
+    return Response.json(await addNotebookTag({
         notebook_id: params.notebookId,
         tag_type_name: body.tag_type_name,
         tag: body.tag
-    })
-
-    console.log(notebookTag)
-
-    return Response.json(notebookTag);
+    }));
 }

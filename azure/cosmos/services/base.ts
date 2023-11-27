@@ -46,7 +46,7 @@ export const update = async <InputType extends object, RowType>(
     id: any[],
     updatedFields: object,
     idColumnNames: string[] = ['id']
-): Promise<RowType | null> => {
+): Promise<boolean> => {
 const client = await getPool().connect();
     try {
         const updates = Object.keys(updatedFields).map((key, index) => `${key} = $${index + 1}`);
@@ -56,11 +56,11 @@ const client = await getPool().connect();
             SET ${updates.join(', ')} 
             WHERE ${idColumnNames.map((idColumnName, index) => `${idColumnName} = $${index + 1 + Object.values(updatedFields).length}`).join(' AND ')}
         `;
-        const { rows } = await client.query(queryText, values);
-        return rows[0];
+        await client.query(queryText, values);
+        return true;
     } catch (error) {
         console.error('Error in update operation:', error);
-        return null;
+        return false;
     } finally {
         client.release();
     }

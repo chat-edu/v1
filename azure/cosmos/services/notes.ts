@@ -25,7 +25,7 @@ export const findNotesByNotebookId = async (notebookId: number): Promise<Note[]>
 
 // UPDATE
 
-export const updateNote = async (id: number, updatedFields: Partial<NoteRowInput>): Promise<NoteRow | null> => {
+export const updateNote = async (id: number, updatedFields: Partial<NoteRowInput>): Promise<boolean> => {
     return update<Partial<NoteRowInput>, NoteRow>(NOTES_TABLE, [id], updatedFields);
 };
 

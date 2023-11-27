@@ -33,7 +33,7 @@ export const updateNotebookTag = async (
     notebookId: number,
     tagTypeName: string,
     updatedFields: Partial<NotebookTagRow>
-): Promise<NotebookTagRow | null> => {
+): Promise<boolean> => {
     return update<Partial<NotebookTagRow>, NotebookTagRow>(
         NOTEBOOK_TAGS_TABLE,
         [notebookId, tagTypeName],
