@@ -25,6 +25,8 @@ const NotebookLeaderboardRow: React.FC<Props> = ({ userScore, rank }) => {
                 <UsernameText
                     username={userScore.username}
                     id={userScore.userId}
+                    verified={userScore.verified}
+                    opacity={0.75}
                 />
             </HStack>
             <Text>

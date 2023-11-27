@@ -3,7 +3,8 @@ CREATE TABLE IF NOT EXISTS Users (
     username VARCHAR(255) NOT NULL UNIQUE,
     name VARCHAR(255),
     email VARCHAR(255) UNIQUE,
-    profile_picture_url VARCHAR(255)
+    profile_picture_url VARCHAR(255),
+    verified BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS Notebooks (
@@ -53,3 +54,5 @@ DROP TABLE IF EXISTS Scores;
 DROP TABLE IF EXISTS Notes;
 DROP TABLE IF EXISTS Notebooks;
 DROP TABLE IF EXISTS Users;
+
+UPDATE Users SET profile_picture_url = 'https://www.chatedu.tech/logo.png' WHERE id = '116059457699821363282';

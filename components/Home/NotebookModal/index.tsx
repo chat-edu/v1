@@ -74,12 +74,23 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                             >
                                 {notebook.name}
                             </Heading>
-                            <Text
-                                fontSize={'sm'}
-                                opacity={0.7}
+                            <HStack
+                                spacing={0}
+                                align={'center'}
                             >
-                                By<UsernameText username={notebook.username} id={notebook.userId} />
-                            </Text>
+                                <Text
+                                    fontSize={'sm'}
+                                    opacity={0.75}
+                                >
+                                    By
+                                </Text>
+                                <UsernameText
+                                    username={notebook.username}
+                                    id={notebook.userId}
+                                    verified={notebook.verified}
+                                    opacity={0.75}
+                                />
+                            </HStack>
                         </VStack>
                         {
                             (!loading && notebookRank) && (
