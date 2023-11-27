@@ -4,7 +4,7 @@ import {NextRequest} from "next/server";
 
 import {NoteIdParams} from "@/app/api/notes/[noteId]/NoteIdParams";
 
-export const GET = async (request: NextRequest, {params}: {params: NoteIdParams}) => {
+export const DELETE = async (request: NextRequest, {params}: {params: NoteIdParams}) => {
     // get the notebookId from the query string
     const {noteId} = params;
 

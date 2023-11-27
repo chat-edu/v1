@@ -5,11 +5,9 @@ import {NextRequest} from "next/server";
 import {NoteIdParams} from "@/app/api/notes/[noteId]/NoteIdParams";
 import {NoteInput} from "@/types/Note";
 
-export const POST = async (request: NextRequest, {params}: {params: NoteIdParams}) => {
-    // get the notebookId from the query string
+export const PATCH = async (request: NextRequest, {params}: {params: NoteIdParams}) => {
     const {noteId} = params;
 
-    // if there is no notebookId, return an empty array
     if (!noteId) {
         return Response.json([]);
     }
@@ -20,6 +18,5 @@ export const POST = async (request: NextRequest, {params}: {params: NoteIdParams
     if (note.name) updatedFields.name = note.name;
     if (note.content) updatedFields.content = note.content;
 
-    // otherwise, get the notes from the notebook
     return Response.json(await updateNote(noteId, updatedFields));
 }

@@ -1,19 +1,23 @@
+import {emitNotebookLeaderboardChangedEvent} from "@/azure/cosmos/eventEmitters/notebookLeaderboardEventEmitter";
+
 import {Notebook} from "@/types/Notebook";
 import {User} from "@/types/User";
-import {emitNotebookLeaderboardChangedEvent} from "@/azure/cosmos/eventEmitters/notebookLeaderboardEventEmitter";
+import {ScoreRow} from "@/types/Score";
+
+// UPDATE
 
 export const updateScore = async (
     notebookId: Notebook["id"],
     userId: User["id"],
     incrementAmount: number
-): Promise<boolean> => {
+): Promise<ScoreRow | null> => {
     return fetch(`/api/notebooks/${notebookId}/scores/${userId}/update`, {
-        method: "POST",
+        method: "PATCH",
         body: JSON.stringify({incrementAmount})
     })
-        .then(() => {
+        .then((res) => {
             emitNotebookLeaderboardChangedEvent(notebookId)
-            return true;
+            return res.json();
         })
-        .catch(() => false);
+        .catch(null);
 }

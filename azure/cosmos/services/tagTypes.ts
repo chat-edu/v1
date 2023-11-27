@@ -4,13 +4,13 @@ import { TAG_TYPES_TABLE } from "@/azure/cosmos/constants/tables";
 
 import { TagType, TagTypeRow} from "@/types/Tags";
 
-export const addTagType = async (tagType: TagTypeRow): Promise<boolean> => {
-    return add(TAG_TYPES_TABLE, tagType);
+// CREATE
+
+export const addTagType = async (tagType: TagTypeRow): Promise<TagTypeRow | null> => {
+    return add<TagTypeRow, TagTypeRow>(TAG_TYPES_TABLE, tagType);
 };
 
-export const updateTagType = async (name: string, updatedFields: Partial<TagType>): Promise<boolean> => {
-    return update(TAG_TYPES_TABLE, [name], updatedFields);
-};
+// READ
 
 export const getTagType = async (name: string): Promise<TagType | null> => {
     const query = 'SELECT * FROM TagTypes WHERE name = $1;';
@@ -27,9 +27,19 @@ export const findTagTypesWithNoParent = async (): Promise<TagType[]> => {
     return find(query, [], transformTagType);
 }
 
+// UPDATE
+
+export const updateTagType = async (name: string, updatedFields: Partial<TagType>): Promise<TagTypeRow | null> => {
+    return update<Partial<TagType>, TagTypeRow>(TAG_TYPES_TABLE, [name], updatedFields);
+};
+
+// DELETE
+
 export const deleteTagType = async (name: string): Promise<boolean> => {
     return del(TAG_TYPES_TABLE, [name]);
 };
+
+// TRANSFORMERS
 
 const transformTagType = (row: TagTypeRow): TagType => ({
     name: row.name,

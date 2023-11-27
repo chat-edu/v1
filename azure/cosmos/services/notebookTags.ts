@@ -4,21 +4,13 @@ import { NOTEBOOK_TAGS_TABLE } from "@/azure/cosmos/constants/tables";
 
 import { NotebookTag, NotebookTagRow, NotebookTagWithParentTagTypeRow} from "@/types/Tags";
 
-export const addNotebookTag = async (notebookTag: NotebookTagRow): Promise<boolean> => {
+// CREATE
+
+export const addNotebookTag = async (notebookTag: NotebookTagRow): Promise<NotebookTagRow | null> => {
     return add(NOTEBOOK_TAGS_TABLE, notebookTag);
 };
 
-export const deleteNotebookTag = async (notebookId: number, tagTypeName: string): Promise<boolean> => {
-    return del(NOTEBOOK_TAGS_TABLE, [notebookId, tagTypeName], ['notebook_id', 'tag_type_name']);
-};
-
-export const updateNotebookTag = async (
-    notebookId: number,
-    tagTypeName: string,
-    updatedFields: Partial<NotebookTagRow>
-): Promise<boolean> => {
-    return update(NOTEBOOK_TAGS_TABLE, [notebookId, tagTypeName], updatedFields, ['notebook_id', 'tag_type_name']);
-}
+// READ
 
 // find all tags for a notebook, get the parent_tag_type
 export const findNotebookTagsByNotebookId = async (notebookId: number): Promise<NotebookTag[]> => {
@@ -34,6 +26,29 @@ export const findNotebookTagsByNotebookId = async (notebookId: number): Promise<
     `;
     return find(query, [notebookId], transformNotebookTagWithParentTagType);
 }
+
+// UPDATE
+
+export const updateNotebookTag = async (
+    notebookId: number,
+    tagTypeName: string,
+    updatedFields: Partial<NotebookTagRow>
+): Promise<NotebookTagRow | null> => {
+    return update<Partial<NotebookTagRow>, NotebookTagRow>(
+        NOTEBOOK_TAGS_TABLE,
+        [notebookId, tagTypeName],
+        updatedFields,
+        ['notebook_id', 'tag_type_name']
+    );
+}
+
+// DELETE
+
+export const deleteNotebookTag = async (notebookId: number, tagTypeName: string) => {
+    return del(NOTEBOOK_TAGS_TABLE, [notebookId, tagTypeName], ['notebook_id', 'tag_type_name']);
+};
+
+// TRANSFORMERS
 
 const transformNotebookTagWithParentTagType = (row: NotebookTagWithParentTagTypeRow): NotebookTag => ({
     tag: row.tag,

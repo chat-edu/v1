@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 import * as Yup from 'yup';
 
@@ -8,11 +8,12 @@ import {useToast} from "@chakra-ui/react";
 
 import useAuth from "@/hooks/useAuth";
 
-import { addNotebook } from "@/services/notebooks";
+import {addNotebook, addNotebookTag} from "@/services/notebooks";
 
 import {emitNotebooksChangedEvent} from "@/azure/cosmos/eventEmitters/notebooksEventEmitter";
 
 import {NotebookInput} from "@/types/Notebook";
+import {TopicTagTypes, NotebookTagRow, SchoolTagTypes, TagTypes} from "@/types/Tags";
 
 const NotebookSchema: Yup.ObjectSchema<NotebookInput> = Yup.object().shape({
     name: Yup.string()
@@ -45,9 +46,8 @@ const useAddNotebook = () => {
         validationSchema: NotebookSchema,
         onSubmit: async notebook => {
             if(!user) return;
-            const success = await addNotebook(notebook);
-            if(success) {
-                emitNotebooksChangedEvent(notebook.userId);
+            const notebookRow = await addNotebook(notebook);
+            if(notebookRow) {
                 toast({
                     title: "Notebook Created",
                     description: `Notebook ${notebook.name} was created.`,
@@ -55,6 +55,42 @@ const useAddNotebook = () => {
                     duration: 5000,
                     isClosable: true,
                 });
+                let tags: NotebookTagRow[] = [];
+                if(schoolTag && schoolName) {
+                    tags.push({
+                        tag: schoolName,
+                        tag_type_name: schoolTag,
+                        notebook_id: notebookRow.id
+                    });
+                }
+                if(topicTag) {
+                    tags.push({
+                        tag: topicTag,
+                        tag_type_name: TagTypes.TOPIC,
+                        notebook_id: notebookRow.id
+                    });
+                }
+                if(tags.length > 0) {
+                    const successes = await Promise.all(tags.map(tag => addNotebookTag(tag)));
+                    if(successes.every(Boolean)) {
+                        toast({
+                            title: "Tags Created",
+                            description: `Tags were created.`,
+                            status: "success",
+                            duration: 5000,
+                            isClosable: true,
+                        });
+                    } else {
+                        toast({
+                            title: "Tags Creation Failed",
+                            description: `Tags could not be created.`,
+                            status: "error",
+                            duration: 5000,
+                            isClosable: true,
+                        });
+                    }
+                }
+                emitNotebooksChangedEvent(notebook.userId);
             } else {
                 toast({
                     title: "Notebook Creation Failed",
@@ -75,12 +111,23 @@ const useAddNotebook = () => {
     }, [setFieldValue, user]);
 
 
+    const [schoolTag, setSchoolTag] = useState<SchoolTagTypes | null>(null);
+    const [schoolName, setSchoolName] = useState<string>("");
+    const [topicTag, setTopicTag] = useState<TopicTagTypes | null>(null);
+
+
     return {
         values,
         errors,
         touched,
         setFieldValue,
         setFieldTouched,
+        schoolTag,
+        schoolName,
+        topicTag,
+        setSchoolTag,
+        setSchoolName,
+        setTopicTag,
         submitForm,
         disabled: Object.keys(errors).length > 0
     }

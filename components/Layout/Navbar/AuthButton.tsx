@@ -6,7 +6,7 @@ import {
     MenuList,
     MenuItem,
     Button,
-    Avatar, IconButton
+    Avatar, IconButton, useBreakpointValue
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 
@@ -20,6 +20,38 @@ const AuthButton = () => {
 
     const { isConnected, user } = useAuth();
 
+    const menuButton = useBreakpointValue({
+        base: (
+            <MenuButton
+                display={{base: 'flex', md: 'none'}}
+                as={IconButton}
+                aria-label={'Profile '}
+                icon={
+                    <Avatar
+                        size={'sm'}
+                        name={user?.name || ""}
+                        src={user?.image || ""}
+                    />
+                }
+            />
+        ),
+        md: (
+            <MenuButton
+                as={Button}
+                rightIcon={<ChevronDownIcon />}
+                leftIcon={
+                    <Avatar
+                        size={'sm'}
+                        name={user?.name || ""}
+                        src={user?.image || ""}
+                    />
+                }
+            >
+                {user?.name}
+            </MenuButton>
+        )
+    })
+
     if(!isConnected) {
         return (
             <AuthProviderIconButtons />
@@ -29,31 +61,7 @@ const AuthButton = () => {
     if(isConnected) {
         return (
             <Menu>
-                <MenuButton
-                    display={{base: 'flex', md: 'none'}}
-                    as={IconButton}
-                    aria-label={'Profile '}
-                    icon={
-                        <Avatar
-                            size={'sm'}
-                            name={user?.name || ""}
-                            src={user?.image || ""}
-                        />
-                    }
-                />
-                <MenuButton
-                    display={{base: 'none', md: 'flex'}}
-                    as={Button}
-                    leftIcon={<Avatar
-                        size={'sm'}
-                        name={user?.name || ""}
-                        src={user?.image || ""}
-                    />}
-                    rightIcon={<ChevronDownIcon />}
-
-                >
-                    {user?.name}
-                </MenuButton>
+                {menuButton}
                 <MenuList>
                     <MenuItem
                         onClick={() => signOut()}

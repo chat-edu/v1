@@ -22,3 +22,21 @@ export interface NotebookTagRow {
 export interface NotebookTagWithParentTagTypeRow extends NotebookTagRow {
     parent_tag_type_name: string | null,
 }
+
+export enum TagTypes {
+    SCHOOL = 'school',
+    TOPIC = 'topic',
+}
+
+export enum SchoolTagTypes {
+    UNIVERSITY = 'university',
+    HIGH_SCHOOL = 'high school',
+    MIDDLE_SCHOOL = 'middle school',
+    ELEMENTARY_SCHOOL = 'elementary school',
+}
+
+export enum TopicTagTypes {
+    MATH = 'math',
+    SCIENCE = 'science',
+    COMPUTER_SCIENCE = 'computer science'
+}

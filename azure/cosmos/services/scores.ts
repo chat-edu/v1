@@ -3,10 +3,11 @@ import {del, find, get} from "@/azure/cosmos/services/base";
 
 import {Score, ScoreRow, UserScore, UserScoreRow} from "@/types/Score";
 
-// Find Scores
-export const findAllScores = async (): Promise<Score[]> => {
-    const queryText = `SELECT * FROM Scores;`;
-    return find(queryText, [], transformScore);
+// READ
+
+export const getScore = async (userId: string, notebookId: number): Promise<Score | null> => {
+    const query = 'SELECT * FROM Scores WHERE user_id = $1 AND notebook_id = $2;';
+    return get(query, [userId, notebookId], transformScore);
 };
 
 export const findScoresByNotebookId = async (notebookId: number): Promise<UserScore[]> => {
@@ -20,7 +21,9 @@ export const findScoresByNotebookId = async (notebookId: number): Promise<UserSc
     return find(queryText, [notebookId], transformUserScore);
 }
 
-export const updateScore = async (userId: string, notebookId: number, incrementAmount: number): Promise<boolean> => {
+// UPDATE
+
+export const updateScore = async (userId: string, notebookId: number, incrementAmount: number): Promise<Score | null> => {
     const client = await getPool().connect();
     try {
         const queryText = `
@@ -29,29 +32,24 @@ export const updateScore = async (userId: string, notebookId: number, incrementA
             ON CONFLICT (user_id, notebook_id)
             DO UPDATE SET score = Scores.score + EXCLUDED.score;
         `;
-        await client.query(queryText, [userId, notebookId, incrementAmount]);
-        return true;
+        const { rows } = await client.query(queryText, [userId, notebookId, incrementAmount]);
+        return rows[0];
     } catch (error) {
-        console.error('Error in updateScore operation:', error);
-        return false;
+        return null;
     } finally {
         client.release();
     }
 };
 
-// Get Score by User ID and Notebook ID
-export const getScore = async (userId: string, notebookId: number): Promise<Score | null> => {
-    const query = 'SELECT * FROM Scores WHERE user_id = $1 AND notebook_id = $2;';
-    return get(query, [userId, notebookId], transformScore);
-};
+// DELETE
 
-// Delete Score
 export const deleteScore = async (userId: string, notebookId: number): Promise<boolean> => {
     const queryText = 'DELETE FROM Scores WHERE user_id = $1 AND notebook_id = $2;';
     return del(queryText, [userId, notebookId]);
 };
 
-// Transform function to convert database rows to Score type
+// TRANSFORMERS
+
 const transformScore = (row: ScoreRow): Score => ({
     userId: row.user_id,
     notebookId: row.notebook_id,

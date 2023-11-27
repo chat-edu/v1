@@ -4,34 +4,38 @@ import { NOTES_TABLE } from "@/azure/cosmos/constants/tables";
 
 import {Note, NoteRow, NoteRowInput} from "@/types/Note";
 
+// CREATE
+
+export const addNote = async (note: NoteRowInput) => {
+    return add(NOTES_TABLE, note);
+};
+
+// READ
+
+export const getNote = async (id: number): Promise<Note | null> => {
+    const query = 'SELECT * FROM Notes WHERE id = $1;';
+    return get(query, [id], transformRowToNote);
+};
+
 // Find Notes by Notebook ID
 export const findNotesByNotebookId = async (notebookId: number): Promise<Note[]> => {
     const queryText = 'SELECT * FROM Notes WHERE notebook_id = $1;';
     return find<NoteRow, Note>(queryText, [notebookId], transformRowToNote);
 };
 
-// Add Note
-export const addNote = async (note: NoteRowInput): Promise<boolean> => {
-    return add(NOTES_TABLE, note);
+// UPDATE
+
+export const updateNote = async (id: number, updatedFields: Partial<NoteRowInput>): Promise<NoteRow | null> => {
+    return update<Partial<NoteRowInput>, NoteRow>(NOTES_TABLE, [id], updatedFields);
 };
 
-// Update Note
-export const updateNote = async (id: number, updatedFields: Partial<NoteRowInput>): Promise<boolean> => {
-    // Assuming 'id' uniquely identifies a note
-    return update(NOTES_TABLE, [id], updatedFields);
-};
+// DELETE
 
-// Get Note by ID
-export const getNote = async (id: number): Promise<Note | null> => {
-    const query = 'SELECT * FROM Notes WHERE id = $1;';
-    return get(query, [id], transformRowToNote);
-};
-
-// Delete Note
-export const deleteNote = async (id: number): Promise<boolean> => {
-    // Assuming 'id' uniquely identifies a note
+export const deleteNote = async (id: number) => {
     return del(NOTES_TABLE, [id]);
 };
+
+// TRANSFORM
 
 const transformRowToNote = (row: NoteRow): Note => ({
     id: row.id,

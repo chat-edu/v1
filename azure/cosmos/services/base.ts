@@ -22,7 +22,7 @@ export const find = async <RowType extends QueryResultRow, ReturnType>(
     }
 };
 
-export const add = async (tableName: string, input: object): Promise<boolean> => {
+export const add = async <InputType extends object, RowType>(tableName: string, input: InputType): Promise<RowType | null> => {
     const client = await getPool().connect();
     try {
         const columns = Object.keys(input).join(', ');
@@ -30,23 +30,23 @@ export const add = async (tableName: string, input: object): Promise<boolean> =>
         const valuePlaceholders = values.map((_, index) => `$${index + 1}`).join(', ');
 
         const queryText = `INSERT INTO ${tableName} (${columns}) VALUES (${valuePlaceholders}) RETURNING *`;
-        await client.query(queryText, values);
-        return true;
+        const { rows } = await client.query(queryText, values);
+        return rows[0];
     } catch (error) {
         console.error('Error in add operation:', error);
-        return false;
+        return null;
     } finally {
         client.release();
     }
 };
 
 // make an update function for when the id is a composite key
-export const update = async(
+export const update = async <InputType extends object, RowType>(
     tableName: string,
     id: any[],
     updatedFields: object,
     idColumnNames: string[] = ['id']
-): Promise<boolean> => {
+): Promise<RowType | null> => {
 const client = await getPool().connect();
     try {
         const updates = Object.keys(updatedFields).map((key, index) => `${key} = $${index + 1}`);
@@ -56,11 +56,11 @@ const client = await getPool().connect();
             SET ${updates.join(', ')} 
             WHERE ${idColumnNames.map((idColumnName, index) => `${idColumnName} = $${index + 1 + Object.values(updatedFields).length}`).join(' AND ')}
         `;
-        await client.query(queryText, values);
-        return true;
+        const { rows } = await client.query(queryText, values);
+        return rows[0];
     } catch (error) {
         console.error('Error in update operation:', error);
-        return false;
+        return null;
     } finally {
         client.release();
     }

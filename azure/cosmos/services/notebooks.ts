@@ -10,6 +10,14 @@ import {
     RankedNotebookRow
 } from "@/types/Notebook";
 
+// CREATE
+
+export const addNotebook = async (notebook: NotebookRowInput) => {
+    return add<NotebookRowInput, NotebookRow>(NOTEBOOKS_TABLE, notebook);
+};
+
+// QUERIES
+
 export const findAllNotebooks = async (): Promise<Notebook[]> => {
     const queryText = `
         SELECT 
@@ -34,8 +42,6 @@ export const findNotebooksByUserId = async (userId: string): Promise<Notebook[]>
     return find(queryText, [userId], transformNotebook);
 };
 
-// sort the notebooks by their score, descending, then by their number of notes if there is a tie
-// use the scores table to determine the aggregate score for each notebook
 export const findTopNotebooks = async (limit: number): Promise<RankedNotebook[]> => {
     const queryText = `
         WITH RankedNotebooks AS (
@@ -116,15 +122,6 @@ export const getRankedNotebook = async (notebookId: number): Promise<RankedNoteb
     return get(query, [notebookId], transformRankedNotebook);
 }
 
-
-export const addNotebook = async (notebook: NotebookRowInput): Promise<boolean> => {
-    return add(NOTEBOOKS_TABLE, notebook);
-};
-
-export const updateNotebook = async (id: number, updatedFields: Partial<NotebookRowInput>): Promise<boolean> => {
-    return update(NOTEBOOKS_TABLE, [id], updatedFields);
-};
-
 export const getNotebook = async (id: number): Promise<Notebook | null> => {
     const query = `
         SELECT
@@ -140,9 +137,19 @@ export const getNotebook = async (id: number): Promise<Notebook | null> => {
     return get(query, [id], transformNotebook);
 };
 
+// UPDATE
+
+export const updateNotebook = async (id: number, updatedFields: Partial<NotebookRowInput>) => {
+    return update<Partial<NotebookRowInput>, NotebookRow>(NOTEBOOKS_TABLE, [id], updatedFields);
+};
+
+// DELETE
+
 export const deleteNotebook = async (id: number): Promise<boolean> => {
     return del(NOTEBOOKS_TABLE, [id]);
 };
+
+// TRANSFORMERS
 
 const transformNotebook = (row: NotebookRow): Notebook => ({
     id: row.id,

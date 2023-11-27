@@ -1,36 +1,42 @@
 import {emitNotesChangedEvent} from "@/azure/cosmos/eventEmitters/notesEventEmitter";
 
-import {Note, NoteInput} from "@/types/Note";
+import {Note, NoteInput, NoteRow} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
 
-export const addNote = async (note: NoteInput) =>
+// CREATE
+
+export const addNote = async (note: NoteInput): Promise<NoteRow | null> =>
     fetch(`/api/notes/create`, {
         method: "POST",
         body: JSON.stringify(note),
     })
-        .then(async (res) => {
+        .then((res) => {
             emitNotesChangedEvent(note.notebookId);
-            return (await res.json()) as boolean
+            return res.json()
         })
-        .then((res) => res);
+        .catch(null)
 
-export const updateNote = async (noteId: number, note: NoteInput) =>
+// UPDATE
+
+export const updateNote = async (noteId: number, note: NoteInput): Promise<NoteRow | null> =>
     fetch(`/api/notes/${note.notebookId}/${noteId}/update`, {
-        method: "POST",
+        method: "PATCH",
         body: JSON.stringify(note),
     })
         .then(async (res) => {
             emitNotesChangedEvent(note.notebookId);
-            return await res.json() as boolean
+            return res.json()
         })
-        .then((res) => res);
+        .then(null);
 
-export const deleteNote = async (noteId: Note["id"], notebookId: Notebook["id"]) =>
+// DELETE
+
+export const deleteNote = async (noteId: Note["id"], notebookId: Notebook["id"]): Promise<boolean> =>
     fetch(`/api/notes/${noteId}/delete`, {
-        method: "GET",
+        method: "DELETE",
     })
         .then(async (res) => {
             emitNotesChangedEvent(notebookId);
-            return await res.json() as boolean
+            return res.json()
         })
-        .then((res) => res);
+        .catch(null);

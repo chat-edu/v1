@@ -5,11 +5,23 @@ import {USERS_TABLE} from "@/azure/cosmos/constants/tables";
 import {User, UserRow, UserScore, UserScoreRow} from "@/types/User";
 import {NotebookScore, NotebookScoreRow} from "@/types/Notebook";
 
+// CREATE
+
+export const addUser = async (user: UserRow): Promise<UserRow | null> => {
+    return add<UserRow, UserRow>(USERS_TABLE, user);
+};
+
+// READ
+
+export const getUser = async (id: string): Promise<User | null> => {
+    const query = 'SELECT * FROM Users WHERE id = $1;';
+    return get(query, [id], transform);
+};
+
 export const findAllUsers = async (): Promise<User[]> => {
     return find('SELECT * FROM Users;', [], transform);
 };
 
-// gets all users and sots them by their score
 export const findAllUsersByScore = async (limit: number): Promise<User[]> => {
     const queryText = `
         WITH RankedUsers AS (
@@ -38,24 +50,6 @@ export const findAllUsersByScore = async (limit: number): Promise<User[]> => {
     return find(queryText, [limit], transformUserScore);
 }
 
-export const addUser = async (user: UserRow): Promise<boolean> => {
-    return add(USERS_TABLE, user);
-};
-
-export const updateUser = async (id: string, updatedFields: Partial<User>): Promise<boolean> => {
-    return update(USERS_TABLE, [id], updatedFields);
-};
-
-export const getUser = async (id: string): Promise<User | null> => {
-    const query = 'SELECT * FROM Users WHERE id = $1;';
-    return get(query, [id], transform);
-};
-
-export const deleteUser = async (id: string): Promise<boolean> => {
-    return del(USERS_TABLE, [id]);
-};
-
-// finds the top users by score. Include rank in the row select
 export const findScoresByUserId = async (userId: string): Promise<NotebookScore[]> => {
     const queryText = `
         WITH NoteCount AS (
@@ -83,6 +77,21 @@ export const findScoresByUserId = async (userId: string): Promise<NotebookScore[
 
     return find(queryText, [userId], transformNotebookScore);
 }
+
+
+// UPDATE
+
+export const updateUser = async (id: string, updatedFields: Partial<User>): Promise<UserRow | null> => {
+    return update<Partial<User>, UserRow>(USERS_TABLE, [id], updatedFields);
+};
+
+// DELETE
+
+export const deleteUser = async (id: string): Promise<boolean> => {
+    return del(USERS_TABLE, [id]);
+};
+
+// TRANSFORMERS
 
 const transform = (user: UserRow): User => ({
     id: user.id,
