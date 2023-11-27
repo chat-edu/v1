@@ -7,7 +7,7 @@ import {extractTextFromFile} from "@/azure/documentIntelligence/extractText";
 
 import {Notebook} from "@/types/Notebook";
 import useSummary from "@/hooks/utilities/useSummary";
-import {TabIndex} from "@/components/Home/UploadNotes/UploadNotesModal/ModalTabs";
+import {TabIndex} from "@/components/AddModals/UploadNotes/UploadNotesModal/ModalTabs";
 
 const useUploadNote = (notebookId: Notebook["id"]) => {
 

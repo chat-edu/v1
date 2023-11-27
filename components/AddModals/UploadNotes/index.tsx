@@ -4,7 +4,7 @@ import { HStack, IconButton } from "@chakra-ui/react";
 import { CheckIcon } from "@chakra-ui/icons";
 
 import FileInput from "@/components/Utilities/FormUtilities/FIleInput";
-import UploadNotesModal from "@/components/Home/UploadNotes/UploadNotesModal";
+import UploadNotesModal from "@/components/AddModals/UploadNotes/UploadNotesModal";
 
 import useUploadNote from "@/hooks/mutators/useUploadNote";
 

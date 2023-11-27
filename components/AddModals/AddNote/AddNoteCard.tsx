@@ -3,10 +3,15 @@ import React from 'react';
 import {Card, Text, useColorModeValue, useDisclosure} from "@chakra-ui/react";
 import {AddIcon} from "@chakra-ui/icons";
 
-import AddNotebookModal from "@/components/Home/AddNotebook/AddNotebookModal";
+import AddNoteModal from "@/components/AddModals/AddNote/AddNoteModal";
 import {transparentize} from "@chakra-ui/theme-tools";
+import {Notebook} from "@/types/Notebook";
 
-const AddNotebookCard = () => {
+interface Props {
+    notebook: Notebook
+}
+
+const AddNoteCard: React.FC<Props> = ({ notebook }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -22,8 +27,8 @@ const AddNotebookCard = () => {
                 onClick={onOpen}
                 transition={'all 0.2s ease-in-out'}
                 borderWidth={{
-                    base: 2,
-                    md: 3
+                    base: 1,
+                    md: 2
                 }}
                 borderColor={'brand.400'}
                 flexDirection={'row'}
@@ -41,15 +46,16 @@ const AddNotebookCard = () => {
                         md: 'lg'
                     }}
                 >
-                    Add Notebook
+                    Add Note
                 </Text>
             </Card>
-            <AddNotebookModal
+            <AddNoteModal
                 isOpen={isOpen}
                 onClose={onClose}
+                notebook={notebook}
             />
         </>
     );
 };
 
-export default AddNotebookCard;
+export default AddNoteCard;

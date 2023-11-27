@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 import {VStack, Text} from "@chakra-ui/react";
 
-import '@/components/Home/UploadNotes/UploadNotesModal/TypeWriterAnimation.css';
+import '@/components/AddModals/UploadNotes/UploadNotesModal/TypeWriterAnimation.css';
 
 const subtexts = [
     "Typing up your masterpieces...",

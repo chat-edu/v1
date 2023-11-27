@@ -5,7 +5,7 @@ import UsersLeaderboard from "@/components/Users/UsersLeaderboard";
 import {Button, VStack} from "@chakra-ui/react";
 import Link from "next/link";
 
-const ExploreLeaderboard = () => {
+const HomeLeaderboard = () => {
     return (
         <SectionBlock heading={'Leaderboard'}>
             <UsersLeaderboard
@@ -29,4 +29,4 @@ const ExploreLeaderboard = () => {
     );
 };
 
-export default ExploreLeaderboard;
+export default HomeLeaderboard;

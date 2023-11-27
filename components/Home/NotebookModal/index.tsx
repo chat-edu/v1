@@ -123,7 +123,7 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                     gap={2}
                 >
                     <Link
-                        href={`/notebook/${notebook.id}`}
+                        href={`/notebooks/${notebook.id}`}
                         style={{
                             width: '100%'
                         }}

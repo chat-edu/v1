@@ -7,8 +7,8 @@ import {
     TabPanels,
     Tabs
 } from "@chakra-ui/tabs";
-import ExtractedText from "@/components/Home/UploadNotes/UploadNotesModal/ExtractedText";
-import Summary from "@/components/Home/UploadNotes/UploadNotesModal/Summary";
+import ExtractedText from "@/components/AddModals/UploadNotes/UploadNotesModal/ExtractedText";
+import Summary from "@/components/AddModals/UploadNotes/UploadNotesModal/Summary";
 
 export enum TabIndex {
     ExtractedText = 0,
