@@ -7,6 +7,7 @@ import Divider from "./divider";
 import Accordion from "./accordion";
 import Heading from "./heading";
 import Drawer from "@/theme/components/drawer";
+import Tooltip from "@/theme/components/tooltip";
 
 import {ThemeComponents} from "@chakra-ui/react";
 
@@ -19,7 +20,8 @@ const components: ThemeComponents = {
     Divider,
     Accordion,
     Heading,
-    Drawer
+    Drawer,
+    Tooltip
 }
 
 export default components

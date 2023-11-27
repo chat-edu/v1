@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Button, ButtonProps, useDisclosure} from "@chakra-ui/react";
 
-import AddNoteModal from "@/components/Home/AddNote/AddNoteModal";
+import AddNoteModal from "@/components/AddModals/AddNote/AddNoteModal";
 
 import { Notebook } from "@/types/Notebook";
 

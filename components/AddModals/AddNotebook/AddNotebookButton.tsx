@@ -3,7 +3,7 @@ import React from 'react';
 import {Button, ButtonProps, useDisclosure} from "@chakra-ui/react";
 import {SmallAddIcon} from "@chakra-ui/icons";
 
-import AddNotebookModal from "@/components/Home/AddNotebook/AddNotebookModal";
+import AddNotebookModal from "@/components/AddModals/AddNotebook/AddNotebookModal";
 
 const AddNotebookButton: React.FC<ButtonProps> = (buttonProps) => {
 

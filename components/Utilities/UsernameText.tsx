@@ -5,15 +5,16 @@ import {HStack, Image, Text, TextProps, Tooltip, useColorModeValue, VStack} from
 import {User} from "@/types/User";
 import Link from "next/link";
 import useUser from "@/hooks/queries/user/useUser";
+import VerifiedCheckmark from "@/components/Utilities/VerifiedCheckmark";
 
 interface Props extends TextProps {
     username: User['username']
     id: User['id']
+    verified: boolean
 }
 
-const UsernameText: React.FC<Props> = ({ username, id,  ...rest }) => {
+const UsernameText: React.FC<Props> = ({ username, id, verified,  ...rest }) => {
 
-    const tooltipBg = useColorModeValue("brand.600", "brand.100");
     const hoverColor = useColorModeValue('blackAlpha.200', 'whiteAlpha.200');
 
     const onClick = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
@@ -21,39 +22,53 @@ const UsernameText: React.FC<Props> = ({ username, id,  ...rest }) => {
     }
 
     return (
-        <Tooltip
-            label={<UsernameTooltip username={username} id={id} />}
-            rounded={'md'}
-            p={2}
-            bg={tooltipBg}
+        <HStack
+            spacing={1}
         >
-            <Link
-                href={`/users/${id}`}
-                style={{
-                    wordBreak: 'break-word'
-                }}
+            <Tooltip
+                label={
+                    <UsernameTooltip
+                        username={username}
+                        id={id}
+                        verified={verified}
+                    />
+                }
             >
-                <Text
-                    fontWeight={'semibold'}
-                    p={1}
-                    as={'span'}
-                    _hover={{
-                        bg: hoverColor
-                    }}
-                    {...rest}
-                    onClick={onClick}
-                    rounded={'md'}
-                    cursor={'pointer'}
-                    transition={'all 0.2s ease-in-out'}
-                    fontSize={{
-                        base: 'sm',
-                        md: 'md'
+                <Link
+                    href={`/users/${id}`}
+                    style={{
+                        wordBreak: 'break-word',
+                        display: 'flex',
+                        alignItems: 'center'
                     }}
                 >
-                    @{username}
-                </Text>
-            </Link>
-        </Tooltip>
+                    <Text
+                        fontWeight={'semibold'}
+                        px={0.5}
+                        as={'span'}
+                        _hover={{
+                            bg: hoverColor
+                        }}
+                        {...rest}
+                        onClick={onClick}
+                        rounded={'md'}
+                        cursor={'pointer'}
+                        transition={'all 0.2s ease-in-out'}
+                        fontSize={{
+                            base: 'sm',
+                            md: 'md'
+                        }}
+                    >
+                        @{username}
+                    </Text>
+                </Link>
+            </Tooltip>
+            {
+                verified && (
+                    <VerifiedCheckmark />
+                )
+            }
+        </HStack>
     );
 };
 

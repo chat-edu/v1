@@ -3,7 +3,7 @@ import {Text} from "@chakra-ui/react";
 import useAuth from "@/hooks/useAuth";
 import PageHeader from "@/components/Utilities/PageHeader";
 
-const ExploreHeader = () => {
+const HomeHeader = () => {
 
     const { user } = useAuth();
 
@@ -43,4 +43,4 @@ const ExploreHeader = () => {
     );
 };
 
-export default ExploreHeader;
+export default HomeHeader;

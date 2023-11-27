@@ -41,7 +41,7 @@ const UserLeaderboardRow: React.FC<Props> = ({ userScore }) => {
                     />
                     <VStack
                         align={'start'}
-                        spacing={1}
+                        spacing={0}
                     >
                         <Text
                             fontSize={{
@@ -55,6 +55,8 @@ const UserLeaderboardRow: React.FC<Props> = ({ userScore }) => {
                         <UsernameText
                             id={userScore.id}
                             username={userScore.username}
+                            verified={userScore.verified}
+                            opacity={0.75}
                         />
                     </VStack>
                 </HStack>

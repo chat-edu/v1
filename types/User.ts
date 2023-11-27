@@ -1,4 +1,4 @@
-export interface User {
+export interface UserInput {
     id: string;
     name: string;
     email: string;
@@ -6,17 +6,26 @@ export interface User {
     profilePictureUrl: string;
 }
 
+export interface User extends UserInput {
+    verified: boolean;
+}
+
 export interface UserScore extends User {
     score: number;
     rank: number;
 }
 
-export interface UserRow {
+export interface UserRowInput {
     id: string;
     name: string;
     email: string;
     username: string;
     profile_picture_url: string;
+}
+
+export interface UserRow extends UserRowInput {
+
+    verified: boolean;
 }
 
 export interface UserScoreRow extends UserRow {

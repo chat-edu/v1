@@ -23,6 +23,7 @@ export const findAllNotebooks = async (): Promise<Notebook[]> => {
         SELECT 
             notebooks.*, 
             users.username as username, 
+            users.verified as verified,
             count(notes.id) as num_notes 
         FROM notebooks 
         JOIN users ON notebooks.user_id = users.id 
@@ -34,7 +35,11 @@ export const findAllNotebooks = async (): Promise<Notebook[]> => {
 
 export const findNotebooksByUserId = async (userId: string): Promise<Notebook[]> => {
     const queryText = `
-        SELECT notebooks.*, users.username as username, count(notes.id) as num_notes 
+        SELECT 
+            notebooks.*, 
+            users.username as username, 
+            users.verified as verified,
+            count(notes.id) as num_notes 
         FROM notebooks JOIN users ON notebooks.user_id = users.id LEFT JOIN notes ON notes.notebook_id = notebooks.id 
         WHERE notebooks.user_id = $1 
         GROUP BY notebooks.id, users.id;
@@ -49,6 +54,7 @@ export const findTopNotebooks = async (limit: number): Promise<RankedNotebook[]>
                 n.id AS id,
                 n.user_id AS user_id,
                 u.username AS username,
+                u.verified AS verified,
                 n.name AS name,
                 COALESCE(SUM(s.score), 0) AS total_score,
                 RANK() OVER (ORDER BY COALESCE(SUM(s.score), 0) DESC) AS rank
@@ -68,12 +74,14 @@ export const findTopNotebooks = async (limit: number): Promise<RankedNotebook[]>
             rn.id,
             rn.user_id,
             rn.username,
+            rn.verified,
             rn.name,
             rn.total_score,
             rn.rank,
             COALESCE(nc.num_notes, 0) AS num_notes
         FROM RankedNotebooks rn
                  LEFT JOIN NoteCount nc ON rn.id = nc.notebook_id
+        WHERE rn.total_score > 0
         ORDER BY rn.rank
         LIMIT $1;
     `;
@@ -95,19 +103,20 @@ export const getRankedNotebook = async (notebookId: number): Promise<RankedNoteb
                 COUNT(id) AS num_notes
             FROM Notes
             GROUP BY notebook_id
-         ),
-         RankedNotebooks AS (
+        ),
+        RankedNotebooks AS (
              SELECT
                  n.id AS id,
                  n.name AS name,
                  u.username AS username,
+                 u.verified AS verified,
                  COALESCE(sa.total_score, 0) AS total_score,
                  COALESCE(nc.num_notes, 0) AS num_notes,
                  RANK() OVER (ORDER BY COALESCE(sa.total_score, 0) DESC) AS rank
              FROM Notebooks n
-                      JOIN Users u ON n.user_id = u.id
-                      LEFT JOIN ScoreAggregation sa ON n.id = sa.notebook_id
-                      LEFT JOIN NoteCount nc ON n.id = nc.notebook_id
+                 JOIN Users u ON n.user_id = u.id
+                 LEFT JOIN ScoreAggregation sa ON n.id = sa.notebook_id
+                 LEFT JOIN NoteCount nc ON n.id = nc.notebook_id
         )
         SELECT
             id,
@@ -115,6 +124,7 @@ export const getRankedNotebook = async (notebookId: number): Promise<RankedNoteb
             total_score,
             rank,
             username,
+            verified,
             num_notes
         FROM RankedNotebooks
         WHERE id = $1;
@@ -127,12 +137,13 @@ export const getNotebook = async (id: number): Promise<Notebook | null> => {
         SELECT
             n.*,
             u.username AS username,
+            u.verified AS verified,
             COUNT(nt.id) AS num_notes
         FROM Notebooks n
         JOIN Users u ON n.user_id = u.id
         LEFT JOIN Notes nt ON n.id = nt.notebook_id
         WHERE n.id = $1
-        GROUP BY n.id, u.username;
+        GROUP BY n.id, u.username, u.verified;
     `
     return get(query, [id], transformNotebook);
 };
@@ -157,6 +168,7 @@ const transformNotebook = (row: NotebookRow): Notebook => ({
     userId: row.user_id,
     username: row.username,
     numNotes: parseInt(row.num_notes),
+    verified: row.verified,
 });
 
 const transformRankedNotebook = (row: RankedNotebookRow): RankedNotebook => ({

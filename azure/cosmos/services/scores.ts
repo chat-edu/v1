@@ -12,7 +12,10 @@ export const getScore = async (userId: string, notebookId: number): Promise<Scor
 
 export const findScoresByNotebookId = async (notebookId: number): Promise<UserScore[]> => {
     const queryText = `
-        SELECT Scores.*, Users.username
+        SELECT 
+            Scores.*, 
+            Users.username,
+            Users.verified
         FROM Scores
         INNER JOIN Users ON Scores.user_id = Users.id
         WHERE notebook_id = $1
@@ -58,5 +61,6 @@ const transformScore = (row: ScoreRow): Score => ({
 
 const transformUserScore = (row: UserScoreRow): UserScore => ({
     ...transformScore(row),
-    username: row.username
+    username: row.username,
+    verified: row.verified
 })

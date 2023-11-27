@@ -2,13 +2,13 @@ import {add, del, find, get, update} from "@/azure/cosmos/services/base";
 
 import {USERS_TABLE} from "@/azure/cosmos/constants/tables";
 
-import {User, UserRow, UserScore, UserScoreRow} from "@/types/User";
+import {User, UserRow, UserRowInput, UserScore, UserScoreRow} from "@/types/User";
 import {NotebookScore, NotebookScoreRow} from "@/types/Notebook";
 
 // CREATE
 
-export const addUser = async (user: UserRow): Promise<UserRow | null> => {
-    return add<UserRow, UserRow>(USERS_TABLE, user);
+export const addUser = async (user: UserRowInput): Promise<UserRow | null> => {
+    return add<UserRowInput, UserRow>(USERS_TABLE, user);
 };
 
 // READ
@@ -29,7 +29,9 @@ export const findAllUsersByScore = async (limit: number): Promise<User[]> => {
                 u.id AS id,
                 u.name AS name,
                 u.username AS username,
+                u.profile_picture_url AS profile_picture_url,
                 u.email AS email,
+                u.verified AS verified,
                 COALESCE(SUM(s.score), 0) AS score,
                 RANK() OVER (ORDER BY COALESCE(SUM(s.score), 0) DESC) AS rank
             FROM Users u
@@ -41,9 +43,12 @@ export const findAllUsersByScore = async (limit: number): Promise<User[]> => {
             name,
             email,
             username,
+            profile_picture_url,
+            verified,
             score,
             rank
         FROM RankedUsers
+        WHERE score > 0
         ORDER BY rank
         LIMIT $1;
     `;
@@ -64,6 +69,8 @@ export const findScoresByUserId = async (userId: string): Promise<NotebookScore[
             n.name,
             n.user_id,
             u.username,
+            u.profile_picture_url,
+            u.verified,
             s.score,
             COALESCE(nc.num_notes, 0) AS num_notes
         FROM Notebooks n
@@ -99,6 +106,7 @@ const transform = (user: UserRow): User => ({
     email: user.email,
     username: user.username,
     profilePictureUrl: user.profile_picture_url || `https://api.multiavatar.com/${user.id}.png`,
+    verified: user.verified
 });
 
 const transformUserScore = (user: UserScoreRow): UserScore => ({
@@ -113,5 +121,6 @@ const transformNotebookScore = (row: NotebookScoreRow): NotebookScore => ({
     id: row.id,
     name: row.name,
     userScore: parseInt(row.score || '0'),
-    numNotes: parseInt(row.num_notes || '0')
+    numNotes: parseInt(row.num_notes || '0'),
+    verified: row.verified
 });
