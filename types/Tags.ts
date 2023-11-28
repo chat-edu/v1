@@ -36,7 +36,16 @@ export enum SchoolTagTypes {
 }
 
 export enum TopicTagTypes {
+    SAT = 'SAT',
+    ACT = 'ACT',
     MATH = 'math',
     SCIENCE = 'science',
-    COMPUTER_SCIENCE = 'computer science'
+    ENGLISH = 'english',
+    HISTORY = 'history',
+    COMPUTER_SCIENCE = 'computer science',
+    ECONOMICS = 'economics',
+    FOREIGN_LANGUAGE = 'foreign language',
+    ART = 'art',
+    MUSIC = 'music',
+    AZURE = 'azure',
 }
