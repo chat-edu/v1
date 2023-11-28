@@ -30,6 +30,7 @@ const Points: React.FC<Props> = ({ points, ...rest }) => {
                 borderWidth={2}
                 roundedRight={'md'}
                 lineHeight={1}
+                fontWeight={'bold'}
             >
                 {points}
             </Text>
