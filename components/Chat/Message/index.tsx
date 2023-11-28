@@ -93,7 +93,6 @@ const getMessageComponent = (
     promptWithCommand: (command: Command<any>) => void,
     answered: boolean
 ) => {
-    // const messageContent = jsonAutocomplete(message.content) as string;
     let tag: string;
     let content: any;
     try {

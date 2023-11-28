@@ -6,7 +6,7 @@ import {useCallback, useEffect} from "react";
 import {
     subscribeToNotebookLeaderboardChangedEvent,
     unsubscribeFromNotebookLeaderboardChangedEvent
-} from "@/eventEmitters/notebookLeaderboardEventEmitter";
+} from "@/azure/cosmos/eventEmitters/notebookLeaderboardEventEmitter";
 
 const useNotebookLeaderboard = (notebookId: Notebook["id"]) => {
     const [userScores, loading, error, fetchUserScores] = useContainerData<UserScore>(`/api/notebooks/${notebookId}/scores`);

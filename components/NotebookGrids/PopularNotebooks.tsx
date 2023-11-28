@@ -1,9 +1,9 @@
 import React from 'react';
 
-import {Text, VStack} from "@chakra-ui/react";
+import {VStack} from "@chakra-ui/react";
 
 import NotebookGrid from "@/components/NotebookGrids/NotebookGrid";
-import NotebookMedal from "@/components/Utilities/NotebookMedal";
+import Points from "@/components/Utilities/Points";
 
 import useNotebooks from "@/hooks/queries/notebooks/useNotebooks";
 
@@ -25,21 +25,16 @@ const PopularNotebooks: React.FC<Props> = ({ onClick }) => {
             onClick={onClick}
             rightComponent={(notebook) => (
                 <VStack
-                    justifyContent={'space-between'}
+                    justifyContent={'end'}
                     align={'end'}
                     h={'100%'}
                 >
-                    <NotebookMedal
-                        rank={notebook.rank}
+                    {/*<NotebookMedal*/}
+                    {/*    rank={notebook.rank}*/}
+                    {/*/>*/}
+                    <Points
+                        points={notebook.totalScore}
                     />
-                    <Text
-                        fontSize={{
-                            base: 'sm',
-                            md: 'md'
-                        }}
-                    >
-                        Total Score: {notebook.totalScore}
-                    </Text>
                 </VStack>
             )}
         />

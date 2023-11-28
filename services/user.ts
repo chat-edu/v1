@@ -1,9 +1,11 @@
-import {User} from "@/types/User";
+import {User, UserInput} from "@/types/User";
 
-export const addUser = async (user: User) =>
+// CREATE
+
+export const addUser = async (user: UserInput): Promise<User | null> =>
     fetch(`/api/users/create`, {
         method: "POST",
         body: JSON.stringify(user),
     })
-        .then(async (res) => (await res.json()) as boolean)
-        .then((res) => res);
+        .then((res) => res.json())
+        .catch(null)

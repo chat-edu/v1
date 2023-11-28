@@ -2,7 +2,7 @@ import {useCallback, useEffect} from "react";
 
 import useItemData from "@/hooks/queries/utilities/useItemData";
 
-import {subscribeToUsersChangedEvent, unsubscribeFromUsersChangedEvent} from "@/eventEmitters/userEventEmitter";
+import {subscribeToUsersChangedEvent, unsubscribeFromUsersChangedEvent} from "@/azure/cosmos/eventEmitters/userEventEmitter";
 
 import {User} from "@/types/User";
 

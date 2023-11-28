@@ -1,4 +1,4 @@
-import {findTopNotebooks} from "@/cosmos/services/notebooks";
+import {findTopNotebooks} from "@/azure/cosmos/services/notebooks";
 import {NextRequest} from "next/server";
 
 export const GET = async (req: NextRequest) => {

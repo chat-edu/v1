@@ -10,10 +10,11 @@ import { addUser } from "@/services/user";
 
 import useAuth from "@/hooks/useAuth";
 
-import {User} from "@/types/User";
-import {emitUsersChangedEvent} from "@/eventEmitters/userEventEmitter";
+import {emitUsersChangedEvent} from "@/azure/cosmos/eventEmitters/userEventEmitter";
 
-const UserSchema: Yup.ObjectSchema<User> = Yup.object().shape({
+import {UserInput} from "@/types/User";
+
+const UserSchema: Yup.ObjectSchema<UserInput> = Yup.object().shape({
     name: Yup.string()
         .required('Name is Required')
         .min(1, 'Name is Required'),
@@ -44,7 +45,7 @@ const useAddUser = () => {
         setFieldTouched,
         submitForm,
         resetForm,
-    } = useFormik<User>({
+    } = useFormik<UserInput>({
         initialValues: {
             name: user?.name || '',
             email: user?.email || '',

@@ -3,7 +3,7 @@ import React from 'react';
 import {Card, SimpleGrid, Text, VStack} from "@chakra-ui/react";
 
 import NotebookCard from "@/components/NotebookGrids/NotebookCard";
-import AddNotebookCard from "@/components/Home/AddNotebook/AddNotebookCard";
+import AddNotebookCard from "@/components/AddModals/AddNotebook/AddNotebookCard";
 import Loading from "@/components/Utilities/Loading";
 import SectionBlock from "@/components/Utilities/SectionBlock";
 

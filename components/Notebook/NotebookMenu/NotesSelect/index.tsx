@@ -9,9 +9,9 @@ import {
 } from "@chakra-ui/react";
 import {SmallAddIcon} from "@chakra-ui/icons";
 
-import AddNoteButton from "@/components/Home/AddNote/AddNoteButton";
+import AddNoteButton from "@/components/AddModals/AddNote/AddNoteButton";
 import Note from "@/components/Notebook/NotebookMenu/NotesSelect/Note";
-import UploadNotes from "@/components/Home/UploadNotes";
+import UploadNotes from "@/components/AddModals/UploadNotes";
 
 import useAuth from "@/hooks/useAuth";
 import useNotes from "@/hooks/queries/notebook/useNotes";

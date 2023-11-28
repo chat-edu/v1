@@ -28,6 +28,7 @@ import useNotebookRank from "@/hooks/queries/notebook/useNotebookRank";
 import {Notebook} from "@/types/Notebook";
 import useAuth from "@/hooks/useAuth";
 import DeleteNotebookButton from "@/components/Home/NotebookModal/DeleteNotebookButton";
+import Points from "@/components/Utilities/Points";
 
 
 interface Props {
@@ -74,12 +75,23 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                             >
                                 {notebook.name}
                             </Heading>
-                            <Text
-                                fontSize={'sm'}
-                                opacity={0.7}
+                            <HStack
+                                spacing={0}
+                                align={'center'}
                             >
-                                By<UsernameText username={notebook.username} id={notebook.userId} />
-                            </Text>
+                                <Text
+                                    fontSize={'sm'}
+                                    opacity={0.75}
+                                >
+                                    By
+                                </Text>
+                                <UsernameText
+                                    username={notebook.username}
+                                    id={notebook.userId}
+                                    verified={notebook.verified}
+                                    opacity={0.75}
+                                />
+                            </HStack>
                         </VStack>
                         {
                             (!loading && notebookRank) && (
@@ -92,12 +104,9 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                                     >
                                         Rank: #{notebookRank.rank}
                                     </Text>
-                                    <Text
-                                        fontSize={'md'}
-
-                                    >
-                                        Total Score: {notebookRank.totalScore}
-                                    </Text>
+                                    <Points
+                                        points={notebookRank.totalScore}
+                                    />
                                 </VStack>
                             )
                         }
@@ -123,7 +132,7 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                     gap={2}
                 >
                     <Link
-                        href={`/notebook/${notebook.id}`}
+                        href={`/notebooks/${notebook.id}`}
                         style={{
                             width: '100%'
                         }}

@@ -43,16 +43,27 @@ const NotebookCard: React.FC<Props> = ({ notebook, rightComponent, onClick }) =>
                     >
                         {notebook.name}
                     </Text>
-                    <Text
-                        fontSize={{
-                            base: 'sm',
-                        }}
-                        opacity={0.7}
+                    <HStack
+                        spacing={0}
                     >
-                        By<UsernameText username={notebook.username} id={notebook.userId} />
-                    </Text>
-                    <Text>
-                        {notebook.numNotes} note{notebook.numNotes === 1 ? '' : 's'}
+                        <Text
+                            fontSize={'sm'}
+                            opacity={0.75}
+                        >
+                            By
+                        </Text>
+                        <UsernameText
+                            username={notebook.username}
+                            id={notebook.userId}
+                            verified={notebook.verified}
+                            opacity={0.75}
+                        />
+                    </HStack>
+                    <Text
+                        fontSize={'sm'}
+                        opacity={0.75}
+                    >
+                        {notebook.numNotes} modules
                     </Text>
                 </VStack>
                 {rightComponent}

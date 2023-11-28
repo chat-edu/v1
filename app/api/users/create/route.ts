@@ -1,4 +1,4 @@
-import {addUser} from "@/cosmos/services/user";
+import {addUser} from "@/azure/cosmos/services/user";
 
 import {User} from "@/types/User";
 

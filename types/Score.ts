@@ -6,6 +6,7 @@ export interface Score {
 
 export interface UserScore extends Score {
     username: string;
+    verified: boolean;
 }
 
 export interface ScoreRow {
@@ -16,4 +17,5 @@ export interface ScoreRow {
 
 export interface UserScoreRow extends ScoreRow {
     username: string;
+    verified: boolean;
 }

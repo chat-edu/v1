@@ -5,6 +5,7 @@ import {Card, HStack, Image, Text, VStack} from "@chakra-ui/react";
 import UsernameText from "@/components/Utilities/UsernameText";
 import Medal from "@/components/Utilities/Medal";
 import useAuth from "@/hooks/useAuth";
+import Points from "@/components/Utilities/Points";
 
 interface Props {
     userScore: UserScore
@@ -41,7 +42,7 @@ const UserLeaderboardRow: React.FC<Props> = ({ userScore }) => {
                     />
                     <VStack
                         align={'start'}
-                        spacing={1}
+                        spacing={0}
                     >
                         <Text
                             fontSize={{
@@ -55,17 +56,14 @@ const UserLeaderboardRow: React.FC<Props> = ({ userScore }) => {
                         <UsernameText
                             id={userScore.id}
                             username={userScore.username}
+                            verified={userScore.verified}
+                            opacity={0.75}
                         />
                     </VStack>
                 </HStack>
-                <Text
-                    fontSize={{
-                        base: 'sm',
-                        md: 'lg'
-                    }}
-                >
-                    Score: {userScore.score}
-                </Text>
+                <Points
+                    points={userScore.score}
+                />
             </HStack>
         </Card>
     );

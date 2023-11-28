@@ -1,7 +1,7 @@
 import {NextRequest} from "next/server";
 
 import {UserIdParams} from "@/app/api/notebooks/[notebookId]/scores/[userId]/UserIdParams";
-import {getScore} from "@/cosmos/services/scores";
+import {getScore} from "@/azure/cosmos/services/scores";
 
 export const GET = async (request: NextRequest, {params}: {params: UserIdParams}) => {
     const {notebookId, userId} = params;

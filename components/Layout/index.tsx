@@ -2,25 +2,27 @@ import React from 'react';
 
 import {Box, Flex} from "@chakra-ui/react";
 
-import NotConnected from "@/components/Layout/NotConnected";
 import Navbar, { navbarHeight, mobileNavbarHeight } from "@/components/Layout/Navbar";
 import Loading from "@/components/Utilities/Loading";
 import {mobileHeaderHeight} from "@/components/Notebook/NotebookMenu/MobileHeader";
+import Onboarding from "@/components/Layout/Onboarding";
 
 import useAuth from "@/hooks/useAuth";
 import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
+import useUser from "@/hooks/queries/user/useUser";
 
 
 interface Props {
     children: React.ReactElement,
-    authGate?: boolean
 }
 
-const Layout: React.FC<Props> = ({ children, authGate }) => {
+const Layout: React.FC<Props> = ({ children }) => {
 
-    const { loading, isConnected } = useAuth();
+    const { user, loading: authLoading } = useAuth();
 
     const { height } = useViewportDimensions();
+
+    const { userData, loading: userDataLoading } = useUser(user?.id || '');
 
     return (
         <Box
@@ -38,21 +40,18 @@ const Layout: React.FC<Props> = ({ children, authGate }) => {
                 }}
                 position={'relative'}
             >
-                {
-                    authGate ? (
-                        <Loading loading={loading}>
-                            {
-                                isConnected ? (
-                                    children
-                                ) : (
-                                    <NotConnected />
-                                )
-                            }
-                        </Loading>
-                    ) : (
-                        children
-                    )
-                }
+                <Loading
+                    loading={authLoading || userDataLoading}
+                    h={'100%'}
+                >
+                    {
+                        user && !userData ? (
+                            <Onboarding />
+                        ) : (
+                            children
+                        )
+                    }
+                </Loading>
             </Flex>
         </Box>
     );

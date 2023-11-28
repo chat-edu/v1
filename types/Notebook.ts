@@ -8,6 +8,7 @@ export interface NotebookInput {
 export interface Notebook extends NotebookInput {
     id: number;
     username: User["username"];
+    verified: User["verified"];
     numNotes: number;
 }
 
@@ -28,6 +29,7 @@ export interface NotebookRowInput {
 export interface NotebookRow extends NotebookRowInput {
     id: number;
     username: string;
+    verified: boolean;
     num_notes: string;
 }
 

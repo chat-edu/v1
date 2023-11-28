@@ -1,31 +1,45 @@
 import React from 'react';
 
-import Explore from "@/components/Home/Explore";
-import Onboarding from "@/components/Home/Onboarding";
-import Loading from "@/components/Utilities/Loading";
+import YourNotebooks from "@/components/NotebookGrids/YourNotebooks";
+import PopularNotebooks from "@/components/NotebookGrids/PopularNotebooks";
+import HomeHeader from "@/components/Home/HomeHeader";
+import YourUsedNotebooks from "@/components/NotebookGrids/YourUsedNotebooks";
+import NotebookModal from "@/components/Home/NotebookModal";
+import Container from "@/components/Utilities/Container";
+import HomeLeaderboard from "@/components/Home/HomeLeaderboard";
 
-import useAuth from "@/hooks/useAuth";
-import useUser from "@/hooks/queries/user/useUser"
+import useNotebookModal from "@/hooks/utilities/useNotebookModal";
 
 const Home = () => {
 
-    const { user } = useAuth();
-
-    const { userData, loading } = useUser(user?.id || '');
+    const { notebook, selectNotebook, isOpen, closeNotebookModal } = useNotebookModal();
 
     return (
-        <Loading
-            loading={loading}
-        >
+        <>
             {
-                userData ? (
-                    <Explore />
-                ) : (
-                    <Onboarding />
+                notebook && (
+                    <NotebookModal
+                        notebook={notebook}
+                        isOpen={isOpen}
+                        onClose={closeNotebookModal}
+                    />
                 )
             }
-        </Loading>
-    )
+            <Container>
+                <HomeHeader />
+                <YourNotebooks
+                    onClick={selectNotebook}
+                />
+                <PopularNotebooks
+                    onClick={selectNotebook}
+                />
+                <YourUsedNotebooks
+                    onClick={selectNotebook}
+                />
+                <HomeLeaderboard />
+            </Container>
+        </>
+    );
 };
 
 export default Home;

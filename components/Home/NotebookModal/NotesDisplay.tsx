@@ -8,7 +8,7 @@ import useNotes from "@/hooks/queries/notebook/useNotes";
 
 import {Notebook} from "@/types/Notebook";
 import Loading from "@/components/Utilities/Loading";
-import AddNoteCard from "@/components/Home/AddNote/AddNoteCard";
+import AddNoteCard from "@/components/AddModals/AddNote/AddNoteCard";
 
 interface Props {
     notebook: Notebook,
