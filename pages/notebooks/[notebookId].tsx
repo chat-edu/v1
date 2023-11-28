@@ -3,14 +3,10 @@ import Head from "next/head";
 import Layout from "@/components/Layout";
 import Notebook from "@/components/Notebook";
 
-import {NextPage} from "next";
-import {useRouter} from "next/router";
+import {NextPageContext} from "next";
 import Loading from "@/components/Utilities/Loading";
 
-const NotebookPage: NextPage = () => {
-
-    const router = useRouter();
-    const { notebookId } = router.query;
+const NotebookPage = ({ notebookId } : {notebookId: string}) => {
 
     return (
         <>
@@ -35,6 +31,12 @@ const NotebookPage: NextPage = () => {
             </Layout>
         </>
     )
+}
+
+NotebookPage.getInitialProps = async (ctx: NextPageContext) => {
+    return {
+        notebookId: ctx.query.notebookId
+    };
 }
 
 export default NotebookPage
