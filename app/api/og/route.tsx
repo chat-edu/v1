@@ -5,7 +5,7 @@ export const runtime = 'edge';
 export async function GET() {
 
     const fontData = await fetch(
-        new URL('../../../../assets/SF-Pro-Black.ttf', import.meta.url),
+        new URL('../../../assets/SF-Pro-Black.ttf', import.meta.url),
     ).then((res) => res.arrayBuffer());
 
     return new ImageResponse(
