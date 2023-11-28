@@ -3,6 +3,7 @@ import {NextRequest} from "next/server";
 import {Notebook} from "@/types/Notebook";
 import {NotebookTag, TagTypes} from "@/types/Tags";
 import {capitalize} from "@/lib/capitalize";
+import ChatEduFooter from "@/app/api/og/lib/chatEduFooter";
 
 export const runtime = 'edge';
 
@@ -31,7 +32,8 @@ export async function GET(req: NextRequest, { params }: { params: { notebookId: 
                     padding: 32,
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: 16
+                    gap: 32,
+                    lineHeight: 1,
                 }}
             >
                 <div
@@ -85,34 +87,17 @@ export async function GET(req: NextRequest, { params }: { params: { notebookId: 
                 >
                     By @{notebookData.username}
                 </h2>
-                <div
+                <h3
                     style={{
-                        display: 'flex',
-                        alignItems: 'flex-end',
-                        justifyContent: 'flex-end',
-                        gap: 16,
-                        marginTop: 'auto',
+                        margin: 0,
+                        fontFamily: 'SF Pro',
+                        fontSize: 48,
+                        opacity: 0.5,
                     }}
                 >
-                    <h1
-                        style={{
-                            fontSize: 60,
-                            color: '#000000',
-                            margin: 0,
-                            fontFamily: 'SF Pro Black',
-                        }}
-                    >
-                        Chat<span style={{color: '#4caf50'}}>EDU</span>
-                    </h1>
-                    <img
-                        src={'https://www.chatedu.tech/logo.png'}
-                        alt={'ChatEDU Logo'}
-                        style={{
-                            width: 150,
-                            height: 150,
-                        }}
-                    />
-                </div>
+                    {notebookData.numNotes} modules
+                </h3>
+                <ChatEduFooter />
             </div>
         ), {
             fonts: [
