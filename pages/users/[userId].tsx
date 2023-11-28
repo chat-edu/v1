@@ -1,24 +1,20 @@
 import React from 'react';
 
-import {useRouter} from "next/router";
-
 import Head from "next/head";
 
 import Layout from "@/components/Layout";
 import User from "@/components/User";
 
-import {NextPage} from "next";
+import {NextPageContext} from "next";
 
-const UserPage: NextPage = () => {
-    const router = useRouter();
-    const { userId } = router.query;
-
+const UserPage = ({ userId} : { userId: string}) => {
     return (
         <>
             <Head>
                 <title>User</title>
                 <meta name="description" content="Supercharge your learning with AI" />
                 <meta name="viewport" content="width=device-width, height=device-height,  initial-scale=1.0, user-scalable=no, user-scalable=0;" />
+                <meta property="og:image" content={`https://preview.chatedu.io/api/users/${userId}`}/>
                 <link rel="icon" href="/favicon.ico" />
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png" />
                 <link rel="apple-touch-icon" sizes="192x192" href="/apple-touch-icon-192x192.png" />
@@ -31,5 +27,11 @@ const UserPage: NextPage = () => {
         </>
     )
 };
+
+UserPage.getInitialProps = async (ctx: NextPageContext) => {
+    return {
+        userId: ctx.query.userId
+    }
+}
 
 export default UserPage;
