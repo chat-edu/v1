@@ -59,6 +59,12 @@ const NotebookCard: React.FC<Props> = ({ notebook, rightComponent, onClick }) =>
                             opacity={0.75}
                         />
                     </HStack>
+                    <Text
+                        fontSize={'sm'}
+                        opacity={0.75}
+                    >
+                        {notebook.numNotes} modules
+                    </Text>
                 </VStack>
                 {rightComponent}
             </HStack>
