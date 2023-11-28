@@ -10,26 +10,26 @@ This system leverages the power of React and Next.js for a dynamic front-end, Az
 
 ![Overall.png](https://raw.githubusercontent.com/chat-edu/chat-edu/main/public/architecture/overall.png)
 
-## Content Upload and Extraction Flow
+### Content Upload and Extraction Flow
 
 The uploading flow in ChatEDU allows users to add files or text via a client interface, which then posts the data to the `/api/notes/upload` or `/api/notes/add` endpoints. This data is processed — text is extracted from files using Azure AI Document Intelligence — and subsequently stored in Azure Cosmos DB for further use within the platform.
 
 ![Uploading.png](https://raw.githubusercontent.com/chat-edu/chat-edu/main/public/architecture/uploading.png)
 
-## RAG Prompting Flow
+### RAG Prompting Flow
 
 The Retrieval-Augmented Generation (RAG) prompting flow in ChatEDU begins when a user submits a prompt through the client interface, which sends a request to the `/api/chat` endpoint. The system then retrieves relevant information from the Azure Cosmos DB database to provide context to the generative language model (LLM), which uses this data to create personalized educational material. Finally, the response is streamed back to the client, providing the user with an answer that is augmented by the retrieved data, ensuring a more accurate and contextual interaction.
 
 ![Prompting.png](https://raw.githubusercontent.com/chat-edu/chat-edu/main/public/architecture/prompting.png)
 
 
-## Continuous Integration and Deployment
+### Continuous Integration and Deployment
 
 The CI/CD pipeline for ChatEDU is implemented using GitHub Actions, which automates the process of code integration, testing, and deployment upon every push or pull request to the repository. Once the automated workflows verify the changes, the application is deployed to Azure Static Web Apps, ensuring continuous delivery of the latest version of the platform.
 
 ![Continuous Integration and Deployment Workflow with Next.js, GitHub, and Azure.png](https://raw.githubusercontent.com/chat-edu/chat-edu/main/public/architecture/deployment.png)
 
-# Running the App
+## Running the App
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
