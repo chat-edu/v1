@@ -1,5 +1,4 @@
 import {Notebook, NotebookInput, NotebookRow} from "@/types/Notebook";
-import {NotebookTagRow} from "@/types/Tags";
 
 // CREATE
 
@@ -9,14 +8,6 @@ export const addNotebook = async (notebook: NotebookInput): Promise<NotebookRow 
         body: JSON.stringify(notebook),
     })
         .then((res) => res.json())
-        .catch(null);
-
-export const addNotebookTag = async (tag: NotebookTagRow): Promise<NotebookTagRow | null> =>
-    fetch(`/api/notebooks/${tag.notebook_id}/tags/add`, {
-        method: "POST",
-        body: JSON.stringify(tag)
-    })
-        .then(res => res.json())
         .catch(null);
 
 // UPDATE

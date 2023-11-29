@@ -1,10 +1,14 @@
 import useItemData from "@/hooks/queries/utilities/useItemData";
+import {transformRankedNotebook} from "@/hooks/queries/notebook/transformers";
 
-import {Notebook, RankedNotebook} from "@/types/Notebook";
+import {Notebook} from "@/types/Notebook";
 
 const useNotebookRank = (notebookId: Notebook["id"]) => {
 
-    const [notebookRank, loading, error] = useItemData<RankedNotebook>(`/api/notebooks/${notebookId}/rank`);
+    const [notebookRank, loading, error] = useItemData(
+        `/api/notebooks/${notebookId}/rank`,
+        transformRankedNotebook
+    );
 
     return {
         notebookRank,

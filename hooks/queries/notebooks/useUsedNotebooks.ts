@@ -1,9 +1,9 @@
 import useContainerData from "@/hooks/queries/utilities/useContainerData";
 
-import {NotebookScore} from "@/types/Notebook";
+import {UserNotebookScore} from "@/types/User";
 
 const useUsedNotebooks = (userId: string) => {
-    const [notebookScores, loading, error] = useContainerData<NotebookScore>(`/api/users/${userId}/scores`);
+    const [notebookScores, loading, error] = useContainerData<UserNotebookScore>(`/api/users/${userId}/scores`);
 
     return {
         notebookScores: notebookScores || [],

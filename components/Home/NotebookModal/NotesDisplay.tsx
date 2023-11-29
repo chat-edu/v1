@@ -4,7 +4,7 @@ import {SimpleGrid, Text, VStack} from "@chakra-ui/react";
 
 import Note from "@/components/Home/NotebookModal/Note";
 
-import useNotes from "@/hooks/queries/notebook/useNotes";
+import useNotes from "@/hooks/queries/notes/useNotes";
 
 import {Notebook} from "@/types/Notebook";
 import Loading from "@/components/Utilities/Loading";

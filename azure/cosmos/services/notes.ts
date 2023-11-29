@@ -2,25 +2,25 @@ import { add, del, find, get, update } from "@/azure/cosmos/services/base";
 
 import { NOTES_TABLE } from "@/azure/cosmos/constants/tables";
 
-import {Note, NoteRow, NoteRowInput} from "@/types/Note";
+import { NoteRow, NoteRowInput } from "@/azure/cosmos/types/note";
 
 // CREATE
 
 export const addNote = async (note: NoteRowInput) => {
-    return add(NOTES_TABLE, note);
+    return add<NoteRowInput, NoteRow>(NOTES_TABLE, note);
 };
 
 // READ
 
 export const getNote = async (id: number): Promise<Note | null> => {
     const query = 'SELECT * FROM Notes WHERE id = $1;';
-    return get(query, [id], transformRowToNote);
+    return get(query, [id]);
 };
 
 // Find Notes by Notebook ID
 export const findNotesByNotebookId = async (notebookId: number): Promise<Note[]> => {
     const queryText = 'SELECT * FROM Notes WHERE notebook_id = $1;';
-    return find<NoteRow, Note>(queryText, [notebookId], transformRowToNote);
+    return find<NoteRow, Note>(queryText, [notebookId]);
 };
 
 // UPDATE
@@ -37,9 +37,3 @@ export const deleteNote = async (id: number) => {
 
 // TRANSFORM
 
-const transformRowToNote = (row: NoteRow): Note => ({
-    id: row.id,
-    notebookId: row.notebook_id,
-    content: row.content,
-    name: row.name,
-});

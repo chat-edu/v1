@@ -1,9 +1,12 @@
 import useContainerData from "@/hooks/queries/utilities/useContainerData";
 
-import {UserScore} from "@/types/User";
+import {transformRankedUserTotalScore} from "@/hooks/queries/user/transformers";
 
 const useTopUsers = (limit?: number) => {
-    const [userScores, loading, error] = useContainerData<UserScore>(`/api/users/top${limit ? `?limit=${limit}` : ""}`);
+    const [userScores, loading, error] = useContainerData(
+        `/api/users/top/scorers${limit ? `?limit=${limit}` : ""}`,
+        transformRankedUserTotalScore
+    );
 
     return {
         userScores,

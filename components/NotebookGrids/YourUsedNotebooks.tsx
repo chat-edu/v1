@@ -8,6 +8,7 @@ import useAuth from "@/hooks/useAuth";
 import useUsedNotebooks from "@/hooks/queries/notebooks/useUsedNotebooks";
 
 import {Notebook} from "@/types/Notebook";
+import Points from "@/components/Utilities/Points";
 
 interface Props {
     onClick: (notebook: Notebook) => void
@@ -34,9 +35,9 @@ const YourUsedNotebooks: React.FC<Props> = ({ onClick }) => {
             }
             rightComponent={(notebook) => {
                 return (
-                    <Text>
-                        Your Score: {notebook.userScore}
-                    </Text>
+                    <Points
+                        points={notebook.userScore}
+                    />
                 )
             }}
             authGate

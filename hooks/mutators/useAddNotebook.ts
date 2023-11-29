@@ -13,7 +13,7 @@ import {addNotebook, addNotebookTag} from "@/services/notebooks";
 import {emitNotebooksChangedEvent} from "@/azure/cosmos/eventEmitters/notebooksEventEmitter";
 
 import {NotebookInput} from "@/types/Notebook";
-import {TopicTagTypes, NotebookTagRow, SchoolTagTypes, TagTypes} from "@/types/Tags";
+import {TopicTagTypes, TagRow, SchoolTagTypes, TagTypes} from "@/types/Tags";
 
 const NotebookSchema: Yup.ObjectSchema<NotebookInput> = Yup.object().shape({
     name: Yup.string()
@@ -55,7 +55,7 @@ const useAddNotebook = () => {
                     duration: 5000,
                     isClosable: true,
                 });
-                let tags: NotebookTagRow[] = [];
+                let tags: TagRow[] = [];
                 if(schoolTag && schoolName) {
                     tags.push({
                         tag: schoolName,

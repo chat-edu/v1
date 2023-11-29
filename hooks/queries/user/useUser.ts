@@ -4,12 +4,12 @@ import useItemData from "@/hooks/queries/utilities/useItemData";
 
 import {subscribeToUsersChangedEvent, unsubscribeFromUsersChangedEvent} from "@/azure/cosmos/eventEmitters/userEventEmitter";
 
-import {User} from "@/types/User";
+import { transformUser } from "@/hooks/queries/user/transformers";
 
 
 const useUser = (userId: string) => {
 
-    const [userData, loading, error, fetchUserData] = useItemData<User>(`/api/users/${userId}`);
+    const [userData, loading, error, fetchUserData] = useItemData(`/api/users/${userId}`, transformUser);
 
     const handleUserChanged = useCallback(async (changedUserId: string) => {
         if(changedUserId === userId) {

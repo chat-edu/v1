@@ -1,6 +1,10 @@
+// used on the client side to display a user's score on a notebook
+import {User} from "@/types/User";
+import {Notebook} from "@/types/Notebook";
+
 export interface Score {
-    userId: string;
-    notebookId: number;
+    userId: User['id'];
+    notebookId: Notebook['id'];
     score: number;
 }
 
@@ -9,13 +13,7 @@ export interface UserScore extends Score {
     verified: boolean;
 }
 
-export interface ScoreRow {
-    user_id: string;
-    notebook_id: number;
-    score: number;
-}
-
-export interface UserScoreRow extends ScoreRow {
-    username: string;
-    verified: boolean;
+export interface NotebookScore extends UserScore {
+    notebookName: string;
+    numNotes: number;
 }

@@ -1,17 +1,20 @@
 import React from 'react';
 
-import {UserScore} from "@/types/User";
 import {Card, HStack, Image, Text, VStack} from "@chakra-ui/react";
+
 import UsernameText from "@/components/Utilities/UsernameText";
 import Medal from "@/components/Utilities/Medal";
+
 import useAuth from "@/hooks/useAuth";
-import Points from "@/components/Utilities/Points";
+
+import {RankedUser} from "@/types/User";
 
 interface Props {
-    userScore: UserScore
+    userScore: RankedUser,
+    rightComponent?: React.ReactNode
 }
 
-const UserLeaderboardRow: React.FC<Props> = ({ userScore }) => {
+const UserLeaderboardRow: React.FC<Props> = ({ userScore, rightComponent }) => {
 
     const { user } = useAuth();
 
@@ -61,9 +64,7 @@ const UserLeaderboardRow: React.FC<Props> = ({ userScore }) => {
                         />
                     </VStack>
                 </HStack>
-                <Points
-                    points={userScore.score}
-                />
+                {rightComponent}
             </HStack>
         </Card>
     );
