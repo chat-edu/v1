@@ -13,9 +13,3 @@ export interface Notebook extends NotebookInput {
     verified: User["verified"];
     numNotes: number;
 }
-
-// used on the client side to display a notebook, the total score on the notebook, and the rank of the notebook
-export interface RankedNotebook extends Notebook {
-    totalScore: number;
-    rank: number;
-}

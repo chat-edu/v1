@@ -1,6 +1,6 @@
-import {NotebookRow, RankedNotebookRow} from "@/azure/cosmos/types/notebook";
+import {NotebookRow} from "@/azure/cosmos/types";
 
-import {Notebook, RankedNotebook} from "@/types/Notebook";
+import {Notebook} from "@/types/Notebook";
 
 export const transformNotebook = (row: NotebookRow): Notebook => ({
     id: row.id,
@@ -9,10 +9,4 @@ export const transformNotebook = (row: NotebookRow): Notebook => ({
     username: row.username,
     numNotes: parseInt(row.num_notes),
     verified: row.verified,
-});
-
-export const transformRankedNotebook = (row: RankedNotebookRow): RankedNotebook => ({
-    ...transformNotebook(row),
-    totalScore: parseInt(row.total_score),
-    rank: parseInt(row.rank),
 });

@@ -6,9 +6,7 @@ import { deleteNotebook as deleteNotebookService } from '@/services/notebooks'
 
 import {emitNotebooksChangedEvent} from "@/azure/cosmos/eventEmitters/notebooksEventEmitter";
 
-import {Notebook} from "@/types/Notebook";
-
-const useDeleteNotebook = (notebook: Notebook) => {
+const useDeleteNotebook = (notebookId: number, notebookName: string) => {
 
     const { user } = useAuth();
 
@@ -16,20 +14,20 @@ const useDeleteNotebook = (notebook: Notebook) => {
 
     const deleteNotebook = async () => {
         if(!user) return;
-        const success = await deleteNotebookService(notebook.id);
+        const success = await deleteNotebookService(notebookId);
         if(success) {
             toast({
                 title: "Notebook Deleted",
-                description: `Notebook ${notebook.name} was deleted.`,
+                description: `Notebook ${notebookName} was deleted.`,
                 status: "success",
                 duration: 5000,
                 isClosable: true,
             });
-            emitNotebooksChangedEvent(notebook.userId);
+            emitNotebooksChangedEvent(user.id);
         } else {
             toast({
                 title: "Notebook Deletion Failed",
-                description: `Notebook ${notebook.name} could not be deleted.`,
+                description: `Notebook ${notebookName} could not be deleted.`,
                 status: "error",
                 duration: 5000,
                 isClosable: true,

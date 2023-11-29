@@ -2,10 +2,11 @@ import React from 'react';
 
 import {HStack} from "@chakra-ui/react";
 
-import {UserScore} from "@/types/Score";
 import UsernameText from "@/components/Utilities/UsernameText";
 import Medal from "@/components/Utilities/Medal";
 import Points from "@/components/Utilities/Points";
+
+import {UserScore} from "@/types/score";
 
 interface Props {
     userScore: UserScore,

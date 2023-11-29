@@ -4,17 +4,17 @@ import {HStack, Text, VStack} from "@chakra-ui/react";
 
 import ClickableCard from "@/components/Utilities/ClickableCard";
 import NotebookTags from "@/components/NotebookUtilities/NotebookTags";
-
-import {Notebook} from "@/types/Notebook";
 import UsernameText from "@/components/Utilities/UsernameText";
 
+import {NotebookScore} from "@/types/score";
+
 interface Props {
-    notebook: Notebook,
+    notebookScore: NotebookScore,
     rightComponent?: React.ReactNode,
     onClick: () => void
 }
 
-const NotebookCard: React.FC<Props> = ({ notebook, rightComponent, onClick }) => {
+const NotebookCard: React.FC<Props> = ({ notebookScore, rightComponent, onClick }) => {
 
     return (
         <ClickableCard
@@ -31,7 +31,7 @@ const NotebookCard: React.FC<Props> = ({ notebook, rightComponent, onClick }) =>
                     align={'start'}
                 >
                     <NotebookTags
-                        notebookId={notebook.id}
+                        notebookId={notebookScore.notebookId}
                     />
                     <Text
                         fontWeight={'bold'}
@@ -41,7 +41,7 @@ const NotebookCard: React.FC<Props> = ({ notebook, rightComponent, onClick }) =>
                         }}
                         mb={0}
                     >
-                        {notebook.name}
+                        {notebookScore.notebookName}
                     </Text>
                     <HStack
                         spacing={0}
@@ -53,9 +53,9 @@ const NotebookCard: React.FC<Props> = ({ notebook, rightComponent, onClick }) =>
                             By
                         </Text>
                         <UsernameText
-                            username={notebook.username}
-                            id={notebook.userId}
-                            verified={notebook.verified}
+                            username={notebookScore.authorUsername}
+                            id={notebookScore.authorId}
+                            verified={notebookScore.authorVerified}
                             opacity={0.75}
                         />
                     </HStack>
@@ -63,7 +63,7 @@ const NotebookCard: React.FC<Props> = ({ notebook, rightComponent, onClick }) =>
                         fontSize={'sm'}
                         opacity={0.75}
                     >
-                        {notebook.numNotes} modules
+                        {notebookScore.numNotes} modules
                     </Text>
                 </VStack>
                 {rightComponent}

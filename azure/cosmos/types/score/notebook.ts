@@ -3,13 +3,14 @@ import {
     NotebookRow,
     RankedRow,
     NotebookScorePartialRow
-} from "@/azure/cosmos/types/score";
+} from "@/azure/cosmos/types";
 
 export interface NotebookScoreRow extends NotebookScorePartialRow {
     notebook_name: NotebookRow["name"];
+    author_id: UserRow["id"];
     author_username: UserRow["username"];
     author_verified: UserRow["verified"];
     num_notes: string;
 }
 
-export interface RankedNotebookRow extends NotebookScoreRow, RankedRow {}
+export interface RankedNotebookScoreRow extends NotebookScoreRow, RankedRow {}

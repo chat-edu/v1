@@ -1,7 +1,7 @@
 import {useCallback, useEffect} from "react";
 
 import useContainerData from "@/hooks/queries/utilities/useContainerData";
-import {transformRankedNotebook} from "@/hooks/queries/notebook/transformers";
+import {transformUserNotebookScore} from "@/hooks/queries/scores/users/transformers";
 
 import {
     subscribeToNotebookLeaderboardChangedEvent,
@@ -12,8 +12,8 @@ import {Notebook} from "@/types/Notebook";
 
 const useNotebookLeaderboard = (notebookId: Notebook["id"]) => {
     const [userScores, loading, error, fetchUserScores] = useContainerData(
-        `/api/notebooks/${notebookId}/scores`,
-        transformRankedNotebook
+        `/api/scores/users/notebook/${notebookId}`,
+        transformUserNotebookScore
     );
 
     const handleLeaderboardChanged = useCallback( (changedNotebookId: Notebook["id"]) => {

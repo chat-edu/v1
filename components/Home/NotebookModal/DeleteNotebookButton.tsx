@@ -13,16 +13,15 @@ import {
 
 import useDeleteNotebook from "@/hooks/mutators/useDeleteNotebook";
 
-import {Notebook} from "@/types/Notebook";
-
 interface Props {
-    notebook: Notebook,
+    notebookId: number,
+    notebookName: string,
     onDelete: () => void
 }
 
-const DeleteNotebookButton: React.FC<Props> = ({ notebook, onDelete }) => {
+const DeleteNotebookButton: React.FC<Props> = ({ notebookId, notebookName, onDelete }) => {
 
-    const { deleteNotebook } = useDeleteNotebook(notebook);
+    const { deleteNotebook } = useDeleteNotebook(notebookId, notebookName);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 

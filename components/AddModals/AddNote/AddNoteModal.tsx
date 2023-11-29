@@ -14,18 +14,15 @@ import TextareaInput from "@/components/Utilities/FormUtilities/TextareaInput";
 import TextInput from "@/components/Utilities/FormUtilities/TextInput";
 
 import useAddNote from "@/hooks/mutators/useAddNote";
-
-import { Notebook } from "@/types/Notebook";
-
 interface Props {
     isOpen: boolean;
     onClose: () => void;
-    notebook: Notebook
+    notebookId: number;
 }
 
-const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , notebook}) => {
+const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , notebookId}) => {
 
-    const { values, setFieldValue, touched, setFieldTouched, disabled, submitForm, errors } = useAddNote(notebook);
+    const { values, setFieldValue, touched, setFieldTouched, disabled, submitForm, errors } = useAddNote(notebookId);
 
     const onSubmit = async () => {
         await submitForm();

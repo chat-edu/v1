@@ -7,10 +7,10 @@ import Medal from "@/components/Utilities/Medal";
 
 import useAuth from "@/hooks/useAuth";
 
-import {RankedUser} from "@/types/User";
+import {RankedUserNotebookScore} from "@/types/score";
 
 interface Props {
-    userScore: RankedUser,
+    userScore: RankedUserNotebookScore,
     rightComponent?: React.ReactNode
 }
 
@@ -21,7 +21,7 @@ const UserLeaderboardRow: React.FC<Props> = ({ userScore, rightComponent }) => {
     return (
         <Card
             w={'100%'}
-            borderWidth={userScore.id === user?.id ? 2 : 0}
+            borderWidth={userScore.userId === user?.id ? 2 : 0}
             borderColor={'brand.500'}
         >
             <HStack
@@ -34,7 +34,9 @@ const UserLeaderboardRow: React.FC<Props> = ({ userScore, rightComponent }) => {
                         md: 4
                     }}
                 >
-                    <Medal rank={userScore.rank} />
+                    <Medal
+                        rank={userScore.rank}
+                    />
                     <Image
                         src={userScore.profilePictureUrl}
                         alt={userScore.username}
@@ -57,7 +59,7 @@ const UserLeaderboardRow: React.FC<Props> = ({ userScore, rightComponent }) => {
                             {userScore.name}
                         </Text>
                         <UsernameText
-                            id={userScore.id}
+                            id={userScore.userId}
                             username={userScore.username}
                             verified={userScore.verified}
                             opacity={0.75}

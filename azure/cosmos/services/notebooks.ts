@@ -43,20 +43,6 @@ export const findNotebooks = async (): Promise<NotebookRow[]> => {
     return find(queryText, []);
 };
 
-export const findNotebooksByUserId = async (userId: string): Promise<NotebookRow[]> => {
-    const queryText = `
-        SELECT 
-            notebooks.*, 
-            users.username as username, 
-            users.verified as verified,
-            count(notes.id) as num_notes 
-        FROM notebooks JOIN users ON notebooks.user_id = users.id LEFT JOIN notes ON notes.notebook_id = notebooks.id 
-        WHERE notebooks.user_id = $1 
-        GROUP BY notebooks.id, users.id;
-    `;
-    return find(queryText, [userId]);
-};
-
 // UPDATE
 
 export const updateNotebook = async (id: number, updatedFields: Partial<NotebookRowInput>) => {

@@ -11,7 +11,7 @@ import { ScoreRow } from "@/azure/cosmos/types/score";
 // gets the score of a user for a notebook
 export const getScore = async (userId: UserRow["id"], notebookId: NotebookRow["id"]): Promise<ScoreRow | null> => {
     const query = 'SELECT * FROM Scores WHERE user_id = $1 AND notebook_id = $2;';
-    return get(query, [userId, notebookId], transformScore);
+    return get(query, [userId, notebookId]);
 };
 
 // UPDATE
@@ -40,20 +40,6 @@ export const deleteScore = async (userId: string, notebookId: number): Promise<b
     const queryText = 'DELETE FROM Scores WHERE user_id = $1 AND notebook_id = $2;';
     return del(queryText, [userId, notebookId]);
 };
-
-// TRANSFORMERS
-
-const transformScore = (row: ScoreRow): Score => ({
-    userId: row.user_id,
-    notebookId: row.notebook_id,
-    score: row.score
-});
-
-const transformUserScore = (row: UserScoreRow): UserScore => ({
-    ...transformScore(row),
-    username: row.username,
-    verified: row.verified
-})
 
 export * from './notebooks';
 export * from './users';

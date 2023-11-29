@@ -1,9 +1,9 @@
 import {find, get} from "@/azure/cosmos/services/base";
 
-import {NotebookRow, RankedNotebookRow} from "@/azure/cosmos/types";
+import {NotebookRow, RankedNotebookScoreRow} from "@/azure/cosmos/types";
 
 // finds the top notebooks by total score
-export const findTopNotebooks = async (limit: number): Promise<RankedNotebookRow[]> => {
+export const findTopNotebooks = async (limit: number): Promise<RankedNotebookScoreRow[]> => {
     const queryText = `
         WITH RankedNotebooks AS (
             SELECT
@@ -42,8 +42,93 @@ export const findTopNotebooks = async (limit: number): Promise<RankedNotebookRow
     return find(queryText, [limit]);
 }
 
+export const findTopNotebooksByCreatorId = async (userId: string, limit: number): Promise<RankedNotebookScoreRow[]> => {
+    const queryText = `
+        WITH RankedNotebooks AS (
+            SELECT
+                n.id AS notebook_id,
+                COALESCE(SUM(s.score), 0) AS score,
+                n.name AS notebook_name,
+                u.id AS author_id,
+                u.name AS author_name,
+                u.username AS author_username,
+                u.verified AS author_verified,
+                RANK() OVER (ORDER BY COALESCE(SUM(s.score), 0) DESC) AS rank
+            FROM Notebooks n
+                LEFT JOIN Scores s ON n.id = s.notebook_id
+                JOIN Users u ON n.user_id = u.id
+            WHERE n.user_id = $1
+            GROUP BY n.id, u.username, u.id
+        ),
+        NoteCount AS (
+            SELECT
+                notebook_id,
+                COALESCE(COUNT(id), 0) AS num_notes
+                FROM Notes
+                GROUP BY notebook_id
+        )
+        SELECT
+            rn.notebook_id,
+            rn.score,
+            rn.notebook_name,
+            rn.author_username,
+            rn.author_verified,
+            nc.num_notes,
+            rn.rank
+        FROM RankedNotebooks rn
+            LEFT JOIN NoteCount nc ON rn.notebook_id = nc.notebook_id
+        WHERE rn.score > 0
+        ORDER BY rn.rank
+        LIMIT $2;
+    `;
+    return find(queryText, [userId, limit]);
+}
+
+export const findTopNotebooksByUserId = async (userId: string, limit: number): Promise<RankedNotebookScoreRow[]> => {
+    const queryText = `
+        WITH RankedNotebooks AS (
+            SELECT
+                n.id AS notebook_id,
+                COALESCE(SUM(s.score), 0) AS score,
+                n.name AS notebook_name,
+                u.id AS author_id,
+                u.name AS author_name,
+                u.username AS author_username,
+            
+                u.verified AS author_verified,
+                RANK() OVER (ORDER BY COALESCE(SUM(s.score), 0) DESC) AS rank
+            FROM Notebooks n
+                LEFT JOIN Scores s ON n.id = s.notebook_id
+                JOIN Users u ON n.user_id = u.id
+            WHERE s.user_id = $1
+            GROUP BY n.id, u.username, u.id
+        ),
+        NoteCount AS (
+            SELECT
+                notebook_id,
+                COALESCE(COUNT(id), 0) AS num_notes
+                FROM Notes
+                GROUP BY notebook_id
+        )
+        SELECT
+            rn.notebook_id,
+            rn.score,
+            rn.notebook_name,
+            rn.author_username,
+            rn.author_verified,
+            nc.num_notes,
+            rn.rank
+        FROM RankedNotebooks rn
+            LEFT JOIN NoteCount nc ON rn.notebook_id = nc.notebook_id
+        WHERE rn.score > 0
+        ORDER BY rn.rank
+        LIMIT $2;
+    `;
+    return find(queryText, [userId, limit]);
+}
+
 // gets the rank of a notebook by total score
-export const getRankedNotebook = async (notebookId: NotebookRow["id"]): Promise<RankedNotebookRow | null> => {
+export const getRankedNotebook = async (notebookId: NotebookRow["id"]): Promise<RankedNotebookScoreRow | null> => {
     const query = `
         WITH ScoreAggregation AS (
             SELECT

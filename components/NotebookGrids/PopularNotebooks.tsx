@@ -5,17 +5,17 @@ import {VStack} from "@chakra-ui/react";
 import NotebookGrid from "@/components/NotebookGrids/NotebookGrid";
 import Points from "@/components/Utilities/Points";
 
-import useNotebooks from "@/hooks/queries/notebooks/useNotebooks";
+import useTopNotebooks from "@/hooks/queries/scores/notebooks/useTopNotebooks";
 
-import {RankedNotebook} from "@/types/Notebook";
+import {RankedNotebookScore} from "@/types/score";
 
 interface Props {
-    onClick: (notebook: RankedNotebook) => void
+    onClick: (notebook: RankedNotebookScore) => void
 }
 
 const PopularNotebooks: React.FC<Props> = ({ onClick }) => {
 
-    const { notebooks, loading } = useNotebooks<RankedNotebook>("top?limit=6");
+    const { notebooks, loading } = useTopNotebooks(6);
 
     return (
         <NotebookGrid
@@ -29,11 +29,8 @@ const PopularNotebooks: React.FC<Props> = ({ onClick }) => {
                     align={'end'}
                     h={'100%'}
                 >
-                    {/*<NotebookMedal*/}
-                    {/*    rank={notebook.rank}*/}
-                    {/*/>*/}
                     <Points
-                        points={notebook.totalScore}
+                        points={notebook.score}
                     />
                 </VStack>
             )}

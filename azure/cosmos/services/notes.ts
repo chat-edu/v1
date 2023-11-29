@@ -12,15 +12,15 @@ export const addNote = async (note: NoteRowInput) => {
 
 // READ
 
-export const getNote = async (id: number): Promise<Note | null> => {
+export const getNote = async (id: number): Promise<NoteRow | null> => {
     const query = 'SELECT * FROM Notes WHERE id = $1;';
     return get(query, [id]);
 };
 
 // Find Notes by Notebook ID
-export const findNotesByNotebookId = async (notebookId: number): Promise<Note[]> => {
+export const findNotesByNotebookId = async (notebookId: number): Promise<NoteRow[]> => {
     const queryText = 'SELECT * FROM Notes WHERE notebook_id = $1;';
-    return find<NoteRow, Note>(queryText, [notebookId]);
+    return find<NoteRow>(queryText, [notebookId]);
 };
 
 // UPDATE

@@ -22,17 +22,17 @@ import NotebookTags from "@/components/NotebookUtilities/NotebookTags";
 import NotebookLeaderboard from "@/components/NotebookUtilities/NotebookLeaderboard";
 import NotesDisplay from "@/components/Home/NotebookModal/NotesDisplay";
 import UsernameText from "@/components/Utilities/UsernameText";
-
-import useNotebookRank from "@/hooks/queries/notebook/useNotebookRank";
-
-import {Notebook} from "@/types/Notebook";
-import useAuth from "@/hooks/useAuth";
 import DeleteNotebookButton from "@/components/Home/NotebookModal/DeleteNotebookButton";
 import Points from "@/components/Utilities/Points";
 
+import useNotebookRank from "@/hooks/queries/scores/notebooks/useNotebookRank";
+import useAuth from "@/hooks/useAuth";
+
+import {NotebookScore} from "@/types/score";
+
 
 interface Props {
-    notebook: Notebook,
+    notebook: NotebookScore,
     isOpen: boolean,
     onClose: () => void
 }
@@ -41,7 +41,7 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
 
     const { user } = useAuth();
 
-    const { notebookRank, loading } = useNotebookRank(notebook.id);
+    const { notebookRank, loading } = useNotebookRank(notebook.notebookId);
 
     return (
         <Modal
@@ -65,7 +65,7 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                             align={'start'}
                         >
                             <NotebookTags
-                                notebookId={notebook.id}
+                                notebookId={notebook.notebookId}
                             />
                             <Heading
                                 size={{
@@ -73,7 +73,7 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                                     md: 'lg'
                                 }}
                             >
-                                {notebook.name}
+                                {notebook.notebookName}
                             </Heading>
                             <HStack
                                 spacing={0}
@@ -86,9 +86,9 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                                     By
                                 </Text>
                                 <UsernameText
-                                    username={notebook.username}
-                                    id={notebook.userId}
-                                    verified={notebook.verified}
+                                    username={notebook.authorUsername}
+                                    id={notebook.authorId}
+                                    verified={notebook.authorVerified}
                                     opacity={0.75}
                                 />
                             </HStack>
@@ -105,7 +105,7 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                                         Rank: #{notebookRank.rank}
                                     </Text>
                                     <Points
-                                        points={notebookRank.totalScore}
+                                        points={notebookRank.score}
                                     />
                                 </VStack>
                             )
@@ -119,11 +119,12 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                         gap={4}
                     >
                         <NotesDisplay
-                            notebook={notebook}
-                            allowAddNote={user && user.id === notebook.userId}
+                            notebookId={notebook.notebookId}
+                            authorId={notebook.authorId}
+                            allowAddNote={user && user.id === notebook.authorId}
                         />
                         <NotebookLeaderboard
-                            notebookId={notebook.id}
+                            notebookId={notebook.notebookId}
                         />
                     </Flex>
                 </ModalBody>
@@ -132,7 +133,7 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                     gap={2}
                 >
                     <Link
-                        href={`/notebooks/${notebook.id}`}
+                        href={`/notebooks/${notebook.notebookId}`}
                         style={{
                             width: '100%'
                         }}
@@ -145,9 +146,10 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                         </Button>
                     </Link>
                     {
-                        user && user.id === notebook.userId && (
+                        user && user.id === notebook.authorId && (
                             <DeleteNotebookButton
-                                notebook={notebook}
+                                notebookId={notebook.notebookId}
+                                notebookName={notebook.notebookName}
                                 onDelete={onClose}
                             />
                         )

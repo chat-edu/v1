@@ -4,7 +4,10 @@ import {transformNotebook} from "@/hooks/queries/notebook/transformers";
 import {Notebook} from "@/types/Notebook";
 
 const useNotebook = (notebookId: Notebook["id"]) => {
-    const [notebook, loading, error] = useItemData<Notebook>(`/api/notebooks/${notebookId}`, transformNotebook);
+    const [notebook, loading, error] = useItemData(
+        `/api/notebooks/${notebookId}`,
+        transformNotebook
+    );
 
     return {
         notebook,

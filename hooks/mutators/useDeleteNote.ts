@@ -5,15 +5,14 @@ import {useToast} from "@chakra-ui/react";
 import {deleteNote as deleteNoteService} from "@/services/notes";
 
 import {Note} from "@/types/Note";
-import {Notebook} from "@/types/Notebook";
 
-const useDeleteNote = (note: Note, notebook: Notebook) => {
+const useDeleteNote = (note: Note, authorId: string) => {
 
     const { user } = useAuth();
 
     const toast = useToast();
 
-    const isAllowed = user && user.id === notebook.userId;
+    const isAllowed = user && user.id === authorId;
     
     const deleteNote = async () => {
         if(!isAllowed) return;

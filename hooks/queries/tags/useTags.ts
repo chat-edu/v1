@@ -5,7 +5,7 @@ import {Notebook} from "@/types/Notebook";
 
 const useTags = (notebookId: Notebook["id"]) => {
 
-    const [tags, loading, error, fetchTags] = useContainerData(`/api/notebooks/${notebookId}/tags`, transformTag);
+    const [tags, loading, error, fetchTags] = useContainerData(`/api/tags/notebook/${notebookId}`, transformTag);
 
     return {
         tags: tags || [],

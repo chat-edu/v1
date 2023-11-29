@@ -10,9 +10,13 @@ export const updateScore = async (
     userId: User["id"],
     incrementAmount: number
 ): Promise<boolean> => {
-    return fetch(`/api/notebooks/${notebookId}/scores/${userId}/update`, {
+    return fetch(`/api/scores//update`, {
         method: "PATCH",
-        body: JSON.stringify({incrementAmount})
+        body: JSON.stringify({
+            notebook_id: notebookId,
+            user_id: userId,
+            incrementAmount
+        })
     })
         .then((res) => {
             emitNotebookLeaderboardChangedEvent(notebookId)

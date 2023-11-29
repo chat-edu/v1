@@ -4,7 +4,7 @@ import {Text, VStack} from "@chakra-ui/react";
 
 import UserLeaderboardRow from "@/components/Users/UserLeaderboardRow";
 
-import useTopUsers from "@/hooks/queries/user/useTopUsers";
+import useTopUsers from "@/hooks/queries/scores/users/useTopUsers";
 import Loading from "@/components/Utilities/Loading";
 
 interface Props {
@@ -36,7 +36,7 @@ const UsersLeaderboard: React.FC<Props> = ({ limit }) => {
                                 userScores.map((userScore) => (
                                     <UserLeaderboardRow
                                         userScore={userScore}
-                                        key={userScore.id}
+                                        key={userScore.userId}
                                     />
                                 ))
                             }

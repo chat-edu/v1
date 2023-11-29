@@ -10,7 +10,6 @@ import useAuth from "@/hooks/useAuth";
 import {useToast} from "@chakra-ui/react";
 
 import {NoteInput} from "@/types/Note";
-import {Notebook} from "@/types/Notebook";
 
 const NoteSchema: Yup.ObjectSchema<NoteInput> = Yup.object().shape({
     name: Yup.string()
@@ -24,7 +23,7 @@ const NoteSchema: Yup.ObjectSchema<NoteInput> = Yup.object().shape({
         .min(1, 'Course ID is Required'),
 });
 
-const useAddNote = (notebook: Notebook) => {
+const useAddNote = (notebookId: number) => {
 
     const { user } = useAuth();
 
@@ -42,7 +41,7 @@ const useAddNote = (notebook: Notebook) => {
         initialValues: {
             name: '',
             content: '',
-            notebookId: notebook?.id || 0,
+            notebookId: notebookId || 0,
         },
         validationSchema: NoteSchema,
         onSubmit: async note => {
@@ -70,11 +69,11 @@ const useAddNote = (notebook: Notebook) => {
     });
 
     useEffect(() => {
-        setFieldValue('notebookId', notebook?.id || 0);
-    }, [setFieldValue, notebook]);
+        setFieldValue('notebookId', notebookId || 0);
+    }, [setFieldValue, notebookId]);
 
     return {
-        notebook,
+        notebookId,
         values,
         errors,
         touched,

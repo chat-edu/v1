@@ -1,7 +1,7 @@
 import useItemData from "@/hooks/queries/utilities/useItemData";
-import {transformRankedNotebook} from "@/hooks/queries/notebook/transformers";
 
 import {Notebook} from "@/types/Notebook";
+import {transformRankedNotebook} from "@/hooks/queries/scores/notebooks/transformers";
 
 const useNotebookRank = (notebookId: Notebook["id"]) => {
 

@@ -1,11 +1,12 @@
-import {Notebook, NotebookInput, NotebookRow} from "@/types/Notebook";
+import {Notebook, NotebookInput} from "@/types/Notebook";
+import {NotebookRowInput, NotebookRow} from "@/azure/cosmos/types";
 
 // CREATE
 
 export const addNotebook = async (notebook: NotebookInput): Promise<NotebookRow | null> =>
     fetch(`/api/notebooks/create`, {
         method: "POST",
-        body: JSON.stringify(notebook),
+        body: JSON.stringify(transformNotebookInput(notebook)),
     })
         .then((res) => res.json())
         .catch(null);
@@ -15,7 +16,7 @@ export const addNotebook = async (notebook: NotebookInput): Promise<NotebookRow 
 export const updateNotebook = async (notebookId: Notebook["id"], notebook: NotebookInput): Promise<NotebookRow | null> =>
     fetch(`/api/notebooks/${notebookId}/update`, {
         method: "PATCH",
-        body: JSON.stringify(notebook),
+        body: JSON.stringify(transformNotebookInput(notebook)),
     })
         .then(res => res.json())
         .catch(null);
@@ -28,3 +29,8 @@ export const deleteNotebook = async (notebookId: Notebook["id"]) =>
     })
         .then(async (res) => (await res.json()) as boolean)
         .catch(() => false);
+
+const transformNotebookInput = (notebook: NotebookInput): NotebookRowInput => ({
+    name: notebook.name,
+    user_id: notebook.userId,
+})
