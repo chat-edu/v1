@@ -70,6 +70,7 @@ export const findTopNotebooksByCreatorId = async (userId: string, limit: number)
         SELECT
             rn.notebook_id,
             rn.score,
+            rn.author_id,
             rn.notebook_name,
             rn.author_username,
             rn.author_verified,

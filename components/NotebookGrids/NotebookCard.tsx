@@ -63,7 +63,7 @@ const NotebookCard: React.FC<Props> = ({ notebookScore, rightComponent, onClick 
                         fontSize={'sm'}
                         opacity={0.75}
                     >
-                        {notebookScore.numNotes} modules
+                        {notebookScore.numNotes} module{notebookScore.numNotes === 1 ? '' : 's'}
                     </Text>
                 </VStack>
                 {rightComponent}

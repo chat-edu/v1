@@ -2,7 +2,7 @@ import {NotebookRow} from "@/azure/cosmos/types/notebook";
 import {UserRow} from "@/azure/cosmos/types/user";
 
 interface Score {
-    score: number;
+    score: string | number;
 }
 
 export interface UserScorePartialRow extends Score {
