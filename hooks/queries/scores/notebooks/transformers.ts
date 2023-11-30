@@ -9,7 +9,7 @@ export const transformNotebookScore = (row: NotebookScoreRow): NotebookScore => 
     authorId: row.author_id,
     authorUsername: row.author_username,
     authorVerified: row.author_verified,
-    numNotes: parseInt(row.num_notes),
+    numNotes: parseInt(row.num_notes ?? "0") ?? 0,
 })
 
 export const transformRankedNotebook = (row: RankedNotebookScoreRow): RankedNotebookScore => ({
