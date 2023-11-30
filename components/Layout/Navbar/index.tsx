@@ -60,8 +60,8 @@ const Navbar = () => {
             <HStack
                 ml={'auto'}
             >
-                <ColorModeToggle />
                 <AuthButton />
+                <ColorModeToggle />
             </HStack>
         </Flex>
       </Card>
