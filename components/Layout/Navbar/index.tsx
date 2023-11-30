@@ -24,7 +24,6 @@ const Navbar = () => {
         <Flex
             alignItems="center"
             w='100%'
-            gap={4}
             bg='navbar.500'
             rounded='md'
             px={{
@@ -33,27 +32,31 @@ const Navbar = () => {
             }}
         >
             <Link href={'/'}>
-                <Image
-                    src={'/logo.png'}
-                    alt="ChatEDU Logo"
-                    boxSize={'40px'}
-                />
+                <HStack
+                    spacing={4}
+                >
+                    <Image
+                        src={'/logo.png'}
+                        alt="ChatEDU Logo"
+                        boxSize={'40px'}
+                    />
+                    <Heading
+                        size='md'
+                    >
+                        <Text
+                            as='span'
+                        >
+                            Chat
+                        </Text>
+                        <Text
+                            as='span'
+                            color='brand.500'
+                        >
+                            EDU
+                        </Text>
+                    </Heading>
+                </HStack>
             </Link>
-            <Heading
-                size='md'
-            >
-                <Text
-                    as='span'
-                >
-                    Chat
-                </Text>
-                <Text
-                    as='span'
-                    color='brand.500'
-                >
-                    EDU
-                </Text>
-            </Heading>
             <HStack
                 ml={'auto'}
             >
