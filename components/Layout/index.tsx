@@ -24,6 +24,8 @@ const Layout: React.FC<Props> = ({ children }) => {
 
     const { userData, loading: userDataLoading } = useUser(user?.id || '');
 
+    console.log(user, userData)
+
     return (
         <Box
             h={height}

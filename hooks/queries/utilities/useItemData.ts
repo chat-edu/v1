@@ -13,7 +13,10 @@ const useItemData = <RowType, ReturnType>(url: string, transform: (row: RowType)
             method: 'GET',
         })
             .then(response => response.json())
-            .then((data: RowType) => setData(transform(data)))
+            .then((data: RowType) => {
+                if(!data) return;
+                setData(transform(data))
+            })
             .catch(error => setError(error))
         setLoading(false);
     }, [url])

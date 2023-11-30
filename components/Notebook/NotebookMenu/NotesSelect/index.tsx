@@ -69,6 +69,7 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                                                 notebook={notebook}
                                                 addNote={addNote}
                                                 removeNote={removeNote}
+                                                selected={selectedNotes.some((selectedNote) => selectedNote.id === note.id)}
                                             />
                                         ))
                                     ) : (

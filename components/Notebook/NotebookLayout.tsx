@@ -8,14 +8,16 @@ import Chat from "@/components/Chat";
 import useSelectNotes from "@/hooks/useSelectNotes";
 
 import {Notebook} from "@/types/Notebook";
+import {Note} from "@/types/Note";
 
 interface Props {
-    notebook: Notebook
+    notebook: Notebook,
+    initialNoteId?: Note["id"]
 }
 
-const NotebookLayout: React.FC<Props> = ({ notebook }) => {
+const NotebookLayout: React.FC<Props> = ({ notebook, initialNoteId }) => {
 
-    const { selectedNotes, addNote, removeNote } = useSelectNotes()
+    const { selectedNotes, addNote, removeNote } = useSelectNotes(initialNoteId);
 
     return (
         <Stack
