@@ -52,12 +52,14 @@ const Note: React.FC<Props> = ({ note, authorId }) => {
                     flex={1}
                     h={'100%'}
                 >
-                    <HStack>
+                    <HStack
+                        justifyContent={'space-between'}
+                        w={'100%'}
+                    >
                         <Text
                             overflowWrap={'break-word'}
                             maxW={'100%'}
                             fontWeight={'semibold'}
-                            textAlign={'center'}
                         >
                             {note.name.length > maxCharacters ? `${note.name.substring(0, maxCharacters)}...` : note.name}
                         </Text>
