@@ -9,6 +9,7 @@ interface Props {
 const UserPoints: React.FC<Props> = ({ points }) => {
     return (
         <Points
+            pointsType={'User'}
             points={points}
             icon={GiAcorn}
         />

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Text} from "@chakra-ui/react";
+import {Text, VStack} from "@chakra-ui/react";
 
 import NotebookGrid from "@/components/NotebookGrids/NotebookGrid";
 
@@ -8,6 +8,7 @@ import useUserNotebooks from "@/hooks/queries/scores/notebooks/useUserNotebooks"
 
 import {User} from "@/types/User";
 import {NotebookScore} from "@/types/score";
+import NotebookPoints from "@/components/Utilities/Points/NotebookPoints";
 
 interface Props {
     user: User
@@ -29,6 +30,16 @@ const UserNotebooks: React.FC<Props> = ({ user, onClick }) => {
                     {`@${user.username} hasn't created any notebooks yet`}
                 </Text>
             }
+            rightComponent={(notebook) => (
+                <VStack
+                    justifyContent={'flex-end'}
+                    h={'100%'}
+                >
+                    <NotebookPoints
+                        points={notebook.score}
+                    />
+                </VStack>
+            )}
         />
     );
 };
