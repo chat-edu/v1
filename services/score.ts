@@ -10,12 +10,12 @@ export const updateScore = async (
     userId: User["id"],
     incrementAmount: number
 ): Promise<boolean> => {
-    return fetch(`/api/scores//update`, {
+    return fetch(`/api/scores/update`, {
         method: "PATCH",
         body: JSON.stringify({
             notebook_id: notebookId,
             user_id: userId,
-            incrementAmount
+            increment_amount: incrementAmount
         })
     })
         .then((res) => {
