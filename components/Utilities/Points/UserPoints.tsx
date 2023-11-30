@@ -12,6 +12,7 @@ const UserPoints: React.FC<Props> = ({ points }) => {
             pointsType={'User'}
             points={points}
             icon={GiAcorn}
+            color={'orange'}
         />
     );
 };
