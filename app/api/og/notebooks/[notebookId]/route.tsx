@@ -1,7 +1,7 @@
 import { ImageResponse } from '@vercel/og';
 import {NextRequest} from "next/server";
 import {Notebook} from "@/types/Notebook";
-import {NotebookTag, TagTypes} from "@/types/Tags";
+import {Tag, TagTypes} from "@/types/Tags";
 import {capitalize} from "@/lib/capitalize";
 import ChatEduFooter from "@/app/api/og/lib/chatEduFooter";
 
@@ -18,7 +18,7 @@ export async function GET(req: NextRequest, { params }: { params: { notebookId: 
         fetch(`https://preview.chatedu.io/api/notebooks/${params.notebookId}`)
             .then(async res => (await res.json()) as Notebook),
         fetch(`https://preview.chatedu.io/api/notebooks/${params.notebookId}/tags`)
-            .then(async res => (await res.json()) as NotebookTag[])
+            .then(async res => (await res.json()) as Tag[])
     ]);
 
 
@@ -116,7 +116,7 @@ export async function GET(req: NextRequest, { params }: { params: { notebookId: 
     );
 }
 
-const getTagColor = (tag: NotebookTag, opacity: number): string => {
+const getTagColor = (tag: Tag, opacity: number): string => {
     switch (tag.tagType.parentTagTypeName) {
         case TagTypes.TOPIC:
             return `rgba(76, 175, 80, ${opacity})`;

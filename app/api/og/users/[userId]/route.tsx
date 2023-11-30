@@ -4,7 +4,6 @@ import {NextRequest} from "next/server";
 
 import ChatEduFooter from "@/app/api/og/lib/chatEduFooter";
 
-import {NotebookTag, TagTypes} from "@/types/Tags";
 import {User} from "@/types/User";
 
 export const runtime = 'edge';
