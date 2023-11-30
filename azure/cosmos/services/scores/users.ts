@@ -100,6 +100,7 @@ export const findScoresByUserId = async (userId: UserRow["id"]): Promise<UserNot
             n.id AS notebook_id,
             n.name AS notebook_name,
             n.user_id AS author_id,
+            u.id AS author_id,
             u.name AS author_name,
             u.username AS author_username,
             u.profile_picture_url AS author_profile_picture_url,

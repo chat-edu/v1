@@ -19,10 +19,11 @@ interface Props {
     notebook: Notebook
     note: NoteType,
     addNote: (note: NoteType) => void
-    removeNote: (id: NoteType["id"]) => void
+    removeNote: (id: NoteType["id"]) => void,
+    selected: boolean
 }
 
-const Note: React.FC<Props> = ({ note, notebook, addNote, removeNote }) => {
+const Note: React.FC<Props> = ({ note, notebook, addNote, removeNote, selected }) => {
 
     const { user } = useAuth();
 
@@ -40,6 +41,7 @@ const Note: React.FC<Props> = ({ note, notebook, addNote, removeNote }) => {
                     user ? (
                         <Checkbox
                             key={note.id}
+                            isChecked={selected}
                             onChange={(e) => {
                                 if(e.target.checked) {
                                     addNote(note);

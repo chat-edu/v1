@@ -9,6 +9,7 @@ export const findTopNotebooks = async (limit: number): Promise<RankedNotebookSco
             SELECT
                 n.id AS notebook_id,
                 COALESCE(SUM(s.score), 0) AS score,
+                u.id AS author_id,
                 n.name AS notebook_name,
                 u.username AS author_username,
                 u.verified AS author_verified,
@@ -29,6 +30,7 @@ export const findTopNotebooks = async (limit: number): Promise<RankedNotebookSco
             rn.notebook_id,
             rn.score,
             rn.notebook_name,
+            rn.author_id,
             rn.author_username,
             rn.author_verified,
             nc.num_notes,
@@ -94,7 +96,6 @@ export const findTopNotebooksByUserId = async (userId: string, limit: number): P
                 u.id AS author_id,
                 u.name AS author_name,
                 u.username AS author_username,
-            
                 u.verified AS author_verified,
                 RANK() OVER (ORDER BY COALESCE(SUM(s.score), 0) DESC) AS rank
             FROM Notebooks n

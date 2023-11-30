@@ -10,10 +10,11 @@ import useNotebook from "@/hooks/queries/notebook/useNotebook";
 import {Notebook as NotebookType} from "@/types/Notebook";
 
 interface Props {
-    notebookId: NotebookType["id"]
+    notebookId: NotebookType["id"],
+    initialNoteId?: NotebookType["id"]
 }
 
-const Notebook: React.FC<Props> = ({ notebookId }) => {
+const Notebook: React.FC<Props> = ({ notebookId, initialNoteId }) => {
 
     const { notebook, loading } = useNotebook(notebookId);
 
@@ -26,6 +27,7 @@ const Notebook: React.FC<Props> = ({ notebookId }) => {
                 notebook ? (
                     <NotebookLayout
                         notebook={notebook}
+                        initialNoteId={initialNoteId}
                     />
                 ) : (
                     <Text>
