@@ -8,6 +8,8 @@ import Loading from "@/components/Utilities/Loading";
 
 const NotebookPage = ({ notebookId } : {notebookId: string}) => {
 
+    console.log(`https://www.chatedu.tech/api/og/notebooks/${notebookId}`);
+
     return (
         <>
             <Head>
