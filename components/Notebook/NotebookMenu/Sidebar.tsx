@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Box, Card, HStack, IconButton, useDisclosure} from "@chakra-ui/react";
+import {Box, Card, HStack, IconButton, useDisclosure, VStack} from "@chakra-ui/react";
 
 import {VscLayoutSidebarLeft, VscLayoutSidebarLeftOff} from "react-icons/vsc";
 
@@ -13,6 +13,7 @@ import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
 import {Note} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
+import ShareButton from "@/components/Utilities/ShareButton";
 
 
 const openWebSidebarWidthLg = 400;
@@ -57,17 +58,23 @@ const Sidebar: React.FC<Props> = ({ notebook, selectedNotes, addNote, removeNote
                 h={'100%'}
             >
                 <HStack
-                    align={'start'}
+                    align={'center'}
                 >
                     <NotebookMenuHeader
                         notebook={notebook}
                     />
-                    <IconButton
-                        aria-label={'CloseSidebar'}
-                        icon={<VscLayoutSidebarLeftOff />}
-                        onClick={onClose}
-                        size={'sm'}
-                    />
+                    <VStack>
+                        <IconButton
+                            aria-label={'CloseSidebar'}
+                            icon={<VscLayoutSidebarLeftOff />}
+                            onClick={onClose}
+                            size={'sm'}
+                        />
+                        <ShareButton
+                            notebookId={notebook.id}
+                            size={'sm'}
+                        />
+                    </VStack>
                 </HStack>
                 <Box
                     h={'100%'}
@@ -85,12 +92,16 @@ const Sidebar: React.FC<Props> = ({ notebook, selectedNotes, addNote, removeNote
                     notebookId={notebook.id}
                 />
             </Box>
-            <IconButton
+            <VStack
                 display={isOpen ? 'none' : 'flex'}
-                aria-label={'OpenSidebar'}
-                icon={<VscLayoutSidebarLeft />}
-                onClick={onOpen}
-            />
+            >
+                <IconButton
+                    aria-label={'OpenSidebar'}
+                    icon={<VscLayoutSidebarLeft />}
+                    onClick={onOpen}
+                />
+                <ShareButton notebookId={notebook.id} />
+            </VStack>
         </Card>
     );
 };

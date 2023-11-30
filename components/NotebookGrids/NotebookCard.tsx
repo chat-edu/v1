@@ -7,6 +7,7 @@ import NotebookTags from "@/components/NotebookUtilities/NotebookTags";
 import UsernameText from "@/components/Utilities/UsernameText";
 
 import {NotebookScore} from "@/types/score";
+import ShareButton from "@/components/Utilities/ShareButton";
 
 interface Props {
     notebookScore: NotebookScore,
@@ -36,8 +37,8 @@ const NotebookCard: React.FC<Props> = ({ notebookScore, rightComponent, onClick 
                     <Text
                         fontWeight={'bold'}
                         fontSize={{
-                            base: 'sm',
-                            md: 'md'
+                            base: 'md',
+                            md: 'lg'
                         }}
                         mb={0}
                     >
@@ -66,7 +67,18 @@ const NotebookCard: React.FC<Props> = ({ notebookScore, rightComponent, onClick 
                         {notebookScore.numNotes} module{notebookScore.numNotes === 1 ? '' : 's'}
                     </Text>
                 </VStack>
-                {rightComponent}
+                <VStack
+                    h={'100%'}
+                    justifyContent={'space-between'}
+                    align={'end'}
+                >
+                    <ShareButton
+                        notebookId={notebookScore.notebookId}
+                        size={'sm'}
+                        variant={'outline'}
+                    />
+                    {rightComponent}
+                </VStack>
             </HStack>
         </ClickableCard>
     );

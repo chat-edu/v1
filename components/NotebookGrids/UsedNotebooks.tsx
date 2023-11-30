@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Text, VStack} from "@chakra-ui/react";
+import {Text} from "@chakra-ui/react";
 
 import NotebookGrid from "@/components/NotebookGrids/NotebookGrid";
 import UserPoints from "@/components/Utilities/Points/UserPoints";
@@ -32,14 +32,9 @@ const YourUsedNotebooks: React.FC<Props> = ({ user, onClick }) => {
             }
             rightComponent={(notebook) => {
                 return (
-                    <VStack
-                        justifyContent={'flex-end'}
-                        h={'100%'}
-                    >
-                        <UserPoints
-                            points={notebook.score}
-                        />
-                    </VStack>
+                    <UserPoints
+                        points={notebook.score}
+                    />
                 )
             }}
         />

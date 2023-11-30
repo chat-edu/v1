@@ -29,6 +29,7 @@ import useNotebookRank from "@/hooks/queries/scores/notebooks/useNotebookRank";
 import useAuth from "@/hooks/useAuth";
 
 import {NotebookScore} from "@/types/score";
+import ShareButton from "@/components/Utilities/ShareButton";
 
 
 interface Props {
@@ -55,7 +56,7 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader
-                    pt={8}
+                    pt={12}
                 >
                     <HStack
                         justify={'space-between'}
@@ -67,14 +68,16 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                             <NotebookTags
                                 notebookId={notebook.notebookId}
                             />
-                            <Heading
-                                size={{
-                                    base: 'md',
-                                    md: 'lg'
-                                }}
-                            >
-                                {notebook.notebookName}
-                            </Heading>
+                            <HStack>
+                                <Heading
+                                    size={{
+                                        base: 'md',
+                                        md: 'lg'
+                                    }}
+                                >
+                                    {notebook.notebookName}
+                                </Heading>
+                            </HStack>
                             <HStack
                                 spacing={0}
                                 align={'center'}
@@ -97,6 +100,7 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                             (!loading && notebookRank) && (
                                 <VStack
                                     align={'end'}
+                                    spacing={0}
                                 >
                                     <Text
                                         fontSize={'md'}
@@ -113,6 +117,14 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                     </HStack>
                 </ModalHeader>
                 <ModalCloseButton />
+                <ShareButton
+                    notebookId={notebook.notebookId}
+                    size={'sm'}
+                    variant={'ghost'}
+                    position={'absolute'}
+                    top={"8px"}
+                    right={"48px"}
+                />
                 <ModalBody>
                     <Flex
                         direction={'column'}
