@@ -25,6 +25,7 @@ const Points: React.FC<Props> = ({ points, pointsType, icon, ...rest }) => {
                 py={0.5}
                 align={'end'}
                 flexDirection={'row-reverse'}
+                mr={-2}
             >
                 <Text
                     pl={"18px"}
@@ -36,6 +37,7 @@ const Points: React.FC<Props> = ({ points, pointsType, icon, ...rest }) => {
                     roundedRight={'md'}
                     lineHeight={1}
                     fontWeight={'bold'}
+                    textAlign={'right'}
                 >
                     {points}
                 </Text>

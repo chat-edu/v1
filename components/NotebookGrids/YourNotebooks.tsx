@@ -1,14 +1,14 @@
 import React from 'react';
 
-import {Text, VStack} from "@chakra-ui/react";
+import {Text} from "@chakra-ui/react";
 
 import NotebookGrid from "@/components/NotebookGrids/NotebookGrid";
+import NotebookPoints from "@/components/Utilities/Points/NotebookPoints";
 
 import useUserNotebooks from "@/hooks/queries/scores/notebooks/useUserNotebooks";
 import useAuth from "@/hooks/useAuth";
 
 import {NotebookScore} from "@/types/score";
-import NotebookPoints from "@/components/Utilities/Points/NotebookPoints";
 
 interface Props {
     onClick: (notebook: NotebookScore) => void
@@ -34,14 +34,9 @@ const YourNotebooks: React.FC<Props> = ({ onClick }) => {
             addNotebook
             authGate
             rightComponent={(notebook) => (
-                <VStack
-                    justifyContent={'flex-end'}
-                    h={'100%'}
-                >
-                    <NotebookPoints
-                        points={notebook.score}
-                    />
-                </VStack>
+                <NotebookPoints
+                    points={notebook.score}
+                />
             )}
         />
     );
