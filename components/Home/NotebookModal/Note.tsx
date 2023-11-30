@@ -6,16 +6,15 @@ import ClickableCard from "@/components/Utilities/ClickableCard";
 import NoteModal from "@/components/NotebookUtilities/NoteModal";
 
 import {Note as NoteType} from "@/types/Note";
-import {Notebook} from "@/types/Notebook";
 
 interface Props {
     note: NoteType
-    notebook: Notebook
+    authorId: string
 }
 
 const maxCharacters = 32;
 
-const Note: React.FC<Props> = ({ note, notebook }) => {
+const Note: React.FC<Props> = ({ note, authorId }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -23,7 +22,7 @@ const Note: React.FC<Props> = ({ note, notebook }) => {
         <>
             <NoteModal
                 note={note}
-                notebook={notebook}
+                authorId={authorId}
                 isOpen={isOpen}
                 onClose={onClose}
             />

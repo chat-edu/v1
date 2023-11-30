@@ -14,7 +14,7 @@ import Note from "@/components/Notebook/NotebookMenu/NotesSelect/Note";
 import UploadNotes from "@/components/AddModals/UploadNotes";
 
 import useAuth from "@/hooks/useAuth";
-import useNotes from "@/hooks/queries/notebook/useNotes";
+import useNotes from "@/hooks/queries/notes/useNotes";
 
 import {Notebook as NotebookType} from "@/types/Notebook";
 import {Note as NoteType} from "@/types/Note";

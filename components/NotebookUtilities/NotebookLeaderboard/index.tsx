@@ -5,7 +5,7 @@ import {Text, VStack} from "@chakra-ui/react";
 import NotebookLeaderboardRow from "@/components/NotebookUtilities/NotebookLeaderboard/NotebookLeaderboardRow";
 import Loading from "@/components/Utilities/Loading";
 
-import useNotebookLeaderboard from "@/hooks/queries/notebook/useNotebookLeaderboard";
+import useNotebookLeaderboard from "@/hooks/queries/scores/users/useNotebookLeaderboard";
 
 import {Notebook} from "@/types/Notebook";
 

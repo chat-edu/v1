@@ -6,12 +6,13 @@ import NotebookCard from "@/components/NotebookGrids/NotebookCard";
 import AddNotebookCard from "@/components/AddModals/AddNotebook/AddNotebookCard";
 import Loading from "@/components/Utilities/Loading";
 import SectionBlock from "@/components/Utilities/SectionBlock";
-
-import {Notebook} from "@/types/Notebook";
-import useAuth from "@/hooks/useAuth";
 import AuthProviderButtons from "@/components/Utilities/AuthButtons/AuthProviderButtons";
 
-interface Props<NotebookType extends Notebook> {
+import useAuth from "@/hooks/useAuth";
+
+import {NotebookScore} from "@/types/score";
+
+interface Props<NotebookType extends NotebookScore> {
     heading: string,
     notebooks: NotebookType[]
     loading: boolean,
@@ -23,7 +24,7 @@ interface Props<NotebookType extends Notebook> {
     authGate?: boolean
 }
 
-const NotebookGrid = <NotebookType extends Notebook>({ heading, headingRightComponent, notebooks, loading, onClick, noNotebooksComponent, rightComponent, addNotebook, authGate}: Props<NotebookType>) => {
+const NotebookGrid = <NotebookType extends NotebookScore>({ heading, headingRightComponent, notebooks, loading, onClick, noNotebooksComponent, rightComponent, addNotebook, authGate}: Props<NotebookType>) => {
 
     const { user } = useAuth();
 
@@ -88,8 +89,8 @@ const NotebookGrid = <NotebookType extends Notebook>({ heading, headingRightComp
                                         {
                                             notebooks.map((notebook, index) => (
                                                 <NotebookCard
-                                                    key={notebook.id}
-                                                    notebook={notebook}
+                                                    key={notebook.notebookId}
+                                                    notebookScore={notebook}
                                                     rightComponent={rightComponent ? rightComponent(notebook, index) : undefined}
                                                     onClick={() => onClick(notebook)}
                                                 />

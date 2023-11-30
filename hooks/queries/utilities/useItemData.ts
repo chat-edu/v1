@@ -1,8 +1,8 @@
 import {useState, useEffect, useCallback} from "react";
 
-const useItemData = <T>(url: string) => {
+const useItemData = <RowType, ReturnType>(url: string, transform: (row: RowType) => ReturnType) => {
 
-    const [data, setData] = useState<T | null>(null);
+    const [data, setData] = useState<ReturnType | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -13,7 +13,7 @@ const useItemData = <T>(url: string) => {
             method: 'GET',
         })
             .then(response => response.json())
-            .then(data => setData(data))
+            .then((data: RowType) => setData(transform(data)))
             .catch(error => setError(error))
         setLoading(false);
     }, [url])

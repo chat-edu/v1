@@ -1,14 +1,16 @@
 import {emitNotesChangedEvent} from "@/azure/cosmos/eventEmitters/notesEventEmitter";
 
-import {Note, NoteInput, NoteRow} from "@/types/Note";
+import {Note, NoteInput} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
+
+import {NoteRowInput, NoteRow} from "@/azure/cosmos/types";
 
 // CREATE
 
 export const addNote = async (note: NoteInput): Promise<NoteRow | null> =>
     fetch(`/api/notes/create`, {
         method: "POST",
-        body: JSON.stringify(note),
+        body: JSON.stringify(transformNoteInput(note)),
     })
         .then((res) => {
             emitNotesChangedEvent(note.notebookId);
@@ -21,7 +23,7 @@ export const addNote = async (note: NoteInput): Promise<NoteRow | null> =>
 export const updateNote = async (noteId: number, note: NoteInput): Promise<NoteRow | null> =>
     fetch(`/api/notes/${note.notebookId}/${noteId}/update`, {
         method: "PATCH",
-        body: JSON.stringify(note),
+        body: JSON.stringify(transformNoteInput(note)),
     })
         .then(async (res) => {
             emitNotesChangedEvent(note.notebookId);
@@ -40,3 +42,9 @@ export const deleteNote = async (noteId: Note["id"], notebookId: Notebook["id"])
             return res.json()
         })
         .catch(null);
+
+const transformNoteInput = (note: NoteInput): NoteRowInput => ({
+    notebook_id: note.notebookId,
+    name: note.name,
+    content: note.content,
+});

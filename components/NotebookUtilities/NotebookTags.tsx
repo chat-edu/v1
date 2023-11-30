@@ -2,10 +2,10 @@ import React from 'react';
 
 import {Badge, HStack, Skeleton} from "@chakra-ui/react";
 
-import useNotebookTags from "@/hooks/queries/notebook/useNotebookTags";
+import useTags from "@/hooks/queries/tags/useTags";
 
 import {Notebook} from "@/types/Notebook";
-import {NotebookTag, TagTypes} from "@/types/Tags";
+import {Tag, TagTypes} from "@/types/Tags";
 
 interface Props {
     notebookId: Notebook["id"]
@@ -15,7 +15,7 @@ interface Props {
 
 const NotebookTags: React.FC<Props> = ({ notebookId }) => {
 
-    const { tags, loading } = useNotebookTags(notebookId);
+    const { tags, loading } = useTags(notebookId);
 
     if(loading) return <Skeleton
         h={'20px'}
@@ -40,7 +40,7 @@ const NotebookTags: React.FC<Props> = ({ notebookId }) => {
     );
 };
 
-const getTagColorScheme = (tag: NotebookTag): string => {
+const getTagColorScheme = (tag: Tag): string => {
     switch(tag.tagType.parentTagTypeName) {
         case TagTypes.SCHOOL:
             return "blue"

@@ -68,7 +68,7 @@ const Note: React.FC<Props> = ({ note, notebook, addNote, removeNote }) => {
             </HStack>
             <NoteModal
                 note={note}
-                notebook={notebook}
+                authorId={notebook.userId}
                 isOpen={isOpen}
                 onClose={onClose}
             />

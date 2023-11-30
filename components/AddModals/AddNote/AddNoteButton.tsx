@@ -30,7 +30,7 @@ const AddNotes: React.FC<Props> = ({ text, icon, buttonProps, notebook }) => {
             <AddNoteModal
                 isOpen={isOpen}
                 onClose={onClose}
-                notebook={notebook}
+                notebookId={notebook.id}
             />
         </>
     );

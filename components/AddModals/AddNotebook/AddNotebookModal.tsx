@@ -15,6 +15,7 @@ import TextInput from "@/components/Utilities/FormUtilities/TextInput";
 import useAddNotebook from "@/hooks/mutators/useAddNotebook";
 import {TopicTagTypes, SchoolTagTypes} from "@/types/Tags";
 import MenuInput from "@/components/Utilities/FormUtilities/MenuInput";
+import {capitalize} from "@/lib/capitalize";
 
 interface Props {
     isOpen: boolean;
@@ -110,12 +111,5 @@ const AddNotebookModal: React.FC<Props> = ({ isOpen, onClose }) => {
         </Modal>
     );
 };
-
-// takes a string and capitalizes the first letter of each word
-const capitalize = (str: string): string => {
-    return str.split(' ').map((word) => {
-        return word.charAt(0).toUpperCase() + word.slice(1);
-    }).join(' ');
-}
 
 export default AddNotebookModal;

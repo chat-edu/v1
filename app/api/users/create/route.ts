@@ -1,14 +1,12 @@
 import {addUser} from "@/azure/cosmos/services/user";
 
-import {User} from "@/types/User";
+import {UserRow} from "@/azure/cosmos/types/user";
 
 export async function POST(request: Request) {
-    const user = await request.json() as User;
-    return Response.json(await addUser({
-        name: user.name,
-        email: user.email,
-        username: user.username,
-        id: user.id,
-        profile_picture_url: user.profilePictureUrl,
-    }));
+    const userRow = await request.json() as UserRow;
+
+    if(!userRow.name || !userRow.email || !userRow.username || !userRow.id || !userRow.profile_picture_url)
+        return Response.json(null);
+
+    return Response.json(await addUser(userRow));
 }
