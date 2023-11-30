@@ -1,9 +1,14 @@
 import { ImageResponse } from '@vercel/og';
-import {NextRequest} from "next/server";
-import {Notebook} from "@/types/Notebook";
-import {Tag, TagTypes} from "@/types/Tags";
-import {capitalize} from "@/lib/capitalize";
+
 import ChatEduFooter from "@/app/api/og/lib/chatEduFooter";
+
+import {capitalize} from "@/lib/capitalize";
+
+import {NextRequest} from "next/server";
+
+import {Notebook} from "@/types/Notebook";
+import {TagTypes} from "@/types/Tags";
+import {TagWithParentTagTypeRow} from "@/azure/cosmos/types";
 
 export const runtime = 'edge';
 
@@ -15,12 +20,11 @@ export async function GET(req: NextRequest, { params }: { params: { notebookId: 
             .then((res) => res.arrayBuffer()),
         fetch(new URL('../../../../../assets/SF-Pro.ttf', import.meta.url))
             .then((res) => res.arrayBuffer()),
-        fetch(`https://preview.chatedu.io/api/notebooks/${params.notebookId}`)
+        fetch(`https://www.chatedu.tech/api/notebooks/${params.notebookId}`)
             .then(async res => (await res.json()) as Notebook),
-        fetch(`https://preview.chatedu.io/api/notebooks/${params.notebookId}/tags`)
-            .then(async res => (await res.json()) as Tag[])
+        fetch(`https://www.chatedu.tech/api/tags/notebook/${params.notebookId}`)
+            .then(async res => (await res.json()) as TagWithParentTagTypeRow[])
     ]);
-
 
     return new ImageResponse(
         (
@@ -116,8 +120,8 @@ export async function GET(req: NextRequest, { params }: { params: { notebookId: 
     );
 }
 
-const getTagColor = (tag: Tag, opacity: number): string => {
-    switch (tag.tagType.parentTagTypeName) {
+const getTagColor = (tag: TagWithParentTagTypeRow, opacity: number): string => {
+    switch (tag.parent_tag_type_name) {
         case TagTypes.TOPIC:
             return `rgba(76, 175, 80, ${opacity})`;
         case TagTypes.SCHOOL:
