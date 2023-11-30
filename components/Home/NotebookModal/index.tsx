@@ -43,8 +43,6 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
 
     const { notebookRank, loading } = useNotebookRank(notebook.notebookId);
 
-    console.log(notebookRank);
-
     return (
         <Modal
             isOpen={isOpen}
