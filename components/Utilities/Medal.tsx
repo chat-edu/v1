@@ -26,8 +26,9 @@ const Medal: React.FC<Props> = ({ rank }) => {
                 md: mdBoxSize
             }}
             textAlign={'center'}
+            fontWeight={'semibold'}
         >
-            #{rank}
+            {rank}
         </Text>
     )
 

@@ -23,11 +23,20 @@ const CreatorLeaderboard: React.FC<Props> = ({ limit = 10 }) => {
             rightComponent={(creator) => (
                 <VStack
                     align={'end'}
+                    spacing={{
+                        base: 1,
+                        md: 2
+                    }}
                 >
                     <NotebookPoints
                         points={creator.score}
                     />
-                    <Text>
+                    <Text
+                        fontSize={{
+                            base: 'sm',
+                            md: 'md'
+                        }}
+                    >
                         {creator.numNotebooks} notebook{creator.numNotebooks === 1 ? '' : 's'}
                     </Text>
                 </VStack>
