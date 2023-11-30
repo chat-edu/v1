@@ -77,7 +77,6 @@ export const findTopNotebooksByCreatorId = async (userId: string, limit: number)
             rn.rank
         FROM RankedNotebooks rn
             LEFT JOIN NoteCount nc ON rn.notebook_id = nc.notebook_id
-        WHERE rn.score > 0
         ORDER BY rn.rank
         LIMIT $2;
     `;

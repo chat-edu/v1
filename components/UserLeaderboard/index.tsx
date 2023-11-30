@@ -2,19 +2,18 @@ import React from 'react';
 
 import {Text, VStack} from "@chakra-ui/react";
 
-import UserLeaderboardRow from "@/components/Users/UserLeaderboardRow";
-
-import useTopUsers from "@/hooks/queries/scores/users/useTopUsers";
+import UserLeaderboardRow from "@/components/UserLeaderboard/UserLeaderboardRow";
 import Loading from "@/components/Utilities/Loading";
 
-interface Props {
-    limit?: number
+import {RankedUserScore} from "@/types/score";
+
+interface Props<RankedUserScoreType extends RankedUserScore> {
+    users: RankedUserScoreType[],
+    loading: boolean,
+    rightComponent?: (userScore: RankedUserScoreType) => React.ReactNode
 }
 
-const UsersLeaderboard: React.FC<Props> = ({ limit }) => {
-
-    const { userScores, loading } = useTopUsers(limit);
-
+const UserLeaderboard = <RankedUserScoreType extends RankedUserScore,>({ users, loading, rightComponent }: Props<RankedUserScoreType>) => {
     return (
         <VStack
             w={'100%'}
@@ -24,7 +23,7 @@ const UsersLeaderboard: React.FC<Props> = ({ limit }) => {
                 h={'500px'}
             >
                 {
-                    userScores.length === 0 ? (
+                    users.length === 0 ? (
                         <Text>
                             No users found.
                         </Text>
@@ -33,10 +32,11 @@ const UsersLeaderboard: React.FC<Props> = ({ limit }) => {
                             w={'100%'}
                         >
                             {
-                                userScores.map((userScore) => (
+                                users.map((userScore) => (
                                     <UserLeaderboardRow
                                         userScore={userScore}
                                         key={userScore.userId}
+                                        rightComponent={rightComponent ? rightComponent(userScore) : undefined}
                                     />
                                 ))
                             }
@@ -45,7 +45,7 @@ const UsersLeaderboard: React.FC<Props> = ({ limit }) => {
                 }
             </Loading>
         </VStack>
-    )
+    );
 };
 
-export default UsersLeaderboard;
+export default UserLeaderboard;

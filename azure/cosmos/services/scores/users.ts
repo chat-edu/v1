@@ -66,20 +66,20 @@ export const findTopUsers = async (limit: number): Promise<RankedUserScoreRow[]>
 // finds the top creators by the total score of their notebooks
 export const findTopCreators = async (limit: number): Promise<RankedUserCreatorScoreRow[]> => {
     const queryText = `
-        SELECT 
-            u.id AS user_id, 
+        SELECT
+            u.id AS user_id,
             u.name,
-            u.username, 
+            u.username,
             u.profile_picture_url,
-            u.verified, 
-            COALESCE(SUM(s.score), 0) AS score, 
-            COUNT(n.id) AS num_notebooks, 
+            u.verified,
+            COALESCE(SUM(s.score), 0) AS score,
+            COUNT(DISTINCT n.id) AS num_notebooks,
             RANK() OVER (ORDER BY COALESCE(SUM(s.score), 0) DESC) AS rank
         FROM Users u
-        LEFT JOIN Notebooks n ON u.id = n.user_id
-        LEFT JOIN Scores s ON n.id = s.notebook_id
-        WHERE score > 0
+                 LEFT JOIN Notebooks n ON u.id = n.user_id
+                 LEFT JOIN Scores s ON n.id = s.notebook_id
         GROUP BY u.id
+        HAVING COALESCE(SUM(s.score), 0) > 0
         ORDER BY score DESC
         LIMIT $1;
     `;

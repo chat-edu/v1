@@ -6,9 +6,10 @@ import HomeHeader from "@/components/Home/HomeHeader";
 import YourUsedNotebooks from "@/components/NotebookGrids/YourUsedNotebooks";
 import NotebookModal from "@/components/Home/NotebookModal";
 import Container from "@/components/Utilities/Container";
-import HomeLeaderboard from "@/components/Home/HomeLeaderboard";
+import HomeUsersLeaderboard from "@/components/Home/HomeUsersLeaderboard";
 
 import useNotebookModal from "@/hooks/utilities/useNotebookModal";
+import HomeCreatorsLeaderboard from "@/components/Home/HomeCreatorsLeaderboard";
 
 const Home = () => {
 
@@ -36,7 +37,8 @@ const Home = () => {
                 <YourUsedNotebooks
                     onClick={selectNotebook}
                 />
-                <HomeLeaderboard />
+                <HomeUsersLeaderboard />
+                <HomeCreatorsLeaderboard />
             </Container>
         </>
     );

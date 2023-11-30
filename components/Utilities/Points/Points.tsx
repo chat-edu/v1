@@ -2,13 +2,14 @@ import React from 'react';
 
 import {Box, BoxProps, HStack, Icon, Text, useColorModeValue} from "@chakra-ui/react";
 
-import {GiAcorn} from "react-icons/gi";
+import {IconType} from "react-icons";
 
 interface Props extends BoxProps {
     points: number,
+    icon: IconType
 }
 
-const Points: React.FC<Props> = ({ points, ...rest }) => {
+const Points: React.FC<Props> = ({ points, icon, ...rest }) => {
 
     const textBackground = useColorModeValue('brand.100', 'brand.900')
 
@@ -47,7 +48,7 @@ const Points: React.FC<Props> = ({ points, ...rest }) => {
                 {...rest}
             >
                 <Icon
-                    as={GiAcorn}
+                    as={icon}
                 />
             </Box>
         </HStack>

@@ -3,7 +3,7 @@ import React from 'react';
 import {VStack} from "@chakra-ui/react";
 
 import NotebookGrid from "@/components/NotebookGrids/NotebookGrid";
-import Points from "@/components/Utilities/Points";
+import NotebookPoints from "@/components/Utilities/Points/NotebookPoints";
 
 import useTopNotebooks from "@/hooks/queries/scores/notebooks/useTopNotebooks";
 
@@ -29,7 +29,7 @@ const PopularNotebooks: React.FC<Props> = ({ onClick }) => {
                     align={'end'}
                     h={'100%'}
                 >
-                    <Points
+                    <NotebookPoints
                         points={notebook.score}
                     />
                 </VStack>

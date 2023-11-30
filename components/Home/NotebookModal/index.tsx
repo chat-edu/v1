@@ -23,7 +23,7 @@ import NotebookLeaderboard from "@/components/NotebookUtilities/NotebookLeaderbo
 import NotesDisplay from "@/components/Home/NotebookModal/NotesDisplay";
 import UsernameText from "@/components/Utilities/UsernameText";
 import DeleteNotebookButton from "@/components/Home/NotebookModal/DeleteNotebookButton";
-import Points from "@/components/Utilities/Points";
+import NotebookPoints from "@/components/Utilities/Points/NotebookPoints";
 
 import useNotebookRank from "@/hooks/queries/scores/notebooks/useNotebookRank";
 import useAuth from "@/hooks/useAuth";
@@ -104,7 +104,7 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                                     >
                                         Rank: #{notebookRank.rank}
                                     </Text>
-                                    <Points
+                                    <NotebookPoints
                                         points={notebookRank.score}
                                     />
                                 </VStack>

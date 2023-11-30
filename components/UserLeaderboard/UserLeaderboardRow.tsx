@@ -7,10 +7,10 @@ import Medal from "@/components/Utilities/Medal";
 
 import useAuth from "@/hooks/useAuth";
 
-import {RankedUserNotebookScore} from "@/types/score";
+import {RankedUserScore} from "@/types/score";
 
 interface Props {
-    userScore: RankedUserNotebookScore,
+    userScore: RankedUserScore,
     rightComponent?: React.ReactNode
 }
 
