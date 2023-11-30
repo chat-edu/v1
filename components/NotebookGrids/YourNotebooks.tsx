@@ -4,13 +4,13 @@ import {Text} from "@chakra-ui/react";
 
 import NotebookGrid from "@/components/NotebookGrids/NotebookGrid";
 
-import useUserNotebooks from "@/hooks/queries/notebooks/useUserNotebooks";
+import useUserNotebooks from "@/hooks/queries/scores/notebooks/useUserNotebooks";
 import useAuth from "@/hooks/useAuth";
 
-import {Notebook} from "@/types/Notebook";
+import {NotebookScore} from "@/types/score";
 
 interface Props {
-    onClick: (notebook: Notebook) => void
+    onClick: (notebook: NotebookScore) => void
 }
 
 const YourNotebooks: React.FC<Props> = ({ onClick }) => {

@@ -1,4 +1,4 @@
-import {getRankedNotebook} from "@/azure/cosmos/services/notebooks";
+import {getRankedNotebook} from "@/azure/cosmos/services/scores";
 
 import {NextRequest} from "next/server";
 import {NotebookIdParams} from "@/app/api/notebooks/[notebookId]/NotebookIdParams";

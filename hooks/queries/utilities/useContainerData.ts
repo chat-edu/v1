@@ -1,8 +1,10 @@
 import {useCallback, useEffect, useState} from "react";
 
-const useContainerData = <T>(url: string) => {
 
-    const [data, setData] = useState<T[]>([]);
+
+const useContainerData = <RowType, ReturnType>(url: string, transform: (row: RowType) => ReturnType) => {
+
+    const [data, setData] = useState<ReturnType[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -12,7 +14,7 @@ const useContainerData = <T>(url: string) => {
             method: 'GET',
         })
             .then(response => response.json())
-            .then((data: T[]) => setData(data))
+            .then((data: RowType[]) => setData(data.map(transform)))
             .catch(error => setError(error))
         setLoading(false);
     }, [url])

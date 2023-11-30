@@ -2,10 +2,11 @@ import React from 'react';
 
 import {HStack} from "@chakra-ui/react";
 
-import {UserScore} from "@/types/Score";
 import UsernameText from "@/components/Utilities/UsernameText";
 import Medal from "@/components/Utilities/Medal";
-import Points from "@/components/Utilities/Points";
+import UserPoints from "@/components/Utilities/Points/UserPoints";
+
+import {UserScore} from "@/types/score";
 
 interface Props {
     userScore: UserScore,
@@ -30,7 +31,7 @@ const NotebookLeaderboardRow: React.FC<Props> = ({ userScore, rank }) => {
                     opacity={0.75}
                 />
             </HStack>
-            <Points
+            <UserPoints
                 points={userScore.score}
             />
         </HStack>

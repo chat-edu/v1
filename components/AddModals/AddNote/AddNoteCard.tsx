@@ -2,16 +2,15 @@ import React from 'react';
 
 import {Card, Text, useColorModeValue, useDisclosure} from "@chakra-ui/react";
 import {AddIcon} from "@chakra-ui/icons";
+import {transparentize} from "@chakra-ui/theme-tools";
 
 import AddNoteModal from "@/components/AddModals/AddNote/AddNoteModal";
-import {transparentize} from "@chakra-ui/theme-tools";
-import {Notebook} from "@/types/Notebook";
 
 interface Props {
-    notebook: Notebook
+    notebookId: number
 }
 
-const AddNoteCard: React.FC<Props> = ({ notebook }) => {
+const AddNoteCard: React.FC<Props> = ({ notebookId }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -52,7 +51,7 @@ const AddNoteCard: React.FC<Props> = ({ notebook }) => {
             <AddNoteModal
                 isOpen={isOpen}
                 onClose={onClose}
-                notebook={notebook}
+                notebookId={notebookId}
             />
         </>
     );

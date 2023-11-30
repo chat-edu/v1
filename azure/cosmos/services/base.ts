@@ -2,11 +2,7 @@ import {getPool} from "@/azure/cosmos/citus";
 
 import {QueryResultRow} from "pg";
 
-export const find = async <RowType extends QueryResultRow, ReturnType>(
-    queryText: string,
-    values: any[],
-    transform: (row: RowType) => ReturnType
-): Promise<ReturnType[]> => {
+export const find = async <RowType extends QueryResultRow>(queryText: string, values: any[]): Promise<RowType[]> => {
     const client = await getPool().connect();
     try {
         const { rows } = await client.query<RowType>(queryText, values)
@@ -16,13 +12,16 @@ export const find = async <RowType extends QueryResultRow, ReturnType>(
                 console.error('Error in find operation:', error);
                 return { rows: [] };
             });
-        return rows.map(transform);
+        return rows;
     } finally {
         client.release();
     }
 };
 
-export const add = async <InputType extends object, RowType>(tableName: string, input: InputType): Promise<RowType | null> => {
+export const add = async <InputType extends object, RowType>(
+    tableName: string,
+    input: InputType
+): Promise<RowType | null> => {
     const client = await getPool().connect();
     try {
         const columns = Object.keys(input).join(', ');
@@ -47,7 +46,7 @@ export const update = async <InputType extends object, RowType>(
     updatedFields: object,
     idColumnNames: string[] = ['id']
 ): Promise<boolean> => {
-const client = await getPool().connect();
+    const client = await getPool().connect();
     try {
         const updates = Object.keys(updatedFields).map((key, index) => `${key} = $${index + 1}`);
         const values = [...Object.values(updatedFields), ...id];
@@ -67,11 +66,10 @@ const client = await getPool().connect();
 };
 
 // make a get function for when the id is a composite key
-export const get = async <RowType extends QueryResultRow, ReturnType>(
+export const get = async <RowType extends QueryResultRow>(
     query: string,
     values: any[],
-    transform: (row: RowType) => ReturnType,
-): Promise<ReturnType | null> => {
+): Promise<RowType | null> => {
     const client = await getPool().connect();
     try {
         const { rows } = await client.query<RowType>(query, values)
@@ -80,7 +78,7 @@ export const get = async <RowType extends QueryResultRow, ReturnType>(
                 console.error('Error in get operation:', error);
                 return { rows: [] };
             });
-        return rows && rows.length ? transform(rows[0]) : null;
+        return rows && rows.length ? rows[0] : null;
     } finally {
         client.release();
     }

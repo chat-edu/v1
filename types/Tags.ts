@@ -1,33 +1,22 @@
+// used on the client side to display a tag's type
 export interface TagType {
     name: string,
     parentTagTypeName: string | null,
 }
 
-export interface NotebookTag {
+// used on the client side to display a tag on a notebook
+export interface Tag {
     tag: string,
     tagType: TagType
 }
 
-export interface TagTypeRow {
-    name: string,
-    parent_tag_type_name: string | null,
-}
-
-export interface NotebookTagRow {
-    notebook_id: number,
-    tag: string,
-    tag_type_name: string,
-}
-
-export interface NotebookTagWithParentTagTypeRow extends NotebookTagRow {
-    parent_tag_type_name: string | null,
-}
-
+// enumerates the top-level tag types
 export enum TagTypes {
     SCHOOL = 'school',
     TOPIC = 'topic',
 }
 
+// enumerates the types of school tags
 export enum SchoolTagTypes {
     UNIVERSITY = 'university',
     HIGH_SCHOOL = 'high school',
@@ -35,6 +24,7 @@ export enum SchoolTagTypes {
     ELEMENTARY_SCHOOL = 'elementary school',
 }
 
+// enumerates the types of topic tags
 export enum TopicTagTypes {
     SAT = 'SAT',
     ACT = 'ACT',

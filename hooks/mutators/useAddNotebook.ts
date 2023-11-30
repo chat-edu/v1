@@ -8,12 +8,14 @@ import {useToast} from "@chakra-ui/react";
 
 import useAuth from "@/hooks/useAuth";
 
-import {addNotebook, addNotebookTag} from "@/services/notebooks";
+import {addNotebook} from "@/services/notebooks";
 
 import {emitNotebooksChangedEvent} from "@/azure/cosmos/eventEmitters/notebooksEventEmitter";
 
 import {NotebookInput} from "@/types/Notebook";
-import {TopicTagTypes, NotebookTagRow, SchoolTagTypes, TagTypes} from "@/types/Tags";
+import {TopicTagTypes, SchoolTagTypes, TagTypes} from "@/types/Tags";
+import {TagRow} from "@/azure/cosmos/types/tag";
+import {addTag} from "@/services/tags";
 
 const NotebookSchema: Yup.ObjectSchema<NotebookInput> = Yup.object().shape({
     name: Yup.string()
@@ -55,7 +57,7 @@ const useAddNotebook = () => {
                     duration: 5000,
                     isClosable: true,
                 });
-                let tags: NotebookTagRow[] = [];
+                let tags: TagRow[] = [];
                 if(schoolTag && schoolName) {
                     tags.push({
                         tag: schoolName,
@@ -71,7 +73,7 @@ const useAddNotebook = () => {
                     });
                 }
                 if(tags.length > 0) {
-                    const successes = await Promise.all(tags.map(tag => addNotebookTag(tag)));
+                    const successes = await Promise.all(tags.map(tag => addTag(tag)));
                     if(successes.every(Boolean)) {
                         toast({
                             title: "Tags Created",

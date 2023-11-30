@@ -16,18 +16,17 @@ import Markdown from "@/components/Utilities/Markdown";
 import useDeleteNote from "@/hooks/mutators/useDeleteNote";
 
 import {Note} from "@/types/Note";
-import {Notebook} from "@/types/Notebook";
 
 interface Props {
-    notebook: Notebook;
     note: Note;
+    authorId: string;
     isOpen: boolean;
     onClose: () => void;
 }
 
-const NoteModal: React.FC<Props> = ({ note, notebook, isOpen, onClose }) => {
+const NoteModal: React.FC<Props> = ({ note, authorId, isOpen, onClose }) => {
 
-    const { deleteNote, isAllowed } = useDeleteNote(note, notebook);
+    const { deleteNote, isAllowed } = useDeleteNote(note, authorId);
 
     const onDelete = async () => {
         await deleteNote();

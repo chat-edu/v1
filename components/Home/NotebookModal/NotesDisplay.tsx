@@ -4,20 +4,21 @@ import {SimpleGrid, Text, VStack} from "@chakra-ui/react";
 
 import Note from "@/components/Home/NotebookModal/Note";
 
-import useNotes from "@/hooks/queries/notebook/useNotes";
+import useNotes from "@/hooks/queries/notes/useNotes";
 
 import {Notebook} from "@/types/Notebook";
 import Loading from "@/components/Utilities/Loading";
 import AddNoteCard from "@/components/AddModals/AddNote/AddNoteCard";
 
 interface Props {
-    notebook: Notebook,
+    notebookId: Notebook["id"],
+    authorId: string,
     allowAddNote?: boolean
 }
 
-const NotesDisplay: React.FC<Props> = ({ notebook, allowAddNote }) => {
+const NotesDisplay: React.FC<Props> = ({ notebookId, authorId, allowAddNote }) => {
 
-    const { notes, loading } = useNotes(notebook.id);
+    const { notes, loading } = useNotes(notebookId);
 
     return (
         <VStack
@@ -50,7 +51,7 @@ const NotesDisplay: React.FC<Props> = ({ notebook, allowAddNote }) => {
                             {
                                 allowAddNote && (
                                     <AddNoteCard
-                                        notebook={notebook}
+                                        notebookId={notebookId}
                                     />
                                 )
                             }
@@ -59,7 +60,7 @@ const NotesDisplay: React.FC<Props> = ({ notebook, allowAddNote }) => {
                                     <Note
                                         key={note.id}
                                         note={note}
-                                        notebook={notebook}
+                                        authorId={authorId}
                                     />
                                 ))
                             }

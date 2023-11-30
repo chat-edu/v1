@@ -1,18 +1,12 @@
 import Head from "next/head";
 
-import {useSearchParams} from "next/navigation";
+import {Box} from "@chakra-ui/react";
 
 import Layout from "@/components/Layout";
 
 import {NextPage} from "next";
-import {Box} from "@chakra-ui/react";
 
 const NotebooksPage: NextPage = () => {
-
-    const params = useSearchParams();
-
-    console.log(params);
-
     return (
         <>
             <Head>

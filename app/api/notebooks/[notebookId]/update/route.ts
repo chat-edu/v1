@@ -1,7 +1,8 @@
 import {updateNotebook} from "@/azure/cosmos/services/notebooks";
 
 import {NotebookIdParams} from "@/app/api/notebooks/[notebookId]/NotebookIdParams";
-import {NotebookRowInput} from "@/types/Notebook";
+
+import {NotebookRowInput} from "@/azure/cosmos/types";
 
 export const PATCH = async (request: Request, {params}: {params: NotebookIdParams}) => {
     const body = await request.json();
