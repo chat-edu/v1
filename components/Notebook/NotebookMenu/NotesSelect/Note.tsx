@@ -9,7 +9,7 @@ import {
 
 import {AiFillEye} from "react-icons/ai";
 
-import NoteModal from "@/components/NotebookUtilities/NoteModal";
+import NoteInputModal from "@/components/NotebookUtilities/NoteInputModal";
 
 import {Note as NoteType} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
@@ -68,7 +68,7 @@ const Note: React.FC<Props> = ({ note, notebook, addNote, removeNote, selected }
                     />
                 </HStack>
             </HStack>
-            <NoteModal
+            <NoteInputModal
                 note={note}
                 authorId={notebook.userId}
                 isOpen={isOpen}

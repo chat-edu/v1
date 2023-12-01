@@ -17,6 +17,7 @@ import MultipleTagInput from "@/components/Utilities/FormUtilities/MultipleTagIn
 import TypewriterAnimation from "@/components/AddModals/UploadNotes/UploadNotesModal/TypewriterAnimation";
 
 import useAddNote, {AddNoteStep} from "@/hooks/mutators/useAddNote";
+import GeneratedNotes from "@/components/AddModals/AddNote/GeneratedNotes";
 
 interface Props {
     isOpen: boolean;
@@ -29,26 +30,40 @@ const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , notebookId}) => {
     const {
         step,
         content,
-        setContent,
         contentTouched,
-        setContentTouched,
-        generateTopics,
         generatedTopics,
-        generateNotes,
         generatedTopicsLoading,
         generateNotesLoading,
+        generatedNotes,
         selectedTopics,
+        confirmNotesLoading,
+        setContent,
+        setContentTouched,
+        onGenerateTopics,
+        onGenerateNotes,
         selectTopic,
         unselectTopic,
+        confirmNotes,
+        removeNote,
+        regenerateNote,
+        confirmNote,
+        reset
     } = useAddNote(notebookId);
+
+    const onDone = () => {
+        onClose();
+        reset();
+    }
 
     const onSubmit = async () => {
         if (step === AddNoteStep.CONTENT) {
-            await generateTopics();
+            await onGenerateTopics();
         } else if (step === AddNoteStep.TOPICS) {
-            const success = await generateNotes();
+            await onGenerateNotes();
+        } else {
+            const success = await confirmNotes();
             if (success) {
-                onClose();
+                onDone();
             }
         }
     }
@@ -56,7 +71,7 @@ const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , notebookId}) => {
     return (
         <Modal
             isOpen={isOpen}
-            onClose={onClose}
+            onClose={onDone}
             size={'3xl'}
             scrollBehavior={'inside'}
             isCentered={true}
@@ -71,7 +86,7 @@ const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , notebookId}) => {
                             step === AddNoteStep.TOPICS ? (
                                 "Select Topics"
                             ) : (
-                                "Select Notes"
+                                "Confirm Notes"
                             )
                         )
                     }
@@ -98,13 +113,23 @@ const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , notebookId}) => {
                                             helperText={"Ex: A loop is a sequence of instructions that is continually repeated until a certain condition is reached."}
                                         />
                                     ) : (
-                                        <MultipleTagInput
-                                            label={"Topics"}
-                                            tagOptions={generatedTopics}
-                                            selectedTags={selectedTopics}
-                                            selectTag={selectTopic}
-                                            unselectTag={unselectTopic}
-                                        />
+                                        step === AddNoteStep.TOPICS ? (
+                                            <MultipleTagInput
+                                                label={"Topics"}
+                                                tagOptions={generatedTopics}
+                                                selectedTags={selectedTopics}
+                                                selectTag={selectTopic}
+                                                unselectTag={unselectTopic}
+                                            />
+                                        ) : (
+                                            <GeneratedNotes
+                                                generatedNotes={generatedNotes}
+                                                onDelete={removeNote}
+                                                onRegenerate={regenerateNote}
+                                                onConfirm={confirmNote}
+                                                onClose={onDone}
+                                            />
+                                        )
                                     )
                                 }
                             </Flex>
@@ -116,11 +141,11 @@ const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , notebookId}) => {
                         colorScheme={'brand'}
                         onClick={onSubmit}
                         isDisabled={
-                            generatedTopicsLoading || generateNotesLoading
+                            generatedTopicsLoading || generateNotesLoading || confirmNotesLoading
                                 || (step === AddNoteStep.CONTENT && content.length === 0)
                                 || (step === AddNoteStep.TOPICS && selectedTopics.length === 0)
                         }
-                        isLoading={generatedTopicsLoading || generateNotesLoading}
+                        isLoading={generatedTopicsLoading || generateNotesLoading || confirmNotesLoading}
                     >
                         {
                             step === AddNoteStep.CONTENT ? (
