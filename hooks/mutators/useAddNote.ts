@@ -1,90 +1,96 @@
-import { useEffect } from 'react';
-
-import * as Yup from "yup";
-
-import {useFormik} from "formik";
+import {useState} from 'react';
 
 import { addNote } from "@/services/notes";
 
-import useAuth from "@/hooks/useAuth";
 import {useToast} from "@chakra-ui/react";
 
-import {NoteInput} from "@/types/Note";
-import {getTopics} from "@/services/topics";
+import {generateNote, getTopics} from "@/services/topics";
 
-const NoteSchema: Yup.ObjectSchema<NoteInput> = Yup.object().shape({
-    name: Yup.string()
-        .required('Title is Required')
-        .min(1, 'Title is Required'),
-    content: Yup.string()
-        .required('Content is Required')
-        .min(1, 'Content is Required'),
-    notebookId: Yup.number()
-        .required('Notebook ID is Required')
-        .min(1, 'Course ID is Required'),
-});
+export enum AddNoteStep {
+    CONTENT,
+    TOPICS,
+    GENERATE_NOTES,
+}
 
 const useAddNote = (notebookId: number) => {
 
-    const { user } = useAuth();
-
     const toast = useToast();
 
-    const {
-        values,
-        errors,
-        touched,
-        setFieldValue,
-        setFieldTouched,
-        submitForm,
-        resetForm,
-    } = useFormik<NoteInput>({
-        initialValues: {
-            name: '',
-            content: '',
-            notebookId: notebookId || 0,
-        },
-        validationSchema: NoteSchema,
-        onSubmit: async note => {
-            if(!user) return;
-            const topics = await getTopics(note.content);
-            console.log(topics);
-            // const success = await addNote(note);
-            // if(success) {
-            //     toast({
-            //         title: "Note Added",
-            //         description: "Your note has been added.",
-            //         status: "success",
-            //         duration: 5000,
-            //         isClosable: true,
-            //     })
-            // } else {
-            //     toast({
-            //         title: "Error",
-            //         description: "There was an error adding your note.",
-            //         status: "error",
-            //         duration: 5000,
-            //         isClosable: true,
-            //     })
-            // }
-            resetForm();
-        },
-    });
+    const [step, setStep] = useState<AddNoteStep>(AddNoteStep.CONTENT);
 
-    useEffect(() => {
-        setFieldValue('notebookId', notebookId || 0);
-    }, [setFieldValue, notebookId]);
+    const [content, setContent] = useState<string>('');
+    const [contentTouched, setContentTouched] = useState<boolean>(false);
+
+    const [generatedTopicsLoading, setGeneratedTopicsLoading] = useState<boolean>(false);
+    const [generatedTopics, setGeneratedTopics] = useState<string[]>([]);
+
+    const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+    const [generateNotesLoading, setGenerateNotesLoading] = useState<boolean>(false);
+
+    const generateTopics = async () => {
+        setGeneratedTopicsLoading(true);
+        setGeneratedTopics(await getTopics(content));
+        setGeneratedTopicsLoading(false);
+        setStep(AddNoteStep.TOPICS);
+    }
+
+    const selectTopic = (topic: string) => {
+        setSelectedTopics([...selectedTopics, topic]);
+    }
+
+    const unselectTopic = (topic: string) => {
+        setSelectedTopics(selectedTopics.filter(t => t !== topic));
+    }
+
+    const generateNotes = async () => {
+        setGenerateNotesLoading(true);
+        const noteInputs = await Promise.all(selectedTopics.map(async topic =>
+            generateNote(content, topic, notebookId)
+        ));
+        const results = await Promise.all(noteInputs.map(async noteInput => {
+            return await addNote(noteInput)
+        }));
+        if(results.every(result => result)) {
+            toast({
+                title: "Note Added",
+                description: "Your note has been added.",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+            })
+            setGenerateNotesLoading(false);
+            setContent('');
+            setSelectedTopics([]);
+            setGeneratedTopics([]);
+            setStep(AddNoteStep.CONTENT);
+            return true
+        } else {
+            toast({
+                title: "Error",
+                description: "There was an error adding your note.",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            })
+            return false;
+        }
+    }
 
     return {
         notebookId,
-        values,
-        errors,
-        touched,
-        setFieldValue,
-        setFieldTouched,
-        submitForm,
-        resetForm,
-        disabled: Object.keys(errors).length > 0,
+        step,
+        content,
+        setContent,
+        contentTouched,
+        setContentTouched,
+        generateTopics,
+        generatedTopicsLoading,
+        generatedTopics,
+        selectedTopics,
+        selectTopic,
+        unselectTopic,
+        generateNotes,
+        generateNotesLoading,
     }
 }
 

@@ -1,13 +1,25 @@
-export const topicsPrompt = (content: string) => (`
-    Extract roughly ${Math.max(Math.floor(content.split(" ").length / wordsPerTopic), 1)} key topics from the following text. A topic should encompass a big idea or concept. There should be roughly one topic for every 500 words.
+export const extractTopicsPrompt = (content: string) => `
+
+    Analyze the following class notes. 
     
-    Text: ${content}
+    If the notes are short and focused on a specific topic, identify the pme or two most central concepts. 
+    
+    If the notes are longer and cover multiple topics, list the key concepts or main topics covered.
+    
+    Content: ${content}
     
     Return the response as a JSON object with the following format:
     
     {
         "topics": string[]
     }
-`);
+`
 
-const wordsPerTopic = 500;
+export const generateNoteForTopicPrompt = (topic: string, note: string) => `
+    Given the topic "${topic}", generate a note that summarizes the information about this topic in the provided text. Only include information about this topic. Do not include information about other topics.
+    
+    Text: ${note}
+    
+    Use markdown to format the note, including headings, bullet points, math equations, and code blocks.
+`
+

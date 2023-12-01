@@ -1,19 +1,23 @@
 import React from 'react';
 
 import {
+    Button,
+    Flex,
     Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
     ModalBody,
-    ModalCloseButton, Button, Flex,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
 } from '@chakra-ui/react'
 
 import TextareaInput from "@/components/Utilities/FormUtilities/TextareaInput";
-import TextInput from "@/components/Utilities/FormUtilities/TextInput";
+import MultipleTagInput from "@/components/Utilities/FormUtilities/MultipleTagInput";
+import TypewriterAnimation from "@/components/AddModals/UploadNotes/UploadNotesModal/TypewriterAnimation";
 
-import useAddNote from "@/hooks/mutators/useAddNote";
+import useAddNote, {AddNoteStep} from "@/hooks/mutators/useAddNote";
+
 interface Props {
     isOpen: boolean;
     onClose: () => void;
@@ -22,11 +26,31 @@ interface Props {
 
 const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , notebookId}) => {
 
-    const { values, setFieldValue, touched, setFieldTouched, disabled, submitForm, errors } = useAddNote(notebookId);
+    const {
+        step,
+        content,
+        setContent,
+        contentTouched,
+        setContentTouched,
+        generateTopics,
+        generatedTopics,
+        generateNotes,
+        generatedTopicsLoading,
+        generateNotesLoading,
+        selectedTopics,
+        selectTopic,
+        unselectTopic,
+    } = useAddNote(notebookId);
 
     const onSubmit = async () => {
-        await submitForm();
-        onClose();
+        if (step === AddNoteStep.CONTENT) {
+            await generateTopics();
+        } else if (step === AddNoteStep.TOPICS) {
+            const success = await generateNotes();
+            if (success) {
+                onClose();
+            }
+        }
     }
 
     return (
@@ -39,40 +63,76 @@ const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , notebookId}) => {
         >
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Add Notes</ModalHeader>
+                <ModalHeader>
+                    {
+                        step === AddNoteStep.CONTENT ? (
+                            "Add Notes"
+                        ) : (
+                            step === AddNoteStep.TOPICS ? (
+                                "Select Topics"
+                            ) : (
+                                "Select Notes"
+                            )
+                        )
+                    }
+                </ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <Flex
-                        direction={'column'}
-                        gap={4}
-                    >
-                        <TextInput
-                            label={"Name"}
-                            placeholder={"Enter the name of this note here..."}
-                            value={values.name}
-                            onChange={(title) => setFieldValue('name', title)}
-                            onBlur={() => setFieldTouched('name', true)}
-                            error={touched.name && errors.name || undefined}
-                            helperText={"Ex: Loops"}
-                        />
-                        <TextareaInput
-                            label={"Content"}
-                            placeholder={"Enter the contents of the note here..."}
-                            value={values.content}
-                            onChange={(content) => setFieldValue('content', content)}
-                            onBlur={() => setFieldTouched('content', true)}
-                            error={touched.content && errors.content || undefined}
-                            helperText={"Ex: A loop is a sequence of instructions that is continually repeated until a certain condition is reached."}
-                        />
-                    </Flex>
+                    {
+                        generatedTopicsLoading || generateNotesLoading ? (
+                            <TypewriterAnimation />
+                        ) : (
+                            <Flex
+                                direction={'column'}
+                                gap={4}
+                            >
+                                {
+                                    step === AddNoteStep.CONTENT ? (
+                                        <TextareaInput
+                                            label={"Content"}
+                                            placeholder={"Enter the contents of the note here..."}
+                                            value={content}
+                                            onChange={(val) => setContent(val)}
+                                            onBlur={() => setContentTouched(true)}
+                                            error={contentTouched && content.length === 0 ? "Content is required." : undefined}
+                                            helperText={"Ex: A loop is a sequence of instructions that is continually repeated until a certain condition is reached."}
+                                        />
+                                    ) : (
+                                        <MultipleTagInput
+                                            label={"Topics"}
+                                            tagOptions={generatedTopics}
+                                            selectedTags={selectedTopics}
+                                            selectTag={selectTopic}
+                                            unselectTag={unselectTopic}
+                                        />
+                                    )
+                                }
+                            </Flex>
+                        )
+                    }
                 </ModalBody>
                 <ModalFooter>
                     <Button
                         colorScheme={'brand'}
                         onClick={onSubmit}
-                        isDisabled={disabled}
+                        isDisabled={
+                            generatedTopicsLoading || generateNotesLoading
+                                || (step === AddNoteStep.CONTENT && content.length === 0)
+                                || (step === AddNoteStep.TOPICS && selectedTopics.length === 0)
+                        }
+                        isLoading={generatedTopicsLoading || generateNotesLoading}
                     >
-                        Submit
+                        {
+                            step === AddNoteStep.CONTENT ? (
+                                "Generate Topics"
+                            ) : (
+                                step === AddNoteStep.TOPICS ? (
+                                    "Generate Notes"
+                                ) : (
+                                    "Add Notes"
+                                )
+                            )
+                        }
                     </Button>
                 </ModalFooter>
             </ModalContent>
