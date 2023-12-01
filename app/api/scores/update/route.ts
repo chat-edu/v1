@@ -1,6 +1,6 @@
 import {NextRequest} from "next/server";
 
-import {updateScore} from "@/azure/cosmos/services/scores";
+import {updateScore} from "@/cosmosPostgres/services/scores";
 
 export const PATCH = async (request: NextRequest) => {
     const body = await request.json();

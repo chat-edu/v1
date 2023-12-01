@@ -1,5 +1,5 @@
-import {summarizePrompt} from "@/prompts/summarize";
 import openai from "@/openai";
+import {topicsPrompt} from "@/prompts/topics";
 
 export const runtime = 'edge';
 
@@ -11,12 +11,12 @@ export async function POST(req: Request) {
         messages: [
             {
                 role: "user",
-                content: summarizePrompt(text),
+                content: topicsPrompt(text),
             }
         ],
     })
         .then((response) => response.choices[0].message.content)
         .catch(() => "An error occurred.")
 
-    return Response.json(content);
+    return Response.json(content ? JSON.parse(content).topics : []);
 }

@@ -1,9 +1,9 @@
-import {emitNotesChangedEvent} from "@/azure/cosmos/eventEmitters/notesEventEmitter";
+import {emitNotesChangedEvent} from "@/cosmosPostgres/eventEmitters/notesEventEmitter";
 
 import {Note, NoteInput} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
 
-import {NoteRowInput, NoteRow} from "@/azure/cosmos/types";
+import {NoteRowInput, NoteRow} from "@/cosmosPostgres/types";
 
 // CREATE
 

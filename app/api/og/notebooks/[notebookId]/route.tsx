@@ -8,7 +8,7 @@ import {NextRequest} from "next/server";
 
 import {Notebook} from "@/types/Notebook";
 import {TagTypes} from "@/types/Tags";
-import {TagWithParentTagTypeRow} from "@/azure/cosmos/types";
+import {TagWithParentTagTypeRow} from "@/cosmosPostgres/types";
 
 export const runtime = 'edge';
 

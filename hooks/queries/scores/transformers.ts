@@ -1,4 +1,4 @@
-import {UserScorePartialRow, NotebookScorePartialRow, ScoreRow, RankedRow} from "@/azure/cosmos/types";
+import {UserScorePartialRow, NotebookScorePartialRow, ScoreRow, RankedRow} from "@/cosmosPostgres/types";
 import {UserScorePartial, NotebookScorePartial, Score, Ranked} from "@/types/score";
 
 export const transformUserScorePartial = (row: UserScorePartialRow): UserScorePartial => ({

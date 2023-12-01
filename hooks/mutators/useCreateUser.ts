@@ -10,7 +10,7 @@ import { addUser } from "@/services/user";
 
 import useAuth from "@/hooks/useAuth";
 
-import {emitUsersChangedEvent} from "@/azure/cosmos/eventEmitters/userEventEmitter";
+import {emitUsersChangedEvent} from "@/cosmosPostgres/eventEmitters/userEventEmitter";
 
 import {UserInput} from "@/types/User";
 

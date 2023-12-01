@@ -3,7 +3,7 @@ import {
     UserScorePartialRow,
     RankedRow,
     NotebookScoreRow
-} from "@/azure/cosmos/types";
+} from "@/cosmosPostgres/types";
 
 export interface UserScoreRow extends UserScorePartialRow {
     name: UserRow["name"];

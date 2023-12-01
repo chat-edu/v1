@@ -10,11 +10,11 @@ import useAuth from "@/hooks/useAuth";
 
 import {addNotebook} from "@/services/notebooks";
 
-import {emitNotebooksChangedEvent} from "@/azure/cosmos/eventEmitters/notebooksEventEmitter";
+import {emitNotebooksChangedEvent} from "@/cosmosPostgres/eventEmitters/notebooksEventEmitter";
 
 import {NotebookInput} from "@/types/Notebook";
 import {TopicTagTypes, SchoolTagTypes, TagTypes} from "@/types/Tags";
-import {TagRow} from "@/azure/cosmos/types/tag";
+import {TagRow} from "@/cosmosPostgres/types/tag";
 import {addTag} from "@/services/tags";
 
 const NotebookSchema: Yup.ObjectSchema<NotebookInput> = Yup.object().shape({

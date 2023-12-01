@@ -1,4 +1,4 @@
-import {findScoreByUserIdAndNotebookId} from "@/azure/cosmos/services/scores";
+import {findScoreByUserIdAndNotebookId} from "@/cosmosPostgres/services/scores";
 
 import {UserIdParams} from "@/app/api/scores/notebooks/notebook/[notebookId]/user/[userId]/UserIdParams";
 

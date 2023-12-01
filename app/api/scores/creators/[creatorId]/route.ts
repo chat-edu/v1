@@ -1,4 +1,4 @@
-import {findCreatorScoreAndRank} from "@/azure/cosmos/services/scores";
+import {findCreatorScoreAndRank} from "@/cosmosPostgres/services/scores";
 
 import {CreatorIdParams} from "@/app/api/scores/creators/[creatorId]/CreatorIdParams";
 

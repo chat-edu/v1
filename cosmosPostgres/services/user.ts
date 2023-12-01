@@ -1,8 +1,8 @@
-import {add, del, find, get, update} from "@/azure/cosmos/services/base";
+import {add, del, find, get, update} from "@/cosmosPostgres/services/base";
 
-import {USERS_TABLE} from "@/azure/cosmos/constants/tables";
+import {USERS_TABLE} from "@/cosmosPostgres/constants/tables";
 
-import { UserRowInput, UserRow } from "@/azure/cosmos/types/user";
+import { UserRowInput, UserRow } from "@/cosmosPostgres/types/user";
 
 // CREATE
 

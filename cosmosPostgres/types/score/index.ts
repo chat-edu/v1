@@ -1,5 +1,5 @@
-import {NotebookRow} from "@/azure/cosmos/types/notebook";
-import {UserRow} from "@/azure/cosmos/types/user";
+import {NotebookRow} from "@/cosmosPostgres/types/notebook";
+import {UserRow} from "@/cosmosPostgres/types/user";
 
 interface Score {
     score: string | number;

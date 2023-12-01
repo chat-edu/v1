@@ -10,6 +10,7 @@ import useAuth from "@/hooks/useAuth";
 import {useToast} from "@chakra-ui/react";
 
 import {NoteInput} from "@/types/Note";
+import {getTopics} from "@/services/topics";
 
 const NoteSchema: Yup.ObjectSchema<NoteInput> = Yup.object().shape({
     name: Yup.string()
@@ -46,24 +47,26 @@ const useAddNote = (notebookId: number) => {
         validationSchema: NoteSchema,
         onSubmit: async note => {
             if(!user) return;
-            const success = await addNote(note);
-            if(success) {
-                toast({
-                    title: "Note Added",
-                    description: "Your note has been added.",
-                    status: "success",
-                    duration: 5000,
-                    isClosable: true,
-                })
-            } else {
-                toast({
-                    title: "Error",
-                    description: "There was an error adding your note.",
-                    status: "error",
-                    duration: 5000,
-                    isClosable: true,
-                })
-            }
+            const topics = await getTopics(note.content);
+            console.log(topics);
+            // const success = await addNote(note);
+            // if(success) {
+            //     toast({
+            //         title: "Note Added",
+            //         description: "Your note has been added.",
+            //         status: "success",
+            //         duration: 5000,
+            //         isClosable: true,
+            //     })
+            // } else {
+            //     toast({
+            //         title: "Error",
+            //         description: "There was an error adding your note.",
+            //         status: "error",
+            //         duration: 5000,
+            //         isClosable: true,
+            //     })
+            // }
             resetForm();
         },
     });

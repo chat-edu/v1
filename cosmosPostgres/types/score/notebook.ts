@@ -3,7 +3,7 @@ import {
     NotebookRow,
     RankedRow,
     NotebookScorePartialRow
-} from "@/azure/cosmos/types";
+} from "@/cosmosPostgres/types";
 
 export interface NotebookScoreRow extends NotebookScorePartialRow {
     notebook_name: NotebookRow["name"];

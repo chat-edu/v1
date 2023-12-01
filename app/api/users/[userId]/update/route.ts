@@ -1,8 +1,8 @@
-import {updateUser} from "@/azure/cosmos/services/user"
+import {updateUser} from "@/cosmosPostgres/services/user"
 
 import {UserIdParams} from "@/app/api/users/[userId]/UserIdParams";
 
-import {UserRowInput} from "@/azure/cosmos/types/user";
+import {UserRowInput} from "@/cosmosPostgres/types/user";
 
 export const PATCH = async (request: Request, {params}: {params: UserIdParams}) => {
     const body = await request.json();

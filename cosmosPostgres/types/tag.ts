@@ -1,4 +1,4 @@
-import {NotebookRow} from "@/azure/cosmos/types/notebook";
+import {NotebookRow} from "@/cosmosPostgres/types/notebook";
 
 // returned from the database when querying for a tag's type
 export interface TagTypeRow {

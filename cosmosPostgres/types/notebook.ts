@@ -1,5 +1,5 @@
 // used on the server side to create a new notebook
-import {UserRow} from "@/azure/cosmos/types/user";
+import {UserRow} from "@/cosmosPostgres/types/user";
 
 export interface NotebookRowInput {
     name: string;

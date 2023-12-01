@@ -1,6 +1,6 @@
-import {find, get} from "@/azure/cosmos/services/base";
+import {find, get} from "@/cosmosPostgres/services/base";
 
-import {NotebookRow, RankedNotebookScoreRow} from "@/azure/cosmos/types";
+import {NotebookRow, RankedNotebookScoreRow} from "@/cosmosPostgres/types";
 
 // finds the top notebooks by total score
 export const findTopNotebooks = async (limit: number): Promise<RankedNotebookScoreRow[]> => {

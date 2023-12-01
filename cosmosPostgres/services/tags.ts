@@ -1,9 +1,9 @@
-import {find, del, add, update, get} from '@/azure/cosmos/services/base';
+import {find, del, add, update, get} from '@/cosmosPostgres/services/base';
 
-import { NOTEBOOK_TAGS_TABLE } from "@/azure/cosmos/constants/tables";
+import { NOTEBOOK_TAGS_TABLE } from "@/cosmosPostgres/constants/tables";
 
-import {TagRow, TagTypeRow} from "@/azure/cosmos/types/tag";
-import {NotebookRow} from "@/azure/cosmos/types";
+import {TagRow, TagTypeRow} from "@/cosmosPostgres/types/tag";
+import {NotebookRow} from "@/cosmosPostgres/types";
 
 
 // CREATE

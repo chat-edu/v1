@@ -1,5 +1,5 @@
 import {User, UserInput} from "@/types/User";
-import {UserRowInput} from "@/azure/cosmos/types/user";
+import {UserRowInput} from "@/cosmosPostgres/types/user";
 
 // CREATE
 

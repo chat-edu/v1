@@ -1,8 +1,8 @@
-import { add, del, find, get, update } from "@/azure/cosmos/services/base";
+import { add, del, find, get, update } from "@/cosmosPostgres/services/base";
 
-import { NOTEBOOKS_TABLE } from "@/azure/cosmos/constants/tables";
+import { NOTEBOOKS_TABLE } from "@/cosmosPostgres/constants/tables";
 
-import { NotebookRow, NotebookRowInput } from "@/azure/cosmos/types/notebook";
+import { NotebookRow, NotebookRowInput } from "@/cosmosPostgres/types/notebook";
 
 // CREATE
 

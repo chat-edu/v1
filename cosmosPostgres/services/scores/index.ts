@@ -1,9 +1,9 @@
-import {getPool} from "@/azure/cosmos/citus";
-import {del, get} from "@/azure/cosmos/services/base";
+import {getPool} from "@/cosmosPostgres/citus";
+import {del, get} from "@/cosmosPostgres/services/base";
 
-import { UserRow } from "@/azure/cosmos/types/user";
-import { NotebookRow } from "@/azure/cosmos/types/notebook";
-import { ScoreRow } from "@/azure/cosmos/types/score";
+import { UserRow } from "@/cosmosPostgres/types/user";
+import { NotebookRow } from "@/cosmosPostgres/types/notebook";
+import { ScoreRow } from "@/cosmosPostgres/types/score";
 
 
 // READ
