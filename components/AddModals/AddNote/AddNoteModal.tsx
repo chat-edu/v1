@@ -156,6 +156,7 @@ const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , notebookId}) => {
                                                                 icon={<CloseIcon />}
                                                                 onClick={resetFile}
                                                                 flexShrink={0}
+                                                                isDisabled={isFileExtracting}
                                                             />
                                                         </Tooltip>
                                                     </HStack>

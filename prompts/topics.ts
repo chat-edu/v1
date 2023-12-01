@@ -18,8 +18,14 @@ export const extractTopicsPrompt = (content: string) => `
 export const generateNoteForTopicPrompt = (topic: string, note: string) => `
     Given the topic "${topic}", generate a note that summarizes the information about this topic in the provided text. Only include information about this topic. Do not include information about other topics.
     
-    Text: ${note}
+    The summary should make the note easy to read, so it should be well-organized. You can change the formatting of the original text.
     
-    Use markdown to format the note, including headings, bullet points, math equations, and code blocks.
+    Use markdown to format the note, including headings, bullet points, and bolded text.
+    
+    For any math or equations, use LaTeX to format the math. Wrap them in $ signs to indicate that they are math. For example, $x^2$.
+    
+    For any code, use markdown to format the code.
+    
+    Provided text: ${note}
 `
 
