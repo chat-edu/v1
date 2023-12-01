@@ -1,7 +1,8 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import useGenerateTopics from "@/hooks/utilities/useGenerateTopics";
 import useGenerateNotes from "@/hooks/utilities/useGenerateNotes";
+import useProcessPdf from "@/hooks/utilities/useProcessPdf";
 
 export enum AddNoteStep {
     CONTENT,
@@ -38,6 +39,19 @@ const useAddNote = (notebookId: number) => {
         confirmNotes
     } = useGenerateNotes(content, selectedTopics, notebookId);
 
+    const {
+        file,
+        isFileExtracting,
+        extractedText,
+        processFile,
+        updateFile,
+        resetFile
+    } = useProcessPdf();
+
+    useEffect(() => {
+        setContent(extractedText);
+    }, [extractedText]);
+
     const onGenerateTopics = async () => {
         await generateTopics();
         setStep(AddNoteStep.TOPICS);
@@ -54,6 +68,7 @@ const useAddNote = (notebookId: number) => {
         setContent('');
         setContentTouched(false);
         setStep(AddNoteStep.CONTENT);
+        resetFile();
     }
 
     return {
@@ -67,6 +82,10 @@ const useAddNote = (notebookId: number) => {
         generateNotesLoading,
         generatedNotes,
         confirmNotesLoading,
+        file,
+        isFileExtracting,
+        processFile,
+        updateFile,
         setContent,
         setContentTouched,
         onGenerateTopics,
@@ -77,7 +96,8 @@ const useAddNote = (notebookId: number) => {
         regenerateNote,
         removeNote,
         confirmNote,
-        reset
+        reset,
+        resetFile,
     }
 }
 

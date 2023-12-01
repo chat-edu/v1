@@ -21,7 +21,7 @@ const GeneratedNotes: React.FC<Props> = ({ generatedNotes, onRegenerate, onConfi
                 <Text
                     fontWeight={'bold'}
                 >
-                    No Notes Generated
+                    All Notes Processed
                 </Text>
                 <Button
                     onClick={onClose}

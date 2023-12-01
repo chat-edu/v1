@@ -11,7 +11,6 @@ import {SmallAddIcon} from "@chakra-ui/icons";
 
 import AddNoteButton from "@/components/AddModals/AddNote/AddNoteButton";
 import Note from "@/components/Notebook/NotebookMenu/NotesSelect/Note";
-import UploadNotes from "@/components/AddModals/UploadNotes";
 
 import useAuth from "@/hooks/useAuth";
 import useNotes from "@/hooks/queries/notes/useNotes";
@@ -106,9 +105,6 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                                 buttonProps={{
                                     w: '100%',
                                 }}
-                            />
-                            <UploadNotes
-                                notebookId={notebook.id}
                             />
                         </VStack>
                     )

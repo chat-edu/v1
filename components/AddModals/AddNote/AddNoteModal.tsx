@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
     Button,
-    Flex,
+    Flex, HStack, IconButton,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -10,14 +10,20 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
+    Text, Tooltip,
+    VStack
 } from '@chakra-ui/react'
+import {CloseIcon} from "@chakra-ui/icons";
+
+import {FaMagic} from "react-icons/fa";
 
 import TextareaInput from "@/components/Utilities/FormUtilities/TextareaInput";
 import MultipleTagInput from "@/components/Utilities/FormUtilities/MultipleTagInput";
-import TypewriterAnimation from "@/components/AddModals/UploadNotes/UploadNotesModal/TypewriterAnimation";
+import TypewriterAnimation from "@/components/Utilities/TypewriterAnimation";
+import GeneratedNotes from "@/components/AddModals/AddNote/GeneratedNotes";
+import FileInput from "@/components/Utilities/FormUtilities/FIleInput";
 
 import useAddNote, {AddNoteStep} from "@/hooks/mutators/useAddNote";
-import GeneratedNotes from "@/components/AddModals/AddNote/GeneratedNotes";
 
 interface Props {
     isOpen: boolean;
@@ -37,6 +43,8 @@ const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , notebookId}) => {
         generatedNotes,
         selectedTopics,
         confirmNotesLoading,
+        file,
+        isFileExtracting,
         setContent,
         setContentTouched,
         onGenerateTopics,
@@ -47,7 +55,10 @@ const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , notebookId}) => {
         removeNote,
         regenerateNote,
         confirmNote,
-        reset
+        reset,
+        updateFile,
+        processFile,
+        resetFile
     } = useAddNote(notebookId);
 
     const onDone = () => {
@@ -103,15 +114,54 @@ const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , notebookId}) => {
                             >
                                 {
                                     step === AddNoteStep.CONTENT ? (
-                                        <TextareaInput
-                                            label={"Content"}
-                                            placeholder={"Enter the contents of the note here..."}
-                                            value={content}
-                                            onChange={(val) => setContent(val)}
-                                            onBlur={() => setContentTouched(true)}
-                                            error={contentTouched && content.length === 0 ? "Content is required." : undefined}
-                                            helperText={"Ex: A loop is a sequence of instructions that is continually repeated until a certain condition is reached."}
-                                        />
+                                        <VStack
+                                            w={'100%'}
+                                        >
+                                            <TextareaInput
+                                                label={"Content"}
+                                                placeholder={"Enter the contents of the note here..."}
+                                                value={content}
+                                                onChange={(val) => setContent(val)}
+                                                onBlur={() => setContentTouched(true)}
+                                                error={contentTouched && content.length === 0 ? "Content is required." : undefined}
+                                                helperText={"Ex: A loop is a sequence of instructions that is continually repeated until a certain condition is reached."}
+                                            />
+                                            <Text>
+                                                or
+                                            </Text>
+                                            <HStack>
+                                                <FileInput
+                                                    setFile={updateFile}
+                                                    text={file ? file.name : 'Upload Notes'}
+                                                    accept={'application/pdf'}
+                                                />
+                                                {file && (
+                                                    <HStack>
+                                                        <Tooltip
+                                                            label={'Process File'}
+                                                        >
+                                                            <IconButton
+                                                                aria-label={'Upload Notes'}
+                                                                icon={<FaMagic />}
+                                                                onClick={processFile}
+                                                                flexShrink={0}
+                                                                isLoading={isFileExtracting}
+                                                            />
+                                                        </Tooltip>
+                                                        <Tooltip
+                                                            label={'Reset File'}
+                                                        >
+                                                            <IconButton
+                                                                aria-label={'Remove PDF'}
+                                                                icon={<CloseIcon />}
+                                                                onClick={resetFile}
+                                                                flexShrink={0}
+                                                            />
+                                                        </Tooltip>
+                                                    </HStack>
+                                                )}
+                                            </HStack>
+                                        </VStack>
                                     ) : (
                                         step === AddNoteStep.TOPICS ? (
                                             <MultipleTagInput
