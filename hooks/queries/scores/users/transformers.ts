@@ -7,7 +7,7 @@ import {
     RankedUserNotebookScoreRow,
     UserCreatorScoreRow,
     RankedUserCreatorScoreRow, RankedUserScoreRow
-} from "@/azure/cosmos/types";
+} from "@/cosmosPostgres/types";
 import {
     UserScore,
     UserNotebookScore,

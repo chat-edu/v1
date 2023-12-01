@@ -1,5 +1,5 @@
 import {Notebook, NotebookInput} from "@/types/Notebook";
-import {NotebookRowInput, NotebookRow} from "@/azure/cosmos/types";
+import {NotebookRowInput, NotebookRow} from "@/cosmosPostgres/types";
 
 // CREATE
 

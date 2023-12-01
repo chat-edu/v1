@@ -1,4 +1,4 @@
-import {deleteNotebook} from "@/azure/cosmos/services/notebooks";
+import {deleteNotebook} from "@/cosmosPostgres/services/notebooks";
 
 import {NotebookIdParams} from "@/app/api/notebooks/[notebookId]/NotebookIdParams";
 

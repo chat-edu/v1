@@ -1,6 +1,6 @@
 import {NextRequest} from "next/server";
 
-import {updateTag} from "@/azure/cosmos/services/tags";
+import {updateTag} from "@/cosmosPostgres/services/tags";
 
 import {TagTypeParams} from "@/app/api/tags/notebook/[notebookId]/[tagType]/TagTypeParams";
 

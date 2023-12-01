@@ -6,7 +6,7 @@ import {transformNotebookScore} from "@/hooks/queries/scores/notebooks/transform
 import {
     subscribeToNotebooksChangedEvent,
     unsubscribeFromNotebooksChangedEvent
-} from "@/azure/cosmos/eventEmitters/notebooksEventEmitter";
+} from "@/cosmosPostgres/eventEmitters/notebooksEventEmitter";
 
 
 const useUserNotebooks = (userId: string) => {

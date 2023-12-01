@@ -1,87 +1,103 @@
-import { useEffect } from 'react';
+import {useEffect, useState} from 'react';
 
-import * as Yup from "yup";
+import useGenerateTopics from "@/hooks/utilities/useGenerateTopics";
+import useGenerateNotes from "@/hooks/utilities/useGenerateNotes";
+import useProcessPdf from "@/hooks/utilities/useProcessPdf";
 
-import {useFormik} from "formik";
-
-import { addNote } from "@/services/notes";
-
-import useAuth from "@/hooks/useAuth";
-import {useToast} from "@chakra-ui/react";
-
-import {NoteInput} from "@/types/Note";
-
-const NoteSchema: Yup.ObjectSchema<NoteInput> = Yup.object().shape({
-    name: Yup.string()
-        .required('Title is Required')
-        .min(1, 'Title is Required'),
-    content: Yup.string()
-        .required('Content is Required')
-        .min(1, 'Content is Required'),
-    notebookId: Yup.number()
-        .required('Notebook ID is Required')
-        .min(1, 'Course ID is Required'),
-});
+export enum AddNoteStep {
+    CONTENT,
+    TOPICS,
+    GENERATE_NOTES,
+}
 
 const useAddNote = (notebookId: number) => {
 
-    const { user } = useAuth();
+    const [step, setStep] = useState<AddNoteStep>(AddNoteStep.CONTENT);
 
-    const toast = useToast();
+    const [content, setContent] = useState<string>('');
+    const [contentTouched, setContentTouched] = useState<boolean>(false);
 
     const {
-        values,
-        errors,
-        touched,
-        setFieldValue,
-        setFieldTouched,
-        submitForm,
-        resetForm,
-    } = useFormik<NoteInput>({
-        initialValues: {
-            name: '',
-            content: '',
-            notebookId: notebookId || 0,
-        },
-        validationSchema: NoteSchema,
-        onSubmit: async note => {
-            if(!user) return;
-            const success = await addNote(note);
-            if(success) {
-                toast({
-                    title: "Note Added",
-                    description: "Your note has been added.",
-                    status: "success",
-                    duration: 5000,
-                    isClosable: true,
-                })
-            } else {
-                toast({
-                    title: "Error",
-                    description: "There was an error adding your note.",
-                    status: "error",
-                    duration: 5000,
-                    isClosable: true,
-                })
-            }
-            resetForm();
-        },
-    });
+        generatedTopics,
+        generatedTopicsLoading,
+        selectedTopics,
+        generateTopics,
+        resetGeneratedTopics ,
+        selectTopic,
+        unselectTopic,
+    } = useGenerateTopics(content);
+
+    const {
+        generateNotesLoading,
+        generatedNotes,
+        confirmNotesLoading,
+        generateNotes,
+        resetGeneratedNotes,
+        regenerateNote,
+        removeNote,
+        confirmNote,
+        confirmNotes
+    } = useGenerateNotes(content, selectedTopics, notebookId);
+
+    const {
+        file,
+        isFileExtracting,
+        extractedText,
+        processFile,
+        updateFile,
+        resetFile
+    } = useProcessPdf();
 
     useEffect(() => {
-        setFieldValue('notebookId', notebookId || 0);
-    }, [setFieldValue, notebookId]);
+        setContent(extractedText);
+    }, [extractedText]);
+
+    const onGenerateTopics = async () => {
+        await generateTopics();
+        setStep(AddNoteStep.TOPICS);
+    }
+
+    const onGenerateNotes = async () => {
+        await generateNotes();
+        setStep(AddNoteStep.GENERATE_NOTES);
+    }
+
+    const reset = () => {
+        resetGeneratedNotes();
+        resetGeneratedTopics();
+        setContent('');
+        setContentTouched(false);
+        setStep(AddNoteStep.CONTENT);
+        resetFile();
+    }
 
     return {
         notebookId,
-        values,
-        errors,
-        touched,
-        setFieldValue,
-        setFieldTouched,
-        submitForm,
-        resetForm,
-        disabled: Object.keys(errors).length > 0,
+        step,
+        content,
+        contentTouched,
+        generatedTopicsLoading,
+        generatedTopics,
+        selectedTopics,
+        generateNotesLoading,
+        generatedNotes,
+        confirmNotesLoading,
+        file,
+        isFileExtracting,
+        processFile,
+        updateFile,
+        setContent,
+        setContentTouched,
+        onGenerateTopics,
+        selectTopic,
+        unselectTopic,
+        onGenerateNotes,
+        confirmNotes,
+        regenerateNote,
+        removeNote,
+        confirmNote,
+        reset,
+        resetFile,
     }
 }
 

@@ -6,7 +6,7 @@ import {transformUserNotebookScore} from "@/hooks/queries/scores/users/transform
 import {
     subscribeToNotebookLeaderboardChangedEvent,
     unsubscribeFromNotebookLeaderboardChangedEvent
-} from "@/azure/cosmos/eventEmitters/notebookLeaderboardEventEmitter";
+} from "@/cosmosPostgres/eventEmitters/notebookLeaderboardEventEmitter";
 
 import {Notebook} from "@/types/Notebook";
 

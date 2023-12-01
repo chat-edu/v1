@@ -1,4 +1,4 @@
-import {UserRow,} from "@/azure/cosmos/types/user";
+import {UserRow,} from "@/cosmosPostgres/types/user";
 import {User} from "@/types/User";
 
 export const transformUser = (user: UserRow): User => ({

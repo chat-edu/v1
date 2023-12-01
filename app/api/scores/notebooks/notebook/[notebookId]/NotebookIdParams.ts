@@ -1,4 +1,4 @@
-import {NotebookRow} from "@/azure/cosmos/types";
+import {NotebookRow} from "@/cosmosPostgres/types";
 
 export interface NotebookIdParams {
     notebookId: NotebookRow["id"];

@@ -1,4 +1,4 @@
-import {UserRow} from "@/azure/cosmos/types";
+import {UserRow} from "@/cosmosPostgres/types";
 
 import {NotebookIdParams} from "@/app/api/scores/notebooks/notebook/[notebookId]/NotebookIdParams";
 

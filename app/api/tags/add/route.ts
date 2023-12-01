@@ -1,7 +1,7 @@
 import {NextRequest} from "next/server";
 
-import {addTag} from "@/azure/cosmos/services/tags";
-import {TagRow} from "@/azure/cosmos/types";
+import {addTag} from "@/cosmosPostgres/services/tags";
+import {TagRow} from "@/cosmosPostgres/types";
 
 export const POST = async (req: NextRequest) => {
     const body = await req.json() as TagRow;

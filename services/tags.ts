@@ -1,4 +1,4 @@
-import {TagRow} from "@/azure/cosmos/types/tag";
+import {TagRow} from "@/cosmosPostgres/types/tag";
 
 export const addTag = async (tag: TagRow): Promise<TagRow | null> =>
     fetch(`/api/tags/add`, {

@@ -1,4 +1,4 @@
-import {emitNotebookLeaderboardChangedEvent} from "@/azure/cosmos/eventEmitters/notebookLeaderboardEventEmitter";
+import {emitNotebookLeaderboardChangedEvent} from "@/cosmosPostgres/eventEmitters/notebookLeaderboardEventEmitter";
 
 import {Notebook} from "@/types/Notebook";
 import {User} from "@/types/User";

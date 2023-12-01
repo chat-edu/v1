@@ -11,9 +11,10 @@ import {AiFillEye} from "react-icons/ai";
 
 import NoteModal from "@/components/NotebookUtilities/NoteModal";
 
+import useAuth from "@/hooks/useAuth";
+
 import {Note as NoteType} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
-import useAuth from "@/hooks/useAuth";
 
 interface Props {
     notebook: Notebook

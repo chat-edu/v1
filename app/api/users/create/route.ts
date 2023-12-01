@@ -1,6 +1,6 @@
-import {addUser} from "@/azure/cosmos/services/user";
+import {addUser} from "@/cosmosPostgres/services/user";
 
-import {UserRow} from "@/azure/cosmos/types/user";
+import {UserRow} from "@/cosmosPostgres/types/user";
 
 export async function POST(request: Request) {
     const userRow = await request.json() as UserRow;

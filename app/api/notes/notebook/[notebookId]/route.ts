@@ -1,6 +1,6 @@
 import {NextRequest} from "next/server";
 
-import {findNotesByNotebookId} from "@/azure/cosmos/services/notes";
+import {findNotesByNotebookId} from "@/cosmosPostgres/services/notes";
 
 import {NotebookIdParams} from "@/app/api/notes/notebook/[notebookId]/NotebookIdParams";
 
