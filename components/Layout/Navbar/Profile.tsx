@@ -67,11 +67,15 @@ const Profile: React.FC<Props> = ({ userId }) => {
             <HStack
                 align={'end'}
             >
-                <UserPoints
-                    points={userScore?.score || 0}
-                />
+                {
+                    userScore && (
+                        <UserPoints
+                            points={userScore?.score || 0}
+                        />
+                    )
+                }
                 <Menu>
-                    {menuButton}
+                    {userScore && menuButton}
                     <MenuList>
                         <MenuItem
                             onClick={() => signOut()}

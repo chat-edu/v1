@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Card, HStack, Icon, Text, useColorModeValue, VStack} from "@chakra-ui/react";
+import {Card, HStack, Icon, Text, Tooltip, useColorModeValue, VStack} from "@chakra-ui/react";
 
 import {IconType} from "react-icons";
 
@@ -8,65 +8,70 @@ interface Props {
     label: string,
     icon: IconType
     onClick: () => void,
-    disabled: boolean
+    disabled: boolean,
+    tooltip: string,
 }
 
-const Action: React.FC<Props> = ({ label, icon, onClick, disabled }) => {
+const Action: React.FC<Props> = ({ label, icon, onClick, disabled, tooltip }) => {
 
     const hoverColor = useColorModeValue('#cde6ce', '#30542c');
     const actionCardColor = useColorModeValue("white", "#2D2D2D");
 
     return (
-        <Card
-            bg={(actionCardColor)}
-            flex={1}
-            onClick={disabled ? undefined : onClick}
-            cursor={disabled ? "not-allowed" : 'pointer'}
-            p={{
-                base: 2,
-                lg: 4
-            }}
-            _hover={disabled ? undefined : {
-                boxShadow: 'lg',
-                bg: hoverColor
-            }}
-            transition={'all 0.2s ease-in-out'}
-            h={'100%'}
-            borderColor={'brand.500'}
-            borderWidth={2}
+        <Tooltip
+            label={tooltip}
         >
-            <HStack
-                spacing={{
+            <Card
+                bg={(actionCardColor)}
+                flex={1}
+                onClick={disabled ? undefined : onClick}
+                cursor={disabled ? "not-allowed" : 'pointer'}
+                p={{
                     base: 2,
-                    sm: 4
+                    lg: 4
                 }}
+                _hover={disabled ? undefined : {
+                    boxShadow: 'lg',
+                    bg: hoverColor
+                }}
+                transition={'all 0.2s ease-in-out'}
                 h={'100%'}
-                alignItems={'center'}
+                borderColor={'brand.500'}
+                borderWidth={2}
             >
-                <Icon
-                    as={icon}
-                    color={'brand.500'}
-                    boxSize={{
-                        base: 4,
-                        md: 6
+                <HStack
+                    spacing={{
+                        base: 2,
+                        sm: 4
                     }}
-                />
-                <VStack
-                    align={'flex-start'}
+                    h={'100%'}
+                    alignItems={'center'}
                 >
-                    <Text
-                        fontSize={{
-                            base: 'xs',
-                            md: 'md'
+                    <Icon
+                        as={icon}
+                        color={'brand.500'}
+                        boxSize={{
+                            base: 4,
+                            md: 6
                         }}
-                        fontWeight={'bold'}
-                        textAlign={'center'}
+                    />
+                    <VStack
+                        align={'flex-start'}
                     >
-                        {label}
-                    </Text>
-                </VStack>
-            </HStack>
-        </Card>
+                        <Text
+                            fontSize={{
+                                base: 'xs',
+                                md: 'md'
+                            }}
+                            fontWeight={'bold'}
+                            textAlign={'center'}
+                        >
+                            {label}
+                        </Text>
+                    </VStack>
+                </HStack>
+            </Card>
+        </Tooltip>
     );
 };
 

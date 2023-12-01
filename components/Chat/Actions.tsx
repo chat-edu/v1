@@ -48,28 +48,32 @@ const Actions: React.FC<Props> = ({ promptWithCommand, disabled, showMessage }) 
                 columns={{ base: 2, xl: 4 }}
             >
                 <Action
-                    label={"Study Guide"}
-                    icon={FaLeaf}
-                    onClick={() => promptWithCommand(studyGuideCommand)}
-                    disabled={disabled}
-                />
-                <Action
                     label={"Multiple Choice"}
                     icon={SlOptionsVertical}
                     onClick={() => promptWithCommand(multipleChoiceCommand)}
                     disabled={disabled}
+                    tooltip={"Generate a multiple choice question."}
                 />
                 <Action
                     label={"Understanding"}
                     icon={MdQuestionAnswer}
                     onClick={() => promptWithCommand(understandingQuestionCommand)}
                     disabled={disabled}
+                    tooltip={"Demonstrate your understanding in a free response question."}
                 />
                 <Action
                     label={"Application"}
                     icon={MdQuestionAnswer}
                     onClick={() => promptWithCommand(applicationQuestionCommand)}
                     disabled={disabled}
+                    tooltip={"Apply your knowledge in a free response question."}
+                />
+                <Action
+                    label={"Study Guide"}
+                    icon={FaLeaf}
+                    onClick={() => promptWithCommand(studyGuideCommand)}
+                    disabled={disabled}
+                    tooltip={"Create a study guide for this topic."}
                 />
             </SimpleGrid>
         </VStack>
