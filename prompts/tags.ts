@@ -8,7 +8,8 @@ export enum ResponseTags {
     ANSWER_CORRECTNESS = `Answer Correctness Response`,
     HINT = `Hint Response`,
     STUDY_GUIDE = `Study Guide Response`,
-    PLAIN_TEXT = `Plain Text Response`
+    PLAIN_TEXT = `Plain Text Response`,
+    DONT_KNOW = `Don't Know Response`
 }
 
 export enum CommandTags {
@@ -18,5 +19,6 @@ export enum CommandTags {
     ANSWER_CORRECTNESS = `Answer Correctness ${promptTagSuffix}`,
     HINT = `Hint ${promptTagSuffix}`,
     STUDY_GUIDE = `Study Guide ${promptTagSuffix}`,
-    PLAIN_TEXT = `Plain Text ${promptTagSuffix}`
+    PLAIN_TEXT = `Plain Text ${promptTagSuffix}`,
+    DONT_KNOW = `Don't Know ${promptTagSuffix}`
 }

@@ -4,6 +4,7 @@ import { multipleChoiceCommand } from "@/prompts/commands/multipleChoice";
 import { studyGuideCommand } from "@/prompts/commands/studyGuide";
 import { understandingQuestionCommand } from "@/prompts/commands/understanding";
 import { applicationQuestionCommand } from "@/prompts/commands/application";
+import { plainTextCommand } from "@/prompts/commands/plainText";
 
 export {
     answerCorrectnessDefaults,
@@ -12,5 +13,6 @@ export {
     multipleChoiceCommand,
     studyGuideCommand,
     understandingQuestionCommand,
-    applicationQuestionCommand
+    applicationQuestionCommand,
+    plainTextCommand
 }

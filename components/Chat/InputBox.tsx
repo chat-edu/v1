@@ -9,8 +9,10 @@ import {
     FormControl,
     FormLabel,
     HStack,
+    IconButton,
     Text,
     Textarea,
+    Tooltip,
     useColorModeValue
 } from "@chakra-ui/react";
 
@@ -19,22 +21,28 @@ import Actions from "@/components/Chat/Actions";
 import {Command, CommandTypes} from "@/types/commands/Command";
 
 import {Note} from "@/types/Note";
+import {FaStopCircle} from "react-icons/fa";
+import {AnswerStates} from "@/hooks/useChatEdu";
 
 interface Props {
     value: string,
     isLoading: boolean,
+    stop: () => void,
     handleChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>,
     handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
     notes: Note[],
     promptWithCommand: (command: Command<any>) => void,
     promptType: CommandTypes
     showMessage: boolean;
-    correctAnswers: { [key: string]: boolean };
+    answerMapping: { [key: string]: AnswerStates };
 }
 
-const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmit, promptWithCommand, promptType, showMessage, correctAnswers }) => {
+const InputBox: React.FC<Props> = ({ value, isLoading, stop, handleChange, handleSubmit, promptWithCommand, promptType, showMessage, answerMapping }) => {
 
-    const inputBoxColor = useColorModeValue("white", "#2D2D2D")
+    const inputBoxColor = useColorModeValue("white", "#2D2D2D");
+
+    const numCorrect = Object.values(answerMapping).filter(state => state === AnswerStates.CORRECT).length;
+    const numAnswered = Object.values(answerMapping).filter(state => state !== AnswerStates.DONT_KNOW).length;
 
     return (
         <Flex
@@ -77,15 +85,15 @@ const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmi
                         align={'flex-end'}
                     >
                         {
-                            Object.keys(correctAnswers).length > 0 && (
+                            Object.keys(answerMapping).length > 0 && (
                                 <Box
                                     position={'relative'}
                                     boxSize={'60px'}
                                 >
                                     <CircularProgress
                                         color={'brand.500'}
-                                        value={Object.values(correctAnswers).filter(Boolean).length}
-                                        max={Object.keys(correctAnswers).length}
+                                        value={numCorrect}
+                                        max={numAnswered}
                                         size={'60px'}
                                     />
                                     <Text
@@ -96,7 +104,7 @@ const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmi
                                         fontSize={'xs'}
                                         fontWeight={'bold'}
                                     >
-                                        {Math.ceil(Object.values(correctAnswers).filter(Boolean).length / Object.keys(correctAnswers).length * 100)}%
+                                        {Math.ceil(numCorrect / numAnswered * 100)}%
                                     </Text>
                                 </Box>
                             )
@@ -131,8 +139,25 @@ const InputBox: React.FC<Props> = ({ value, isLoading, handleChange, handleSubmi
                             }}
                             isLoading={isLoading}
                         >
-                            Send
+                            {promptType === CommandTypes.TEXT_BASED ? 'Answer' : 'Ask'}
                         </Button>
+                        {
+                            isLoading && (
+                                <Tooltip
+                                    label={'Stop'}
+                                >
+                                    <IconButton
+                                        aria-label="Stop"
+                                        icon={<FaStopCircle />}
+                                        onClick={stop}
+                                        size={{
+                                            base: 'sm',
+                                            md: 'md'
+                                        }}
+                                    />
+                                </Tooltip>
+                            )
+                        }
                     </HStack>
                 </form>
             </Card>

@@ -7,7 +7,9 @@ export enum CommandTypes {
     TEXT_BASED,
     STUDY_GUIDE,
     HINT,
-    PLAIN_TEXT
+    PLAIN_TEXT,
+    DONT_KNOW
+
 }
 
 export interface Command<ResponseType> {
