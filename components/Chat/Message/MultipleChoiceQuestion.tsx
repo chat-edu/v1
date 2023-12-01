@@ -1,17 +1,22 @@
 import React, { useState, useRef } from 'react';
 
+import confetti from 'canvas-confetti';
+
 import {Button, HStack, VStack} from "@chakra-ui/react";
+
+import Markdown from "@/components/Utilities/Markdown";
+import QuestionButtons from "@/components/Chat/Message/QuestionButtons";
+
+import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
+
+import {answerCorrectnessCommand} from "@/prompts";
 
 import {
     MultipleChoiceKey,
     MultipleChoiceQuestion as MultipleChoiceQuestionType
 } from "@/types/commands/MultipleChoiceQuestion";
-
-import confetti from 'canvas-confetti';
-import Markdown from "@/components/Utilities/Markdown";
 import {Command} from "@/types/commands/Command";
-import {answerCorrectnessCommand, hintCommand} from "@/prompts";
-import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
+
 
 interface Props {
     question: MultipleChoiceQuestionType,
@@ -76,18 +81,10 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, promptWithCommand, 
                     <Markdown>
                         {`***${question.question}***`}
                     </Markdown>
-                    <Button
-                        variant={'outline'}
-                        colorScheme={'brand'}
-                        onClick={() => promptWithCommand(hintCommand)}
-                        isDisabled={answered}
-                        size={{
-                            base: 'sm',
-                            md: 'md'
-                        }}
-                    >
-                        Hint
-                    </Button>
+                    <QuestionButtons
+                        promptWithCommand={promptWithCommand}
+                        answered={answered}
+                    />
                 </HStack>
                 <VStack
                     w={'100%'}

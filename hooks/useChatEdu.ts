@@ -7,16 +7,25 @@ import useAuth from "@/hooks/useAuth";
 
 import {updateScore} from "@/services/score";
 
-import {answerCorrectnessCommand} from "@/prompts";
-import {answerCorrectnessResponseTag} from "@/prompts/commands/answerCorrectness";
-import {getPrePrompt, getPrompt} from "@/prompts";
-import {questionResponseTagSuffix} from "@/prompts/tags";
-import {plainTextCommand} from "@/prompts/commands/plainText";
-import {context} from "@/prompts/context";
+import {
+    answerCorrectnessCommand,
+    getPrePrompt,
+    getPrompt,
+    questionResponseTagSuffix,
+    ResponseTags,
+    plainTextCommand,
+    context
+} from "@/prompts";
 
 import {Command, CommandTypes} from "@/types/commands/Command";
 import {Note} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
+
+export enum AnswerStates {
+    CORRECT,
+    INCORRECT,
+    DONT_KNOW
+}
 
 const useChatEdu = (notebookId: Notebook["id"], notes: Note[]) => {
 
@@ -26,22 +35,28 @@ const useChatEdu = (notebookId: Notebook["id"], notes: Note[]) => {
 
     const [currentQuestion, setCurrentQuestion] = useState<Message | null>(null);
 
-    const [correctMapping, setCorrectMapping] = useState<{[key: string]: boolean}>({});
+    const [answerMapping, setAnswerMapping] = useState<{[key: string]: AnswerStates}>({});
 
     const [messageBottomRef, setMessageBottomRef] = useState<HTMLDivElement | null>(null);
 
     const onFinish =  (message: Message) => {
         if(!currentQuestion && message.content.includes(`${questionResponseTagSuffix}`)) {
             setCurrentQuestion(message);
-        } else if(message.content.includes(answerCorrectnessResponseTag)) {
+        } else if(message.content.includes(ResponseTags.ANSWER_CORRECTNESS)) {
             const correct = JSON.parse(message.content).content.correct;
-            setCorrectMapping({
-                ...correctMapping,
-                [currentQuestion?.id || ""]: correct
+            setAnswerMapping({
+                ...answerMapping,
+                [currentQuestion?.id || ""]: correct ? AnswerStates.CORRECT : AnswerStates.INCORRECT
             })
             if(correct && user) {
                 updateScore(notebookId, user.id, 1)
             }
+            setCurrentQuestion(null);
+        } else if(message.content.includes(ResponseTags.DONT_KNOW)) {
+            setAnswerMapping({
+                ...answerMapping,
+                [currentQuestion?.id || ""]: AnswerStates.DONT_KNOW
+            })
             setCurrentQuestion(null);
         }
         scrollToBottom();
@@ -62,6 +77,7 @@ const useChatEdu = (notebookId: Notebook["id"], notes: Note[]) => {
         handleInputChange,
         setMessages,
         append,
+        stop,
         isLoading
     } = useChat({
         api: process.env.NEXT_PUBLIC_CHAT_ENDPOINT as string,
@@ -86,12 +102,15 @@ const useChatEdu = (notebookId: Notebook["id"], notes: Note[]) => {
             }
         ])
         setCurrentQuestion(null);
-        setCorrectMapping({});
+        setAnswerMapping({});
         setPromptType(CommandTypes.REGULAR)
     }, [notes])
 
     const promptWithCommand = async (command: Command<any>) => {
-        if(command.promptType !== CommandTypes.HINT) {
+        if(command.promptType === CommandTypes.DONT_KNOW) {
+            setCurrentQuestion(null);
+            setPromptType(CommandTypes.REGULAR)
+        } else if(command.promptType !== CommandTypes.HINT) {
             setPromptType(command.promptType);
         }
         setMessages([
@@ -121,12 +140,13 @@ const useChatEdu = (notebookId: Notebook["id"], notes: Note[]) => {
         messages: messages.filter((message) => (message.role !== 'system')),
         input,
         promptType,
-        correctMapping,
+        answerMapping,
         isLoading,
         handleInputChange,
         onSubmit,
         promptWithCommand,
-        setMessageBottomRef
+        setMessageBottomRef,
+        stop
     };
 }
 
