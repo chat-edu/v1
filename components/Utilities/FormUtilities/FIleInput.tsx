@@ -21,7 +21,7 @@ const FileInput: React.FC<Props> = ({ accept, setFile, text }) => {
     const onDrop = useCallback((acceptedFiles: File[]) => {
         if(acceptedFiles.length === 0) return;
         setFile(acceptedFiles[0]);
-    }, [setFile])
+    }, [setFile]);
 
     const onError = useCallback((fileRejections: FileRejection[]) => {
         toast({
