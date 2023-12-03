@@ -33,14 +33,13 @@ const FileInput: React.FC<Props> = ({ accept, setFile, text }) => {
         })
     }, [toast])
 
-    const {getRootProps, getInputProps} = useDropzone({
+    const {getRootProps} = useDropzone({
         onDrop,
         onDropRejected: onError,
         accept: {
             'application/pdf': ['.pdf'],
         },
         multiple: false,
-        noClick: true,
     });
 
     const [isDragOver, setIsDragOver] = useState(false);
@@ -111,7 +110,6 @@ const FileInput: React.FC<Props> = ({ accept, setFile, text }) => {
                         setFile(e.target.files[0])
                     }
                 }}
-                {...getInputProps()}
             />
             <Button
                 onClick={handleClick}
