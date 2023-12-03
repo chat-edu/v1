@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Button, HStack} from "@chakra-ui/react";
+import {Button, Stack} from "@chakra-ui/react";
 
 import {hintCommand} from "@/prompts";
 import {dontKnowCommand} from "@/prompts/commands/dontKnow";
@@ -14,7 +14,16 @@ interface Props {
 
 const QuestionButtons: React.FC<Props> = ({ promptWithCommand, answered }) => {
     return (
-        <HStack>
+        <Stack
+            flexDir={{
+                base: 'column',
+                md: 'row'
+            }}
+            alignItems={{
+                base: 'flex-end',
+                md: 'center'
+            }}
+        >
             <Button
                 variant={'outline'}
                 colorScheme={'brand'}
@@ -40,7 +49,7 @@ const QuestionButtons: React.FC<Props> = ({ promptWithCommand, answered }) => {
             >
                 {"Don't Know"}
             </Button>
-        </HStack>
+        </Stack>
     );
 };
 

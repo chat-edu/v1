@@ -4,7 +4,7 @@ import {Command, CommandTypes} from "@/types/commands/Command";
 import {Stringified} from "@/types/utilities/Stringified";
 import {DontKnow} from "@/types/commands/DontKnow";
 
-const dontKnowResponseDescription = 'The user doe';
+const dontKnowResponseDescription = 'The user doesn\'t know the answer to the question. Explain it to them';
 const dontKnowResponseFormat: Stringified<DontKnow> = {
     explanation: 'string: <explanation>'
 };

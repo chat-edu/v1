@@ -85,7 +85,7 @@ const InputBox: React.FC<Props> = ({ value, isLoading, stop, handleChange, handl
                         align={'flex-end'}
                     >
                         {
-                            Object.keys(answerMapping).length > 0 && (
+                            numAnswered > 0 && (
                                 <Box
                                     position={'relative'}
                                     boxSize={'60px'}
