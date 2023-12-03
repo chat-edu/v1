@@ -129,10 +129,12 @@ const AddNoteModal: React.FC<Props> = ({ isOpen, onClose , notebookId}) => {
                                             <Text>
                                                 or
                                             </Text>
-                                            <HStack>
+                                            <HStack
+                                                w={'100%'}
+                                            >
                                                 <FileInput
                                                     setFile={updateFile}
-                                                    text={file ? file.name : 'Upload Notes'}
+                                                    text={file ? file.name : 'Upload or Drag & Drop PDF'}
                                                     accept={'application/pdf'}
                                                 />
                                                 {file && (

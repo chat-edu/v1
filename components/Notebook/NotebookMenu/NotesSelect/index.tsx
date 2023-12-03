@@ -18,6 +18,8 @@ import useNotes from "@/hooks/queries/notes/useNotes";
 import {Notebook as NotebookType} from "@/types/Notebook";
 import {Note as NoteType} from "@/types/Note";
 import Loading from "@/components/Utilities/Loading";
+import {CgNotes} from "react-icons/cg";
+import {MdQuiz} from "react-icons/md";
 
 interface Props {
     notebook: NotebookType,
@@ -81,6 +83,26 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                         </CheckboxGroup>
                     }
                 </Loading>
+                {
+                    selectedNotes.length > 0 && (
+                        <VStack
+                            w={'100%'}
+                        >
+                            <Button
+                                w={'100%'}
+                                leftIcon={<MdQuiz />}
+                            >
+                                Create Practice Test
+                            </Button>
+                            <Button
+                                w={'100%'}
+                                leftIcon={<CgNotes />}
+                            >
+                                Create Study Guide
+                            </Button>
+                        </VStack>
+                    )
+                }
                 {
                     closeSidebar && selectedNotes.length > 0 && (
                         <Button
