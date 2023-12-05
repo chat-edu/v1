@@ -12,6 +12,7 @@
   - [/app](#app)
   - [/components](#components)
   - [/hooks](#hooks)
+  - [/search](#search)
   - [/prompts](#prompts)
   - [/types](#types)
   - [/cosmosPostgres](#cosmospostgres)
@@ -41,6 +42,12 @@ The Retrieval-Augmented Generation (RAG) prompting flow in ChatEDU begins when a
 
 ![Prompting.png](https://raw.githubusercontent.com/chat-edu/chat-edu/main/public/architecture/prompting.png)
 
+
+### Azure AI Search
+
+We utilize Azure AI search to index the `users` and `notebooks` collections of our database. This then allows users to perform fast and efficient searches on the data through the client. The search service is automatically synced with the database, ensuring that the search results are always up-to-date.
+
+![Search.png](https://raw.githubusercontent.com/chat-edu/chat-edu/main/public/architecture/search.png)
 
 ### Continuous Integration and Deployment
 
@@ -92,6 +99,10 @@ Governs the chat interface of the application and generalizes use of `commands` 
 
 Handles user authentication through Azure AD, which is used throughout the application to handle user data and gated content.
 
+### `/search`
+
+Contains all of the logic for interacting with the Azure AI Search service. It includes functions and modules for connecting to the search service, querying data, and performing CRUD operations.
+
 ### `/prompts`
 
 Contains all of the prompts used by the chat and other LLM (Language Model) related functionality. Commands are templatized prompt structures that are used to interact with the chat component of the application. They provide context and instructions for generating personalized educational material and facilitating conversations within the platform.
@@ -111,6 +122,7 @@ Provides functions that enable type-safe interactions with the REST API. These f
 ### `/documentIntelligence`
 
 Handles the extraction of data from images and PDFs for seamless upload through Azure AI Document Intelligence.
+
 ## Running the App
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).

@@ -26,6 +26,7 @@ const NotebookCard: React.FC<Props> = ({ notebookScore, rightComponent, onClick 
             <HStack
                 w={'100%'}
                 h={'100%'}
+                maxW={'100%'}
             >
                 <VStack
                     flex={1}
