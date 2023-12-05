@@ -24,7 +24,9 @@ const NotebookTags: React.FC<Props> = ({ notebookId }) => {
     if(tags.length === 0) return null;
 
     return (
-        <HStack>
+        <HStack
+            flexWrap={'wrap'}
+        >
             {
                 tags.map((tag) => (
                     <Badge
