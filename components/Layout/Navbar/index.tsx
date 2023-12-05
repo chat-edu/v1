@@ -66,13 +66,12 @@ const Navbar = () => {
                     base: 'none',
                     md: 'block'
                 }}
+                flexShrink={0}
             >
                 <NavLinks />
             </Box>
             <SearchBar />
-            <HStack
-                ml={'auto'}
-            >
+            <HStack>
                 <AuthButton />
                 <ColorModeToggle />
             </HStack>

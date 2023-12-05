@@ -18,6 +18,7 @@ const NavLinks = () => {
                 base: 'column',
                 md: 'row'
             }}
+            flex={1}
         >
             {
                 links.map((link, index) => (

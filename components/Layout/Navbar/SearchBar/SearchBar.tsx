@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
 
-import {InputGroup, InputLeftElement, useColorModeValue} from "@chakra-ui/react";
+import {Box, InputGroup, InputLeftElement, useColorModeValue} from "@chakra-ui/react";
 import {Search2Icon} from "@chakra-ui/icons";
 
 import {
@@ -15,6 +15,8 @@ import {
 import UserHit from "@/components/Layout/Navbar/SearchBar/UserHit";
 
 import useUsersSearch from "@/hooks/queries/search/useUsersSearch";
+import useNotebooksSearch from "@/hooks/queries/search/useNotebooksSearch";
+import NotebookHit from "@/components/Layout/Navbar/SearchBar/NotebookHit";
 
 const SearchBar = () => {
 
@@ -22,19 +24,23 @@ const SearchBar = () => {
 
     const { results: userResults } = useUsersSearch(input);
 
+    const { results: notebookResults } = useNotebooksSearch(input);
+
     const menuBackground = useColorModeValue('white', '#2D2D2D');
     const menuBorderColor = useColorModeValue("gray.200", "whiteAlpha.300");
 
     return (
-        <AutoComplete>
-
-            <InputGroup
-                flex={1}
-                display={{
-                    base: 'none',
-                    lg: 'block'
-                }}
-            >
+        <Box
+            flex={1}
+            display={{
+                base: 'none',
+                lg: 'block'
+            }}
+        >
+        <AutoComplete
+            disableFilter
+        >
+            <InputGroup>
                 <InputLeftElement>
                     <Search2Icon
                         color={'brand.500'}
@@ -64,9 +70,10 @@ const SearchBar = () => {
                             </AutoCompleteGroupTitle>
                             {userResults.map((user) => (
                                 <AutoCompleteItem
-                                    key={user.id}
-                                    value={user.username}
+                                    key={user.username}
+                                    value={user.username + user.name}
                                     m={0}
+                                    onClick={() => {}}
                                 >
                                     <UserHit
                                         userIndexRow={user}
@@ -74,10 +81,28 @@ const SearchBar = () => {
                                 </AutoCompleteItem>
                             ))}
                         </AutoCompleteGroup>
+                        <AutoCompleteGroup title={'Notebooks'}>
+                            <AutoCompleteGroupTitle>
+                                Notebooks
+                            </AutoCompleteGroupTitle>
+                                {notebookResults.map((notebook) => (
+                                    <AutoCompleteItem
+                                        key={notebook.id}
+                                        value={notebook.name + notebook.id}
+                                        m={0}
+                                        onClick={() => {}}
+                                    >
+                                        <NotebookHit
+                                            notebookIndexRow={notebook}
+                                        />
+                                    </AutoCompleteItem>
+                                ))}
+                        </AutoCompleteGroup>
                     </AutoCompleteList>
                 )
             }
         </AutoComplete>
+        </Box>
     );
 };
 
