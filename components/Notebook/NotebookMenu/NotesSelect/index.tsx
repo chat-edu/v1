@@ -4,22 +4,23 @@ import {
     Button,
     CheckboxGroup,
     Flex,
-    Text,
+    Text, Tooltip,
     VStack,
 } from "@chakra-ui/react";
 import {SmallAddIcon} from "@chakra-ui/icons";
 
+import {MdQuiz} from "react-icons/md";
+
 import AddNoteButton from "@/components/AddModals/AddNote/AddNoteButton";
 import Note from "@/components/Notebook/NotebookMenu/NotesSelect/Note";
+import StudyGuide from "@/components/Notebook/NotebookMenu/StudyGuide";
+import Loading from "@/components/Utilities/Loading";
 
 import useAuth from "@/hooks/useAuth";
 import useNotes from "@/hooks/queries/notes/useNotes";
 
 import {Notebook as NotebookType} from "@/types/Notebook";
 import {Note as NoteType} from "@/types/Note";
-import Loading from "@/components/Utilities/Loading";
-import {CgNotes} from "react-icons/cg";
-import {MdQuiz} from "react-icons/md";
 
 interface Props {
     notebook: NotebookType,
@@ -88,18 +89,9 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                         <VStack
                             w={'100%'}
                         >
-                            <Button
-                                w={'100%'}
-                                leftIcon={<MdQuiz />}
-                            >
-                                Create Practice Test
-                            </Button>
-                            <Button
-                                w={'100%'}
-                                leftIcon={<CgNotes />}
-                            >
-                                Create Study Guide
-                            </Button>
+                            <StudyGuide
+                                notes={selectedNotes}
+                            />
                         </VStack>
                     )
                 }
@@ -129,6 +121,21 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                                 }}
                             />
                         </VStack>
+                    )
+                }
+                {
+                    selectedNotes.length > 0 && (
+                        <Tooltip
+                            label={'Coming soon!'}
+                        >
+                            <Button
+                                w={'100%'}
+                                leftIcon={<MdQuiz />}
+                                isDisabled
+                            >
+                                Create Practice Test
+                            </Button>
+                        </Tooltip>
                     )
                 }
             </VStack>
