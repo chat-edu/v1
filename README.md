@@ -29,6 +29,66 @@ The CI/CD pipeline for ChatEDU is implemented using GitHub Actions, which automa
 
 ![Continuous Integration and Deployment Workflow with Next.js, GitHub, and Azure.png](https://raw.githubusercontent.com/chat-edu/chat-edu/main/public/architecture/deployment.png)
 
+## Directory Structure
+
+### `/pages`
+
+In the `pages` directory, each `.tsx` file corresponds to a route on the front end, powered by Next.js SSR. When a user visits a URL, the corresponding `.tsx` file is rendered, representing the content of that route.
+
+### `/app`
+
+The `/app` directory contains all API routes for ChatEDU. Any folder with a `route.ts` file represents an API route that can be accessed via the path to that folder. For instance, the route at `/app/api/notebooks/create/route.ts` is invoked by `chatedu.tech/api/notebooks/create/`.
+
+### `/components`
+
+The `/components` directory contains all of the React components for the ChatEDU application. The components are organized into folders based on their functionalities. This directory follows a modular approach, allowing for easy management and reuse of components across different parts of the application.
+
+The `/components/layout` directory contains a shared layout for each page, which includes a navbar, authentication gating, and
+
+### `/hooks`
+
+The `/hooks` directory in is responsible for modularizing the stateful aspects of the application. It houses custom React hooks that encapsulate logic and provide reusable functionality. These hooks are designed to be composable, allowing utility hooks to be combined to create more complex hooks.
+
+By separating stateful logic into hooks, the codebase becomes more organized and maintainable. It also promotes code reusability, as hooks can be easily shared and used across different parts of the application.
+
+The hooks integrate with the interfaces defined in the `/types` directory. This allows for changes to the logic of the application without impacting the front end as there is a separation of concerns and use of type-safe contracts.
+
+****************************`/hooks/queries`****************************
+
+All data querying in the ChatEDU application is facilitated through the React hooks located in this directory. These hooks are extensively utilized throughout the client and in other higher-order hooks to ensure efficient and consistent data retrieval for seamless user experiences.
+
+****************************`/hooks/mutators`****************************
+
+The creation, modification, and deletion of data are facilitated through these hooks, encapsulating the logic for interacting with the API.
+
+****************************`/hooks/utilities`****************************
+
+Utility hooks are composable logic that are used in other hooks, such as extracting data from PDFs and summarizing large notes.
+
+`**/hooks/useChatEdu.ts**`
+
+This hook governs the chat interface of the application and generalizes use of `commands` defined in the `/prompts` directory.
+
+`**/hooks/useAuth.ts**`
+
+This hook handles user authentication through Azure AD, which is used throughout the application to handle user data and gated content.
+
+### `/types`
+
+Defines the interfaces for the application, allowing for communication across components and facilitating the integration of the front and back end of the application.
+
+### `/cosmosPostgres`
+
+Contains all of the logic for interacting with the Azure Cosmos Postgres database. It includes functions and modules for connecting to the database, querying data, performing CRUD operations, and managing database transactions.
+
+### `/services`
+
+Provides functions that enable type-safe interactions with the REST API. These functions handle requests to the server and provide a layer of abstraction for making API calls. They ensure that the data exchanged between the front end and back end is consistent and follows the defined types and contracts.
+
+### `/documentIntelligence`
+
+Handles the extraction of data from images and PDFs for seamless upload through Azure AI Document Intelligence.
+
 ## Running the App
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
