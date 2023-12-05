@@ -47,6 +47,8 @@ The Retrieval-Augmented Generation (RAG) prompting flow in ChatEDU begins when a
 
 We utilize Azure AI search to index the `users` and `notebooks` collections of our database. This then allows users to perform fast and efficient searches on the data through the client. The search service is automatically synced with the database, ensuring that the search results are always up-to-date.
 
+![Search.png](https://raw.githubusercontent.com/chat-edu/chat-edu/main/public/architecture/search.png)
+
 ### Continuous Integration and Deployment
 
 The CI/CD pipeline for ChatEDU is implemented using GitHub Actions, which automates the process of code integration, testing, and deployment upon every push or pull request to the repository. Once the automated workflows verify the changes, the application is deployed to Azure Static Web Apps, ensuring continuous delivery of the latest version of the platform.
