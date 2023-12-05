@@ -31,6 +31,7 @@ jobs:
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
       NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
       NEXT_PUBLIC_CHAT_ENDPOINT: ${{ secrets.NEXT_PUBLIC_CHAT_ENDPOINT }}
+      NEXT_PUBLIC_TOPICS_ENDPOINT: ${{ secrets.NEXT_PUBLIC_TOPICS_ENDPOINT }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -70,6 +71,7 @@ jobs:
           NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} \
           NEXT_PUBLIC_DOCUMENT_INTELLIGENCE_KEY=${{ secrets.NEXT_PUBLIC_DOCUMENT_INTELLIGENCE_KEY }} \
           NEXT_PUBLIC_CHAT_ENDPOINT=${{ secrets.NEXT_PUBLIC_CHAT_ENDPOINT }} \
+          NEXT_PUBLIC_TOPICS_ENDPOINT=${{ secrets.NEXT_PUBLIC_TOPICS_ENDPOINT }} \
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
