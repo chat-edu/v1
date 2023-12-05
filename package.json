@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@types/canvas-confetti": "^1.6.2",
+    "@types/cors": "^2.8.17",
     "@types/formidable": "^3.4.5",
     "@types/node": "^20",
     "@types/pg": "^8.10.9",
