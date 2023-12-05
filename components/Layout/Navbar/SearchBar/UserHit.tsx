@@ -12,9 +12,15 @@ interface Props {
 
 const UserHit: React.FC<Props> = ({ userIndexRow }) => {
     return (
-        <Link href={`/users/${userIndexRow.id}`}>
+        <Link
+            href={`/users/${userIndexRow.id}`}
+            style={{
+                width: '100%'
+            }}
+        >
             <HStack
                 spacing={4}
+                w={'100%'}
             >
                 <Image
                     src={userIndexRow.profile_picture_url}
