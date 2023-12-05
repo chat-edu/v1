@@ -15,7 +15,7 @@ export const getTopics = async (text: string): Promise<string[]> => {
 }
 
 export const generateNote = async (text: string, topic: string, notebookId: number): Promise<NoteInput> => {
-    return fetch('/api/chat/topics/generate', {
+    return fetch(process.env.NEXT_PUBLIC_TOPICS_ENDPOINT + '/generate', {
         method: 'POST',
         body: JSON.stringify({
             text,

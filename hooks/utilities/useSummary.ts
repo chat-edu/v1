@@ -1,9 +1,19 @@
 import {useEffect, useState} from "react";
+import {useChat} from "ai/react";
+import {summarizePrompt} from "@/prompts/summarize";
 
 const useSummary = (text: string) => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [summary, setSummary] = useState('');
+
+    const { append } = useChat({
+        api: process.env.NEXT_PUBLIC_CHAT_ENDPOINT,
+        onFinish: (message) => {
+            setSummary(message.content);
+            setIsLoading(false);
+        }
+    })
 
     useEffect(() => {
         setSummary('');
@@ -12,16 +22,10 @@ const useSummary = (text: string) => {
 
     const summarize = async () => {
         setIsLoading(true);
-        const response = await fetch(process.env.NEXT_PUBLIC_CHAT_ENDPOINT + "/summarize", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({text}),
+        await append({
+            role: 'user',
+            content: summarizePrompt(text),
         });
-        const summary = await response.json();
-        setSummary(summary);
-        setIsLoading(false);
     }
 
     return {

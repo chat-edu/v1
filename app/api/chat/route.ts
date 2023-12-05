@@ -16,7 +16,6 @@ export async function POST(req: Request) {
     messages: messages,
   });
 
-  // @ts-ignore
   const stream = OpenAIStream(response);
   return new StreamingTextResponse(
       stream, {

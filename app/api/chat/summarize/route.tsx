@@ -1,12 +1,13 @@
 import {summarizePrompt} from "@/prompts/summarize";
 import openai from "@/openai";
+import {OpenAIStream, StreamingTextResponse} from "ai";
 
 export const runtime = 'edge';
 
 export async function POST(req: Request) {
     const { text } = await req.json();
 
-    const content = await openai.chat.completions.create({
+    const response = await openai.chat.completions.create({
         model: process.env.GPT_MODEL_ID as string,
         messages: [
             {
@@ -14,9 +15,17 @@ export async function POST(req: Request) {
                 content: summarizePrompt(text),
             }
         ],
+        stream: true,
     })
-        .then((response) => response.choices[0].message.content)
-        .catch(() => "An error occurred.")
 
-    return Response.json(content);
+    const stream = OpenAIStream(response);
+    return new StreamingTextResponse(
+        stream, {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            }
+        }
+    );
 }
