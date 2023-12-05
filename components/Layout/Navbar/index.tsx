@@ -7,7 +7,7 @@ import Link from "next/link";
 import AuthButton from '@/components/Layout/Navbar/AuthButton'
 import ColorModeToggle from "@/components/Layout/Navbar/ColorModeToggle";
 import NavLinks from "@/components/Layout/Navbar/NavLinks";
-import SearchBar from "@/components/Layout/Navbar/SearchBar";
+import SearchBar from "@/components/Layout/Navbar/SearchBar/SearchBar";
 
 export const navbarHeight = 80;
 export const mobileNavbarHeight = 60;
