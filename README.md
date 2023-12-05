@@ -1,5 +1,11 @@
 # ChatEDU
 
+table of contents
+
+[Overview](#overview)
+
+[Technical Architecture](#technical-architecture)
+
 ## Overview
 
 ChatEDU is not just an educational tool; it's a revolution in learning. By harnessing the power of Azure AI, including GPT-4 and Azure's diverse databases and services, we've transcended traditional learning methods. Our platform transforms any text or file into an immersive tutoring experience, offering personalized study guides, multiple-choice tests, long answer formats, and context-driven sessions. This is education reimagined.
