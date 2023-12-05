@@ -14,12 +14,16 @@ const NotebookHit: React.FC<Props> = ({ notebookIndexRow }) => {
     return (
         <Link
             href={`/notebooks/${notebookIndexRow.id}`}
-            onClick={() => {
-                console.log(`/notebooks/${notebookIndexRow.id}`)
+            style={{
+                width: '100%',
             }}
         >
-            <Box>
-                <Text>
+            <Box
+                w={'100%'}
+            >
+                <Text
+                    width={'100%'}
+                >
                     {notebookIndexRow.name}
                 </Text>
             </Box>
