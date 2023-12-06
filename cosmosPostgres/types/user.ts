@@ -10,4 +10,5 @@ export interface UserRowInput {
 // returned from the database when querying for a user
 export interface UserRow extends UserRowInput {
     verified: boolean;
+    is_onboarded: boolean;
 }

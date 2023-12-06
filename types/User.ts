@@ -10,4 +10,5 @@ export interface UserInput {
 // used on the client side to display a user
 export interface User extends UserInput {
     verified: boolean;
+    isOnboarded: boolean;
 }
