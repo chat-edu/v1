@@ -18,13 +18,15 @@ import Loading from "@/components/Utilities/Loading";
 
 import useUserScore from "@/hooks/queries/scores/users/useUserScore";
 
+import {User} from "next-auth";
+
 interface Props {
-    userId: string
+    user: User
 }
 
-const Profile: React.FC<Props> = ({ userId }) => {
+const Profile: React.FC<Props> = ({ user }) => {
 
-    const { userScore, loading } = useUserScore(userId)
+    const { userScore, loading } = useUserScore(user.id)
 
     const menuButton = useBreakpointValue({
         base: (
@@ -35,7 +37,7 @@ const Profile: React.FC<Props> = ({ userId }) => {
                 icon={
                     <Avatar
                         size={'sm'}
-                        name={userScore?.name || ""}
+                        name={userScore?.name || user.name || ""}
                         src={userScore?.profilePictureUrl || ""}
                     />
                 }
@@ -53,7 +55,13 @@ const Profile: React.FC<Props> = ({ userId }) => {
                     />
                 }
             >
-                @{userScore?.username}
+                {
+                    userScore ? (
+                        `@${userScore?.username}`
+                    ) : (
+                        user.name
+                    )
+                }
             </MenuButton>
         )
     })
@@ -75,7 +83,7 @@ const Profile: React.FC<Props> = ({ userId }) => {
                     )
                 }
                 <Menu>
-                    {userScore && menuButton}
+                    {menuButton}
                     <MenuList>
                         <MenuItem
                             onClick={() => signOut()}

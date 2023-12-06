@@ -12,7 +12,11 @@ import SearchBar from "@/components/Layout/Navbar/SearchBar/SearchBar";
 export const navbarHeight = 80;
 export const mobileNavbarHeight = 60;
 
-const Navbar = () => {
+interface Props {
+    isOnboarding?: boolean
+}
+
+const Navbar: React.FC<Props> = ({ isOnboarding }) => {
   return (
       <Card
         p={2}
@@ -34,6 +38,7 @@ const Navbar = () => {
                 md: 4
             }}
             gap={8}
+            justifyContent={'space-between'}
         >
             <Link href={'/'}>
                 <HStack
@@ -64,14 +69,20 @@ const Navbar = () => {
             <Box
                 display={{
                     base: 'none',
-                    md: 'block'
+                    md: isOnboarding ? 'none' : 'flex'
                 }}
                 flexShrink={0}
             >
                 <NavLinks />
             </Box>
-            <SearchBar />
-            <HStack>
+            {
+                !isOnboarding && (
+                    <SearchBar />
+                )
+            }
+            <HStack
+                justify={'flex-end'}
+            >
                 <AuthButton />
                 <ColorModeToggle />
             </HStack>

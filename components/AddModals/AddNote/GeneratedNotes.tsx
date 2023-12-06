@@ -26,7 +26,7 @@ const GeneratedNotes: React.FC<Props> = ({ generatedNotes, onRegenerate, onConfi
                 <Button
                     onClick={onClose}
                 >
-                    Close
+                    Done
                 </Button>
             </VStack>
         )
