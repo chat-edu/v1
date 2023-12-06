@@ -10,7 +10,7 @@ import {
     Stepper,
     StepSeparator,
     StepStatus,
-    StepTitle,
+    StepTitle, useBreakpointValue,
     useSteps,
     VStack
 } from "@chakra-ui/react";
@@ -46,6 +46,11 @@ const steps = [
 
 const OnboardingSteps: React.FC<Props> = ({ user }) => {
 
+    const orientation = useBreakpointValue({
+        base: 'vertical',
+        md: 'horizontal'
+    });
+
     const { userData } = useUser(user.id);
 
     const { notebooks } = useUserNotebooks(user.id);
@@ -71,11 +76,14 @@ const OnboardingSteps: React.FC<Props> = ({ user }) => {
         <VStack
             w={'100%'}
             spacing={8}
+            h={'100%'}
         >
             <Stepper
                 index={activeStep}
                 colorScheme={'brand'}
                 w={'100%'}
+                // @ts-ignore
+                orientation={orientation}
             >
                 {steps.map((step, index) => (
                     <Step key={index}>
@@ -135,6 +143,16 @@ const OnboardingSteps: React.FC<Props> = ({ user }) => {
                         onClick={() => setActiveStep(steps.length - 1)}
                     >
                         Skip
+                    </Button>
+                )
+            }
+            {
+                activeStep === steps.length - 1 && (
+                    <Button
+                        variant={'ghost'}
+                        onClick={() => setActiveStep(notebooks.length == 0 ? 1 : 2)}
+                    >
+                        Back
                     </Button>
                 )
             }
