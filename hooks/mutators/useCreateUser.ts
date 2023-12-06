@@ -10,8 +10,6 @@ import { addUser } from "@/services/user";
 
 import useAuth from "@/hooks/useAuth";
 
-import {emitUsersChangedEvent} from "@/cosmosPostgres/eventEmitters/userEventEmitter";
-
 import {UserInput} from "@/types/User";
 
 const UserSchema: Yup.ObjectSchema<UserInput> = Yup.object().shape({
@@ -58,7 +56,6 @@ const useAddUser = () => {
             if(!user) return;
             const success = await addUser(user);
             if(success) {
-                emitUsersChangedEvent(user.id);
                 toast({
                     title: "User Added",
                     description: "Your user has been added.",
@@ -66,7 +63,7 @@ const useAddUser = () => {
                     duration: 5000,
                     isClosable: true,
                 });
-                resetForm();
+                return true;
             } else {
                 toast({
                     title: "User Not Added",
@@ -75,6 +72,7 @@ const useAddUser = () => {
                     duration: 5000,
                     isClosable: true,
                 });
+                return false;
             }
         }
     });

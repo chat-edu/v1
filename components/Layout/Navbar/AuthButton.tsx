@@ -17,7 +17,7 @@ const AuthButton = () => {
 
     return (
         <Profile
-            userId={user.id}
+            user={user}
         />
     )
 }

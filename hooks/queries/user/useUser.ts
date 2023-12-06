@@ -9,7 +9,7 @@ import { transformUser } from "@/hooks/queries/user/transformers";
 
 const useUser = (userId: string) => {
 
-    const [userData, loading, error, fetchUserData] = useItemData(`/api/users/${userId || "noUser"}`, transformUser);
+    const [userData, loading, error, fetchUserData] = useItemData(userId !== "" ? `/api/users/${userId}` : "", transformUser);
 
     const handleUserChanged = useCallback(async (changedUserId: string) => {
         if(changedUserId === userId) {
