@@ -4,21 +4,23 @@ import {
     Button,
     CheckboxGroup,
     Flex,
-    Text,
+    Text, Tooltip,
     VStack,
 } from "@chakra-ui/react";
 import {SmallAddIcon} from "@chakra-ui/icons";
 
+import {MdQuiz} from "react-icons/md";
+
 import AddNoteButton from "@/components/AddModals/AddNote/AddNoteButton";
 import Note from "@/components/Notebook/NotebookMenu/NotesSelect/Note";
-import UploadNotes from "@/components/AddModals/UploadNotes";
+import StudyGuide from "@/components/Notebook/NotebookMenu/StudyGuide";
+import Loading from "@/components/Utilities/Loading";
 
 import useAuth from "@/hooks/useAuth";
 import useNotes from "@/hooks/queries/notes/useNotes";
 
 import {Notebook as NotebookType} from "@/types/Notebook";
 import {Note as NoteType} from "@/types/Note";
-import Loading from "@/components/Utilities/Loading";
 
 interface Props {
     notebook: NotebookType,
@@ -69,6 +71,7 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                                                 notebook={notebook}
                                                 addNote={addNote}
                                                 removeNote={removeNote}
+                                                selected={selectedNotes.some((selectedNote) => selectedNote.id === note.id)}
                                             />
                                         ))
                                     ) : (
@@ -81,6 +84,17 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                         </CheckboxGroup>
                     }
                 </Loading>
+                {
+                    selectedNotes.length > 0 && (
+                        <VStack
+                            w={'100%'}
+                        >
+                            <StudyGuide
+                                notes={selectedNotes}
+                            />
+                        </VStack>
+                    )
+                }
                 {
                     closeSidebar && selectedNotes.length > 0 && (
                         <Button
@@ -106,10 +120,22 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                                     w: '100%',
                                 }}
                             />
-                            <UploadNotes
-                                notebookId={notebook.id}
-                            />
                         </VStack>
+                    )
+                }
+                {
+                    selectedNotes.length > 0 && (
+                        <Tooltip
+                            label={'Coming soon!'}
+                        >
+                            <Button
+                                w={'100%'}
+                                leftIcon={<MdQuiz />}
+                                isDisabled
+                            >
+                                Create Practice Test
+                            </Button>
+                        </Tooltip>
                     )
                 }
             </VStack>

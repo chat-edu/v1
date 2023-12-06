@@ -1,4 +1,4 @@
-import {TagWithParentTagTypeRow} from "@/azure/cosmos/types/tag";
+import {TagWithParentTagTypeRow} from "@/cosmosPostgres/types/tag";
 
 import {Tag} from "@/types/Tags";
 

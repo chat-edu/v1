@@ -2,14 +2,12 @@ import React from 'react';
 
 import {SimpleGrid, Text, VStack} from "@chakra-ui/react";
 
-import {FaLeaf} from "react-icons/fa";
 import {MdQuestionAnswer} from "react-icons/md";
 import {SlOptionsVertical} from "react-icons/sl";
 
 import Action from "@/components/Chat/Action";
 
 import {
-    studyGuideCommand,
     multipleChoiceCommand,
     understandingQuestionCommand,
     applicationQuestionCommand,
@@ -45,32 +43,36 @@ const Actions: React.FC<Props> = ({ promptWithCommand, disabled, showMessage }) 
             <SimpleGrid
                 w={'100%'}
                 spacing={{ base: 2, xl: 4 }}
-                columns={{ base: 2, xl: 4 }}
+                columns={{ base: 2, xl: 3 }}
             >
-                <Action
-                    label={"Study Guide"}
-                    icon={FaLeaf}
-                    onClick={() => promptWithCommand(studyGuideCommand)}
-                    disabled={disabled}
-                />
                 <Action
                     label={"Multiple Choice"}
                     icon={SlOptionsVertical}
                     onClick={() => promptWithCommand(multipleChoiceCommand)}
                     disabled={disabled}
+                    tooltip={"Generate a multiple choice question."}
                 />
                 <Action
                     label={"Understanding"}
                     icon={MdQuestionAnswer}
                     onClick={() => promptWithCommand(understandingQuestionCommand)}
                     disabled={disabled}
+                    tooltip={"Demonstrate your understanding in a free response question."}
                 />
                 <Action
                     label={"Application"}
                     icon={MdQuestionAnswer}
                     onClick={() => promptWithCommand(applicationQuestionCommand)}
                     disabled={disabled}
+                    tooltip={"Apply your knowledge in a free response question."}
                 />
+                {/*<Action*/}
+                {/*    label={"Study Guide"}*/}
+                {/*    icon={FaLeaf}*/}
+                {/*    onClick={() => promptWithCommand(studyGuideCommand)}*/}
+                {/*    disabled={disabled}*/}
+                {/*    tooltip={"Create a study guide for this topic."}*/}
+                {/*/>*/}
             </SimpleGrid>
         </VStack>
     );

@@ -2,7 +2,7 @@ import {useCallback, useEffect} from "react";
 
 import useContainerData from "@/hooks/queries/utilities/useContainerData";
 
-import {subscribeToNotesChangedEvent, unsubscribeFromNotesChangedEvent} from "@/azure/cosmos/eventEmitters/notesEventEmitter";
+import {subscribeToNotesChangedEvent, unsubscribeFromNotesChangedEvent} from "@/cosmosPostgres/eventEmitters/notesEventEmitter";
 
 import {transformNote} from "@/hooks/queries/notes/transformers";
 

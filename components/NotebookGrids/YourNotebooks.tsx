@@ -3,6 +3,7 @@ import React from 'react';
 import {Text} from "@chakra-ui/react";
 
 import NotebookGrid from "@/components/NotebookGrids/NotebookGrid";
+import NotebookPoints from "@/components/Utilities/Points/NotebookPoints";
 
 import useUserNotebooks from "@/hooks/queries/scores/notebooks/useUserNotebooks";
 import useAuth from "@/hooks/useAuth";
@@ -32,6 +33,11 @@ const YourNotebooks: React.FC<Props> = ({ onClick }) => {
             }
             addNotebook
             authGate
+            rightComponent={(notebook) => (
+                <NotebookPoints
+                    points={notebook.score}
+                />
+            )}
         />
     );
 };

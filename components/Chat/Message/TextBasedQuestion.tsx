@@ -1,12 +1,12 @@
 import React from 'react';
 
-import {Box, Button, HStack} from "@chakra-ui/react";
+import {Box, HStack} from "@chakra-ui/react";
 
 import Markdown from "@/components/Utilities/Markdown";
+import QuestionButtons from "@/components/Chat/Message/QuestionButtons";
 
 import {TextBasedQuestion as TextBasedQuestionType} from "@/types/commands/TextBasedQuestion";
 import {Command} from "@/types/commands/Command";
-import {hintCommand} from "@/prompts";
 
 interface Props {
     textBasedQuestion: TextBasedQuestionType,
@@ -26,14 +26,10 @@ const TextBasedQuestion: React.FC<Props> = ({ textBasedQuestion, promptWithComma
                     {`***${textBasedQuestion.question}***`}
                 </Markdown>
             </Box>
-            <Button
-                variant={'outline'}
-                colorScheme={'brand'}
-                onClick={() => promptWithCommand(hintCommand)}
-                isDisabled={answered}
-            >
-                Hint
-            </Button>
+            <QuestionButtons
+                promptWithCommand={promptWithCommand}
+                answered={answered}
+            />
         </HStack>
     );
 };

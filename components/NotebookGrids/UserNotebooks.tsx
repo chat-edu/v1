@@ -8,6 +8,7 @@ import useUserNotebooks from "@/hooks/queries/scores/notebooks/useUserNotebooks"
 
 import {User} from "@/types/User";
 import {NotebookScore} from "@/types/score";
+import NotebookPoints from "@/components/Utilities/Points/NotebookPoints";
 
 interface Props {
     user: User
@@ -29,6 +30,11 @@ const UserNotebooks: React.FC<Props> = ({ user, onClick }) => {
                     {`@${user.username} hasn't created any notebooks yet`}
                 </Text>
             }
+            rightComponent={(notebook) => (
+                <NotebookPoints
+                    points={notebook.score}
+                />
+            )}
         />
     );
 };

@@ -12,6 +12,7 @@ const NotebookPoints: React.FC<Props> = ({ points }) => {
     return (
         <Points
             points={points}
+            pointsType={'Notebook'}
             icon={FaSeedling}
         />
     );

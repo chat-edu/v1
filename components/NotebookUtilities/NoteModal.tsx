@@ -1,17 +1,8 @@
 import React from 'react';
 
-import {
-    Button,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay
-} from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 
-import Markdown from "@/components/Utilities/Markdown";
+import NoteInputModal from "@/components/NotebookUtilities/NoteInputModal";
 
 import useDeleteNote from "@/hooks/mutators/useDeleteNote";
 
@@ -34,37 +25,22 @@ const NoteModal: React.FC<Props> = ({ note, authorId, isOpen, onClose }) => {
     }
 
     return (
-        <Modal
+        <NoteInputModal
+            note={note}
             isOpen={isOpen}
             onClose={onClose}
-            size={'3xl'}
-            scrollBehavior={'inside'}
-            isCentered={true}
-        >
-            <ModalOverlay />
-            <ModalContent>
-                <ModalHeader>{note.name}</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                    <Markdown>
-                        {note.content}
-                    </Markdown>
-                </ModalBody>
-                <ModalFooter>
-                    {
-                        isAllowed && (
-                            <Button
-                                variant='ghost'
-                                colorScheme='red'
-                                onClick={onDelete}
-                            >
-                                Delete
-                            </Button>
-                        )
-                    }
-                </ModalFooter>
-            </ModalContent>
-        </Modal>
+            footer={
+                isAllowed ? (
+                    <Button
+                        variant='ghost'
+                        colorScheme='red'
+                        onClick={onDelete}
+                    >
+                        Delete
+                    </Button>
+                ) : undefined
+            }
+        />
     );
 };
 

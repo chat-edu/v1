@@ -11,18 +11,20 @@ import {AiFillEye} from "react-icons/ai";
 
 import NoteModal from "@/components/NotebookUtilities/NoteModal";
 
+import useAuth from "@/hooks/useAuth";
+
 import {Note as NoteType} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
-import useAuth from "@/hooks/useAuth";
 
 interface Props {
     notebook: Notebook
     note: NoteType,
     addNote: (note: NoteType) => void
-    removeNote: (id: NoteType["id"]) => void
+    removeNote: (id: NoteType["id"]) => void,
+    selected: boolean
 }
 
-const Note: React.FC<Props> = ({ note, notebook, addNote, removeNote }) => {
+const Note: React.FC<Props> = ({ note, notebook, addNote, removeNote, selected }) => {
 
     const { user } = useAuth();
 
@@ -40,6 +42,7 @@ const Note: React.FC<Props> = ({ note, notebook, addNote, removeNote }) => {
                     user ? (
                         <Checkbox
                             key={note.id}
+                            isChecked={selected}
                             onChange={(e) => {
                                 if(e.target.checked) {
                                     addNote(note);

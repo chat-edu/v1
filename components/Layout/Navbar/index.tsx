@@ -1,10 +1,13 @@
 import React from 'react'
 
-import {Card, Flex, Heading, HStack, Text, Image} from '@chakra-ui/react'
+import {Card, Flex, Heading, HStack, Text, Image, Box} from '@chakra-ui/react'
+
+import Link from "next/link";
 
 import AuthButton from '@/components/Layout/Navbar/AuthButton'
 import ColorModeToggle from "@/components/Layout/Navbar/ColorModeToggle";
-import Link from "next/link";
+import NavLinks from "@/components/Layout/Navbar/NavLinks";
+import SearchBar from "@/components/Layout/Navbar/SearchBar/SearchBar";
 
 export const navbarHeight = 80;
 export const mobileNavbarHeight = 60;
@@ -30,6 +33,7 @@ const Navbar = () => {
                 base: 2,
                 md: 4
             }}
+            gap={8}
         >
             <Link href={'/'}>
                 <HStack
@@ -57,11 +61,19 @@ const Navbar = () => {
                     </Heading>
                 </HStack>
             </Link>
-            <HStack
-                ml={'auto'}
+            <Box
+                display={{
+                    base: 'none',
+                    md: 'block'
+                }}
+                flexShrink={0}
             >
-                <ColorModeToggle />
+                <NavLinks />
+            </Box>
+            <SearchBar />
+            <HStack>
                 <AuthButton />
+                <ColorModeToggle />
             </HStack>
         </Flex>
       </Card>

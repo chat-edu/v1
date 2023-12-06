@@ -6,14 +6,14 @@ import {
     UserNotebookScoreRow,
     RankedUserNotebookScoreRow,
     UserCreatorScoreRow,
-    RankedUserCreatorScoreRow
-} from "@/azure/cosmos/types";
+    RankedUserCreatorScoreRow, RankedUserScoreRow
+} from "@/cosmosPostgres/types";
 import {
     UserScore,
     UserNotebookScore,
     RankedUserNotebookScore,
     UserCreatorScore,
-    RankedUserCreatorScore
+    RankedUserCreatorScore, RankedUserScore
 } from "@/types/score";
 import {transformNotebookScore} from "@/hooks/queries/scores/notebooks/transformers";
 
@@ -25,12 +25,17 @@ export const transformUserScore = (row: UserScoreRow): UserScore => ({
     verified: row.verified
 });
 
+export const transformRankedUserScore = (row: RankedUserScoreRow): RankedUserScore => ({
+    ...transformUserScore(row),
+    ...transformRanked(row)
+});
+
 export const transformUserCreatorScore = (row: UserCreatorScoreRow): UserCreatorScore => ({
     ...transformUserScore(row),
     numNotebooks: parseInt(row.num_notebooks)
 });
 
-export const transformRankedUserCreator = (row: RankedUserCreatorScoreRow): RankedUserCreatorScore => ({
+export const transformRankedUserCreatorScore = (row: RankedUserCreatorScoreRow): RankedUserCreatorScore => ({
     ...transformUserCreatorScore(row),
     ...transformRanked(row)
 });

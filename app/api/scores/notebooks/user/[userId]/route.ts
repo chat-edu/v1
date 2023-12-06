@@ -1,4 +1,4 @@
-import {findTopNotebooksByUserId} from "@/azure/cosmos/services/scores";
+import {findTopNotebooksByUserId} from "@/cosmosPostgres/services/scores";
 
 import {NextRequest} from "next/server";
 

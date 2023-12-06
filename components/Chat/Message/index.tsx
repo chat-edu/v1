@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { Message as MessageInterface } from "ai";
+import {Message as MessageInterface} from "ai";
 
 import {Card, ColorMode, Flex, useColorMode} from "@chakra-ui/react";
 import {transparentize} from "@chakra-ui/theme-tools";
 
 import {SlOptionsVertical} from "react-icons/sl";
 import {MdQuestionAnswer} from "react-icons/md";
-import {FaLeaf} from "react-icons/fa";
+import {FaLeaf, FaQuestion} from "react-icons/fa";
 import {BsFillLightbulbFill} from "react-icons/bs";
 
 // @ts-ignore
@@ -22,23 +22,25 @@ import ActionPrompt from "@/components/Chat/Message/ActionPrompt";
 import Hint from "@/components/Chat/Message/Hint";
 
 import {
-    ResponseTags,
+    answerCorrectnessDefaults,
+    applicationQuestionCommand,
     CommandTags,
-    parseResponse,
-    studyGuideCommand,
     hintCommand,
     multipleChoiceCommand,
-    understandingQuestionCommand,
-    applicationQuestionCommand,
-    answerCorrectnessDefaults
+    parseResponse,
+    ResponseTags,
+    studyGuideCommand,
+    understandingQuestionCommand
 } from "@/prompts";
 
 import {Command} from "@/types/commands/Command";
+import DontKnow from "@/components/Chat/Message/DontKnow";
+import {AnswerStates} from "@/hooks/useChatEdu";
 
 interface Props {
     message: MessageInterface,
     promptWithCommand: (command: Command<any>) => void,
-    isCorrect?: boolean
+    answerState?: AnswerStates
 }
 
 const getRoleBgColor = (role: string, colorMode: ColorMode) => {
@@ -63,7 +65,7 @@ const getRoleJustifyContent = (role: string) => {
     }
 }
 
-const Message: React.FC<Props> = ({ message, promptWithCommand, isCorrect }) => {
+const Message: React.FC<Props> = ({ message, promptWithCommand, answerState }) => {
 
     const { colorMode } = useColorMode();
 
@@ -71,17 +73,23 @@ const Message: React.FC<Props> = ({ message, promptWithCommand, isCorrect }) => 
         <Flex
             justifyContent={getRoleJustifyContent(message.role)}
             w="100%"
-            borderColor={isCorrect === undefined ? undefined : isCorrect ? 'brand.500' : 'red.500'}
         >
             <Card
                 maxW={'95%'}
-                borderColor={isCorrect === undefined ? undefined : isCorrect ? 'brand.500' : 'red.500'}
-                borderWidth={isCorrect === undefined ? undefined : 2}
+                borderColor={answerState === undefined
+                    ? undefined
+                    : answerState === AnswerStates.CORRECT
+                        ? 'brand.500'
+                        : answerState == AnswerStates.INCORRECT
+                            ? 'red.500'
+                            : 'gray.500'
+                }
+                borderWidth={answerState === undefined ? undefined : 2}
                 // @ts-ignore
                 bg={getRoleBgColor(message.role, colorMode)}
             >
                 {
-                    getMessageComponent(message, promptWithCommand, isCorrect !== undefined)
+                    getMessageComponent(message, promptWithCommand, answerState !== undefined)
                 }
             </Card>
         </Flex>
@@ -151,6 +159,12 @@ const getMessageComponent = (
                     hint={parseResponse(hintCommand, content)}
                 />
             );
+        case ResponseTags.DONT_KNOW:
+            return (
+                <DontKnow
+                    dontKnow={content}
+                />
+            );
         case CommandTags.HINT:
             return (
                 <ActionPrompt
@@ -189,6 +203,13 @@ const getMessageComponent = (
         case CommandTags.ANSWER_CORRECTNESS:
             return (
                 <TextMessage content={(content || "").trim()} />
+            );
+        case CommandTags.DONT_KNOW:
+            return (
+                <ActionPrompt
+                    title={"Don't Know"}
+                    icon={FaQuestion}
+                />
             );
         default:
             return (

@@ -26,12 +26,13 @@ const Chat: React.FC<Props> = ({ notebookId, notes }) => {
         input,
         messages,
         promptType,
-        correctMapping,
+        answerMapping,
         isLoading,
         handleInputChange,
         onSubmit,
         promptWithCommand,
-        setMessageBottomRef
+        setMessageBottomRef,
+        stop
     } = useChatEdu(notebookId, notes);
 
     const { height } = useViewportDimensions();
@@ -65,7 +66,7 @@ const Chat: React.FC<Props> = ({ notebookId, notes }) => {
                 <Messages
                     messages={messages}
                     promptWithCommand={promptWithCommand}
-                    correctAnswers={correctMapping}
+                    answerMapping={answerMapping}
                     isLoading={isLoading}
                 />
                 <InputBox
@@ -74,10 +75,11 @@ const Chat: React.FC<Props> = ({ notebookId, notes }) => {
                     isLoading={isLoading}
                     promptType={promptType}
                     showMessage={messages.length === 0}
-                    correctAnswers={correctMapping}
+                    answerMapping={answerMapping}
                     handleChange={handleInputChange}
                     handleSubmit={onSubmit}
                     promptWithCommand={promptWithCommand}
+                    stop={stop}
                 />
             </Flex>
         </Container>

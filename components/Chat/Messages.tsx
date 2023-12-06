@@ -7,15 +7,16 @@ import {Box, Flex, Text, VStack} from "@chakra-ui/react";
 import Message from "@/components/Chat/Message";
 import Welcome from "@/components/Welcome";
 import {Command} from "@/types/commands/Command";
+import {AnswerStates} from "@/hooks/useChatEdu";
 
 interface Props {
     messages: MessageInterface[],
     isLoading: boolean,
     promptWithCommand: (command: Command<any>) => void,
-    correctAnswers: { [key: string]: boolean }
+    answerMapping: { [key: string]: AnswerStates }
 }
 
-const Messages: React.FC<Props> = ({ messages, promptWithCommand, correctAnswers }) => {
+const Messages: React.FC<Props> = ({ messages, promptWithCommand, answerMapping }) => {
 
     return (
         <Box
@@ -45,7 +46,7 @@ const Messages: React.FC<Props> = ({ messages, promptWithCommand, correctAnswers
                                     key={message.id}
                                     message={message}
                                     promptWithCommand={promptWithCommand}
-                                    isCorrect={correctAnswers[message.id]}
+                                    answerState={answerMapping[message.id]}
                                 />
                             ))
                         ) : (

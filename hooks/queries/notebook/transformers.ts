@@ -1,4 +1,4 @@
-import {NotebookRow} from "@/azure/cosmos/types";
+import {NotebookRow} from "@/cosmosPostgres/types";
 
 import {Notebook} from "@/types/Notebook";
 

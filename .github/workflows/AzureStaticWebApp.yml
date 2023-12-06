@@ -3,11 +3,11 @@ name: Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - main
+      - ai-classroom-hackathon
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
-      - main
+      - ai-classroom-hackathon
 
 jobs:
   build_and_deploy_job:
@@ -31,6 +31,9 @@ jobs:
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
       NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
       NEXT_PUBLIC_CHAT_ENDPOINT: ${{ secrets.NEXT_PUBLIC_CHAT_ENDPOINT }}
+      AZURE_SEARCH_URL: ${{ secrets.AZURE_SEARCH_URL }}
+      AZURE_SEARCH_KEY: ${{ secrets.AZURE_SEARCH_KEY }}
+      NEXT_PUBLIC_TOPICS_ENDPOINT: ${{ secrets.NEXT_PUBLIC_TOPICS_ENDPOINT }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -70,6 +73,9 @@ jobs:
           NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} \
           NEXT_PUBLIC_DOCUMENT_INTELLIGENCE_KEY=${{ secrets.NEXT_PUBLIC_DOCUMENT_INTELLIGENCE_KEY }} \
           NEXT_PUBLIC_CHAT_ENDPOINT=${{ secrets.NEXT_PUBLIC_CHAT_ENDPOINT }} \
+          AZURE_SEARCH_URL=${{ secrets.AZURE_SEARCH_URL }} \
+          AZURE_SEARCH_KEY=${{ secrets.AZURE_SEARCH_KEY }} \
+          NEXT_PUBLIC_TOPICS_ENDPOINT=${{ secrets.NEXT_PUBLIC_TOPICS_ENDPOINT }} \
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

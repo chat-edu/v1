@@ -4,7 +4,7 @@ import useAuth from "@/hooks/useAuth";
 
 import { deleteNotebook as deleteNotebookService } from '@/services/notebooks'
 
-import {emitNotebooksChangedEvent} from "@/azure/cosmos/eventEmitters/notebooksEventEmitter";
+import {emitNotebooksChangedEvent} from "@/cosmosPostgres/eventEmitters/notebooksEventEmitter";
 
 const useDeleteNotebook = (notebookId: number, notebookName: string) => {
 

@@ -71,8 +71,10 @@ const NotebookGrid = <NotebookType extends NotebookScore>({ heading, headingRigh
                                                     base: 'sm',
                                                     md: 'md'
                                                 }}
+                                                fontWeight={'bold'}
+                                                textAlign={'center'}
                                             >
-                                                You must be logged in to view this section
+                                                Sign In or Sign Up
                                             </Text>
                                             <AuthProviderButtons
                                                 width={'100%'}

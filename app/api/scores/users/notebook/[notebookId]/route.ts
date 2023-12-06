@@ -1,4 +1,4 @@
-import {findScoresByNotebookId} from "@/azure/cosmos/services/scores";
+import {findScoresByNotebookId} from "@/cosmosPostgres/services/scores";
 
 import {NotebookIdParams} from "@/app/api/scores/users/notebook/[notebookId]/NotebookIdParams";
 

@@ -41,7 +41,6 @@ const NotesDisplay: React.FC<Props> = ({ notebookId, authorId, allowAddNote }) =
                             columns={{
                                 base: 2,
                                 md: 3,
-                                lg: 4
                             }}
                             spacing={{
                                 base: 2,

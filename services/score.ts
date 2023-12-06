@@ -1,4 +1,4 @@
-import {emitNotebookLeaderboardChangedEvent} from "@/azure/cosmos/eventEmitters/notebookLeaderboardEventEmitter";
+import {emitNotebookLeaderboardChangedEvent} from "@/cosmosPostgres/eventEmitters/notebookLeaderboardEventEmitter";
 
 import {Notebook} from "@/types/Notebook";
 import {User} from "@/types/User";
@@ -10,12 +10,12 @@ export const updateScore = async (
     userId: User["id"],
     incrementAmount: number
 ): Promise<boolean> => {
-    return fetch(`/api/scores//update`, {
+    return fetch(`/api/scores/update`, {
         method: "PATCH",
         body: JSON.stringify({
             notebook_id: notebookId,
             user_id: userId,
-            incrementAmount
+            increment_amount: incrementAmount
         })
     })
         .then((res) => {

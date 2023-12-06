@@ -1,12 +1,13 @@
 import React from 'react';
 
 import {HStack, Icon, Text, VStack} from "@chakra-ui/react";
+import {CheckCircleIcon} from "@chakra-ui/icons";
 
-import {MdExposurePlus1} from "react-icons/md";
 import {AiOutlineExclamationCircle} from "react-icons/ai";
 
-import {AnswerCorrectness} from "@/types/commands/AnswerCorrectness";
 import Markdown from "@/components/Utilities/Markdown";
+
+import {AnswerCorrectness} from "@/types/commands/AnswerCorrectness";
 
 interface Props {
     correctness: AnswerCorrectness
@@ -24,7 +25,7 @@ const QuestionCorrectness: React.FC<Props> = ({ correctness }) => {
             {
                 correctness.correct != undefined && correctness.correct && (
                     <Icon
-                        as={MdExposurePlus1}
+                        as={CheckCircleIcon}
                         color={'brand.500'}
                         boxSize={6}
                     />

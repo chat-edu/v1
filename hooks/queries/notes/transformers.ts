@@ -1,4 +1,4 @@
-import {NoteRow} from "@/azure/cosmos/types/note";
+import {NoteRow} from "@/cosmosPostgres/types/note";
 import {Note} from "@/types/Note";
 
 export const transformNote = (row: NoteRow): Note => ({
