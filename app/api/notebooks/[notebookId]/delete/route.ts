@@ -10,6 +10,5 @@ export const DELETE = async (request: Request, {params}: {params: NotebookIdPara
 
     await deleteNotebookIndexRows([params.notebookId.toString()])
 
-
     return Response.json(await deleteNotebook(params.notebookId));
 }

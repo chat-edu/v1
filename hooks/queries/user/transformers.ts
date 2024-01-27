@@ -7,6 +7,7 @@ export const transformUser = (user: UserRow): User => ({
     email: user.email,
     username: user.username,
     profilePictureUrl: user.profile_picture_url || `https://api.multiavatar.com/${user.id}.png`,
+    role: user.role,
     verified: user.verified,
     isOnboarded: user.is_onboarded
 });

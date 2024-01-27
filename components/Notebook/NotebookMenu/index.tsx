@@ -8,26 +8,26 @@ import {Notebook} from "@/types/Notebook";
 
 interface Props {
     notebook: Notebook
-    addNote: (note: Note) => void;
-    removeNote: (id: Note["id"]) => void;
-    selectedNotes: Note[];
+    selectLesson: (note: Note) => void;
+    deselectLesson: () => void;
+    selectedLesson: Note | null;
 }
 
-const NotesMenu: React.FC<Props> = ({ notebook, addNote, removeNote, selectedNotes }) => {
+const NotesMenu: React.FC<Props> = ({ notebook, selectLesson, deselectLesson, selectedLesson }) => {
 
     return (
         <>
             <MobileHeader
                 notebook={notebook}
-                selectedNotes={selectedNotes}
-                addNote={addNote}
-                removeNote={removeNote}
+                selectedLesson={selectedLesson}
+                selectLesson={selectLesson}
+                deselectLesson={deselectLesson}
             />
             <Sidebar
                 notebook={notebook}
-                selectedNotes={selectedNotes}
-                addNote={addNote}
-                removeNote={removeNote}
+                selectedLesson={selectedLesson}
+                selectLesson={selectLesson}
+                deselectLesson={deselectLesson}
             />
         </>
     );

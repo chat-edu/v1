@@ -6,6 +6,7 @@ import TextInput from "@/components/Utilities/FormUtilities/TextInput";
 import OnboardingStep from "@/components/Onboarding/OnboardingStep";
 
 import useCreateUser from "@/hooks/mutators/useCreateUser";
+import {UserRoles} from "@/types/User";
 
 interface Props {
     nextStep: () => void
@@ -21,7 +22,7 @@ const CreateAccount: React.FC<Props> = ({ nextStep }) => {
         setFieldValue,
         submitForm,
         disabled
-    } = useCreateUser();
+    } = useCreateUser(UserRoles.TEACHER);
 
     const handleSubmit = async () => {
         const success = await submitForm();

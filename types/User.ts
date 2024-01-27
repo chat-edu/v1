@@ -5,10 +5,16 @@ export interface UserInput {
     email: string;
     username: string;
     profilePictureUrl: string;
+    role: UserRoles;
 }
 
 // used on the client side to display a user
 export interface User extends UserInput {
     verified: boolean;
     isOnboarded: boolean;
+}
+
+export enum UserRoles {
+    STUDENT = "student",
+    TEACHER = "teacher"
 }

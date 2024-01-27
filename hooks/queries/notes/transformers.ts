@@ -6,4 +6,6 @@ export const transformNote = (row: NoteRow): Note => ({
     notebookId: row.notebook_id,
     content: row.content,
     name: row.name,
+    topicId: row.topic_id,
+    orderPosition: row.order_position,
 });

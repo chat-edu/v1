@@ -23,6 +23,12 @@ export const findNotesByNotebookId = async (notebookId: number): Promise<NoteRow
     return find<NoteRow>(queryText, [notebookId]);
 };
 
+// Find Notes by Topic ID
+export const findNotesByTopicId = async (topicId: number): Promise<NoteRow[]> => {
+    const queryText = 'SELECT * FROM Notes WHERE topic_id = $1 ORDER BY order_position;';
+    return find<NoteRow>(queryText, [topicId]);
+};
+
 // UPDATE
 
 export const updateNote = async (id: number, updatedFields: Partial<NoteRowInput>): Promise<boolean> => {

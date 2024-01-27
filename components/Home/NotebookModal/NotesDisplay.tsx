@@ -3,12 +3,11 @@ import React from 'react';
 import {SimpleGrid, Text, VStack} from "@chakra-ui/react";
 
 import Note from "@/components/Home/NotebookModal/Note";
+import Loading from "@/components/Utilities/Loading";
 
 import useNotes from "@/hooks/queries/notes/useNotes";
 
 import {Notebook} from "@/types/Notebook";
-import Loading from "@/components/Utilities/Loading";
-import AddNoteCard from "@/components/AddModals/AddNote/AddNoteCard";
 
 interface Props {
     notebookId: Notebook["id"],
@@ -47,13 +46,6 @@ const NotesDisplay: React.FC<Props> = ({ notebookId, authorId, allowAddNote }) =
                                 md: 4,
                             }}
                         >
-                            {
-                                allowAddNote && (
-                                    <AddNoteCard
-                                        notebookId={notebookId}
-                                    />
-                                )
-                            }
                             {
                                 notes.map((note) => (
                                     <Note

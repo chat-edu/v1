@@ -11,7 +11,7 @@ export const getPool = () => {
             port: 5432,
             user: 'citus',
             password: process.env.COSMOS_POSTGRES_PASSWORD as string,
-            database: 'citus',
+            database: 'chatedu-v2',
             ssl: true,
         });
     }

@@ -47,4 +47,6 @@ const transformNoteInput = (note: NoteInput): NoteRowInput => ({
     notebook_id: note.notebookId,
     name: note.name,
     content: note.content,
+    topic_id: note.topicId,
+    order_position: note.orderPosition,
 });

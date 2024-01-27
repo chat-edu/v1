@@ -1,103 +1,33 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 
-import useGenerateTopics from "@/hooks/utilities/useGenerateTopics";
-import useGenerateNotes from "@/hooks/utilities/useGenerateNotes";
-import useProcessPdf from "@/hooks/utilities/useProcessPdf";
+import {addNote} from "@/services/notes";
 
-export enum AddNoteStep {
-    CONTENT,
-    TOPICS,
-    GENERATE_NOTES,
-}
+import {Topic} from "@/types/Topic";
+import {Notebook} from "@/types/Notebook";
 
-const useAddNote = (notebookId: number) => {
+const useAddNote = (notebookId: Notebook["id"], orderPosition: Topic["orderPosition"], topicId?: Topic["id"]) => {
 
-    const [step, setStep] = useState<AddNoteStep>(AddNoteStep.CONTENT);
+    const [name, setName] = useState<string>('');
+    const [nameTouched, setNameTouched] = useState<boolean>(false);
 
-    const [content, setContent] = useState<string>('');
-    const [contentTouched, setContentTouched] = useState<boolean>(false);
-
-    const {
-        generatedTopics,
-        generatedTopicsLoading,
-        selectedTopics,
-        generateTopics,
-        resetGeneratedTopics ,
-        selectTopic,
-        unselectTopic,
-    } = useGenerateTopics(content);
-
-    const {
-        generateNotesLoading,
-        generatedNotes,
-        confirmNotesLoading,
-        generateNotes,
-        resetGeneratedNotes,
-        regenerateNote,
-        removeNote,
-        confirmNote,
-        confirmNotes
-    } = useGenerateNotes(content, selectedTopics, notebookId);
-
-    const {
-        file,
-        isFileExtracting,
-        extractedText,
-        processFile,
-        updateFile,
-        resetFile
-    } = useProcessPdf();
-
-    useEffect(() => {
-        setContent(extractedText);
-    }, [extractedText]);
-
-    const onGenerateTopics = async () => {
-        await generateTopics();
-        setStep(AddNoteStep.TOPICS);
-    }
-
-    const onGenerateNotes = async () => {
-        await generateNotes();
-        setStep(AddNoteStep.GENERATE_NOTES);
-    }
-
-    const reset = () => {
-        resetGeneratedNotes();
-        resetGeneratedTopics();
-        setContent('');
-        setContentTouched(false);
-        setStep(AddNoteStep.CONTENT);
-        resetFile();
+    const submit = async () => {
+        const note = await addNote({
+            notebookId,
+            content: "",
+            topicId: topicId || null,
+            name,
+            orderPosition
+        })
+        console.log(note);
     }
 
     return {
         notebookId,
-        step,
-        content,
-        contentTouched,
-        generatedTopicsLoading,
-        generatedTopics,
-        selectedTopics,
-        generateNotesLoading,
-        generatedNotes,
-        confirmNotesLoading,
-        file,
-        isFileExtracting,
-        processFile,
-        updateFile,
-        setContent,
-        setContentTouched,
-        onGenerateTopics,
-        selectTopic,
-        unselectTopic,
-        onGenerateNotes,
-        confirmNotes,
-        regenerateNote,
-        removeNote,
-        confirmNote,
-        reset,
-        resetFile,
+        name,
+        nameTouched,
+        setName,
+        setNameTouched,
+        submit,
     }
 }
 

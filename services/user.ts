@@ -17,4 +17,5 @@ const transformUserInput = (user: UserInput): UserRowInput => ({
     email: user.email,
     username: user.username,
     profile_picture_url: user.profilePictureUrl,
+    role: user.role,
 })

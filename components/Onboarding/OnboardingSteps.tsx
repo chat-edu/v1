@@ -17,7 +17,6 @@ import {
 
 import CreateAccount from "@/components/Onboarding/CreateAccount";
 import CreateNotebook from "@/components/Onboarding/CreateNotebook";
-import CreateNote from "@/components/Onboarding/CreateNote";
 import GetStarted from "@/components/Onboarding/GetStarted";
 
 import useUserNotebooks from "@/hooks/queries/scores/notebooks/useUserNotebooks";
@@ -35,9 +34,6 @@ const steps = [
     },
     {
         title: 'Create a Notebook',
-    },
-    {
-        title: 'Create a Note',
     },
     {
         title: 'Get Started',
@@ -124,14 +120,6 @@ const OnboardingSteps: React.FC<Props> = ({ user }) => {
                 }
                 {
                     activeStep === 2 && (
-                        <CreateNote
-                            notebookId={notebooks[0]?.notebookId || 0}
-                            onNext={goToNext}
-                        />
-                    )
-                }
-                {
-                    activeStep === 3 && (
                         <GetStarted />
                     )
                 }

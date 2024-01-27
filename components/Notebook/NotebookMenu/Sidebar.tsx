@@ -13,7 +13,6 @@ import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
 import {Note} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
-import ShareButton from "@/components/Utilities/ShareButton";
 
 
 const openWebSidebarWidthLg = 400;
@@ -22,12 +21,12 @@ const closedWebSidebarWidth = 72;
 
 interface Props {
     notebook: Notebook,
-    selectedNotes: Note[],
-    addNote: (note: Note) => void;
-    removeNote: (id: Note["id"]) => void
+    selectedLesson: Note | null,
+    selectLesson: (note: Note) => void;
+    deselectLesson: (id: Note["id"]) => void
 }
 
-const Sidebar: React.FC<Props> = ({ notebook, selectedNotes, addNote, removeNote }) => {
+const Sidebar: React.FC<Props> = ({ notebook, selectedLesson, selectLesson, deselectLesson }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
@@ -70,10 +69,6 @@ const Sidebar: React.FC<Props> = ({ notebook, selectedNotes, addNote, removeNote
                             onClick={onClose}
                             size={'sm'}
                         />
-                        <ShareButton
-                            notebookId={notebook.id}
-                            size={'sm'}
-                        />
                     </VStack>
                 </HStack>
                 <Box
@@ -83,9 +78,9 @@ const Sidebar: React.FC<Props> = ({ notebook, selectedNotes, addNote, removeNote
                 >
                     <NotesSelect
                         notebook={notebook}
-                        selectedNotes={selectedNotes}
-                        addNote={addNote}
-                        removeNote={removeNote}
+                        selectedLesson={selectedLesson}
+                        selectLesson={selectLesson}
+                        deselectLesson={deselectLesson}
                     />
                 </Box>
                 <NotebookLeaderboard
@@ -100,7 +95,6 @@ const Sidebar: React.FC<Props> = ({ notebook, selectedNotes, addNote, removeNote
                     icon={<VscLayoutSidebarLeft />}
                     onClick={onOpen}
                 />
-                <ShareButton notebookId={notebook.id} />
             </VStack>
         </Card>
     );

@@ -12,12 +12,12 @@ export const mobileHeaderHeight = 60;
 
 interface Props {
     notebook: Notebook;
-    selectedNotes: Note[];
-    addNote: (note: Note) => void;
-    removeNote: (id: Note["id"]) => void;
+    selectedLesson: Note | null;
+    selectLesson: (note: Note) => void;
+    deselectLesson: (id: Note["id"]) => void;
 }
 
-const MobileHeader: React.FC<Props> = ({ notebook, selectedNotes, addNote, removeNote}) => {
+const MobileHeader: React.FC<Props> = ({ notebook, selectedLesson, selectLesson, deselectLesson}) => {
     return (
         <Card
             display={{base: 'flex', md: 'none'}}
@@ -42,19 +42,13 @@ const MobileHeader: React.FC<Props> = ({ notebook, selectedNotes, addNote, remov
                     >
                         {notebook.name}
                     </Text>
-                    <Text
-                        fontSize={'sm'}
-                        opacity={0.7}
-                    >
-                        {selectedNotes.length} notes selected
-                    </Text>
                 </VStack>
                 <HStack>
                     <MobileSidebar
                         notebook={notebook}
-                        selectedNotes={selectedNotes}
-                        addNote={addNote}
-                        removeNote={removeNote}
+                        selectedLesson={selectedLesson}
+                        selectLesson={selectLesson}
+                        deselectLesson={deselectLesson}
                     />
                     <MobileLeaderboard
                         notebook={notebook}

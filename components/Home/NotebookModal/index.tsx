@@ -18,7 +18,6 @@ import {
 
 import Link from "next/link";
 
-import NotebookTags from "@/components/NotebookUtilities/NotebookTags";
 import NotebookLeaderboard from "@/components/NotebookUtilities/NotebookLeaderboard";
 import NotesDisplay from "@/components/Home/NotebookModal/NotesDisplay";
 import UsernameText from "@/components/Utilities/UsernameText";
@@ -29,7 +28,6 @@ import useNotebookRank from "@/hooks/queries/scores/notebooks/useNotebookRank";
 import useAuth from "@/hooks/useAuth";
 
 import {NotebookScore} from "@/types/score";
-import ShareButton from "@/components/Utilities/ShareButton";
 
 
 interface Props {
@@ -65,9 +63,6 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                         <VStack
                             align={'start'}
                         >
-                            <NotebookTags
-                                notebookId={notebook.notebookId}
-                            />
                             <HStack>
                                 <Heading
                                     size={{
@@ -117,14 +112,6 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                     </HStack>
                 </ModalHeader>
                 <ModalCloseButton />
-                <ShareButton
-                    notebookId={notebook.notebookId}
-                    size={'sm'}
-                    variant={'ghost'}
-                    position={'absolute'}
-                    top={"8px"}
-                    right={"48px"}
-                />
                 <ModalBody>
                     <Flex
                         direction={'column'}

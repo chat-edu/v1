@@ -3,9 +3,9 @@ import React from 'react';
 import {Stack} from "@chakra-ui/react";
 
 import NotebookMenu from "@/components/Notebook/NotebookMenu";
-import Chat from "@/components/Chat";
+import Lesson from "@/components/Notebook/Lesson";
 
-import useSelectNotes from "@/hooks/useSelectNotes";
+import useSelectLesson from "@/hooks/useSelectLesson";
 
 import {Notebook} from "@/types/Notebook";
 import {Note} from "@/types/Note";
@@ -15,9 +15,9 @@ interface Props {
     initialNoteId?: Note["id"]
 }
 
-const NotebookLayout: React.FC<Props> = ({ notebook, initialNoteId }) => {
+const NotebookLayout: React.FC<Props> = ({ notebook }) => {
 
-    const { selectedNotes, addNote, removeNote } = useSelectNotes(initialNoteId);
+    const { selectedLesson, selectLesson, deselectLesson } = useSelectLesson();
 
     return (
         <Stack
@@ -28,13 +28,12 @@ const NotebookLayout: React.FC<Props> = ({ notebook, initialNoteId }) => {
         >
             <NotebookMenu
                 notebook={notebook}
-                addNote={addNote}
-                removeNote={removeNote}
-                selectedNotes={selectedNotes}
+                selectLesson={selectLesson}
+                deselectLesson={deselectLesson}
+                selectedLesson={selectedLesson}
             />
-            <Chat
-                notebookId={notebook.id}
-                notes={selectedNotes}
+            <Lesson
+                selectedLesson={selectedLesson}
             />
         </Stack>
     );

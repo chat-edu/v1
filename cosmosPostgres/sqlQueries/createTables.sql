@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS Users (
     name VARCHAR(255),
     email VARCHAR(255) UNIQUE,
     profile_picture_url VARCHAR(255),
-    verified BOOLEAN DEFAULT FALSE
+    verified BOOLEAN DEFAULT FALSE,
+    role VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS Notebooks (
@@ -14,12 +15,25 @@ CREATE TABLE IF NOT EXISTS Notebooks (
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE SET NULL
 );
 
+CREATE TABLE IF NOT EXISTS Topics (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    notebook_id INT,
+    order_position INT,
+    parent_topic_id INT,
+    FOREIGN KEY (notebook_id) REFERENCES Notebooks(id) ON DELETE CASCADE,
+    FOREIGN KEY (parent_topic_id) REFERENCES Topics(id) ON DELETE SET NULL
+);
+
 CREATE TABLE IF NOT EXISTS Notes (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255),
     content TEXT,
     notebook_id INT,
-    FOREIGN KEY (notebook_id) REFERENCES Notebooks(id) ON DELETE CASCADE
+    topic_id INT,
+    order_position INT,
+    FOREIGN KEY (notebook_id) REFERENCES Notebooks(id) ON DELETE CASCADE,
+    FOREIGN KEY (topic_id) REFERENCES Topics(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Scores (
@@ -31,26 +45,9 @@ CREATE TABLE IF NOT EXISTS Scores (
     FOREIGN KEY (notebook_id) REFERENCES Notebooks(id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS TagTypes (
-    name VARCHAR(255) PRIMARY KEY,
-    parent_type_name VARCHAR(255),
-    FOREIGN KEY (parent_type_name) REFERENCES TagTypes(name) ON DELETE SET NULL
-);
-
-CREATE TABLE IF NOT EXISTS NotebookTags (
-    notebook_id INT NOT NULL,
-    tag VARCHAR(255) NOT NULL,
-    tag_type_name VARCHAR(255) NOT NULL,
-    PRIMARY KEY (notebook_id, tag, tag_type_name),
-    FOREIGN KEY (notebook_id) REFERENCES Notebooks(id) ON DELETE CASCADE,
-    FOREIGN KEY (tag_type_name) REFERENCES TagTypes(name) ON DELETE CASCADE
-);
-
-
 -- DROP ALL TABLES
-DROP TABLE IF EXISTS NotebookTags;
-DROP TABLE IF EXISTS TagTypes;
 DROP TABLE IF EXISTS Scores;
+DROP TABLE IF EXISTS Topics;
 DROP TABLE IF EXISTS Notes;
 DROP TABLE IF EXISTS Notebooks;
 DROP TABLE IF EXISTS Users;

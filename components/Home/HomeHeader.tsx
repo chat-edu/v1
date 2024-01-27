@@ -2,10 +2,13 @@ import React from 'react';
 import {Text} from "@chakra-ui/react";
 import useAuth from "@/hooks/useAuth";
 import PageHeader from "@/components/Utilities/PageHeader";
+import useUser from "@/hooks/queries/user/useUser";
 
 const HomeHeader = () => {
 
     const { user } = useAuth();
+
+    const { userData } = useUser(user?.id || "");
 
     return (
         <PageHeader
@@ -36,9 +39,7 @@ const HomeHeader = () => {
 
                 </>
             }
-            subheading={
-                "Supercharge your learning with AI"
-            }
+            subheading={userData?.role === 'student' ? 'How are your classes going?' : 'See how your students are doing!'}
         />
     );
 };

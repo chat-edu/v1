@@ -4,7 +4,6 @@ import {Heading, HStack, Text, VStack} from "@chakra-ui/react";
 
 import {Notebook} from "@/types/Notebook";
 import UsernameText from "@/components/Utilities/UsernameText";
-import NotebookTags from "@/components/NotebookUtilities/NotebookTags";
 
 interface Props {
     notebook: Notebook
@@ -16,9 +15,6 @@ const NotebookMenuHeader: React.FC<Props> = ({ notebook }) => {
             w={'100%'}
             align={'start'}
         >
-            <NotebookTags
-                notebookId={notebook.id}
-            />
             <Heading
                 size={'md'}
             >

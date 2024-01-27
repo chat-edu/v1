@@ -10,7 +10,7 @@ import { addUser } from "@/services/user";
 
 import useAuth from "@/hooks/useAuth";
 
-import {UserInput} from "@/types/User";
+import {UserInput, UserRoles} from "@/types/User";
 
 const UserSchema: Yup.ObjectSchema<UserInput> = Yup.object().shape({
     name: Yup.string()
@@ -28,9 +28,12 @@ const UserSchema: Yup.ObjectSchema<UserInput> = Yup.object().shape({
     profilePictureUrl: Yup.string()
         .required('Profile Picture URL is Required')
         .min(1, 'Profile Picture URL is Required'),
+    role: Yup.string<UserRoles>()
+        .required('Role is Required')
+        .min(1, 'Role is Required'),
 });
 
-const useAddUser = () => {
+const useAddUser = (role: UserRoles) => {
     const { user } = useAuth();
 
     const toast = useToast();
@@ -50,6 +53,7 @@ const useAddUser = () => {
             username: '',
             id: user?.id || '',
             profilePictureUrl: `https://api.multiavatar.com/${user?.id || 'default'}.png`,
+            role,
         },
         validationSchema: UserSchema,
         onSubmit: async user => {

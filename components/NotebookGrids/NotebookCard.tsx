@@ -3,11 +3,9 @@ import React from 'react';
 import {HStack, Text, VStack} from "@chakra-ui/react";
 
 import ClickableCard from "@/components/Utilities/ClickableCard";
-import NotebookTags from "@/components/NotebookUtilities/NotebookTags";
 import UsernameText from "@/components/Utilities/UsernameText";
 
 import {NotebookScore} from "@/types/score";
-import ShareButton from "@/components/Utilities/ShareButton";
 
 interface Props {
     notebookScore: NotebookScore,
@@ -32,9 +30,6 @@ const NotebookCard: React.FC<Props> = ({ notebookScore, rightComponent, onClick 
                     flex={1}
                     align={'start'}
                 >
-                    <NotebookTags
-                        notebookId={notebookScore.notebookId}
-                    />
                     <Text
                         fontWeight={'bold'}
                         fontSize={{
@@ -73,11 +68,6 @@ const NotebookCard: React.FC<Props> = ({ notebookScore, rightComponent, onClick 
                     justifyContent={'space-between'}
                     align={'end'}
                 >
-                    <ShareButton
-                        notebookId={notebookScore.notebookId}
-                        size={'sm'}
-                        variant={'outline'}
-                    />
                     {rightComponent}
                 </VStack>
             </HStack>

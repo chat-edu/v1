@@ -1,145 +1,94 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import {
-    Button,
     CheckboxGroup,
-    Flex,
-    Text, Tooltip,
+    HStack,
+    Text,
     VStack,
 } from "@chakra-ui/react";
-import {SmallAddIcon} from "@chakra-ui/icons";
 
-import {MdQuiz} from "react-icons/md";
-
-import AddNoteButton from "@/components/AddModals/AddNote/AddNoteButton";
-import Note from "@/components/Notebook/NotebookMenu/NotesSelect/Note";
-import StudyGuide from "@/components/Notebook/NotebookMenu/StudyGuide";
+import Topic from "@/components/Notebook/NotebookMenu/NotesSelect/Topic";
 import Loading from "@/components/Utilities/Loading";
+import AddTopicButton from "@/components/Notebook/NotebookMenu/NotesSelect/AddTopicButton";
 
-import useAuth from "@/hooks/useAuth";
 import useNotes from "@/hooks/queries/notes/useNotes";
+import useTopics from "@/hooks/queries/topics/useTopics";
+
+import {generateHierarchy} from "@/services/topics";
 
 import {Notebook as NotebookType} from "@/types/Notebook";
 import {Note as NoteType} from "@/types/Note";
 
 interface Props {
     notebook: NotebookType,
-    selectedNotes: NoteType[],
-    addNote: (note: NoteType) => void
-    removeNote: (id: NoteType["id"]) => void,
-    closeSidebar?: () => void
+    selectedLesson: NoteType | null,
+    selectLesson: (note: NoteType) => void
+    deselectLesson: (id: NoteType["id"]) => void,
 }
 
-const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, removeNote, closeSidebar }) => {
+const NotesSelect: React.FC<Props> = ({ notebook, selectLesson,  selectedLesson, deselectLesson }) => {
 
-    const { user } = useAuth();
+    const { notes, loading: notesLoading } = useNotes(notebook.id);
+    const { topics, loading: topicsLoading } = useTopics(notebook.id);
 
-    const { notes, loading } = useNotes(notebook.id);
+    const topicHierarchy = useMemo(() => {
+        if(topicsLoading && notesLoading) return [];
+        return generateHierarchy(topics, notes, null);
+    }, [topicsLoading, notesLoading, topics, notes]);
 
     return (
-        <Flex
-            direction={'column'}
-            gap={4}
+        <VStack
+            align={'start'}
+            spacing={2}
         >
-            <VStack
-                align={'start'}
-                spacing={2}
+            <HStack
+                w={'100%'}
+                justifyContent={'space-between'}
             >
                 <Text
                     fontWeight={'bold'}
                 >
                     Topics
                 </Text>
-                <Loading
-                    loading={loading}
-                >
-                    {
-                        <CheckboxGroup colorScheme='brand'>
-                            <VStack
-                                w={'100%'}
-                                spacing={2}
-                                align={'start'}
-                                mb={2}
-                                wordBreak={'break-word'}
-                            >
-                                {
-                                    notes.length > 0 ? (
-                                        notes.map((note) => (
-                                            <Note
-                                                key={note.id}
-                                                note={note}
-                                                notebook={notebook}
-                                                addNote={addNote}
-                                                removeNote={removeNote}
-                                                selected={selectedNotes.some((selectedNote) => selectedNote.id === note.id)}
-                                            />
-                                        ))
-                                    ) : (
-                                        <Text>
-                                            No notes found
-                                        </Text>
-                                    )
-                                }
-                            </VStack>
-                        </CheckboxGroup>
-                    }
-                </Loading>
+                <AddTopicButton
+                    notebookId={notebook.id}
+                    orderPosition={topicHierarchy.length}
+                />
+            </HStack>
+            <Loading
+                loading={notesLoading || topicsLoading}
+            >
                 {
-                    selectedNotes.length > 0 && (
+                    <CheckboxGroup colorScheme='brand'>
                         <VStack
                             w={'100%'}
+                            align={'start'}
+                            mb={2}
+                            wordBreak={'break-word'}
+                            spacing={0}
                         >
-                            <StudyGuide
-                                notes={selectedNotes}
-                            />
+                            {
+                                topicHierarchy.length > 0 ? (
+                                    topicHierarchy.map((topic) => (
+                                        <Topic
+                                            key={topic.id}
+                                            topicHierarchy={topic}
+                                            selectedLesson={selectedLesson}
+                                            selectLesson={selectLesson}
+                                            deselectLesson={deselectLesson}
+                                        />
+                                    ))
+                                ) : (
+                                    <Text>
+                                        No notes found
+                                    </Text>
+                                )
+                            }
                         </VStack>
-                    )
+                    </CheckboxGroup>
                 }
-                {
-                    closeSidebar && selectedNotes.length > 0 && (
-                        <Button
-                            onClick={closeSidebar}
-                            colorScheme={'brand'}
-                            w={'100%'}
-                            variant={'outline'}
-                        >
-                            Start Studying
-                        </Button>
-                    )
-                }
-                {
-                    user && user.id === notebook.userId && (
-                        <VStack
-                            w={'100%'}
-                        >
-                            <AddNoteButton
-                                text={"Add Note"}
-                                icon={<SmallAddIcon />}
-                                notebook={notebook}
-                                buttonProps={{
-                                    w: '100%',
-                                }}
-                            />
-                        </VStack>
-                    )
-                }
-                {
-                    selectedNotes.length > 0 && (
-                        <Tooltip
-                            label={'Coming soon!'}
-                        >
-                            <Button
-                                w={'100%'}
-                                leftIcon={<MdQuiz />}
-                                isDisabled
-                            >
-                                Create Practice Test
-                            </Button>
-                        </Tooltip>
-                    )
-                }
-            </VStack>
-        </Flex>
+            </Loading>
+        </VStack>
     );
 };
 

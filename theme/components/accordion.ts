@@ -7,6 +7,9 @@ const { definePartsStyle, defineMultiStyleConfig } =
 const baseStyle = definePartsStyle({
     button: {
         py: 2
+    },
+    container: {
+        borderWidth: "0px",
     }
 })
 

@@ -1,81 +1,41 @@
 import React from 'react';
 
-import {
-    Checkbox,
-    HStack,
-    IconButton, Text,
-    useDisclosure
-} from "@chakra-ui/react";
+import {HStack, Icon, Text,} from "@chakra-ui/react";
 
-import {AiFillEye} from "react-icons/ai";
-
-import NoteModal from "@/components/NotebookUtilities/NoteModal";
-
-import useAuth from "@/hooks/useAuth";
+import {FaBookBookmark} from "react-icons/fa6";
 
 import {Note as NoteType} from "@/types/Note";
-import {Notebook} from "@/types/Notebook";
 
 interface Props {
-    notebook: Notebook
     note: NoteType,
-    addNote: (note: NoteType) => void
-    removeNote: (id: NoteType["id"]) => void,
+    onSelect: () => void,
     selected: boolean
 }
 
-const Note: React.FC<Props> = ({ note, notebook, addNote, removeNote, selected }) => {
-
-    const { user } = useAuth();
-
-    const { isOpen, onOpen, onClose } = useDisclosure();
-
+const Note: React.FC<Props> = ({ note, onSelect, selected }) => {
     return (
-        <>
-            <HStack
-                key={note.id}
-                w={'100%'}
-                justifyContent={'space-between'}
-                maxW={'100%'}
-            >
-                {
-                    user ? (
-                        <Checkbox
-                            key={note.id}
-                            isChecked={selected}
-                            onChange={(e) => {
-                                if(e.target.checked) {
-                                    addNote(note);
-                                } else {
-                                    removeNote(note.id);
-                                }
-                            }}
-                        >
-                            {note.name}
-                        </Checkbox>
-                    ) : (
-                        <Text>
-                            {note.name}
-                        </Text>
-                    )
-                }
-
-                <HStack>
-                    <IconButton
-                        aria-label={"View Note"}
-                        icon={<AiFillEye />}
-                        onClick={onOpen}
-                        size={'sm'}
-                    />
-                </HStack>
-            </HStack>
-            <NoteModal
-                note={note}
-                authorId={notebook.userId}
-                isOpen={isOpen}
-                onClose={onClose}
+        <HStack
+            w={'100%'}
+            justifyContent={'flex-start'}
+            onClick={onSelect}
+            px={4}
+            py={2}
+            _hover={{
+                bg: 'blackAlpha.50'
+            }}
+            cursor={'pointer'}
+            transition={'background 0.2s ease-in-out'}
+            rounded={'md'}
+            bg={selected ? 'blackAlpha.50' : undefined}
+        >
+            <Icon
+                as={FaBookBookmark}
+                height={'20px'}
             />
-        </>
+            <Text>
+                {note.name}
+            </Text>
+        </HStack>
     );
 };
 
