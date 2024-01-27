@@ -7,7 +7,6 @@ import {VscLayoutSidebarLeft, VscLayoutSidebarLeftOff} from "react-icons/vsc";
 import NotesSelect from "@/components/Notebook/NotebookMenu/NotesSelect";
 import NotebookMenuHeader from "@/components/Notebook/NotebookMenu/NotebookMenuHeader";
 import {navbarHeight} from "@/components/Layout/Navbar";
-import NotebookLeaderboard from "@/components/NotebookUtilities/NotebookLeaderboard";
 
 import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
@@ -24,9 +23,10 @@ interface Props {
     selectedLesson: Note | null,
     selectLesson: (note: Note) => void;
     deselectLesson: (id: Note["id"]) => void
+    selectNotes: (notes: Note[]) => void,
 }
 
-const Sidebar: React.FC<Props> = ({ notebook, selectedLesson, selectLesson, deselectLesson }) => {
+const Sidebar: React.FC<Props> = ({ notebook, selectedLesson, selectLesson, deselectLesson, selectNotes }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
@@ -81,11 +81,9 @@ const Sidebar: React.FC<Props> = ({ notebook, selectedLesson, selectLesson, dese
                         selectedLesson={selectedLesson}
                         selectLesson={selectLesson}
                         deselectLesson={deselectLesson}
+                        selectNotes={selectNotes}
                     />
                 </Box>
-                <NotebookLeaderboard
-                    notebookId={notebook.id}
-                />
             </Box>
             <VStack
                 display={isOpen ? 'none' : 'flex'}

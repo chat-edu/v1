@@ -1,18 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {HStack, Icon, Text,} from "@chakra-ui/react";
 
 import {FaBookBookmark} from "react-icons/fa6";
 
 import {Note as NoteType} from "@/types/Note";
+import ChatWithNotesButton from "@/components/Notebook/NotebookMenu/NotesSelect/ChatWithNotesButton";
 
 interface Props {
     note: NoteType,
     onSelect: () => void,
-    selected: boolean
+    selected: boolean,
+    selectNotes: (note: NoteType[]) => void,
 }
 
-const Note: React.FC<Props> = ({ note, onSelect, selected }) => {
+const Note: React.FC<Props> = ({ note, onSelect, selected, selectNotes }) => {
+
+    const [isHovering, setIsHovering] = useState(false);
+
     return (
         <HStack
             w={'100%'}
@@ -28,14 +33,31 @@ const Note: React.FC<Props> = ({ note, onSelect, selected }) => {
             rounded={'md'}
             borderWidth={selected ? 2 : 0}
             borderColor={'brand.500'}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
         >
-            <Icon
-                as={FaBookBookmark}
-                height={'20px'}
-            />
-            <Text>
-                {note.name}
-            </Text>
+            <HStack
+                w={'100%'}
+                justifyContent={'space-between'}
+                spacing={2}
+            >
+                <HStack>
+                    <Icon
+                        as={FaBookBookmark}
+                        height={'20px'}
+                    />
+                    <Text>
+                        {note.name}
+                    </Text>
+                </HStack>
+                {
+                    isHovering && (
+                        <ChatWithNotesButton
+                            onClick={() => selectNotes([note])}
+                        />
+                    )
+                }
+            </HStack>
         </HStack>
     );
 };

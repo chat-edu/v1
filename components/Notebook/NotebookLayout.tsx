@@ -5,10 +5,12 @@ import {Stack} from "@chakra-ui/react";
 import NotebookMenu from "@/components/Notebook/NotebookMenu";
 import Lesson from "@/components/Notebook/Lesson";
 
-import useSelectLesson from "@/hooks/useSelectLesson";
+import useSelectLesson, {Modes} from "@/hooks/useSelectLesson";
 
 import {Notebook} from "@/types/Notebook";
 import {Note} from "@/types/Note";
+import ChatLanding from "@/components/Chat/ChatLanding";
+import Chat from "@/components/Chat";
 
 interface Props {
     notebook: Notebook,
@@ -17,7 +19,7 @@ interface Props {
 
 const NotebookLayout: React.FC<Props> = ({ notebook }) => {
 
-    const { selectedLesson, selectLesson, deselectLesson } = useSelectLesson();
+    const { selectedLesson, selectedNotes, selectLesson, deselectLesson, selectNotes, mode } = useSelectLesson();
 
     return (
         <Stack
@@ -31,10 +33,24 @@ const NotebookLayout: React.FC<Props> = ({ notebook }) => {
                 selectLesson={selectLesson}
                 deselectLesson={deselectLesson}
                 selectedLesson={selectedLesson}
+                selectNotes={selectNotes}
             />
-            <Lesson
-                selectedLesson={selectedLesson}
-            />
+            {
+                !selectedLesson && selectedNotes.length === 0 ? (
+                    <ChatLanding />
+                ) : (
+                    mode === Modes.CHAT ? (
+                        <Chat
+                            notebookId={notebook.id}
+                            notes={selectedNotes}
+                        />
+                    ) : (
+                        <Lesson
+                            selectedLesson={selectedLesson}
+                        />
+                    )
+                )
+            }
         </Stack>
     );
 };

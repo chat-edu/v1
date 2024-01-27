@@ -3,9 +3,6 @@ import {FormEvent, useEffect, useState} from "react";
 import {Message, nanoid} from "ai";
 import {useChat} from "ai/react";
 
-import useAuth from "@/hooks/useAuth";
-
-import {updateScore} from "@/services/score";
 
 import {
     answerCorrectnessCommand,
@@ -29,8 +26,6 @@ export enum AnswerStates {
 
 const useChatEdu = (notebookId: Notebook["id"], notes: Note[]) => {
 
-    const { user } = useAuth();
-
     const [promptType, setPromptType] = useState<CommandTypes>(CommandTypes.REGULAR);
 
     const [currentQuestion, setCurrentQuestion] = useState<Message | null>(null);
@@ -48,9 +43,6 @@ const useChatEdu = (notebookId: Notebook["id"], notes: Note[]) => {
                 ...answerMapping,
                 [currentQuestion?.id || ""]: correct ? AnswerStates.CORRECT : AnswerStates.INCORRECT
             })
-            if(correct && user) {
-                updateScore(notebookId, user.id, 1)
-            }
             setCurrentQuestion(null);
         } else if(message.content.includes(ResponseTags.DONT_KNOW)) {
             setAnswerMapping({

@@ -15,9 +15,10 @@ interface Props {
     selectedLesson: Note | null;
     selectLesson: (note: Note) => void;
     deselectLesson: (id: Note["id"]) => void;
+    selectNotes: (notes: Note[]) => void;
 }
 
-const MobileHeader: React.FC<Props> = ({ notebook, selectedLesson, selectLesson, deselectLesson}) => {
+const MobileHeader: React.FC<Props> = ({ notebook, selectedLesson, selectLesson, deselectLesson, selectNotes }) => {
     return (
         <Card
             display={{base: 'flex', md: 'none'}}
@@ -49,6 +50,7 @@ const MobileHeader: React.FC<Props> = ({ notebook, selectedLesson, selectLesson,
                         selectedLesson={selectedLesson}
                         selectLesson={selectLesson}
                         deselectLesson={deselectLesson}
+                        selectNotes={selectNotes}
                     />
                     <MobileLeaderboard
                         notebook={notebook}

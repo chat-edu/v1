@@ -16,15 +16,17 @@ import AddTopicButton from "@/components/Notebook/NotebookMenu/NotesSelect/AddTo
 
 import {TopicHierarchy} from "@/types/Topic";
 import {Note as NoteType} from "@/types/Note";
+import ChatWithNotesButton from "@/components/Notebook/NotebookMenu/NotesSelect/ChatWithNotesButton";
 
 interface Props {
     topicHierarchy: TopicHierarchy,
     selectLesson: (note: NoteType) => void
     deselectLesson: (id: NoteType["id"]) => void,
     selectedLesson: NoteType | null,
+    selectNotes: (notes: NoteType[]) => void,
 }
 
-const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectLesson, deselectLesson}) => {
+const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectLesson, deselectLesson, selectNotes }) => {
 
     const [isHovering, setIsHovering] = React.useState(false);
 
@@ -65,6 +67,9 @@ const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectLesson, 
                                             parentTopicId={topicHierarchy.id}
                                             orderPosition={topicHierarchy.subTopics.length}
                                         />
+                                        <ChatWithNotesButton
+                                            onClick={() => selectNotes(topicHierarchy.notes)}
+                                        />
                                     </HStack>
                                 )
                             }
@@ -84,6 +89,7 @@ const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectLesson, 
                                 selectLesson={selectLesson}
                                 deselectLesson={deselectLesson}
                                 selectedLesson={selectedLesson}
+                                selectNotes={selectNotes}
                             />
                         ))
                     }
@@ -94,6 +100,7 @@ const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectLesson, 
                                 note={note}
                                 onSelect={() => selectLesson(note)}
                                 selected={selectedLesson?.id === note.id}
+                                selectNotes={selectNotes}
                             />
                         ))
                     }

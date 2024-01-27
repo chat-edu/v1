@@ -26,9 +26,10 @@ interface Props {
     selectedLesson: Note | null,
     selectLesson: (note: Note) => void;
     deselectLesson: (id: Note["id"]) => void
+    selectNotes: (notes: Note[]) => void,
 }
 
-const MobileSidebar: React.FC<Props> = ({ notebook, selectedLesson, selectLesson, deselectLesson }) => {
+const MobileSidebar: React.FC<Props> = ({ notebook, selectedLesson, selectLesson, deselectLesson, selectNotes }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -63,6 +64,7 @@ const MobileSidebar: React.FC<Props> = ({ notebook, selectedLesson, selectLesson
                                 selectedLesson={selectedLesson}
                                 selectLesson={selectLesson}
                                 deselectLesson={deselectLesson}
+                                selectNotes={selectNotes}
                             />
                         </Box>
                     </DrawerBody>

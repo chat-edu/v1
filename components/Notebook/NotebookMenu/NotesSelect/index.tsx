@@ -24,9 +24,10 @@ interface Props {
     selectedLesson: NoteType | null,
     selectLesson: (note: NoteType) => void
     deselectLesson: (id: NoteType["id"]) => void,
+    selectNotes: (notes: NoteType[]) => void,
 }
 
-const NotesSelect: React.FC<Props> = ({ notebook, selectLesson,  selectedLesson, deselectLesson }) => {
+const NotesSelect: React.FC<Props> = ({ notebook, selectLesson,  selectedLesson, deselectLesson, selectNotes }) => {
 
     const { notes, loading: notesLoading } = useNotes(notebook.id);
     const { topics, loading: topicsLoading } = useTopics(notebook.id);
@@ -76,6 +77,7 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectLesson,  selectedLesson,
                                             selectedLesson={selectedLesson}
                                             selectLesson={selectLesson}
                                             deselectLesson={deselectLesson}
+                                            selectNotes={selectNotes}
                                         />
                                     ))
                                 ) : (
