@@ -63,7 +63,6 @@ const MobileSidebar: React.FC<Props> = ({ notebook, selectedLesson, selectLesson
                                 selectedLesson={selectedLesson}
                                 selectLesson={selectLesson}
                                 deselectLesson={deselectLesson}
-                                closeSidebar={onClose}
                             />
                         </Box>
                     </DrawerBody>

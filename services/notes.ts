@@ -20,13 +20,13 @@ export const addNote = async (note: NoteInput): Promise<NoteRow | null> =>
 
 // UPDATE
 
-export const updateNote = async (noteId: number, note: NoteInput): Promise<NoteRow | null> =>
-    fetch(`/api/notes/${note.notebookId}/${noteId}/update`, {
+export const updateNote = async (noteId: number, notebookId: number, note: Partial<NoteInput>): Promise<NoteRow | null> =>
+    fetch(`/api/notes/${noteId}/update`, {
         method: "PATCH",
-        body: JSON.stringify(transformNoteInput(note)),
+        body: JSON.stringify(transformPartialNoteInput(note)),
     })
         .then(async (res) => {
-            emitNotesChangedEvent(note.notebookId);
+            emitNotesChangedEvent(notebookId);
             return res.json()
         })
         .then(null);
@@ -49,4 +49,11 @@ const transformNoteInput = (note: NoteInput): NoteRowInput => ({
     content: note.content,
     topic_id: note.topicId,
     order_position: note.orderPosition,
+});
+
+const transformPartialNoteInput = (note: Partial<NoteInput>): Partial<NoteRowInput> => ({
+    name: note.name,
+    content: note.content,
+    order_position: note.orderPosition,
+    topic_id: note.topicId,
 });

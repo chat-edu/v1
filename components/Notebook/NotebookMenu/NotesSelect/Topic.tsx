@@ -7,7 +7,7 @@ import {
     AccordionItem,
     AccordionPanel,
     HStack,
-    Text
+    Text, VStack
 } from "@chakra-ui/react";
 
 import Note from "@/components/Notebook/NotebookMenu/NotesSelect/Note";
@@ -40,6 +40,7 @@ const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectLesson, 
                     <AccordionButton
                         onMouseEnter={() => setIsHovering(true)}
                         onMouseLeave={() => setIsHovering(false)}
+                        rounded={'md'}
                     >
                         <HStack
                             w={'100%'}
@@ -72,8 +73,9 @@ const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectLesson, 
                 </h2>
                 <AccordionPanel
                     pr={0}
-                    pb={0}
+                    py={2}
                 >
+                    <VStack>
                     {
                         topicHierarchy.subTopics.map((subTopic) => (
                             <Topic
@@ -102,6 +104,7 @@ const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectLesson, 
                             </Text>
                         )
                     }
+                    </VStack>
                 </AccordionPanel>
             </AccordionItem>
         </Accordion>

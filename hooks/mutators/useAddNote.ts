@@ -11,6 +11,13 @@ const useAddNote = (notebookId: Notebook["id"], orderPosition: Topic["orderPosit
     const [nameTouched, setNameTouched] = useState<boolean>(false);
 
     const submit = async () => {
+        console.log({
+            notebookId,
+            content: "",
+            topicId: topicId || null,
+            name,
+            orderPosition
+        });
         const note = await addNote({
             notebookId,
             content: "",

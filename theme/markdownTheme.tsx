@@ -13,6 +13,7 @@ const markdownTheme: Components = {
                     base: 'xs',
                     md: 'md'
                 }}
+                my={1}
             >
                 {children}
             </Text>
@@ -26,7 +27,7 @@ const markdownTheme: Components = {
                     base: 'md',
                     md: 'lg'
                 }}
-                mb={2}
+                my={4}
             >
                 {children}
             </Heading>
@@ -40,7 +41,7 @@ const markdownTheme: Components = {
                     base: 'sm',
                     md: 'md'
                 }}
-                mb={2}
+                my={2}
             >
                 {children}
             </Heading>
@@ -54,7 +55,7 @@ const markdownTheme: Components = {
                     base: 'sm',
                     md: 'xs'
                 }}
-                mb={2}
+                my={1}
             >
                 {children}
             </Heading>
@@ -77,7 +78,10 @@ const markdownTheme: Components = {
     ul: (props: {children?: React.ReactNode}) => {
         const { children } = props;
         return (
-            <UnorderedList>
+            <UnorderedList
+                my={2}
+                ml={8}
+            >
                 {children}
             </UnorderedList>
         );

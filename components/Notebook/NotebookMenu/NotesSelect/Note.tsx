@@ -26,7 +26,8 @@ const Note: React.FC<Props> = ({ note, onSelect, selected }) => {
             cursor={'pointer'}
             transition={'background 0.2s ease-in-out'}
             rounded={'md'}
-            bg={selected ? 'blackAlpha.50' : undefined}
+            borderWidth={selected ? 2 : 0}
+            borderColor={'brand.500'}
         >
             <Icon
                 as={FaBookBookmark}
