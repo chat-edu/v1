@@ -42,7 +42,7 @@ const Overview = () => {
             </Text>
             <Image
                 alt={'Teaching Agent'}
-                src={'diagrams/virtual_tutor.png'}
+                src={'diagrams/teaching_agent.png'}
                 maxW={'600px'}
             />
             <Text>
