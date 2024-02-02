@@ -55,8 +55,5 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.0",
     "typescript": "^5"
-  },
-  "engines": {
-    "node": "18.17.1"
   }
 }
