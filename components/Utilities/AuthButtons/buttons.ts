@@ -1,4 +1,6 @@
 import {AuthProviderButton, AuthProviders} from "@/types/AuthProviderButton";
+import {FaChalkboardTeacher} from "react-icons/fa";
+import {PiStudentBold} from "react-icons/pi";
 
 const authProviderButtons: AuthProviderButton[] = [
     // {
@@ -13,12 +15,12 @@ const authProviderButtons: AuthProviderButton[] = [
     // },
     {
         title: "Demo as Teacher",
-        imageSrc: "/icons/google.png",
+        icon: FaChalkboardTeacher,
         provider: AuthProviders.TEACHER
     },
     {
         title: "Demo as Student",
-        imageSrc: "/icons/microsoft.png",
+        icon: PiStudentBold,
         provider: AuthProviders.STUDENT
     }
 ]

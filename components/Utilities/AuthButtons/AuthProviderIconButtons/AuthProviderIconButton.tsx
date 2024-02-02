@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {IconButton, Image} from "@chakra-ui/react";
+import {Icon, IconButton} from "@chakra-ui/react";
 
 import { signIn } from "next-auth/react";
 
@@ -14,9 +14,8 @@ const AuthProviderIconButton: React.FC<Props> = ({ provider }) => {
     return (
         <IconButton
             icon={
-                <Image
-                    src={provider.imageSrc}
-                    alt={provider.provider}
+                <Icon
+                    as={provider.icon}
                     boxSize={'24px'}
                 />
             }
