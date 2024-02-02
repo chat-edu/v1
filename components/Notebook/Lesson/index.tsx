@@ -4,16 +4,15 @@ import dynamic from "next/dynamic";
 
 import {Button, Container, Flex, Heading, HStack} from "@chakra-ui/react";
 
+import ChatLanding from "@/components/Chat/ChatLanding";
+import Markdown from "@/components/Utilities/Markdown";
 import {mobileNavbarHeight, navbarHeight} from "@/components/Layout/Navbar";
 import {mobileHeaderHeight} from "@/components/Notebook/NotebookMenu/MobileHeader";
-import ChatLanding from "@/components/Chat/ChatLanding";
 
 import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
-
-import {updateNote} from "@/services/notes";
+import useUpdateNote from "@/hooks/mutators/useUpdateNote";
 
 import {Note} from "@/types/Note";
-import Markdown from "@/components/Utilities/Markdown";
 
 
 const Editor = dynamic(() => import('@/components/Utilities/Editor'), {
@@ -21,7 +20,7 @@ const Editor = dynamic(() => import('@/components/Utilities/Editor'), {
 })
 
 interface Props {
-    selectedLesson: Note | null
+    selectedLesson: Note
 }
 
 enum ViewModes {
@@ -34,6 +33,8 @@ const Lesson: React.FC<Props> = ({ selectedLesson }) => {
     const { height } = useViewportDimensions();
 
     const [viewMode, setViewMode] = React.useState<ViewModes>(ViewModes.EDIT);
+
+    const { updateNoteContent } = useUpdateNote(selectedLesson.id, selectedLesson.notebookId);
 
     if(!selectedLesson) return (
         <ChatLanding />
@@ -84,9 +85,7 @@ const Lesson: React.FC<Props> = ({ selectedLesson }) => {
                     viewMode === ViewModes.EDIT ? (
                         <Editor
                             initialMarkdown={selectedLesson.content}
-                            save={async (markdown: string) => updateNote(selectedLesson.id, selectedLesson.notebookId,{
-                                content: markdown
-                            })}
+                            save={(markdown: string) => updateNoteContent(markdown)}
                         />
                     ) : (
                         <Markdown>

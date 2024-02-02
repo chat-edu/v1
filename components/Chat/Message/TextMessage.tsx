@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Markdown from "@/components/Utilities/Markdown";
-
 interface Props {
     content: string
 }

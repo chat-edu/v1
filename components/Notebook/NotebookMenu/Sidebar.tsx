@@ -12,6 +12,7 @@ import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
 import {Note} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
+import {Assignment} from "@/types/assignment/Assignment";
 
 
 const openWebSidebarWidthLg = 400;
@@ -24,9 +25,10 @@ interface Props {
     selectLesson: (note: Note) => void;
     deselectLesson: (id: Note["id"]) => void
     selectNotes: (notes: Note[]) => void,
+    selectAssignment: (assignment: Assignment) => void
 }
 
-const Sidebar: React.FC<Props> = ({ notebook, selectedLesson, selectLesson, deselectLesson, selectNotes }) => {
+const Sidebar: React.FC<Props> = ({ notebook, selectedLesson, selectLesson, deselectLesson, selectNotes, selectAssignment }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
@@ -82,6 +84,7 @@ const Sidebar: React.FC<Props> = ({ notebook, selectedLesson, selectLesson, dese
                         selectLesson={selectLesson}
                         deselectLesson={deselectLesson}
                         selectNotes={selectNotes}
+                        selectAssignment={selectAssignment}
                     />
                 </Box>
             </Box>

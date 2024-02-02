@@ -25,13 +25,11 @@ import '@mdxeditor/editor/style.css';
 
 import {Button, Card, Heading, HStack} from "@chakra-ui/react";
 
-import {NoteRow} from "@/cosmosPostgres/types";
-
 import "@/components/Utilities/Editor/editorContent.css";
 
 interface Props {
     initialMarkdown: string,
-    save: (markdown: string) => Promise<NoteRow | null>,
+    save: (markdown: string) => Promise<void>,
 }
 
 const Editor: React.FC<Props> = ({ initialMarkdown, save }) => {

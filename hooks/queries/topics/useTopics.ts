@@ -15,9 +15,7 @@ const useTopics = (notebookId: Notebook["id"]) => {
     const [topics, loading, error, fetchTopics] = useContainerData(`/api/topics/notebook/${notebookId}`, transformTopic);
 
     const handleTopicsChanged = useCallback(async (changedNotebookId: number) => {
-        console.log(changedNotebookId, notebookId)
         if(changedNotebookId === notebookId) {
-            console.log('fetching topics')
             await fetchTopics();
         }
     }, [fetchTopics, notebookId])

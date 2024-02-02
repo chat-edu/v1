@@ -7,6 +7,7 @@ import MobileLeaderboard from "@/components/Notebook/NotebookMenu/MobileHeader/M
 
 import {Note} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
+import {Assignment} from "@/types/assignment/Assignment";
 
 export const mobileHeaderHeight = 60;
 
@@ -16,9 +17,10 @@ interface Props {
     selectLesson: (note: Note) => void;
     deselectLesson: (id: Note["id"]) => void;
     selectNotes: (notes: Note[]) => void;
+    selectAssignment: (assignment: Assignment) => void;
 }
 
-const MobileHeader: React.FC<Props> = ({ notebook, selectedLesson, selectLesson, deselectLesson, selectNotes }) => {
+const MobileHeader: React.FC<Props> = ({ notebook, selectedLesson, selectLesson, deselectLesson, selectNotes, selectAssignment }) => {
     return (
         <Card
             display={{base: 'flex', md: 'none'}}
@@ -51,6 +53,7 @@ const MobileHeader: React.FC<Props> = ({ notebook, selectedLesson, selectLesson,
                         selectLesson={selectLesson}
                         deselectLesson={deselectLesson}
                         selectNotes={selectNotes}
+                        selectAssignment={selectAssignment}
                     />
                     <MobileLeaderboard
                         notebook={notebook}

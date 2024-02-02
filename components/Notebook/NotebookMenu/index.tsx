@@ -5,6 +5,7 @@ import MobileHeader from "@/components/Notebook/NotebookMenu/MobileHeader";
 
 import {Note} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
+import {Assignment} from "@/types/assignment/Assignment";
 
 interface Props {
     notebook: Notebook
@@ -12,9 +13,10 @@ interface Props {
     deselectLesson: () => void;
     selectedLesson: Note | null;
     selectNotes: (notes: Note[]) => void;
+    selectAssignment: (assignment: Assignment) => void;
 }
 
-const NotesMenu: React.FC<Props> = ({ notebook, selectLesson, deselectLesson, selectedLesson, selectNotes }) => {
+const NotesMenu: React.FC<Props> = ({ notebook, selectLesson, deselectLesson, selectedLesson, selectNotes, selectAssignment }) => {
 
     return (
         <>
@@ -24,6 +26,7 @@ const NotesMenu: React.FC<Props> = ({ notebook, selectLesson, deselectLesson, se
                 selectLesson={selectLesson}
                 deselectLesson={deselectLesson}
                 selectNotes={selectNotes}
+                selectAssignment={selectAssignment}
             />
             <Sidebar
                 notebook={notebook}
@@ -31,6 +34,7 @@ const NotesMenu: React.FC<Props> = ({ notebook, selectLesson, deselectLesson, se
                 selectLesson={selectLesson}
                 deselectLesson={deselectLesson}
                 selectNotes={selectNotes}
+                selectAssignment={selectAssignment}
             />
         </>
     );

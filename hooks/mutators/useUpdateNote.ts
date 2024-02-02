@@ -7,10 +7,10 @@ const useUpdateNote = (noteId: number, notebookId: number) => {
     const toast = useToast();
 
     const updateNoteContent = async (markdown: string) => {
-        const noteRow = await updateNote(noteId, notebookId, {
+        const success = await updateNote(noteId, notebookId, {
             content: markdown
         })
-        if(noteRow) {
+        if(success) {
             toast({
                 title: "Note content updated",
                 status: "success",
@@ -28,10 +28,10 @@ const useUpdateNote = (noteId: number, notebookId: number) => {
     };
 
     const updateNoteOrderPosition = async (orderPosition: number) => {
-        const noteRow = await updateNote(noteId, notebookId, {
+        const success = await updateNote(noteId, notebookId, {
             orderPosition
         })
-        if(noteRow) {
+        if(success) {
             toast({
                 title: "Note order position updated",
                 status: "success",

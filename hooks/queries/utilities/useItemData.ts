@@ -14,6 +14,7 @@ const useItemData = <RowType, ReturnType>(url: string, transform: (row: RowType)
         })
             .then(response => response.json())
             .then((data: RowType) => {
+                // console.log(url, data);
                 setData(data ? transform(data) : null)
             })
             .catch(error => setError(error));

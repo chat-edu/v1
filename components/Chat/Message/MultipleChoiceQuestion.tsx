@@ -4,8 +4,7 @@ import confetti from 'canvas-confetti';
 
 import {Button, HStack, VStack} from "@chakra-ui/react";
 
-import Markdown from "@/components/Utilities/Markdown";
-import QuestionButtons from "@/components/Chat/Message/QuestionButtons";
+import Markdown from "@/components/Utilities/Markdown";import QuestionButtons from "@/components/Chat/Message/QuestionButtons";
 
 import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 

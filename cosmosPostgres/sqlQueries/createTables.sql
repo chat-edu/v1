@@ -45,9 +45,37 @@ CREATE TABLE IF NOT EXISTS Scores (
     FOREIGN KEY (notebook_id) REFERENCES Notebooks(id) ON DELETE CASCADE
 );
 
+CREATE TABLE Assignments (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    topic_id INT REFERENCES topics(id)
+);
+
+CREATE TABLE FreeResponseQuestions (
+    id SERIAL PRIMARY KEY,
+    assignment_id INT REFERENCES assignments(id),
+    question TEXT NOT NULL,
+    question_number INT NOT NULL
+);
+
+CREATE TABLE MultipleChoiceQuestions (
+    id SERIAL PRIMARY KEY,
+    assignment_id INT REFERENCES assignments(id),
+    question TEXT NOT NULL,
+    option_a TEXT,
+    option_b TEXT,
+    option_c TEXT,
+    option_d TEXT,
+    answer CHAR(1) CHECK(answer IN ('A', 'B', 'C', 'D')),
+    question_number INT NOT NULL
+);
+
 -- DROP ALL TABLES
 DROP TABLE IF EXISTS Scores;
 DROP TABLE IF EXISTS Topics;
 DROP TABLE IF EXISTS Notes;
 DROP TABLE IF EXISTS Notebooks;
 DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Assignments;
+DROP TABLE IF EXISTS FreeResponseQuestions;
+DROP TABLE IF EXISTS MultipleChoiceQuestions;

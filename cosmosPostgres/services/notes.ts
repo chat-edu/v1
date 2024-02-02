@@ -41,5 +41,3 @@ export const deleteNote = async (id: number) => {
     return del(NOTES_TABLE, [id]);
 };
 
-// TRANSFORM
-

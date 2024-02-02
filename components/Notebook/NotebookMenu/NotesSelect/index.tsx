@@ -18,6 +18,7 @@ import {generateHierarchy} from "@/services/topics";
 
 import {Notebook as NotebookType} from "@/types/Notebook";
 import {Note as NoteType} from "@/types/Note";
+import {Assignment} from "@/types/assignment/Assignment";
 
 interface Props {
     notebook: NotebookType,
@@ -25,9 +26,10 @@ interface Props {
     selectLesson: (note: NoteType) => void
     deselectLesson: (id: NoteType["id"]) => void,
     selectNotes: (notes: NoteType[]) => void,
+    selectAssignment: (assignment: Assignment) => void
 }
 
-const NotesSelect: React.FC<Props> = ({ notebook, selectLesson,  selectedLesson, deselectLesson, selectNotes }) => {
+const NotesSelect: React.FC<Props> = ({ notebook, selectLesson,  selectedLesson, deselectLesson, selectNotes, selectAssignment }) => {
 
     const { notes, loading: notesLoading } = useNotes(notebook.id);
     const { topics, loading: topicsLoading } = useTopics(notebook.id);
@@ -78,6 +80,7 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectLesson,  selectedLesson,
                                             selectLesson={selectLesson}
                                             deselectLesson={deselectLesson}
                                             selectNotes={selectNotes}
+                                            selectAssignment={selectAssignment}
                                         />
                                     ))
                                 ) : (

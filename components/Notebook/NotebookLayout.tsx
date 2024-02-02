@@ -1,16 +1,20 @@
 import React from 'react';
 
-import {Stack} from "@chakra-ui/react";
+import {Container, Flex, Stack} from "@chakra-ui/react";
 
 import NotebookMenu from "@/components/Notebook/NotebookMenu";
 import Lesson from "@/components/Notebook/Lesson";
+import ChatLanding from "@/components/Chat/ChatLanding";
+import Chat from "@/components/Chat";
+import Assignment from "@/components/Notebook/Assignment";
 
-import useSelectLesson, {Modes} from "@/hooks/useSelectLesson";
+import useInteractiveNotebook, {Modes} from "@/hooks/useInteractiveNotebook";
 
 import {Notebook} from "@/types/Notebook";
 import {Note} from "@/types/Note";
-import ChatLanding from "@/components/Chat/ChatLanding";
-import Chat from "@/components/Chat";
+import {mobileNavbarHeight, navbarHeight} from "@/components/Layout/Navbar";
+import {mobileHeaderHeight} from "@/components/Notebook/NotebookMenu/MobileHeader";
+import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 
 interface Props {
     notebook: Notebook,
@@ -19,7 +23,18 @@ interface Props {
 
 const NotebookLayout: React.FC<Props> = ({ notebook }) => {
 
-    const { selectedLesson, selectedNotes, selectLesson, deselectLesson, selectNotes, mode } = useSelectLesson();
+    const {
+        selectedLesson,
+        selectedNotes,
+        selectedAssignment,
+        mode,
+        selectLesson,
+        deselectLesson,
+        selectNotes,
+        selectAssignment
+    } = useInteractiveNotebook();
+
+    const { height } = useViewportDimensions();
 
     return (
         <Stack
@@ -34,23 +49,57 @@ const NotebookLayout: React.FC<Props> = ({ notebook }) => {
                 deselectLesson={deselectLesson}
                 selectedLesson={selectedLesson}
                 selectNotes={selectNotes}
+                selectAssignment={selectAssignment}
             />
-            {
-                !selectedLesson && selectedNotes.length === 0 ? (
-                    <ChatLanding />
-                ) : (
-                    mode === Modes.CHAT ? (
-                        <Chat
-                            notebookId={notebook.id}
-                            notes={selectedNotes}
-                        />
-                    ) : (
-                        <Lesson
-                            selectedLesson={selectedLesson}
-                        />
-                    )
-                )
-            }
+            <Container
+                w={'100%'}
+                maxW={'6xl'}
+                p={0}
+                h={{
+                    base: height - mobileNavbarHeight - mobileHeaderHeight,
+                    md: height - navbarHeight
+                }}
+            >
+                <Flex
+                    p={{
+                        base: 0,
+                        md: 4
+                    }}
+                    flexDirection={'column'}
+                    w={'100%'}
+                    position={'relative'}
+                    overflow={'auto'}
+                    h={'100%'}
+                >
+                    {
+                        !selectedLesson && selectedNotes.length === 0 && selectedAssignment === null && (
+                            <ChatLanding />
+                        )
+                    }
+                    {
+                        mode === Modes.CHAT && selectedNotes.length > 0 && (
+                            <Chat
+                                notebookId={notebook.id}
+                                notes={selectedNotes}
+                            />
+                        )
+                    }
+                    {
+                        mode === Modes.CONTENT && selectedLesson && (
+                            <Lesson
+                                selectedLesson={selectedLesson}
+                            />
+                        )
+                    }
+                    {
+                        mode === Modes.ASSIGNMENT && selectedAssignment && (
+                            <Assignment
+                                assignment={selectedAssignment}
+                            />
+                        )
+                    }
+                </Flex>
+            </Container>
         </Stack>
     );
 };

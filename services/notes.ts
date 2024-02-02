@@ -20,7 +20,7 @@ export const addNote = async (note: NoteInput): Promise<NoteRow | null> =>
 
 // UPDATE
 
-export const updateNote = async (noteId: number, notebookId: number, note: Partial<NoteInput>): Promise<NoteRow | null> =>
+export const updateNote = async (noteId: number, notebookId: number, note: Partial<NoteInput>): Promise<boolean> =>
     fetch(`/api/notes/${noteId}/update`, {
         method: "PATCH",
         body: JSON.stringify(transformPartialNoteInput(note)),
@@ -29,7 +29,7 @@ export const updateNote = async (noteId: number, notebookId: number, note: Parti
             emitNotesChangedEvent(notebookId);
             return res.json()
         })
-        .then(null);
+        .catch(() => false);
 
 // DELETE
 

@@ -6,7 +6,6 @@ import {CheckCircleIcon} from "@chakra-ui/icons";
 import {AiOutlineExclamationCircle} from "react-icons/ai";
 
 import Markdown from "@/components/Utilities/Markdown";
-
 import {AnswerCorrectness} from "@/types/commands/AnswerCorrectness";
 
 interface Props {

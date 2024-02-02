@@ -41,7 +41,9 @@ const Note: React.FC<Props> = ({ note, onSelect, selected, selectNotes }) => {
                 justifyContent={'space-between'}
                 spacing={2}
             >
-                <HStack>
+                <HStack
+                    spacing={4}
+                >
                     <Icon
                         as={FaBookBookmark}
                         height={'20px'}

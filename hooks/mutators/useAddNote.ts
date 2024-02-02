@@ -18,14 +18,13 @@ const useAddNote = (notebookId: Notebook["id"], orderPosition: Topic["orderPosit
             name,
             orderPosition
         });
-        const note = await addNote({
+        await addNote({
             notebookId,
             content: "",
             topicId: topicId || null,
             name,
             orderPosition
         })
-        console.log(note);
     }
 
     return {

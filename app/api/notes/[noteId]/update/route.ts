@@ -9,7 +9,7 @@ export const PATCH = async (request: NextRequest, {params}: {params: NoteIdParam
     const {noteId} = params;
 
     if (!noteId) {
-        return Response.json([]);
+        return Response.json(false);
     }
 
     const note = await request.json();

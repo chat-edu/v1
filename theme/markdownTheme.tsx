@@ -1,6 +1,18 @@
 import React from "react";
 
-import {Heading, ListItem, Text, UnorderedList} from "@chakra-ui/react";
+import {
+    Heading,
+    ListItem,
+    Table,
+    TableContainer,
+    Tbody,
+    Td,
+    Text,
+    Th,
+    Thead,
+    Tr,
+    UnorderedList
+} from "@chakra-ui/react";
 
 import {Components} from "react-markdown";
 
@@ -86,6 +98,54 @@ const markdownTheme: Components = {
             </UnorderedList>
         );
     },
+    table: (props: {children?: React.ReactNode}) => {
+        return (
+            <TableContainer>
+                <Table
+                    variant={'striped'}
+                >
+                    {props.children}
+                </Table>
+            </TableContainer>
+        )
+    },
+    thead: (props: {children?: React.ReactNode}) => {
+        return (
+            <Thead>
+                {props.children}
+            </Thead>
+        )
+    },
+    tbody: (props: {children?: React.ReactNode}) => {
+        return (
+            <Tbody>
+                {props.children}
+            </Tbody>
+        )
+    },
+    th: (props: {children?: React.ReactNode}) => {
+        return (
+            <Th
+                fontWeight={'bold'}
+            >
+                {props.children}
+            </Th>
+        )
+    },
+    tr: (props: {children?: React.ReactNode}) => {
+        return (
+            <Tr>
+                {props.children}
+            </Tr>
+        )
+    },
+    td: (props: {children?: React.ReactNode}) => {
+        return (
+            <Td>
+                {props.children}
+            </Td>
+        )
+    }
 };
 
 export default markdownTheme;

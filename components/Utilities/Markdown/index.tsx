@@ -7,7 +7,10 @@ import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import markdownTheme from "@/theme/markdownTheme";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+import remarkGfm from "remark-gfm";
 import 'katex/dist/katex.min.css';
+
+import "@/components/Utilities/Markdown/markdownStyles.css"
 
 interface Props {
     children: string
@@ -19,7 +22,10 @@ const Markdown: React.FC<Props> = ({ children }) => {
             components={ChakraUIRenderer(markdownTheme)}
             className={'prose'}
             skipHtml
-            remarkPlugins={[remarkMath]}
+            remarkPlugins={[
+                remarkMath,
+                remarkGfm
+            ]}
             // @ts-ignore
             rehypePlugins={[rehypeKatex]}
         >

@@ -20,6 +20,7 @@ import NotebookMenuHeader from "@/components/Notebook/NotebookMenu/NotebookMenuH
 
 import {Note} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
+import {Assignment} from "@/types/assignment/Assignment";
 
 interface Props {
     notebook: Notebook,
@@ -27,9 +28,10 @@ interface Props {
     selectLesson: (note: Note) => void;
     deselectLesson: (id: Note["id"]) => void
     selectNotes: (notes: Note[]) => void,
+    selectAssignment: (assignment: Assignment) => void
 }
 
-const MobileSidebar: React.FC<Props> = ({ notebook, selectedLesson, selectLesson, deselectLesson, selectNotes }) => {
+const MobileSidebar: React.FC<Props> = ({ notebook, selectedLesson, selectLesson, deselectLesson, selectNotes, selectAssignment }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -65,6 +67,7 @@ const MobileSidebar: React.FC<Props> = ({ notebook, selectedLesson, selectLesson
                                 selectLesson={selectLesson}
                                 deselectLesson={deselectLesson}
                                 selectNotes={selectNotes}
+                                selectAssignment={selectAssignment}
                             />
                         </Box>
                     </DrawerBody>

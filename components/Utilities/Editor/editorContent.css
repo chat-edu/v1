@@ -10,3 +10,29 @@
     width: 100%;
     max-width: 100%;
 }
+
+.editor-content h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.editor-content h2 {
+    font-size: 24px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.editor-content h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.editor-content li {
+    margin-left: 16px;
+}
+
+.editor-content p {
+    margin-bottom: 8px;
+}
