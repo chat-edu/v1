@@ -7,13 +7,7 @@ import NotebookGrid from "@/components/NotebookGrids/NotebookGrid";
 import useUserNotebooks from "@/hooks/queries/scores/notebooks/useUserNotebooks";
 import useAuth from "@/hooks/useAuth";
 
-import {NotebookScore} from "@/types/score";
-
-interface Props {
-    onClick: (notebook: NotebookScore) => void
-}
-
-const YourNotebooks: React.FC<Props> = ({ onClick }) => {
+const YourNotebooks = () => {
 
     const { user } = useAuth();
 
@@ -24,7 +18,7 @@ const YourNotebooks: React.FC<Props> = ({ onClick }) => {
             heading={'Your Classrooms'}
             notebooks={notebooks}
             loading={loading}
-            onClick={onClick}
+            onClick={() => {}}
             noNotebooksComponent={
                 <Text>
                     {"You don't have any classrooms yet"}

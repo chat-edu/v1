@@ -2,33 +2,26 @@ import React from 'react';
 
 import YourNotebooks from "@/components/NotebookGrids/YourNotebooks";
 import HomeHeader from "@/components/Home/HomeHeader";
-import NotebookModal from "@/components/Home/NotebookModal";
 import Container from "@/components/Utilities/Container";
-
-import useNotebookModal from "@/hooks/utilities/useNotebookModal";
+import useAuth from "@/hooks/useAuth";
+import Overview from "@/components/Home/Overview";
 
 const Home = () => {
 
-    const { notebook, selectNotebook, isOpen, closeNotebookModal } = useNotebookModal();
+    const { user } = useAuth();
 
     return (
-        <>
+        <Container>
+            <HomeHeader />
             {
-                notebook && (
-                    <NotebookModal
-                        notebook={notebook}
-                        isOpen={isOpen}
-                        onClose={closeNotebookModal}
-                    />
+                user ? (
+                    <YourNotebooks />
+                ) : (
+                    <Overview />
                 )
             }
-            <Container>
-                <HomeHeader />
-                <YourNotebooks
-                    onClick={selectNotebook}
-                />
-            </Container>
-        </>
+
+        </Container>
     );
 };
 
