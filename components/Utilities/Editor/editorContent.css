@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
 .editor-content[role="textbox"] {
     border-width: 1px;
     border-style: solid;
     border-color: rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     margin-top: 16px;
+    font-family: 'DM Sans', sans-serif;
 }
 
 .mdxeditor {

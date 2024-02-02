@@ -56,12 +56,12 @@ const Assignment: React.FC<Props> = ({ assignment }) => {
                                                 assignmentWithQuestions.questions.map(question => (
                                                     question.tag === QuestionTypes.MultipleChoice ? (
                                                         <MultipleChoiceQuestion
-                                                            key={question.question.id}
+                                                            key={`${assignment.id}-${question.question.id}-mc`}
                                                             question={question.question as MultipleChoiceQuestionType}
                                                         />
                                                     ) : (
                                                         <FreeResponseQuestion
-                                                            key={question.question.id}
+                                                            key={`${assignment.id}-${question.question.id}-fr`}
                                                             question={question.question as FreeResponseQuestionType}
                                                         />
                                                     )

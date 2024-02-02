@@ -44,6 +44,6 @@ export const transformAssignmentWithQuestions = (assignment: AssignmentRowWithQu
     })
     return {
         ...transformAssignment(assignment),
-        questions: [...multipleChoiceQuestions, ...freeResponseQuestions]
+        questions: [...multipleChoiceQuestions, ...freeResponseQuestions].sort((a, b) => a.question.questionNumber - b.question.questionNumber)
     }
 }

@@ -13,9 +13,8 @@ import {
 
 import TextInput from "@/components/Utilities/FormUtilities/TextInput";
 
-import useCreateAssignment from "@/hooks/mutators/useCreateAssignment";
+import useCreateAssignment from "@/hooks/mutators/create/useCreateAssignment";
 
-import {Notebook} from "@/types/Notebook";
 import {Topic} from "@/types/Topic";
 
 interface Props {
@@ -52,8 +51,8 @@ const AddAssignmentModal: React.FC<Props> = ({ isOpen, onClose, topicId }) => {
                 <ModalCloseButton />
                 <ModalBody>
                     <TextInput
-                        label={"Lesson"}
-                        placeholder={"Lesson Name"}
+                        label={"Assignment Name"}
+                        placeholder={"Type the name of the assignment here..."}
                         value={assignmentName}
                         onChange={updateAssignmentName}
                         onBlur={() => updateAssignmentNameTouched(true)}

@@ -5,11 +5,9 @@ import {useDisclosure} from "@chakra-ui/react";
 import {MdAssignmentAdd} from "react-icons/md";
 
 import TooltipIconButton from "@/components/Utilities/TooltipIconButton";
-import AddNoteModal from "@/components/AddModals/AddNote/AddNoteModal";
-
-import {Notebook} from "@/types/Notebook";
-import {Topic} from "@/types/Topic";
 import AddAssignmentModal from "@/components/AddModals/AddAssignment";
+
+import {Topic} from "@/types/Topic";
 
 interface Props {
     topicId: Topic['id'],

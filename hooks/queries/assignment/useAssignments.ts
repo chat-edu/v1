@@ -4,9 +4,9 @@ import {transformAssignment} from "@/hooks/queries/assignment/transform";
 import useContainerData from "@/hooks/queries/utilities/useContainerData";
 
 import {
-    subscribeToAssignmentChangedEvent,
-    unsubscribeFromAssignmentChangedEvent
-} from "@/cosmosPostgres/eventEmitters/assignmentEventEmitter";
+    subscribeToAssignmentsChangedEvent,
+    unsubscribeFromAssignmentsChangedEvent
+} from "@/cosmosPostgres/eventEmitters/assignmentsEventEmitter";
 
 import {Topic} from "@/types/Topic";
 
@@ -23,9 +23,9 @@ const useAssignments = (topicId: Topic["id"]) => {
     }, [topicId, fetchData])
 
     useEffect(() => {
-        subscribeToAssignmentChangedEvent(handleAssignmentChanged);
+        subscribeToAssignmentsChangedEvent(handleAssignmentChanged);
         return () => {
-            unsubscribeFromAssignmentChangedEvent(handleAssignmentChanged);
+            unsubscribeFromAssignmentsChangedEvent(handleAssignmentChanged);
         }
     }, [handleAssignmentChanged])
 

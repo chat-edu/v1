@@ -5,7 +5,9 @@ import {HStack, Icon, Text,} from "@chakra-ui/react";
 import {FaBookBookmark} from "react-icons/fa6";
 
 import {Note as NoteType} from "@/types/Note";
-import ChatWithNotesButton from "@/components/Notebook/NotebookMenu/NotesSelect/ChatWithNotesButton";
+import ChatWithNotesButton from "@/components/Notebook/NotebookMenu/NotesSelect/Buttons/ChatWithNotesButton";
+import DeleteButton from "@/components/Notebook/NotebookMenu/NotesSelect/Buttons/DeleteButton";
+import useDeleteNote from "@/hooks/mutators/delete/useDeleteNote";
 
 interface Props {
     note: NoteType,
@@ -17,6 +19,8 @@ interface Props {
 const Note: React.FC<Props> = ({ note, onSelect, selected, selectNotes }) => {
 
     const [isHovering, setIsHovering] = useState(false);
+
+    const { deleteNote } = useDeleteNote(note);
 
     return (
         <HStack
@@ -54,9 +58,15 @@ const Note: React.FC<Props> = ({ note, onSelect, selected, selectNotes }) => {
                 </HStack>
                 {
                     isHovering && (
-                        <ChatWithNotesButton
-                            onClick={() => selectNotes([note])}
-                        />
+                        <HStack>
+                            <ChatWithNotesButton
+                                onClick={() => selectNotes([note])}
+                            />
+                            <DeleteButton
+                                onDelete={deleteNote}
+                                name={"Note"}
+                            />
+                        </HStack>
                     )
                 }
             </HStack>

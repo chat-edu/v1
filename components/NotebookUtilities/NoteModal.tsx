@@ -4,7 +4,7 @@ import { Button } from "@chakra-ui/react";
 
 import NoteInputModal from "@/components/NotebookUtilities/NoteInputModal";
 
-import useDeleteNote from "@/hooks/mutators/useDeleteNote";
+import useDeleteNote from "@/hooks/mutators/delete/useDeleteNote";
 
 import {Note} from "@/types/Note";
 

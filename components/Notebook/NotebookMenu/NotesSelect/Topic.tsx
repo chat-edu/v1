@@ -10,31 +10,40 @@ import {
     Text, VStack
 } from "@chakra-ui/react";
 
+import AddNoteButton from "@/components/Notebook/NotebookMenu/NotesSelect/Buttons/AddNoteButton";
+import AddTopicButton from "@/components/Notebook/NotebookMenu/NotesSelect/Buttons/AddTopicButton";
+import AddAssignmentButton from "@/components/Notebook/NotebookMenu/NotesSelect/Buttons/AddAssignmentButton";
+import ChatWithNotesButton from "@/components/Notebook/NotebookMenu/NotesSelect/Buttons/ChatWithNotesButton";
 import Note from "@/components/Notebook/NotebookMenu/NotesSelect/Note";
-import AddNoteButton from "@/components/Notebook/NotebookMenu/NotesSelect/AddNoteButton";
-import AddTopicButton from "@/components/Notebook/NotebookMenu/NotesSelect/AddTopicButton";
+import Assignment from "@/components/Notebook/NotebookMenu/NotesSelect/Assignment";
+import DeleteButton from "@/components/Notebook/NotebookMenu/NotesSelect/Buttons/DeleteButton";
+
+import useAssignments from "@/hooks/queries/assignment/useAssignments";
+import useDeleteTopic from "@/hooks/mutators/delete/useDeleteTopic";
 
 import {TopicHierarchy} from "@/types/Topic";
 import {Note as NoteType} from "@/types/Note";
-import ChatWithNotesButton from "@/components/Notebook/NotebookMenu/NotesSelect/ChatWithNotesButton";
-import useAssignments from "@/hooks/queries/assignment/useAssignments";
-import Assignment from "@/components/Notebook/NotebookMenu/NotesSelect/Assignment";
-import AddAssignmentButton from "@/components/Notebook/NotebookMenu/NotesSelect/AddAssignmentButton";
 
 interface Props {
     topicHierarchy: TopicHierarchy,
     selectLesson: (note: NoteType) => void
     deselectLesson: (id: NoteType["id"]) => void,
     selectedLesson: NoteType | null,
+    selectedNotes: NoteType[],
     selectNotes: (notes: NoteType[]) => void,
+    selectedAssignment: Assignment | null,
     selectAssignment: (assignment: Assignment) => void
 }
 
-const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectLesson, deselectLesson, selectNotes, selectAssignment }) => {
+const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectedNotes, selectLesson, deselectLesson, selectNotes, selectedAssignment, selectAssignment }) => {
 
     const [isHovering, setIsHovering] = React.useState(false);
 
     const { assignments, loading } = useAssignments(topicHierarchy.id);
+
+    const { deleteTopic } = useDeleteTopic(topicHierarchy);
+
+    console.log(topicHierarchy);
 
     return (
         <Accordion
@@ -79,6 +88,10 @@ const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectLesson, 
                                         <ChatWithNotesButton
                                             onClick={() => selectNotes(topicHierarchy.notes)}
                                         />
+                                        <DeleteButton
+                                            onDelete={deleteTopic}
+                                            name={"Topic"}
+                                        />
                                     </HStack>
                                 )
                             }
@@ -96,9 +109,11 @@ const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectLesson, 
                                 key={subTopic.id}
                                 topicHierarchy={subTopic}
                                 selectLesson={selectLesson}
+                                selectedNotes={selectedNotes}
                                 deselectLesson={deselectLesson}
                                 selectedLesson={selectedLesson}
                                 selectNotes={selectNotes}
+                                selectedAssignment={selectedAssignment}
                                 selectAssignment={selectAssignment}
                             />
                         ))
@@ -109,7 +124,7 @@ const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectLesson, 
                                 key={note.id}
                                 note={note}
                                 onSelect={() => selectLesson(note)}
-                                selected={selectedLesson?.id === note.id}
+                                selected={selectedLesson?.id === note.id || selectedNotes.some((selectedNote) => selectedNote.id === note.id)}
                                 selectNotes={selectNotes}
                             />
                         ))
@@ -120,11 +135,12 @@ const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectLesson, 
                                 key={assignment.id}
                                 assignment={assignment}
                                 selectAssignment={() => selectAssignment(assignment)}
+                                selected={selectedAssignment?.id === assignment.id}
                             />
                         ))
                     }
                     {
-                        topicHierarchy.subTopics.length === 0 && topicHierarchy.notes.length === 0 && (
+                        topicHierarchy.subTopics.length === 0 && topicHierarchy.notes.length === 0 && assignments.length === 0 && (
                             <Text>
                                 No Content Yet
                             </Text>

@@ -13,10 +13,9 @@ import {ChevronDownIcon} from "@chakra-ui/icons";
 
 import {signOut} from "next-auth/react";
 
-import UserPoints from "@/components/Utilities/Points/UserPoints";
 import Loading from "@/components/Utilities/Loading";
 
-import useUserScore from "@/hooks/queries/scores/users/useUserScore";
+import useUser from "@/hooks/queries/user/useUser";
 
 import {User} from "next-auth";
 
@@ -26,7 +25,7 @@ interface Props {
 
 const Profile: React.FC<Props> = ({ user }) => {
 
-    const { userScore, loading } = useUserScore(user.id)
+    const { userData, loading } = useUser(user.id)
 
     const menuButton = useBreakpointValue({
         base: (
@@ -37,8 +36,8 @@ const Profile: React.FC<Props> = ({ user }) => {
                 icon={
                     <Avatar
                         size={'sm'}
-                        name={userScore?.name || user.name || ""}
-                        src={userScore?.profilePictureUrl || ""}
+                        name={userData?.name || user.name || ""}
+                        src={userData?.profilePictureUrl || ""}
                     />
                 }
             />
@@ -50,14 +49,14 @@ const Profile: React.FC<Props> = ({ user }) => {
                 leftIcon={
                     <Avatar
                         size={'sm'}
-                        name={userScore?.name || ""}
-                        src={userScore?.profilePictureUrl || ""}
+                        name={userData?.name || ""}
+                        src={userData?.profilePictureUrl || ""}
                     />
                 }
             >
                 {
-                    userScore ? (
-                        `@${userScore?.username}`
+                    userData ? (
+                        `@${userData?.username}`
                     ) : (
                         user.name
                     )
@@ -75,13 +74,6 @@ const Profile: React.FC<Props> = ({ user }) => {
             <HStack
                 align={'end'}
             >
-                {
-                    userScore && (
-                        <UserPoints
-                            points={userScore?.score || 0}
-                        />
-                    )
-                }
                 <Menu>
                     {menuButton}
                     <MenuList>

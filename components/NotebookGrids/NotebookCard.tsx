@@ -6,6 +6,7 @@ import ClickableCard from "@/components/Utilities/ClickableCard";
 import UsernameText from "@/components/Utilities/UsernameText";
 
 import {NotebookScore} from "@/types/score";
+import Link from "next/link";
 
 interface Props {
     notebookScore: NotebookScore,
@@ -13,65 +14,63 @@ interface Props {
     onClick: () => void
 }
 
-const NotebookCard: React.FC<Props> = ({ notebookScore, rightComponent, onClick }) => {
+const NotebookCard: React.FC<Props> = ({ notebookScore, rightComponent }) => {
 
     return (
-        <ClickableCard
-            onClick={onClick}
-            flex={1}
-            w={'100%'}
+        <Link
+            href={`/notebooks/${notebookScore.notebookId}`}
         >
-            <HStack
+            <ClickableCard
+                onClick={() => {}}
+                flex={1}
                 w={'100%'}
-                h={'100%'}
-                maxW={'100%'}
             >
-                <VStack
-                    flex={1}
-                    align={'start'}
+                <HStack
+                    w={'100%'}
+                    h={'100%'}
+                    maxW={'100%'}
                 >
-                    <Text
-                        fontWeight={'bold'}
-                        fontSize={{
-                            base: 'md',
-                            md: 'lg'
-                        }}
-                        mb={0}
-                    >
-                        {notebookScore.notebookName}
-                    </Text>
-                    <HStack
-                        spacing={0}
+                    <VStack
+                        flex={1}
+                        align={'start'}
                     >
                         <Text
-                            fontSize={'sm'}
-                            opacity={0.75}
+                            fontWeight={'bold'}
+                            fontSize={{
+                                base: 'md',
+                                md: 'lg'
+                            }}
+                            mb={0}
                         >
-                            By
+                            {notebookScore.notebookName}
                         </Text>
-                        <UsernameText
-                            username={notebookScore.authorUsername}
-                            id={notebookScore.authorId}
-                            verified={notebookScore.authorVerified}
-                            opacity={0.75}
-                        />
-                    </HStack>
-                    <Text
-                        fontSize={'sm'}
-                        opacity={0.75}
+                        <HStack
+                            spacing={0}
+                        >
+                            <Text
+                                fontSize={'sm'}
+                                opacity={0.75}
+                            >
+                                By
+                            </Text>
+                            <UsernameText
+                                username={notebookScore.authorUsername}
+                                id={notebookScore.authorId}
+                                verified={notebookScore.authorVerified}
+                                opacity={0.75}
+                            />
+                        </HStack>
+                    </VStack>
+                    <VStack
+                        h={'100%'}
+                        justifyContent={'space-between'}
+                        align={'end'}
                     >
-                        {notebookScore.numNotes} module{notebookScore.numNotes === 1 ? '' : 's'}
-                    </Text>
-                </VStack>
-                <VStack
-                    h={'100%'}
-                    justifyContent={'space-between'}
-                    align={'end'}
-                >
-                    {rightComponent}
-                </VStack>
-            </HStack>
-        </ClickableCard>
+                        {rightComponent}
+                    </VStack>
+                </HStack>
+            </ClickableCard>
+        </Link>
     );
 };
 

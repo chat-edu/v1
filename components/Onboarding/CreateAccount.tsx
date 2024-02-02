@@ -5,7 +5,7 @@ import {Button} from "@chakra-ui/react";
 import TextInput from "@/components/Utilities/FormUtilities/TextInput";
 import OnboardingStep from "@/components/Onboarding/OnboardingStep";
 
-import useCreateUser from "@/hooks/mutators/useCreateUser";
+import useCreateUser from "@/hooks/mutators/create/useCreateUser";
 import {UserRoles} from "@/types/User";
 
 interface Props {

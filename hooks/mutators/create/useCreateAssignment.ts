@@ -20,7 +20,7 @@ const useCreateAssignment = (topicId: Topic["id"]) => {
 
     const createAssignment = async () => {
         const assignment = await addAssignment({
-            name: "New Assignment",
+            name: assignmentName,
             topicId,
         });
         if(assignment) {

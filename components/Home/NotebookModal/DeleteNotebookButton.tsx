@@ -11,7 +11,7 @@ import {
     useDisclosure
 } from "@chakra-ui/react";
 
-import useDeleteNotebook from "@/hooks/mutators/useDeleteNotebook";
+import useDeleteNotebook from "@/hooks/mutators/delete/useDeleteNotebook";
 
 interface Props {
     notebookId: number,

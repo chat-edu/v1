@@ -13,7 +13,7 @@ import {
 
 import TextInput from "@/components/Utilities/FormUtilities/TextInput";
 
-import useAddTopic from "@/hooks/mutators/useAddTopic";
+import useAddTopic from "@/hooks/mutators/create/useAddTopic";
 
 import {Notebook} from "@/types/Notebook";
 import {Topic} from "@/types/Topic";

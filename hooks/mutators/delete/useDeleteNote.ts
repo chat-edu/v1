@@ -1,21 +1,15 @@
-import useAuth from "@/hooks/useAuth"
-
 import {useToast} from "@chakra-ui/react";
 
 import {deleteNote as deleteNoteService} from "@/services/notes";
 
 import {Note} from "@/types/Note";
 
-const useDeleteNote = (note: Note, authorId: string) => {
+const useDeleteNote = (note: Note) => {
 
-    const { user } = useAuth();
 
     const toast = useToast();
 
-    const isAllowed = user && user.id === authorId;
-    
     const deleteNote = async () => {
-        if(!isAllowed) return;
         const success = await deleteNoteService(note.id, note.notebookId);
         if(success) {
             toast({
@@ -37,8 +31,7 @@ const useDeleteNote = (note: Note, authorId: string) => {
     }
 
     return {
-        deleteNote,
-        isAllowed
+        deleteNote
     }
 }
 

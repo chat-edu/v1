@@ -2,15 +2,15 @@ import React from 'react';
 
 import dynamic from "next/dynamic";
 
-import {Button, Container, Flex, Heading, HStack} from "@chakra-ui/react";
+import {Button, Container, Flex, Heading, HStack, Skeleton, Text} from "@chakra-ui/react";
 
-import ChatLanding from "@/components/Chat/ChatLanding";
 import Markdown from "@/components/Utilities/Markdown";
 import {mobileNavbarHeight, navbarHeight} from "@/components/Layout/Navbar";
 import {mobileHeaderHeight} from "@/components/Notebook/NotebookMenu/MobileHeader";
 
 import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
-import useUpdateNote from "@/hooks/mutators/useUpdateNote";
+import useUpdateNote from "@/hooks/mutators/update/useUpdateNote";
+import useNote from "@/hooks/queries/notes/useNote";
 
 import {Note} from "@/types/Note";
 
@@ -34,10 +34,22 @@ const Lesson: React.FC<Props> = ({ selectedLesson }) => {
 
     const [viewMode, setViewMode] = React.useState<ViewModes>(ViewModes.EDIT);
 
+    const { note, loading } = useNote(selectedLesson.id);
     const { updateNoteContent } = useUpdateNote(selectedLesson.id, selectedLesson.notebookId);
 
-    if(!selectedLesson) return (
-        <ChatLanding />
+    if(loading && !note) return (
+        <Skeleton />
+    )
+
+    if(!note) return (
+        <Text
+            w={'100%'}
+            h={'100%'}
+            justifyContent={'center'}
+            alignItems={'center'}
+        >
+            Note not found
+        </Text>
     )
 
     return (
@@ -63,7 +75,7 @@ const Lesson: React.FC<Props> = ({ selectedLesson }) => {
                     justifyContent={'space-between'}
                 >
                     <Heading>
-                        {selectedLesson.name}
+                        {note.name}
                     </Heading>
                     {
                         viewMode === ViewModes.EDIT ? (
@@ -84,12 +96,12 @@ const Lesson: React.FC<Props> = ({ selectedLesson }) => {
                 {
                     viewMode === ViewModes.EDIT ? (
                         <Editor
-                            initialMarkdown={selectedLesson.content}
+                            initialMarkdown={note.content}
                             save={(markdown: string) => updateNoteContent(markdown)}
                         />
                     ) : (
                         <Markdown>
-                            {selectedLesson.content}
+                            {note.content}
                         </Markdown>
                     )
                 }

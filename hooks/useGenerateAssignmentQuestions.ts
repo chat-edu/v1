@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 import {useToast} from "@chakra-ui/react";
 
@@ -17,10 +17,13 @@ const useGenerateAssignmentQuestions = (assignmentId: Assignment["id"]) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [generatedQuestions, setGeneratedQuestions] = useState<Question<MultipleChoiceQuestion | TextBasedQuestion>[]>([]);
 
+    useEffect(() => {
+        setGeneratedQuestions([]);
+    }, [assignmentId])
+
     const generateQuestions = async () => {
         setLoading(true);
         const generatedAssignment = await generateAssignmentService(assignmentId);
-        console.log(generatedAssignment);
         setGeneratedQuestions(generatedAssignment.questions);
         setLoading(false);
     }

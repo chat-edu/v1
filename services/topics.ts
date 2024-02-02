@@ -2,6 +2,7 @@ import {TopicRowInput} from "@/cosmosPostgres/types/topic";
 import {Topic, TopicInput, TopicHierarchy} from "@/types/Topic";
 import {Note} from "@/types/Note";
 import {emitTopicsChangedEvent} from "@/cosmosPostgres/eventEmitters/topicsEventEmitter";
+import {Notebook} from "@/types/Notebook";
 
 export const generateHierarchy = (topics: Topic[], notes: Note[], rootId: Topic["id"] | null): TopicHierarchy[] => {
     const rootTopics = topics.filter((topic) => topic.parentTopicId === rootId);
@@ -9,7 +10,7 @@ export const generateHierarchy = (topics: Topic[], notes: Note[], rootId: Topic[
         ...topic,
         notes: notes.filter((note) => note.topicId === topic.id),
         subTopics: generateHierarchy(
-            topics.filter((subTopic) => subTopic.parentTopicId === topic.id),
+            topics,
             notes,
             topic.id
         ),
@@ -34,11 +35,17 @@ export const addTopic = async (topic: TopicInput): Promise<Topic | null> =>
 
 // DELETE
 
-export const deleteTopic = async (id: number): Promise<void> =>
+export const deleteTopic = async (id: Topic["id"], notebookId: Notebook["id"]): Promise<boolean> =>
     fetch(`/api/topics/${id}/delete`, {
         method: "DELETE",
     })
-        .then((res) => res.json())
+        .then(async (res) => {
+            const success = await res.json() as boolean;
+            if (success) {
+                emitTopicsChangedEvent(notebookId);
+            }
+            return success;
+        })
         .catch(null)
 
 // UPDATE

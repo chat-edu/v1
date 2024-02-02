@@ -53,22 +53,30 @@ CREATE TABLE Assignments (
 
 CREATE TABLE FreeResponseQuestions (
     id SERIAL PRIMARY KEY,
-    assignment_id INT REFERENCES assignments(id),
+    assignment_id INT,
     question TEXT NOT NULL,
-    question_number INT NOT NULL
+    question_number INT NOT NULL,
+    FOREIGN KEY (assignment_id) REFERENCES Assignments(id) ON DELETE CASCADE
 );
 
 CREATE TABLE MultipleChoiceQuestions (
     id SERIAL PRIMARY KEY,
-    assignment_id INT REFERENCES assignments(id),
+    assignment_id INT,
     question TEXT NOT NULL,
     option_a TEXT,
     option_b TEXT,
     option_c TEXT,
     option_d TEXT,
     answer CHAR(1) CHECK(answer IN ('A', 'B', 'C', 'D')),
-    question_number INT NOT NULL
+    question_number INT NOT NULL,
+    FOREIGN KEY (assignment_id) REFERENCES Assignments(id) ON DELETE CASCADE
 );
+
+-- alter the foreign key cascade delete to the multiple choice questions table
+ALTER TABLE MultipleChoiceQuestions DROP CONSTRAINT IF EXISTS multiplechoicequestions_assignment_id_fkey;
+ALTER TABLE MultipleChoiceQuestions ADD FOREIGN KEY (assignment_id) REFERENCES Assignments(id) ON DELETE CASCADE;
+ALTER TABLE FreeResponseQuestions DROP CONSTRAINT IF EXISTS freeresponsequestions_assignment_id_fkey;
+ALTER TABLE FreeResponseQuestions ADD FOREIGN KEY (assignment_id) REFERENCES Assignments(id) ON DELETE CASCADE;
 
 -- DROP ALL TABLES
 DROP TABLE IF EXISTS Scores;

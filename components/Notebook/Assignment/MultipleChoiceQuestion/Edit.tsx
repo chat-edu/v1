@@ -1,10 +1,10 @@
 import React from 'react';
 
-import {Button, Flex, FormControl, FormLabel, Radio, RadioGroup, Stack, Text, VStack} from "@chakra-ui/react";
+import {Button, Flex, FormControl, FormLabel, Radio, RadioGroup, Stack} from "@chakra-ui/react";
 
 import TextInput from "@/components/Utilities/FormUtilities/TextInput";
 
-import useUpdateMultipleChoiceQuestion from "@/hooks/mutators/useUpdateMultipleChoiceQuestion";
+import useUpdateMultipleChoiceQuestion from "@/hooks/mutators/update/useUpdateMultipleChoiceQuestion";
 
 import {MultipleChoiceKey} from "@/types/commands/MultipleChoiceQuestion";
 import {MultipleChoiceQuestion} from "@/types/assignment/MultipleChoiceQuestion";

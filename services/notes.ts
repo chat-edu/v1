@@ -4,6 +4,7 @@ import {Note, NoteInput} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
 
 import {NoteRowInput, NoteRow} from "@/cosmosPostgres/types";
+import {emitNoteChangedEvent} from "@/cosmosPostgres/eventEmitters/noteEventEmitter";
 
 // CREATE
 
@@ -26,7 +27,7 @@ export const updateNote = async (noteId: number, notebookId: number, note: Parti
         body: JSON.stringify(transformPartialNoteInput(note)),
     })
         .then(async (res) => {
-            emitNotesChangedEvent(notebookId);
+            emitNoteChangedEvent(noteId);
             return res.json()
         })
         .catch(() => false);
@@ -38,8 +39,11 @@ export const deleteNote = async (noteId: Note["id"], notebookId: Notebook["id"])
         method: "DELETE",
     })
         .then(async (res) => {
-            emitNotesChangedEvent(notebookId);
-            return res.json()
+            const success = await res.json() as boolean;
+            if(success) {
+                emitNotesChangedEvent(notebookId);
+            }
+            return success;
         })
         .catch(null);
 

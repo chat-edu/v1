@@ -12,11 +12,13 @@ interface Props {
     selectLesson: (note: Note) => void;
     deselectLesson: () => void;
     selectedLesson: Note | null;
+    selectedNotes: Note[];
     selectNotes: (notes: Note[]) => void;
+    selectedAssignment: Assignment | null;
     selectAssignment: (assignment: Assignment) => void;
 }
 
-const NotesMenu: React.FC<Props> = ({ notebook, selectLesson, deselectLesson, selectedLesson, selectNotes, selectAssignment }) => {
+const NotesMenu: React.FC<Props> = ({ notebook, selectLesson, deselectLesson, selectedNotes, selectedLesson, selectNotes, selectedAssignment, selectAssignment }) => {
 
     return (
         <>
@@ -25,7 +27,9 @@ const NotesMenu: React.FC<Props> = ({ notebook, selectLesson, deselectLesson, se
                 selectedLesson={selectedLesson}
                 selectLesson={selectLesson}
                 deselectLesson={deselectLesson}
+                selectedNotes={selectedNotes}
                 selectNotes={selectNotes}
+                selectedAssignment={selectedAssignment}
                 selectAssignment={selectAssignment}
             />
             <Sidebar
@@ -33,7 +37,9 @@ const NotesMenu: React.FC<Props> = ({ notebook, selectLesson, deselectLesson, se
                 selectedLesson={selectedLesson}
                 selectLesson={selectLesson}
                 deselectLesson={deselectLesson}
+                selectedNotes={selectedNotes}
                 selectNotes={selectNotes}
+                selectedAssignment={selectedAssignment}
                 selectAssignment={selectAssignment}
             />
         </>

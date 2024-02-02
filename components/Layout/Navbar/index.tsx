@@ -1,22 +1,16 @@
 import React from 'react'
 
-import {Card, Flex, Heading, HStack, Text, Image, Box} from '@chakra-ui/react'
+import {Card, Flex, Heading, HStack, Text, Image} from '@chakra-ui/react'
 
 import Link from "next/link";
 
 import AuthButton from '@/components/Layout/Navbar/AuthButton'
 import ColorModeToggle from "@/components/Layout/Navbar/ColorModeToggle";
-import NavLinks from "@/components/Layout/Navbar/NavLinks";
-import SearchBar from "@/components/Layout/Navbar/SearchBar/SearchBar";
 
 export const navbarHeight = 80;
 export const mobileNavbarHeight = 60;
 
-interface Props {
-    isOnboarding?: boolean
-}
-
-const Navbar: React.FC<Props> = ({ isOnboarding }) => {
+const Navbar: React.FC = () => {
   return (
       <Card
         p={2}
@@ -66,20 +60,6 @@ const Navbar: React.FC<Props> = ({ isOnboarding }) => {
                     </Heading>
                 </HStack>
             </Link>
-            <Box
-                display={{
-                    base: 'none',
-                    md: isOnboarding ? 'none' : 'flex'
-                }}
-                flexShrink={0}
-            >
-                <NavLinks />
-            </Box>
-            {
-                !isOnboarding && (
-                    <SearchBar />
-                )
-            }
             <HStack
                 justify={'flex-end'}
             >

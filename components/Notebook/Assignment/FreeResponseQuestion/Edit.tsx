@@ -6,7 +6,7 @@ import TextInput from "@/components/Utilities/FormUtilities/TextInput";
 
 
 import {FreeResponseQuestion} from "@/types/assignment/FreeResponseQuestion";
-import useUpdateFreeResponseQuestion from "@/hooks/mutators/useUpdateFreeResponseQuestion";
+import useUpdateFreeResponseQuestion from "@/hooks/mutators/update/useUpdateFreeResponseQuestion";
 
 interface Props {
     question: FreeResponseQuestion,

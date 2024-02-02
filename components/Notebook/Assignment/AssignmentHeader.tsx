@@ -4,7 +4,7 @@ import {Button, Heading, HStack} from "@chakra-ui/react";
 
 import TextInput from "@/components/Utilities/FormUtilities/TextInput";
 
-import useUpdateAssignment from "@/hooks/mutators/useUpdateAssignment";
+import useUpdateAssignment from "@/hooks/mutators/update/useUpdateAssignment";
 
 import {Assignment} from "@/types/assignment/Assignment";
 

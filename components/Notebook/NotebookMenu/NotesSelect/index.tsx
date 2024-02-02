@@ -9,7 +9,7 @@ import {
 
 import Topic from "@/components/Notebook/NotebookMenu/NotesSelect/Topic";
 import Loading from "@/components/Utilities/Loading";
-import AddTopicButton from "@/components/Notebook/NotebookMenu/NotesSelect/AddTopicButton";
+import AddTopicButton from "@/components/Notebook/NotebookMenu/NotesSelect/Buttons/AddTopicButton";
 
 import useNotes from "@/hooks/queries/notes/useNotes";
 import useTopics from "@/hooks/queries/topics/useTopics";
@@ -25,11 +25,13 @@ interface Props {
     selectedLesson: NoteType | null,
     selectLesson: (note: NoteType) => void
     deselectLesson: (id: NoteType["id"]) => void,
+    selectedNotes: NoteType[],
     selectNotes: (notes: NoteType[]) => void,
+    selectedAssignment: Assignment | null,
     selectAssignment: (assignment: Assignment) => void
 }
 
-const NotesSelect: React.FC<Props> = ({ notebook, selectLesson,  selectedLesson, deselectLesson, selectNotes, selectAssignment }) => {
+const NotesSelect: React.FC<Props> = ({ notebook, selectLesson,  selectedLesson, deselectLesson, selectedNotes, selectNotes, selectedAssignment, selectAssignment }) => {
 
     const { notes, loading: notesLoading } = useNotes(notebook.id);
     const { topics, loading: topicsLoading } = useTopics(notebook.id);
@@ -79,7 +81,9 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectLesson,  selectedLesson,
                                             selectedLesson={selectedLesson}
                                             selectLesson={selectLesson}
                                             deselectLesson={deselectLesson}
+                                            selectedNotes={selectedNotes}
                                             selectNotes={selectNotes}
+                                            selectedAssignment={selectedAssignment}
                                             selectAssignment={selectAssignment}
                                         />
                                     ))

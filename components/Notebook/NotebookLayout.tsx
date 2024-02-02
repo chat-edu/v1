@@ -48,7 +48,9 @@ const NotebookLayout: React.FC<Props> = ({ notebook }) => {
                 selectLesson={selectLesson}
                 deselectLesson={deselectLesson}
                 selectedLesson={selectedLesson}
+                selectedNotes={selectedNotes}
                 selectNotes={selectNotes}
+                selectedAssignment={selectedAssignment}
                 selectAssignment={selectAssignment}
             />
             <Container

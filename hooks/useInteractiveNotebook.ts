@@ -12,16 +12,15 @@ export enum Modes {
 const useInteractiveNotebook = () => {
 
     const [selectedLesson, setSelectedLesson] = useState<Note | null>(null);
-
     const [selectedNotes, setSelectedNotes] = useState<Note[]>([]);
-
     const [selectedAssignment, setSelectedAssignment] = useState<Assignment | null>(null);
-
     const [mode, setMode] = useState<Modes>(Modes.CONTENT);
 
     const selectLesson = (lesson: Note) => {
         setSelectedLesson(lesson);
-        setMode(Modes.CONTENT)
+        setMode(Modes.CONTENT);
+        setSelectedNotes([]);
+        setSelectedAssignment(null);
     }
 
     const deselectLesson = () => {
@@ -31,11 +30,15 @@ const useInteractiveNotebook = () => {
     const selectNotes = (notes: Note[]) => {
         setSelectedNotes(notes);
         setMode(Modes.CHAT);
+        setSelectedLesson(null);
+        setSelectedAssignment(null)
     }
 
     const selectAssignment = (assignment: Assignment) => {
         setSelectedAssignment(assignment);
         setMode(Modes.ASSIGNMENT);
+        setSelectedNotes([]);
+        setSelectedLesson(null);
     }
 
     return {
