@@ -119,7 +119,6 @@ const NotebookModal: React.FC<Props> = ({ notebook, isOpen, onClose }) => {
                     >
                         <NotesDisplay
                             notebookId={notebook.notebookId}
-                            authorId={notebook.authorId}
                             allowAddNote={user && user.id === notebook.authorId}
                         />
                         <NotebookLeaderboard

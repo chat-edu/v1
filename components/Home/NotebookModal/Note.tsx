@@ -14,12 +14,11 @@ import {Note as NoteType} from "@/types/Note";
 
 interface Props {
     note: NoteType
-    authorId: string
 }
 
 const maxCharacters = 32;
 
-const Note: React.FC<Props> = ({ note, authorId }) => {
+const Note: React.FC<Props> = ({ note }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -32,7 +31,6 @@ const Note: React.FC<Props> = ({ note, authorId }) => {
         <>
             <NoteModal
                 note={note}
-                authorId={authorId}
                 isOpen={isOpen}
                 onClose={onClose}
             />

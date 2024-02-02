@@ -10,14 +10,13 @@ import {Note} from "@/types/Note";
 
 interface Props {
     note: Note;
-    authorId: string;
     isOpen: boolean;
     onClose: () => void;
 }
 
-const NoteModal: React.FC<Props> = ({ note, authorId, isOpen, onClose }) => {
+const NoteModal: React.FC<Props> = ({ note, isOpen, onClose }) => {
 
-    const { deleteNote, isAllowed } = useDeleteNote(note, authorId);
+    const { deleteNote } = useDeleteNote(note);
 
     const onDelete = async () => {
         await deleteNote();
@@ -30,15 +29,13 @@ const NoteModal: React.FC<Props> = ({ note, authorId, isOpen, onClose }) => {
             isOpen={isOpen}
             onClose={onClose}
             footer={
-                isAllowed ? (
-                    <Button
-                        variant='ghost'
-                        colorScheme='red'
-                        onClick={onDelete}
-                    >
-                        Delete
-                    </Button>
-                ) : undefined
+                <Button
+                    variant='ghost'
+                    colorScheme='red'
+                    onClick={onDelete}
+                >
+                    Delete
+                </Button>
             }
         />
     );

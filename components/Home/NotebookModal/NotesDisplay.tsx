@@ -11,11 +11,10 @@ import {Notebook} from "@/types/Notebook";
 
 interface Props {
     notebookId: Notebook["id"],
-    authorId: string,
     allowAddNote?: boolean
 }
 
-const NotesDisplay: React.FC<Props> = ({ notebookId, authorId, allowAddNote }) => {
+const NotesDisplay: React.FC<Props> = ({ notebookId, allowAddNote }) => {
 
     const { notes, loading } = useNotes(notebookId);
 
@@ -51,7 +50,6 @@ const NotesDisplay: React.FC<Props> = ({ notebookId, authorId, allowAddNote }) =
                                     <Note
                                         key={note.id}
                                         note={note}
-                                        authorId={authorId}
                                     />
                                 ))
                             }
