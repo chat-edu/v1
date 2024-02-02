@@ -39,9 +39,7 @@ const Layout: React.FC<Props> = ({ children, isOnboarding }) => {
             h={height}
             backgroundSize={'cover'}
         >
-            <Navbar
-                isOnboarding={isOnboarding}
-            />
+            <Navbar />
             <Flex
                 direction={'column'}
                 gap={4}
