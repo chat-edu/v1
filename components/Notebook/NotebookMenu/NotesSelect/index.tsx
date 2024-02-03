@@ -1,7 +1,6 @@
 import React, {useMemo} from 'react';
 
 import {
-    CheckboxGroup,
     HStack,
     Text,
     VStack,
@@ -57,44 +56,43 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectLesson,  selectedLesson,
                 </Text>
                 <AddTopicButton
                     notebookId={notebook.id}
-                    orderPosition={topicHierarchy.length}
+                    orderPosition={topics.length}
+                    icon
                 />
             </HStack>
             <Loading
                 loading={notesLoading || topicsLoading}
             >
                 {
-                    <CheckboxGroup colorScheme='brand'>
-                        <VStack
-                            w={'100%'}
-                            align={'start'}
-                            mb={2}
-                            wordBreak={'break-word'}
-                            spacing={0}
-                        >
-                            {
-                                topicHierarchy.length > 0 ? (
-                                    topicHierarchy.map((topic) => (
-                                        <Topic
-                                            key={topic.id}
-                                            topicHierarchy={topic}
-                                            selectedLesson={selectedLesson}
-                                            selectLesson={selectLesson}
-                                            deselectLesson={deselectLesson}
-                                            selectedNotes={selectedNotes}
-                                            selectNotes={selectNotes}
-                                            selectedAssignment={selectedAssignment}
-                                            selectAssignment={selectAssignment}
-                                        />
-                                    ))
-                                ) : (
-                                    <Text>
-                                        No notes found
-                                    </Text>
-                                )
-                            }
-                        </VStack>
-                    </CheckboxGroup>
+                    <VStack
+                        w={'100%'}
+                        align={'start'}
+                        mb={2}
+                        wordBreak={'break-word'}
+                        spacing={0}
+                    >
+                        {
+                            topicHierarchy.length > 0 ? (
+                                topicHierarchy.map((topic) => (
+                                    <Topic
+                                        key={topic.id}
+                                        topicHierarchy={topic}
+                                        selectedLesson={selectedLesson}
+                                        selectLesson={selectLesson}
+                                        deselectLesson={deselectLesson}
+                                        selectedNotes={selectedNotes}
+                                        selectNotes={selectNotes}
+                                        selectedAssignment={selectedAssignment}
+                                        selectAssignment={selectAssignment}
+                                    />
+                                ))
+                            ) : (
+                                <Text>
+                                    No notes found
+                                </Text>
+                            )
+                        }
+                    </VStack>
                 }
             </Loading>
         </VStack>

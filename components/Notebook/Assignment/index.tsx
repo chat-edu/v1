@@ -13,12 +13,17 @@ import { MultipleChoiceQuestion as MultipleChoiceQuestionType } from "@/types/as
 import { FreeResponseQuestion as FreeResponseQuestionType } from "@/types/assignment/FreeResponseQuestion";
 import { QuestionTypes } from "@/types/assignment/Question";
 import useGenerateAssignmentQuestions from "@/hooks/useGenerateAssignmentQuestions";
+import useAuth from "@/hooks/useAuth";
+import useUser from "@/hooks/queries/user/useUser";
 
 interface Props {
     assignment: AssignmentType,
 }
 
 const Assignment: React.FC<Props> = ({ assignment }) => {
+
+    const { user } = useAuth();
+    const { isTeacher } = useUser(user?.id || '');
 
     const { assignmentWithQuestions, loading } = useAssignment(assignment.id);
 
@@ -44,7 +49,10 @@ const Assignment: React.FC<Props> = ({ assignment }) => {
                     ) : (
                         assignmentWithQuestions ? (
                             <>
-                                <AssignmentHeader assignment={assignmentWithQuestions} />
+                                <AssignmentHeader
+                                    assignment={assignmentWithQuestions}
+                                    isTeacher={isTeacher}
+                                />
                                 {
                                     <VStack
                                         w={'100%'}
@@ -116,14 +124,26 @@ const Assignment: React.FC<Props> = ({ assignment }) => {
                                                 )
                                             ))
                                         }
-                                        <Button
-                                            w={'100%'}
-                                            colorScheme={'brand'}
-                                            onClick={generateQuestions}
-                                            isLoading={generationLoading}
-                                        >
-                                            Add Questions
-                                        </Button>
+                                        {
+                                            isTeacher ? (
+                                                <Button
+                                                    w={'100%'}
+                                                    colorScheme={'brand'}
+                                                    onClick={generateQuestions}
+                                                    isLoading={generationLoading}
+                                                >
+                                                    Add Questions
+                                                </Button>
+                                            ) : (
+                                                <Button
+                                                    w={'100%'}
+                                                    colorScheme={'brand'}
+                                                    isDisabled
+                                                >
+                                                    Submit Assignment
+                                                </Button>
+                                            )
+                                        }
                                     </VStack>
                                 }
                             </>

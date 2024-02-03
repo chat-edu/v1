@@ -1,13 +1,18 @@
 import React, {useState} from 'react';
 
-import {HStack, Icon, Text,} from "@chakra-ui/react";
+import {HStack, Icon, IconButton, Menu, MenuButton, MenuItem, MenuList, Text,} from "@chakra-ui/react";
 
 import {FaBookBookmark} from "react-icons/fa6";
+import {FaEllipsisH} from "react-icons/fa";
 
-import {Note as NoteType} from "@/types/Note";
 import ChatWithNotesButton from "@/components/Notebook/NotebookMenu/NotesSelect/Buttons/ChatWithNotesButton";
 import DeleteButton from "@/components/Notebook/NotebookMenu/NotesSelect/Buttons/DeleteButton";
+
 import useDeleteNote from "@/hooks/mutators/delete/useDeleteNote";
+
+import {Note as NoteType} from "@/types/Note";
+import useAuth from "@/hooks/useAuth";
+import useUser from "@/hooks/queries/user/useUser";
 
 interface Props {
     note: NoteType,
@@ -17,6 +22,9 @@ interface Props {
 }
 
 const Note: React.FC<Props> = ({ note, onSelect, selected, selectNotes }) => {
+
+    const { user } = useAuth();
+    const { isTeacher } = useUser(user?.id || '')
 
     const [isHovering, setIsHovering] = useState(false);
 
@@ -52,21 +60,47 @@ const Note: React.FC<Props> = ({ note, onSelect, selected, selectNotes }) => {
                         as={FaBookBookmark}
                         height={'20px'}
                     />
-                    <Text>
+                    <Text
+                        textAlign={'left'}
+                    >
                         {note.name}
                     </Text>
                 </HStack>
                 {
-                    isHovering && (
-                        <HStack>
-                            <ChatWithNotesButton
-                                onClick={() => selectNotes([note])}
+                    isTeacher && isHovering && (
+                        <Menu>
+                            <MenuButton
+                                as={IconButton}
+                                icon={
+                                    <Icon
+                                        as={FaEllipsisH}
+                                    />
+                                }
+                                p={0}
+                                m={0}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                }}
+                                size={'xs'}
                             />
-                            <DeleteButton
-                                onDelete={deleteNote}
-                                name={"Note"}
-                            />
-                        </HStack>
+                            <MenuList>
+                                <MenuItem
+                                    p={0}
+                                >
+                                    <DeleteButton
+                                        onDelete={deleteNote}
+                                        name={"Note"}
+                                    />
+                                </MenuItem>
+                                <MenuItem
+                                    p={0}
+                                >
+                                    <ChatWithNotesButton
+                                        onClick={() => selectNotes([note])}
+                                    />
+                                </MenuItem>
+                            </MenuList>
+                        </Menu>
                     )
                 }
             </HStack>

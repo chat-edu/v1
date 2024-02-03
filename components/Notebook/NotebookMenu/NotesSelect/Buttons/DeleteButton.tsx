@@ -1,10 +1,9 @@
 import React from 'react';
 
-import {useDisclosure} from "@chakra-ui/react";
+import {Button, useDisclosure} from "@chakra-ui/react";
 import {DeleteIcon} from "@chakra-ui/icons";
 
 import ConfirmDeleteModal from "@/components/Utilities/ConfirmDeleteModal";
-import TooltipIconButton from "@/components/Utilities/TooltipIconButton";
 
 interface Props {
     onDelete: () => void;
@@ -23,12 +22,18 @@ const DeleteButton: React.FC<Props> = ({ onDelete, name }) => {
                 onConfirm={onDelete}
                 name={name}
             />
-            <TooltipIconButton
-                aria-label={'Delete'}
-                icon={<DeleteIcon />}
-                size={'xs'}
-                onClick={onOpen}
-            />
+            <Button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onOpen();
+                }}
+                leftIcon={<DeleteIcon />}
+                justifyContent={'flex-start'}
+                variant={'ghost'}
+                w={'100%'}
+            >
+                Delete
+            </Button>
         </>
     );
 };

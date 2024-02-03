@@ -13,6 +13,8 @@ import useUpdateNote from "@/hooks/mutators/update/useUpdateNote";
 import useNote from "@/hooks/queries/notes/useNote";
 
 import {Note} from "@/types/Note";
+import useAuth from "@/hooks/useAuth";
+import useUser from "@/hooks/queries/user/useUser";
 
 
 const Editor = dynamic(() => import('@/components/Utilities/Editor'), {
@@ -30,9 +32,12 @@ enum ViewModes {
 
 const Lesson: React.FC<Props> = ({ selectedLesson }) => {
 
+    const { user } = useAuth();
+    const { isTeacher } = useUser(user?.id || '')
+
     const { height } = useViewportDimensions();
 
-    const [viewMode, setViewMode] = React.useState<ViewModes>(ViewModes.EDIT);
+    const [viewMode, setViewMode] = React.useState<ViewModes>(ViewModes.PREVIEW);
 
     const { note, loading } = useNote(selectedLesson.id);
     const { updateNoteContent } = useUpdateNote(selectedLesson.id, selectedLesson.notebookId);
@@ -78,17 +83,11 @@ const Lesson: React.FC<Props> = ({ selectedLesson }) => {
                         {note.name}
                     </Heading>
                     {
-                        viewMode === ViewModes.EDIT ? (
+                        isTeacher && (
                             <Button
-                                onClick={() => setViewMode(ViewModes.PREVIEW)}
+                                onClick={() => setViewMode(viewMode === ViewModes.EDIT ? ViewModes.PREVIEW : ViewModes.EDIT)}
                             >
-                                Preview
-                            </Button>
-                        ) : (
-                            <Button
-                                onClick={() => setViewMode(ViewModes.EDIT)}
-                            >
-                                Edit
+                                {viewMode === ViewModes.EDIT ? 'Preview' : 'Edit'}
                             </Button>
                         )
                     }

@@ -1,13 +1,13 @@
 import React from 'react';
 
+import {Button, useDisclosure} from "@chakra-ui/react";
+
 import {MdNoteAdd} from "react-icons/md";
 
-import TooltipIconButton from "@/components/Utilities/TooltipIconButton";
+import AddNoteModal from "@/components/AddModals/AddNote/AddNoteModal";
 
 import {Notebook} from "@/types/Notebook";
 import {Topic} from "@/types/Topic";
-import AddNoteModal from "@/components/AddModals/AddNote/AddNoteModal";
-import {useDisclosure} from "@chakra-ui/react";
 
 interface Props {
     notebookId: Notebook['id']
@@ -28,12 +28,18 @@ const AddNoteButton: React.FC<Props> = ({ notebookId, parentTopicId, orderPositi
                 orderPosition={orderPosition}
                 parentTopicId={parentTopicId}
             />
-            <TooltipIconButton
-                aria-label={'Add Lesson'}
-                icon={<MdNoteAdd />}
-                size={'xs'}
-                onClick={onOpen}
-            />
+            <Button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onOpen();
+                }}
+                leftIcon={<MdNoteAdd />}
+                justifyContent={'flex-start'}
+                variant={'ghost'}
+                w={'100%'}
+            >
+                Add Lesson
+            </Button>
         </>
     );
 };

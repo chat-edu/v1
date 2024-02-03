@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TooltipIconButton from "@/components/Utilities/TooltipIconButton";
+import {Button} from "@chakra-ui/react";
 
 import {MdChatBubble} from "react-icons/md";
 
@@ -10,12 +10,17 @@ interface Props {
 
 const ChatWithNotesButton: React.FC<Props> = ({ onClick }) => {
     return (
-        <TooltipIconButton
-            aria-label={'Chat with Notes'}
-            icon={<MdChatBubble />}
-            size={'xs'}
-            onClick={onClick}
-        />
+        <Button
+            onClick={(e) => {
+                onClick();
+                e.stopPropagation();
+            }}
+            leftIcon={<MdChatBubble />}
+            justifyContent={'flex-start'}
+            variant={'ghost'}
+        >
+            Chat with Notes
+        </Button>
     );
 };
 

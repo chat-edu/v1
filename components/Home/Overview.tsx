@@ -1,5 +1,7 @@
 import React from 'react';
+
 import {Text, Image, VStack} from "@chakra-ui/react";
+
 import BoldText from "@/components/Utilities/BoldText";
 
 const Overview = () => {

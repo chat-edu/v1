@@ -1,32 +1,28 @@
 import React from 'react';
 
-import TooltipIconButton from "@/components/Utilities/TooltipIconButton";
+import {Button, useDisclosure} from "@chakra-ui/react";
+
 import AddTopicModal from "@/components/AddModals/AddTopic/AddTopicModal";
 
 import {AddIcon} from "@chakra-ui/icons";
 
 import {Notebook} from "@/types/Notebook";
 import {Topic} from "@/types/Topic";
-import {useDisclosure} from "@chakra-ui/react";
+import TooltipIconButton from "@/components/Utilities/TooltipIconButton";
 
 interface Props {
     notebookId: Notebook['id']
     parentTopicId?: Topic['id'],
-    orderPosition: Topic['orderPosition']
+    orderPosition: Topic['orderPosition'],
+    icon?: boolean
 }
 
-const AddTopic: React.FC<Props> = ({ notebookId, parentTopicId, orderPosition}) => {
+const AddTopic: React.FC<Props> = ({ notebookId, parentTopicId, orderPosition, icon}) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
         <>
-            <TooltipIconButton
-                aria-label={'Add Topic'}
-                icon={<AddIcon />}
-                size={'xs'}
-                onClick={onOpen}
-            />
             <AddTopicModal
                 isOpen={isOpen}
                 onClose={onClose}
@@ -34,6 +30,29 @@ const AddTopic: React.FC<Props> = ({ notebookId, parentTopicId, orderPosition}) 
                 orderPosition={orderPosition}
                 parentTopicId={parentTopicId}
             />
+            {
+                icon ? (
+                    <TooltipIconButton
+                        aria-label={'Add Topic'}
+                        onClick={onOpen}
+                        icon={<AddIcon />}
+                        size={'xs'}
+                    />
+                ) : (
+                    <Button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onOpen();
+                        }}
+                        leftIcon={<AddIcon />}
+                        justifyContent={'flex-start'}
+                        variant={'ghost'}
+                        w={'100%'}
+                    >
+                        Add Topic
+                    </Button>
+                )
+            }
         </>
     );
 };

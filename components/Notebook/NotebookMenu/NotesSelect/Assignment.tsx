@@ -1,11 +1,15 @@
 import React from 'react';
 
-import {HStack, Icon, Text} from "@chakra-ui/react";
-import {FaClipboardList} from "react-icons/fa";
+import {HStack, Icon, IconButton, Menu, MenuButton, MenuItem, MenuList, Text} from "@chakra-ui/react";
+import {FaClipboardList, FaEllipsisH} from "react-icons/fa";
+
+import DeleteButton from "@/components/Notebook/NotebookMenu/NotesSelect/Buttons/DeleteButton";
+
+import useDeleteAssignment from "@/hooks/mutators/delete/useDeleteAssignment";
 
 import {Assignment} from "@/types/assignment/Assignment";
-import DeleteButton from "@/components/Notebook/NotebookMenu/NotesSelect/Buttons/DeleteButton";
-import useDeleteAssignment from "@/hooks/mutators/delete/useDeleteAssignment";
+import useAuth from "@/hooks/useAuth";
+import useUser from "@/hooks/queries/user/useUser";
 
 interface Props {
     assignment: Assignment,
@@ -14,6 +18,9 @@ interface Props {
 }
 
 const Assignment: React.FC<Props> = ({ assignment, selectAssignment, selected }) => {
+
+    const { user } = useAuth();
+    const { isTeacher } = useUser(user?.id || '');
 
     const { deleteAssignment } = useDeleteAssignment(assignment);
 
@@ -45,16 +52,40 @@ const Assignment: React.FC<Props> = ({ assignment, selectAssignment, selected })
                     as={FaClipboardList}
                     height={'20px'}
                 />
-                <Text>
+                <Text
+                    textAlign={'left'}
+                >
                     {assignment.name}
                 </Text>
             </HStack>
             {
-                isHovering && (
-                    <DeleteButton
-                        onDelete={deleteAssignment}
-                        name={"Assignment"}
-                    />
+                isHovering && isTeacher && (
+                    <Menu>
+                        <MenuButton
+                            as={IconButton}
+                            icon={
+                                <Icon
+                                    as={FaEllipsisH}
+                                />
+                            }
+                            p={0}
+                            m={0}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                            }}
+                            size={'xs'}
+                        />
+                        <MenuList>
+                            <MenuItem
+                                p={0}
+                            >
+                                <DeleteButton
+                                    onDelete={deleteAssignment}
+                                    name={"Assignment"}
+                                />
+                            </MenuItem>
+                        </MenuList>
+                    </Menu>
                 )
             }
         </HStack>

@@ -10,6 +10,7 @@ import {Assignment} from "@/types/assignment/Assignment";
 
 interface Props {
     assignment: Assignment;
+    isTeacher: boolean;
 }
 
 enum Modes {
@@ -17,7 +18,7 @@ enum Modes {
     EDIT
 }
 
-const AssignmentHeader: React.FC<Props> = ({ assignment}) => {
+const AssignmentHeader: React.FC<Props> = ({ assignment, isTeacher}) => {
 
     const [mode, setMode] = useState<Modes>(Modes.VIEW);
 
@@ -51,25 +52,27 @@ const AssignmentHeader: React.FC<Props> = ({ assignment}) => {
                 )
             }
             {
-                mode === Modes.VIEW ? (
-                    <Button
-                        onClick={() => setMode(Modes.EDIT)}
-                    >
-                        Edit
-                    </Button>
-                ) : (
-                    <HStack>
+                isTeacher && (
+                    mode === Modes.VIEW ? (
                         <Button
-                            onClick={onSave}
+                            onClick={() => setMode(Modes.EDIT)}
                         >
-                            Save
+                            Edit
                         </Button>
-                        <Button
-                            onClick={() => setMode(Modes.VIEW)}
-                        >
-                            Cancel
-                        </Button>
-                    </HStack>
+                    ) : (
+                        <HStack>
+                            <Button
+                                onClick={onSave}
+                            >
+                                Save
+                            </Button>
+                            <Button
+                                onClick={() => setMode(Modes.VIEW)}
+                            >
+                                Cancel
+                            </Button>
+                        </HStack>
+                    )
                 )
             }
         </HStack>

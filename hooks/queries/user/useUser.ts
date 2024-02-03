@@ -26,6 +26,7 @@ const useUser = (userId: string) => {
 
     return {
         userData,
+        isTeacher: userData?.role === "teacher",
         loading,
         error,
         fetchUserData

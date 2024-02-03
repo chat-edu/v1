@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 
 import {Button, Flex} from "@chakra-ui/react";
+import useAuth from "@/hooks/useAuth";
+import useUser from "@/hooks/queries/user/useUser";
 
 
 interface EditComponentProps {
@@ -19,6 +21,9 @@ enum Modes {
 }
 
 const Question: React.FC<Props> = ({ viewComponent, editComponent, onConfirm }) => {
+
+    const { user } = useAuth();
+    const { isTeacher } = useUser(user?.id || '')
 
     const [isHovering, setIsHovering] = useState<boolean>(false)
     const [mode, setMode] = useState<Modes>(Modes.VIEW)
@@ -45,19 +50,12 @@ const Question: React.FC<Props> = ({ viewComponent, editComponent, onConfirm }) 
                         zIndex={1}
                     >
                         {
-                            mode === Modes.VIEW ? (
-                                <Button
-                                    onClick={() => setMode(Modes.EDIT)}
-                                    size={'sm'}
-                                >
-                                    Edit
-                                </Button>
-                            ) : (
+                            isTeacher && (
                                 <Button
                                     size={'sm'}
-                                    onClick={() => setMode(Modes.VIEW)}
+                                    onClick={() => setMode(mode === Modes.VIEW ? Modes.EDIT : Modes.VIEW)}
                                 >
-                                    Cancel
+                                    {mode === Modes.VIEW ? 'Edit' : 'Cancel'}
                                 </Button>
                             )
                         }

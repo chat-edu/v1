@@ -1,10 +1,9 @@
 import React from 'react';
 
-import {useDisclosure} from "@chakra-ui/react";
+import {Button, useDisclosure} from "@chakra-ui/react";
 
 import {MdAssignmentAdd} from "react-icons/md";
 
-import TooltipIconButton from "@/components/Utilities/TooltipIconButton";
 import AddAssignmentModal from "@/components/AddModals/AddAssignment";
 
 import {Topic} from "@/types/Topic";
@@ -24,12 +23,18 @@ const AddNoteButton: React.FC<Props> = ({topicId }) => {
                 onClose={onClose}
                 topicId={topicId}
             />
-            <TooltipIconButton
-                aria-label={'Add Assignment'}
-                icon={<MdAssignmentAdd />}
-                size={'xs'}
-                onClick={onOpen}
-            />
+            <Button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onOpen();
+                }}
+                leftIcon={<MdAssignmentAdd />}
+                justifyContent={'flex-start'}
+                variant={'ghost'}
+                w={'100%'}
+            >
+                Add Assignment
+            </Button>
         </>
     );
 };
