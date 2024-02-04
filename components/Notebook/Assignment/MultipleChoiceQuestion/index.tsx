@@ -9,13 +9,18 @@ import {MultipleChoiceQuestion as MultipleChoiceQuestionType} from "@/types/assi
 interface Props {
     question: MultipleChoiceQuestionType,
     onConfirm?: () => Promise<void>;
+    setAnswer: (answer: string) => void;
 }
 
-const MultipleChoiceQuestion: React.FC<Props> = ({ question, onConfirm }) => {
+const MultipleChoiceQuestion: React.FC<Props> = ({ question, onConfirm, setAnswer }) => {
     return (
         <Question
             viewComponent={() =>
-                <View question={question}/>}
+                <View
+                    question={question}
+                    setAnswer={setAnswer}
+                />
+            }
             editComponent={({changeMode}) =>
                 <Edit
                     question={question}

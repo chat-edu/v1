@@ -1,20 +1,17 @@
 import React from 'react';
 
-import {Card, Text, Skeleton, VStack, Box, Button, Divider} from "@chakra-ui/react";
+import {Card, Text, Skeleton, VStack, Box} from "@chakra-ui/react";
 
-import MultipleChoiceQuestion from "@/components/Notebook/Assignment/MultipleChoiceQuestion";
-import FreeResponseQuestion from "@/components/Notebook/Assignment/FreeResponseQuestion";
 import AssignmentHeader from "@/components/Notebook/Assignment/AssignmentHeader";
+import Questions from "@/components/Notebook/Assignment/Questions";
+import GenerateQuestions from "@/components/Notebook/Assignment/GenerateQuestions";
 
 import useAssignment from "@/hooks/queries/assignment/useAssignment";
-
-import { Assignment as AssignmentType } from "@/types/assignment/Assignment";
-import { MultipleChoiceQuestion as MultipleChoiceQuestionType } from "@/types/assignment/MultipleChoiceQuestion";
-import { FreeResponseQuestion as FreeResponseQuestionType } from "@/types/assignment/FreeResponseQuestion";
-import { QuestionTypes } from "@/types/assignment/Question";
-import useGenerateAssignmentQuestions from "@/hooks/useGenerateAssignmentQuestions";
 import useAuth from "@/hooks/useAuth";
 import useUser from "@/hooks/queries/user/useUser";
+
+import { Assignment as AssignmentType } from "@/types/assignment/Assignment";
+import Submissions from "@/components/Notebook/Assignment/Submissions";
 
 interface Props {
     assignment: AssignmentType,
@@ -26,13 +23,6 @@ const Assignment: React.FC<Props> = ({ assignment }) => {
     const { isTeacher } = useUser(user?.id || '');
 
     const { assignmentWithQuestions, loading } = useAssignment(assignment.id);
-
-    const {
-        generatedQuestions,
-        loading: generationLoading,
-        generateQuestions,
-        addQuestionToAssignment
-    } = useGenerateAssignmentQuestions(assignment.id);
 
     return (
         <Box
@@ -53,99 +43,24 @@ const Assignment: React.FC<Props> = ({ assignment }) => {
                                     assignment={assignmentWithQuestions}
                                     isTeacher={isTeacher}
                                 />
-                                {
-                                    <VStack
-                                        w={'100%'}
-                                        spacing={8}
-                                        alignItems={'flex-start'}
-                                    >
-                                        {
-                                            assignmentWithQuestions.questions.length > 0 ? (
-                                                assignmentWithQuestions.questions.map(question => (
-                                                    question.tag === QuestionTypes.MultipleChoice ? (
-                                                        <MultipleChoiceQuestion
-                                                            key={`${assignment.id}-${question.question.id}-mc`}
-                                                            question={question.question as MultipleChoiceQuestionType}
-                                                        />
-                                                    ) : (
-                                                        <FreeResponseQuestion
-                                                            key={`${assignment.id}-${question.question.id}-fr`}
-                                                            question={question.question as FreeResponseQuestionType}
-                                                        />
-                                                    )
-                                                ))
-                                            ) : (
-                                                <Text>
-                                                    No Questions
-                                                </Text>
-                                            )
-                                        }
-                                        {
-                                            generationLoading && (
-                                                <Skeleton />
-                                            )
-                                        }
-                                        {
-                                            generatedQuestions.length > 0 && (
-                                                <>
-                                                    <Divider />
-                                                    <VStack
-                                                        w={'100%'}
-                                                        spacing={2}
-                                                        alignItems={'flex-start'}
-                                                    >
-                                                        <Text
-                                                            fontSize={'xl'}
-                                                            fontWeight={'bold'}
-                                                        >
-                                                            Generated Questions
-                                                        </Text>
-                                                        <Text>
-                                                            Here are some questions that you can add to your assignment. Confirm the questions you want to add.
-                                                        </Text>
-                                                    </VStack>
-                                                </>
-                                            )
-                                        }
-                                        {
-                                            generatedQuestions.map((question, index) => (
-                                                question.tag === QuestionTypes.MultipleChoice ? (
-                                                    <MultipleChoiceQuestion
-                                                        key={question.question.question}
-                                                        question={question.question as MultipleChoiceQuestionType}
-                                                        onConfirm={() => addQuestionToAssignment(index, assignmentWithQuestions?.questions.length + 1)}
-                                                    />
-                                                ) : (
-                                                    <FreeResponseQuestion
-                                                        key={question.question.question}
-                                                        question={question.question as FreeResponseQuestionType}
-                                                        onConfirm={() => addQuestionToAssignment(index, assignmentWithQuestions?.questions.length + 1)}
-                                                    />
-                                                )
-                                            ))
-                                        }
-                                        {
-                                            isTeacher ? (
-                                                <Button
-                                                    w={'100%'}
-                                                    colorScheme={'brand'}
-                                                    onClick={generateQuestions}
-                                                    isLoading={generationLoading}
-                                                >
-                                                    Add Questions
-                                                </Button>
-                                            ) : (
-                                                <Button
-                                                    w={'100%'}
-                                                    colorScheme={'brand'}
-                                                    isDisabled
-                                                >
-                                                    Submit Assignment
-                                                </Button>
-                                            )
-                                        }
-                                    </VStack>
-                                }
+                                <VStack
+                                    w={'100%'}
+                                    spacing={8}
+                                >
+                                    <Questions
+                                        assignmentWithQuestions={assignmentWithQuestions}
+                                    />
+                                    {
+                                        isTeacher && (
+                                            <GenerateQuestions
+                                                assignmentWithQuestions={assignmentWithQuestions}
+                                            />
+                                        )
+                                    }
+                                </VStack>
+                                <Submissions
+                                    assignmentWithQuestions={assignmentWithQuestions}
+                                />
                             </>
                         ) : (
                             <Text>

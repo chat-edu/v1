@@ -8,13 +8,18 @@ import Edit from "@/components/Notebook/Assignment/FreeResponseQuestion/Edit";
 interface Props {
     question: FreeResponseQuestionType,
     onConfirm?: () => Promise<void>;
+    setAnswer: (answer: string) => void;
 }
 
-const FreeResponseQuestion: React.FC<Props> = ({ question, onConfirm }) => {
+const FreeResponseQuestion: React.FC<Props> = ({ question, onConfirm, setAnswer }) => {
     return (
         <Question
             viewComponent={() =>
-                <View question={question}/>}
+                <View
+                    question={question}
+                    setAnswer={setAnswer}
+                />
+        }
             editComponent={({changeMode}) =>
                 <Edit
                     question={question}

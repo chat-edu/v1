@@ -1,14 +1,15 @@
 import React, {ChangeEvent, useState} from 'react';
 
-import {Input, Text, Textarea, VStack} from "@chakra-ui/react";
+import {Text, Textarea, VStack} from "@chakra-ui/react";
 
 import {FreeResponseQuestion} from "@/types/assignment/FreeResponseQuestion";
 
 interface Props {
-    question: FreeResponseQuestion
+    question: FreeResponseQuestion,
+    setAnswer: (answer: string) => void;
 }
 
-const View: React.FC<Props> = ({ question}) => {
+const View: React.FC<Props> = ({ question, setAnswer}) => {
 
     const [value, setValue] = useState<string>("")
 
@@ -28,6 +29,7 @@ const View: React.FC<Props> = ({ question}) => {
                 value={value}
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)}
                 focusBorderColor={"brand.500"}
+                onBlur={() => setAnswer(value)}
             />
         </VStack>
     );

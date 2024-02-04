@@ -81,6 +81,24 @@ CREATE TABLE Enrollments (
     FOREIGN KEY (notebook_id) REFERENCES Notebooks(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS MultipleChoiceSubmissions (
+    id SERIAL PRIMARY KEY,
+    user_id VARCHAR(255),
+    question_id INT,
+    answer CHAR(1) CHECK(answer IN ('A', 'B', 'C', 'D')),
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (question_id) REFERENCES MultipleChoiceQuestions(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS FreeResponseSubmissions (
+    id SERIAL PRIMARY KEY,
+    user_id VARCHAR(255),
+    question_id INT,
+    answer TEXT,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (question_id) REFERENCES FreeResponseQuestions(id) ON DELETE CASCADE
+);
+
 -- DROP ALL TABLES
 DROP TABLE IF EXISTS Scores;
 DROP TABLE IF EXISTS Topics;

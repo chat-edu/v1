@@ -8,15 +8,17 @@ import {MultipleChoiceKey, MultipleChoiceQuestion as MultipleChoiceQuestionType}
 
 interface Props {
     question: MultipleChoiceQuestionType,
+    setAnswer: (answer: MultipleChoiceKey) => void
 }
 
-const View: React.FC<Props> = ({ question }) => {
+const View: React.FC<Props> = ({ question, setAnswer }) => {
 
     const [selectedOption, setSelectedOption] = useState<MultipleChoiceKey | null>(null);
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-    const onClick = (option: MultipleChoiceKey, index: number) => {
+    const onClick = (option: MultipleChoiceKey) => {
         setSelectedOption(option);
+        setAnswer(option);
     };
 
     return (
@@ -54,8 +56,8 @@ const View: React.FC<Props> = ({ question }) => {
                                     md: 'md'
                                 }}
                                 fontWeight={'normal'}
-                                onClick={() => onClick(option as MultipleChoiceKey, index)}
-                                colorScheme={selectedOption === option ? 'brand' : 'gray'}
+                                onClick={() => onClick(option as MultipleChoiceKey)}
+                                colorScheme={selectedOption === option ? 'blue' : undefined}
                             >
                                 <Markdown>
                                     {
