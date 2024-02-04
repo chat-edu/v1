@@ -76,7 +76,7 @@ const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectedNotes,
                                 </Text>
                             </HStack>
                             {
-                                isTeacher && isHovering && (
+                                isHovering && (
                                     <Menu>
                                         <MenuButton
                                             as={IconButton}
@@ -93,39 +93,45 @@ const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectedNotes,
                                             size={'xs'}
                                         />
                                         <MenuList>
-                                            <MenuItem
-                                                p={0}
-                                            >
-                                                <AddNoteButton
-                                                    notebookId={topicHierarchy.notebookId}
-                                                    parentTopicId={topicHierarchy.id}
-                                                    orderPosition={topicHierarchy.notes.length}
-                                                />
-                                            </MenuItem>
-                                            <MenuItem
-                                                p={0}
-                                            >
-                                                <AddTopicButton
-                                                    notebookId={topicHierarchy.notebookId}
-                                                    parentTopicId={topicHierarchy.id}
-                                                    orderPosition={topicHierarchy.subTopics.length}
-                                                />
-                                            </MenuItem>
-                                            <MenuItem
-                                                p={0}
-                                            >
-                                                <AddAssignmentButton
-                                                    topicId={topicHierarchy.id}
-                                                />
-                                            </MenuItem>
-                                            <MenuItem
-                                                p={0}
-                                            >
-                                                <DeleteButton
-                                                    onDelete={deleteTopic}
-                                                    name={"Topic"}
-                                                />
-                                            </MenuItem>
+                                            {
+                                                isTeacher && (
+                                                    <>
+                                                        <MenuItem
+                                                            p={0}
+                                                        >
+                                                            <AddNoteButton
+                                                                notebookId={topicHierarchy.notebookId}
+                                                                parentTopicId={topicHierarchy.id}
+                                                                orderPosition={topicHierarchy.notes.length}
+                                                            />
+                                                        </MenuItem>
+                                                        <MenuItem
+                                                            p={0}
+                                                        >
+                                                            <AddTopicButton
+                                                                notebookId={topicHierarchy.notebookId}
+                                                                parentTopicId={topicHierarchy.id}
+                                                                orderPosition={topicHierarchy.subTopics.length}
+                                                            />
+                                                        </MenuItem>
+                                                        <MenuItem
+                                                            p={0}
+                                                        >
+                                                            <AddAssignmentButton
+                                                                topicId={topicHierarchy.id}
+                                                            />
+                                                        </MenuItem>
+                                                        <MenuItem
+                                                            p={0}
+                                                        >
+                                                            <DeleteButton
+                                                                onDelete={deleteTopic}
+                                                                name={"Topic"}
+                                                            />
+                                                        </MenuItem>
+                                                    </>
+                                                )
+                                            }
                                             <MenuItem
                                                 p={0}
                                             >

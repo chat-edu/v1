@@ -67,7 +67,7 @@ const Note: React.FC<Props> = ({ note, onSelect, selected, selectNotes }) => {
                     </Text>
                 </HStack>
                 {
-                    isTeacher && isHovering && (
+                    isHovering && (
                         <Menu>
                             <MenuButton
                                 as={IconButton}
@@ -84,14 +84,18 @@ const Note: React.FC<Props> = ({ note, onSelect, selected, selectNotes }) => {
                                 size={'xs'}
                             />
                             <MenuList>
-                                <MenuItem
-                                    p={0}
-                                >
-                                    <DeleteButton
-                                        onDelete={deleteNote}
-                                        name={"Note"}
-                                    />
-                                </MenuItem>
+                                {
+                                    isTeacher && (
+                                        <MenuItem
+                                            p={0}
+                                        >
+                                            <DeleteButton
+                                                onDelete={deleteNote}
+                                                name={"Note"}
+                                            />
+                                        </MenuItem>
+                                    )
+                                }
                                 <MenuItem
                                     p={0}
                                 >
