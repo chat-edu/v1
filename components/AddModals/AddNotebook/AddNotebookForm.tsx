@@ -4,7 +4,7 @@ import {Button, VStack} from "@chakra-ui/react";
 
 import TextInput from "@/components/Utilities/FormUtilities/TextInput";
 
-import useAddNotebook from "@/hooks/mutators/create/useAddNotebook";
+import useAddNotebook from "@/hooks/mutators/add/useAddNotebook";
 
 interface Props {
     onSuccess: () => void;

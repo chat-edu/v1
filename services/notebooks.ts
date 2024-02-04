@@ -33,4 +33,5 @@ export const deleteNotebook = async (notebookId: Notebook["id"]) =>
 const transformNotebookInput = (notebook: NotebookInput): NotebookRowInput => ({
     name: notebook.name,
     user_id: notebook.userId,
+    access_code: notebook.accessCode,
 })

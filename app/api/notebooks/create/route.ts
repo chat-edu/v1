@@ -11,6 +11,7 @@ export async function POST(request: Request) {
     const notebookRow = await addNotebook({
         name: notebook.name,
         user_id: notebook.user_id,
+        access_code: notebook.access_code
     });
 
     if(!notebookRow) return Response.json(null);

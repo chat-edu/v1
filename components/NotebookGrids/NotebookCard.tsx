@@ -5,20 +5,21 @@ import {HStack, Text, VStack} from "@chakra-ui/react";
 import ClickableCard from "@/components/Utilities/ClickableCard";
 import UsernameText from "@/components/Utilities/UsernameText";
 
-import {NotebookScore} from "@/types/score";
 import Link from "next/link";
 
+import {Notebook} from "@/types/Notebook";
+
 interface Props {
-    notebookScore: NotebookScore,
+    notebook: Notebook,
     rightComponent?: React.ReactNode,
     onClick: () => void
 }
 
-const NotebookCard: React.FC<Props> = ({ notebookScore, rightComponent }) => {
+const NotebookCard: React.FC<Props> = ({ notebook, rightComponent }) => {
 
     return (
         <Link
-            href={`/notebooks/${notebookScore.notebookId}`}
+            href={`/notebooks/${notebook.id}`}
         >
             <ClickableCard
                 onClick={() => {}}
@@ -42,7 +43,7 @@ const NotebookCard: React.FC<Props> = ({ notebookScore, rightComponent }) => {
                             }}
                             mb={0}
                         >
-                            {notebookScore.notebookName}
+                            {notebook.name}
                         </Text>
                         <HStack
                             spacing={0}
@@ -54,9 +55,9 @@ const NotebookCard: React.FC<Props> = ({ notebookScore, rightComponent }) => {
                                 By
                             </Text>
                             <UsernameText
-                                username={notebookScore.authorUsername}
-                                id={notebookScore.authorId}
-                                verified={notebookScore.authorVerified}
+                                username={notebook.username}
+                                id={notebook.userId}
+                                verified={notebook.verified}
                                 opacity={0.75}
                             />
                         </HStack>

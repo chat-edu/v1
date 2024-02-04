@@ -7,12 +7,14 @@ import AddNotebookCard from "@/components/AddModals/AddNotebook/AddNotebookCard"
 import Loading from "@/components/Utilities/Loading";
 import SectionBlock from "@/components/Utilities/SectionBlock";
 import AuthProviderButtons from "@/components/Utilities/AuthButtons/AuthProviderButtons";
+import AddEnrollmentCard from "@/components/AddModals/AddEnrollment/AddEnrollmentCard";
 
 import useAuth from "@/hooks/useAuth";
+import useUser from "@/hooks/queries/user/useUser";
 
-import {NotebookScore} from "@/types/score";
+import {Notebook} from "@/types/Notebook";
 
-interface Props<NotebookType extends NotebookScore> {
+interface Props<NotebookType extends Notebook> {
     heading: string,
     notebooks: NotebookType[]
     loading: boolean,
@@ -24,9 +26,10 @@ interface Props<NotebookType extends NotebookScore> {
     authGate?: boolean
 }
 
-const NotebookGrid = <NotebookType extends NotebookScore>({ heading, headingRightComponent, notebooks, loading, onClick, noNotebooksComponent, rightComponent, addNotebook, authGate}: Props<NotebookType>) => {
+const NotebookGrid = <NotebookType extends Notebook>({ heading, headingRightComponent, notebooks, loading, onClick, noNotebooksComponent, rightComponent, addNotebook, authGate}: Props<NotebookType>) => {
 
     const { user } = useAuth();
+    const { isTeacher } = useUser(user?.id || '')
 
     return (
         <SectionBlock
@@ -85,14 +88,18 @@ const NotebookGrid = <NotebookType extends NotebookScore>({ heading, headingRigh
                                     <>
                                         {
                                             addNotebook && (
-                                                <AddNotebookCard />
+                                                isTeacher ? (
+                                                    <AddNotebookCard />
+                                                ) : (
+                                                    <AddEnrollmentCard />
+                                                )
                                             )
                                         }
                                         {
                                             notebooks.map((notebook, index) => (
                                                 <NotebookCard
-                                                    key={notebook.notebookId}
-                                                    notebookScore={notebook}
+                                                    key={notebook.id}
+                                                    notebook={notebook}
                                                     rightComponent={rightComponent ? rightComponent(notebook, index) : undefined}
                                                     onClick={() => onClick(notebook)}
                                                 />

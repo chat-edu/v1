@@ -4,6 +4,7 @@ import {User} from "@/types/User";
 export interface NotebookInput {
     name: string;
     userId: string;
+    accessCode: string;
 }
 
 // used on the client side to display a notebook

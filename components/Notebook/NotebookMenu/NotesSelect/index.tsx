@@ -18,6 +18,8 @@ import {generateHierarchy} from "@/services/topics";
 import {Notebook as NotebookType} from "@/types/Notebook";
 import {Note as NoteType} from "@/types/Note";
 import {Assignment} from "@/types/assignment/Assignment";
+import useAuth from "@/hooks/useAuth";
+import useUser from "@/hooks/queries/user/useUser";
 
 interface Props {
     notebook: NotebookType,
@@ -31,6 +33,9 @@ interface Props {
 }
 
 const NotesSelect: React.FC<Props> = ({ notebook, selectLesson,  selectedLesson, deselectLesson, selectedNotes, selectNotes, selectedAssignment, selectAssignment }) => {
+
+    const { user } = useAuth();
+    const { isTeacher } = useUser(user?.id || '')
 
     const { notes, loading: notesLoading } = useNotes(notebook.id);
     const { topics, loading: topicsLoading } = useTopics(notebook.id);
@@ -54,11 +59,15 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectLesson,  selectedLesson,
                 >
                     Topics
                 </Text>
-                <AddTopicButton
-                    notebookId={notebook.id}
-                    orderPosition={topics.length}
-                    icon
-                />
+                {
+                    isTeacher && (
+                        <AddTopicButton
+                            notebookId={notebook.id}
+                            orderPosition={topics.length}
+                            icon
+                        />
+                    )
+                }
             </HStack>
             <Loading
                 loading={notesLoading || topicsLoading}

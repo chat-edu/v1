@@ -9,4 +9,5 @@ export const transformNotebook = (row: NotebookRow): Notebook => ({
     username: row.username,
     numNotes: parseInt(row.num_notes),
     verified: row.verified,
+    accessCode: row.access_code
 });

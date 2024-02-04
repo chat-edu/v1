@@ -13,28 +13,25 @@ import {
 
 import TextInput from "@/components/Utilities/FormUtilities/TextInput";
 
-import useCreateAssignment from "@/hooks/mutators/add/useCreateAssignment";
-
-import {Topic} from "@/types/Topic";
+import useAddEnrollment from "@/hooks/mutators/add/useAddEnrollment";
 
 interface Props {
     isOpen: boolean;
     onClose: () => void;
-    topicId: Topic['id']
 }
 
-const AddAssignmentModal: React.FC<Props> = ({ isOpen, onClose, topicId }) => {
+const AddEnrollmentModal: React.FC<Props> = ({ isOpen, onClose }) => {
 
     const {
-        assignmentName,
-        updateAssignmentName,
-        assignmentNameTouched,
-        updateAssignmentNameTouched,
-        createAssignment
-    } = useCreateAssignment(topicId)
+        accessCode,
+        accessCodeTouched,
+        updateAccessCode,
+        updateAccessCodeTouched,
+        enroll
+    } = useAddEnrollment();
 
     const onSubmit = async () => {
-        await createAssignment();
+        await enroll();
         onClose();
     }
 
@@ -47,26 +44,26 @@ const AddAssignmentModal: React.FC<Props> = ({ isOpen, onClose, topicId }) => {
         >
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Add Assignment</ModalHeader>
+                <ModalHeader>Enroll in a Class</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
                     <TextInput
-                        label={"Assignment Name"}
-                        placeholder={"Type the name of the assignment here..."}
-                        value={assignmentName}
-                        onChange={updateAssignmentName}
-                        onBlur={() => updateAssignmentNameTouched(true)}
-                        error={(assignmentNameTouched && !assignmentName) ? "Lesson name is required" : undefined}
+                        label={"Access Code"}
+                        placeholder={"Type the access code given to you by your teacher here..."}
+                        value={accessCode}
+                        onChange={updateAccessCode}
+                        onBlur={() => updateAccessCodeTouched()}
+                        error={(accessCodeTouched && accessCode.length !== 6) ? "Access code must be 6 characters" : undefined}
                     />
                 </ModalBody>
                 <ModalFooter>
                     <Button
                         onClick={onSubmit}
-                        isDisabled={!assignmentName}
+                        isDisabled={accessCode.length !== 6}
                         colorScheme={'brand'}
                         w={'100%'}
                     >
-                        Add Assignment
+                        Enroll
                     </Button>
                 </ModalFooter>
             </ModalContent>
@@ -74,4 +71,4 @@ const AddAssignmentModal: React.FC<Props> = ({ isOpen, onClose, topicId }) => {
     );
 };
 
-export default AddAssignmentModal;
+export default AddEnrollmentModal;

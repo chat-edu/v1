@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS Notebooks (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255),
     user_id VARCHAR(255),
+    access_code VARCHAR(6) UNIQUE NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE SET NULL
 );
 
@@ -72,11 +73,13 @@ CREATE TABLE MultipleChoiceQuestions (
     FOREIGN KEY (assignment_id) REFERENCES Assignments(id) ON DELETE CASCADE
 );
 
--- alter the foreign key cascade delete to the multiple choice questions table
-ALTER TABLE MultipleChoiceQuestions DROP CONSTRAINT IF EXISTS multiplechoicequestions_assignment_id_fkey;
-ALTER TABLE MultipleChoiceQuestions ADD FOREIGN KEY (assignment_id) REFERENCES Assignments(id) ON DELETE CASCADE;
-ALTER TABLE FreeResponseQuestions DROP CONSTRAINT IF EXISTS freeresponsequestions_assignment_id_fkey;
-ALTER TABLE FreeResponseQuestions ADD FOREIGN KEY (assignment_id) REFERENCES Assignments(id) ON DELETE CASCADE;
+CREATE TABLE Enrollments (
+    user_id VARCHAR(255),
+    notebook_id INT,
+    PRIMARY KEY (user_id, notebook_id),
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (notebook_id) REFERENCES Notebooks(id) ON DELETE CASCADE
+);
 
 -- DROP ALL TABLES
 DROP TABLE IF EXISTS Scores;
@@ -87,3 +90,4 @@ DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS Assignments;
 DROP TABLE IF EXISTS FreeResponseQuestions;
 DROP TABLE IF EXISTS MultipleChoiceQuestions;
+DROP TABLE IF EXISTS Enrollments;

@@ -4,6 +4,7 @@ import {UserRow} from "@/cosmosPostgres/types/user";
 export interface NotebookRowInput {
     name: string;
     user_id: UserRow["id"];
+    access_code: string;
 }
 
 // returned from the database when querying for a notebook

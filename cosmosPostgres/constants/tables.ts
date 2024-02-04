@@ -6,3 +6,4 @@ export const TOPICS_TABLE = "Topics";
 export const ASSIGNMENTS_TABLE = "Assignments";
 export const FREE_RESPONSE_QUESTIONS_TABLE = "FreeResponseQuestions";
 export const MULTIPLE_CHOICE_QUESTIONS_TABLE = "MultipleChoiceQuestions";
+export const ENROLLMENTS_TABLE = "Enrollments";

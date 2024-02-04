@@ -21,6 +21,12 @@ export const findAllUsers = async (): Promise<UserRow[]> => {
     return find('SELECT * FROM Users;', []);
 };
 
+export const findEnrolledUsersByNotebookId = async (notebookId: number): Promise<UserRow[]> => {
+    const query = `SELECT * FROM Users WHERE id IN (SELECT user_id FROM Enrollments WHERE notebook_id = $1);`;
+    return find(query, [notebookId]);
+
+}
+
 
 // UPDATE
 
