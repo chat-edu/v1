@@ -1,6 +1,7 @@
 import {User} from "@/types/User";
 import {MultipleChoiceQuestion} from "@/types/assignment/MultipleChoiceQuestion";
 import {Assignment} from "@/types/assignment/Assignment";
+import {QuestionTypes} from "@/types/assignment/Question";
 
 export interface SubmissionInput {
     userId: User["id"];
@@ -10,6 +11,7 @@ export interface SubmissionInput {
 
 export interface Submission extends SubmissionInput {
     id: number;
+    questionType: QuestionTypes;
 }
 
 export interface UserSubmission {

@@ -3,6 +3,8 @@ import useContainerData from "@/hooks/queries/utilities/useContainerData";
 import {transformSubmission} from "@/hooks/queries/submissions/transformer";
 import {useMemo} from "react";
 import {Submission, UserSubmission} from "@/types/Submission";
+import {QuestionTypes} from "@/types/assignment/Question";
+import {SubmissionRow} from "@/cosmosPostgres/types/submission";
 
 const processSubmissions = (submissions: Submission[]) => {
     const submissionMap = new Map<string, Submission[]>();
@@ -17,9 +19,14 @@ const processSubmissions = (submissions: Submission[]) => {
 
 const useSubmissions = (assignmentId: Assignment['id']) => {
     const [freeResponseSubmissions, freeResponseLoading] =
-        useContainerData(`/api/submissions/freeResponse/assignment/${assignmentId}`, transformSubmission);
+        useContainerData(
+            `/api/submissions/freeResponse/assignment/${assignmentId}`,
+            (submission: SubmissionRow) => transformSubmission(submission, QuestionTypes.FreeResponse)
+        );
     const [multipleChoiceSubmissions, multipleChoiceLoading] =
-        useContainerData(`/api/submissions/multipleChoice/assignment/${assignmentId}`, transformSubmission);
+        useContainerData(
+            `/api/submissions/multipleChoice/assignment/${assignmentId}`,
+            (submission: SubmissionRow) => transformSubmission(submission, QuestionTypes.MultipleChoice));
 
     const userSubmissions: UserSubmission[] = useMemo(() => {
         if(freeResponseSubmissions.length === 0 || multipleChoiceSubmissions.length === 0) {

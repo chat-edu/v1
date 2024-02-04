@@ -1,7 +1,11 @@
-import React from 'react';
-import {AssignmentWithQuestions} from "@/types/assignment/Assignment";
+import React, {useMemo} from 'react';
+
+import {Heading, VStack} from "@chakra-ui/react";
+
 import useSubmissions from "@/hooks/queries/submissions/useSubmissions";
-import {Heading, HStack, Text, VStack} from "@chakra-ui/react";
+import {Question, QuestionMap} from "@/types/assignment/Question";
+import {AssignmentWithQuestions} from "@/types/assignment/Assignment";
+import Submission from "@/components/Notebook/Assignment/Submission";
 
 interface Props {
     assignmentWithQuestions: AssignmentWithQuestions;
@@ -11,31 +15,31 @@ const Submissions: React.FC<Props> = ({ assignmentWithQuestions}) => {
 
     const { userSubmissions } = useSubmissions(assignmentWithQuestions.id);
 
+    const questionMap: QuestionMap = useMemo(() => {
+        const map: { [key: number]: Question<any> } = {};
+        assignmentWithQuestions.questions.forEach(question => {
+            map[question.question.id] = question;
+        });
+        return map;
+    }, [assignmentWithQuestions.questions]);
+
     return (
-        <VStack>
+        <VStack
+            w={'100%'}
+            align={'flex-start'}
+        >
             <Heading>
                 Submissions
             </Heading>
-            {userSubmissions.map(userSubmission => (
-                <VStack key={`${userSubmission.userId}-${userSubmission.assignmentId}`}>
-                    <Text>
-                        {userSubmission.userId} - {userSubmission.assignmentId}
-                    </Text>
-                    {userSubmission.submissions.map(submission => (
-                        <HStack key={submission.id}>
-                            <Text>
-                                {submission.id}
-                            </Text>
-                            <Text>
-                                {submission.questionId}
-                            </Text>
-                            <Text>
-                                {submission.answer}
-                            </Text>
-                        </HStack>
-                    ))}
-                </VStack>
-            ))}
+            {
+                userSubmissions.map(userSubmission => (
+                    <Submission
+                        userSubmission={userSubmission}
+                        questionMap={questionMap}
+                        key={userSubmission.userId}
+                    />
+                ))
+            }
         </VStack>
     );
 };
