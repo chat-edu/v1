@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS FreeResponseSubmissions (
     FOREIGN KEY (question_id) REFERENCES FreeResponseQuestions(id) ON DELETE CASCADE
 );
 
-CREATE TABLE AssignmentSummaries (
+CREATE TABLE UserAssignmentSummaries (
     user_id VARCHAR(255),
     assignment_id INT,
     summary TEXT,
@@ -112,7 +112,28 @@ CREATE TABLE AssignmentSummaries (
     FOREIGN KEY (assignment_id) REFERENCES Assignments(id) ON DELETE CASCADE
 );
 
-SELECT * FROM FreeResponseSubmissions;
+CREATE TABLE AssignmentSummaries (
+    assignment_id INT,
+    summary TEXT,
+    PRIMARY KEY (assignment_id),
+    FOREIGN KEY (assignment_id) REFERENCES Assignments(id) ON DELETE CASCADE
+);
+
+CREATE TABLE UserNotebookSummaries (
+    user_id VARCHAR(255),
+    notebook_id INT,
+    summary TEXT,
+    PRIMARY KEY (user_id, notebook_id),
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (notebook_id) REFERENCES Notebooks(id) ON DELETE CASCADE
+);
+
+CREATE TABLE NotebookSummaries (
+    notebook_id INT,
+    summary TEXT,
+    PRIMARY KEY (notebook_id),
+    FOREIGN KEY (notebook_id) REFERENCES Notebooks(id) ON DELETE CASCADE
+);
 
 -- DROP ALL TABLES
 DROP TABLE IF EXISTS Scores;
@@ -126,4 +147,7 @@ DROP TABLE IF EXISTS MultipleChoiceQuestions;
 DROP TABLE IF EXISTS Enrollments;
 DROP TABLE IF EXISTS MultipleChoiceSubmissions;
 DROP TABLE IF EXISTS FreeResponseSubmissions;
-DROP TABLE IF EXISTS AssignmentSummary;
+DROP TABLE IF EXISTS UserAssignmentSummaries;
+DROP TABLE IF EXISTS AssignmentSummaries;
+DROP TABLE IF EXISTS NotebookSummaries;
+DROP TABLE IF EXISTS UserNotebookSummaries;

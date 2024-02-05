@@ -1,12 +1,16 @@
 import {useState} from "react";
 
+import {useToast} from "@chakra-ui/react";
+
+import useAuth from "@/hooks/useAuth";
+
+import {addSubmission, gradeSubmission} from "@/services/submissions";
+
+import {emitAssignmentChangedEvent} from "@/cosmosPostgres/eventEmitters/assignmentEventEmitter";
+
 import {AssignmentWithQuestions} from "@/types/assignment/Assignment";
 import {QuestionTypes} from "@/types/assignment/Question";
-import useAuth from "@/hooks/useAuth";
-import {addSubmission, gradeSubmission} from "@/services/submissions";
-import {useToast} from "@chakra-ui/react";
-import {emitAssignmentChangedEvent} from "@/cosmosPostgres/eventEmitters/assignmentEventEmitter";
-import {generateSummary} from "@/services/summary";
+import {generateUserAssignmentSummary} from "@/services/summaries";
 
 interface Answers {
     [key: string]: string
@@ -42,7 +46,7 @@ const useAddSubmission = (assignmentWithQuestions: AssignmentWithQuestions) => {
         }));
         const success = !successes.some(success => !success);
         if(success) {
-            await generateSummary(assignmentWithQuestions.id, user.id)
+            await generateUserAssignmentSummary(user.id, assignmentWithQuestions.id);
             toast({
                 title: "Success",
                 description: "Your answers have been submitted",

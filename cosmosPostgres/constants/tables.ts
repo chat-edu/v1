@@ -9,4 +9,7 @@ export const MULTIPLE_CHOICE_QUESTIONS_TABLE = "MultipleChoiceQuestions";
 export const FREE_RESPONSE_SUBMISSIONS_TABLE = "FreeResponseSubmissions";
 export const MULTIPLE_CHOICE_SUBMISSIONS_TABLE = "MultipleChoiceSubmissions";
 export const ENROLLMENTS_TABLE = "Enrollments";
+export const USER_ASSIGNMENT_SUMMARIES_TABLE = "UserAssignmentSummaries";
+export const USER_NOTEBOOK_SUMMARIES_TABLE = "UserNotebookSummaries";
 export const ASSIGNMENT_SUMMARIES_TABLE = "AssignmentSummaries";
+export const NOTEBOOK_SUMMARIES_TABLE = "NotebookSummaries";
