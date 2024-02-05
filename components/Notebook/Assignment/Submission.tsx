@@ -1,6 +1,18 @@
 import React, {useMemo} from 'react';
 
-import {Divider, Flex, Text, VStack} from "@chakra-ui/react";
+import {
+    Accordion,
+    AccordionButton,
+    AccordionIcon,
+    AccordionItem, AccordionPanel,
+    Divider,
+    Flex,
+    HStack,
+    Text,
+    VStack
+} from "@chakra-ui/react";
+
+import SubmissionSummary from "@/components/Notebook/Assignment/SubmissionSummary";
 
 import useUser from "@/hooks/queries/user/useUser";
 
@@ -22,50 +34,105 @@ const Submission: React.FC<Props> = ({ userSubmission, questionMap }) => {
         });
     }, [userSubmission.submissions, questionMap]);
 
+    const scorePercentage = userSubmission.submissions.reduce((acc, submission) => acc + (submission.points ? submission.points : 0), 0) / userSubmission.submissions.length;
+
+    const accentColor = scorePercentage > 0.8 ? 'green.500' : scorePercentage > 0.6 ? 'yellow.500' : 'red.500';
+
     return (
         <Flex
             w={'100%'}
             direction={'column'}
             align={'flex-start'}
             borderWidth={2}
+            borderColor={accentColor}
             rounded={'md'}
             p={4}
             gap={4}
         >
-            <Text
-                fontSize={'xl'}
-                fontWeight={'bold'}
+            <HStack
+                w={'100%'}
+                justify={'space-between'}
             >
-                {userData?.name}
-            </Text>
-            <VStack>
-                {
-                    sortedSubmissions.map((submission) => (
-                        <VStack
-                            key={`${submission.questionType}-${submission.id}`}
-                            w={'100%'}
-                            align={'flex-start'}
-                        >
-                            <Divider />
-                            <Text
-                                fontWeight={'semibold'}
-                                fontStyle={'italic'}
-                            >
-                                {questionMap[submission.questionId].question.question}
-                            </Text>
-                            <Text>
-                                {
-                                    submission.questionType === QuestionTypes.MultipleChoice ? (
-                                        `${submission.answer}) ${questionMap[submission.questionId].question.options[submission.answer]}`
-                                    ) : (
-                                        submission.answer
-                                    )
-                                }
-                            </Text>
+                <Text
+                    fontSize={'xl'}
+                    fontWeight={'bold'}
+                >
+                    {userData?.name}
+                </Text>
+                <Text
+                    fontSize={'xl'}
+                    fontWeight={'bold'}
+                    color={accentColor}
+                >
+                    {(scorePercentage * 100).toFixed(2)}%
+                </Text>
+            </HStack>
+            <SubmissionSummary
+                userId={userSubmission.userId}
+                assignmentId={userSubmission.assignmentId}
+            />
+            <Accordion
+                allowToggle
+                w={'100%'}
+            >
+                <AccordionItem>
+                    <AccordionButton
+                        w={'100%'}
+                    >
+                        View Graded Questions
+                        <AccordionIcon />
+                    </AccordionButton>
+                    <AccordionPanel>
+                        <VStack>
+                            {
+                                sortedSubmissions.map((submission, index) => (
+                                    <VStack
+                                        key={`${submission.questionType}-${submission.id}`}
+                                        w={'100%'}
+                                        align={'flex-start'}
+                                    >
+                                        <Divider />
+                                        <Text
+                                            fontWeight={'semibold'}
+                                            fontStyle={'italic'}
+                                        >
+                                            {index + 1}) {questionMap[submission.questionId].question.question}
+                                        </Text>
+                                        <Text>
+                                            Answer: {
+                                            submission.questionType === QuestionTypes.MultipleChoice ? (
+                                                `${submission.answer}) ${questionMap[submission.questionId].question.options[submission.answer]}`
+                                            ) : (
+                                                submission.answer
+                                            )
+                                        }
+                                        </Text>
+                                        {
+                                            submission.points !== null && submission.gradeExplanation !== null && (
+                                                <VStack
+                                                    w={'100%'}
+                                                    align={'flex-start'}
+                                                >
+                                                    <Text
+                                                        fontWeight={'bold'}
+                                                        color={submission.points > 0 ? 'brand.500' : 'red.500'}
+                                                        fontSize={'sm'}
+                                                    >
+                                                        {submission.points > 0 ? 'Correct!' : 'Incorrect'}
+                                                    </Text>
+                                                    <Text>
+                                                        Explanation: {submission.gradeExplanation}
+                                                    </Text>
+                                                </VStack>
+                                            )
+                                        }
+                                    </VStack>
+                                ))
+                            }
                         </VStack>
-                    ))
-                }
-            </VStack>
+                    </AccordionPanel>
+                </AccordionItem>
+            </Accordion>
         </Flex>
     );
 };

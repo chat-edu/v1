@@ -1,17 +1,17 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 
-import {Card, Text, Skeleton, VStack, Box} from "@chakra-ui/react";
+import {Card, Text, Skeleton, Box} from "@chakra-ui/react";
 
-import AssignmentHeader from "@/components/Notebook/Assignment/AssignmentHeader";
-import Questions from "@/components/Notebook/Assignment/Questions";
-import GenerateQuestions from "@/components/Notebook/Assignment/GenerateQuestions";
+import UserAssignment from "@/components/Notebook/Assignment/UserAssignment";
+import TeacherAssignment from "@/components/Notebook/Assignment/TeacherAssignment";
 
 import useAssignment from "@/hooks/queries/assignment/useAssignment";
 import useAuth from "@/hooks/useAuth";
 import useUser from "@/hooks/queries/user/useUser";
 
+import {Question, QuestionMap} from "@/types/assignment/Question";
 import { Assignment as AssignmentType } from "@/types/assignment/Assignment";
-import Submissions from "@/components/Notebook/Assignment/Submissions";
+
 
 interface Props {
     assignment: AssignmentType,
@@ -24,6 +24,14 @@ const Assignment: React.FC<Props> = ({ assignment }) => {
 
     const { assignmentWithQuestions, loading } = useAssignment(assignment.id);
 
+    const questionMap: QuestionMap = useMemo(() => {
+        const map: { [key: number]: Question<any> } = {};
+        assignmentWithQuestions?.questions.forEach(question => {
+            map[question.question.id] = question;
+        });
+        return map;
+    }, [assignmentWithQuestions?.questions]);
+
     return (
         <Box
             p={4}
@@ -31,37 +39,23 @@ const Assignment: React.FC<Props> = ({ assignment }) => {
         >
             <Card
                 w={'100%'}
-                gap={4}
             >
                 {
                     loading && !assignmentWithQuestions ? (
                         <Skeleton />
                     ) : (
                         assignmentWithQuestions ? (
-                            <>
-                                <AssignmentHeader
+                            isTeacher ? (
+                                <TeacherAssignment
                                     assignment={assignmentWithQuestions}
-                                    isTeacher={isTeacher}
+                                    questionMap={questionMap}
                                 />
-                                <VStack
-                                    w={'100%'}
-                                    spacing={8}
-                                >
-                                    <Questions
-                                        assignmentWithQuestions={assignmentWithQuestions}
-                                    />
-                                    {
-                                        isTeacher && (
-                                            <GenerateQuestions
-                                                assignmentWithQuestions={assignmentWithQuestions}
-                                            />
-                                        )
-                                    }
-                                </VStack>
-                                <Submissions
-                                    assignmentWithQuestions={assignmentWithQuestions}
+                            ) : (
+                                <UserAssignment
+                                    assignment={assignmentWithQuestions}
+                                    questionMap={questionMap}
                                 />
-                            </>
+                            )
                         ) : (
                             <Text>
                                 No Assignment Found

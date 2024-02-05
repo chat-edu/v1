@@ -11,6 +11,8 @@ export interface SubmissionInput {
 
 export interface Submission extends SubmissionInput {
     id: number;
+    points: number | null;
+    gradeExplanation: string | null;
     questionType: QuestionTypes;
 }
 

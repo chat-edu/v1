@@ -8,4 +8,11 @@ export interface SubmissionRowInput {
 // returned from the database when querying for a multiple choice submission
 export interface SubmissionRow extends SubmissionRowInput {
     id: number;
+    points: number | null;
+    grade_explanation: string | null;
+}
+
+export interface GradeExplanation {
+    points: number;
+    grade_explanation: string;
 }

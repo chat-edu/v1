@@ -6,3 +6,5 @@ export * from "./assignment";
 export * from "./topic";
 export * from "./question";
 export * from "./assignment";
+export * from "./submission";
+export * from "./summary";

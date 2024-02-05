@@ -7,5 +7,7 @@ export const transformSubmission = (submission: SubmissionRow, questionType: Que
     userId: submission.user_id,
     questionId: submission.question_id,
     answer: submission.answer,
+    points: submission.points,
+    gradeExplanation: submission.grade_explanation,
     questionType,
 })

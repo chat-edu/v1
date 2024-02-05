@@ -17,6 +17,19 @@ export const addSubmission = async (submission: SubmissionInput, questionType: Q
         })
         .catch(null);
 
+export const gradeSubmission = async (submissionId: Submission["id"], questionType: QuestionTypes) =>
+    fetch(`/api/submissions/${questionType === QuestionTypes.FreeResponse ? "freeResponse" : "multipleChoice"}/${submissionId}/grade`, {
+        method: "POST",
+    })
+        .then(async res => {
+            const success = await res.json() as boolean;
+            if(success) {
+                // emitAssignmentChangedEvent(assignmentId);
+            }
+            return success;
+        })
+        .catch(null);
+
 // UPDATE
 export const updateSubmission = async (
     submissionId: Submission["id"],

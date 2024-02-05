@@ -1,27 +1,22 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 
 import {Heading, VStack} from "@chakra-ui/react";
 
-import useSubmissions from "@/hooks/queries/submissions/useSubmissions";
-import {Question, QuestionMap} from "@/types/assignment/Question";
-import {AssignmentWithQuestions} from "@/types/assignment/Assignment";
 import Submission from "@/components/Notebook/Assignment/Submission";
+
+import useSubmissions from "@/hooks/queries/submissions/useSubmissions";
+
+import {QuestionMap} from "@/types/assignment/Question";
+import {AssignmentWithQuestions} from "@/types/assignment/Assignment";
 
 interface Props {
     assignmentWithQuestions: AssignmentWithQuestions;
+    questionMap: QuestionMap;
 }
 
-const Submissions: React.FC<Props> = ({ assignmentWithQuestions}) => {
+const Submissions: React.FC<Props> = ({ assignmentWithQuestions, questionMap}) => {
 
     const { userSubmissions } = useSubmissions(assignmentWithQuestions.id);
-
-    const questionMap: QuestionMap = useMemo(() => {
-        const map: { [key: number]: Question<any> } = {};
-        assignmentWithQuestions.questions.forEach(question => {
-            map[question.question.id] = question;
-        });
-        return map;
-    }, [assignmentWithQuestions.questions]);
 
     return (
         <VStack

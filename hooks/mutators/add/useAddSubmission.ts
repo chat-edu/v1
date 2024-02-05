@@ -3,8 +3,10 @@ import {useState} from "react";
 import {AssignmentWithQuestions} from "@/types/assignment/Assignment";
 import {QuestionTypes} from "@/types/assignment/Question";
 import useAuth from "@/hooks/useAuth";
-import {addSubmission} from "@/services/submissions";
+import {addSubmission, gradeSubmission} from "@/services/submissions";
 import {useToast} from "@chakra-ui/react";
+import {emitAssignmentChangedEvent} from "@/cosmosPostgres/eventEmitters/assignmentEventEmitter";
+import {generateSummary} from "@/services/summary";
 
 interface Answers {
     [key: string]: string
@@ -17,6 +19,7 @@ const useAddSubmission = (assignmentWithQuestions: AssignmentWithQuestions) => {
     const { user } = useAuth();
 
     const [answers, setAnswers] = useState<Answers>({});
+    const [submissionLoading, setSubmissionLoading] = useState(false);
 
     const setAnswer = (questionId: number, questionType: QuestionTypes, answer: string) => {
         setAnswers(prev => ({
@@ -27,23 +30,19 @@ const useAddSubmission = (assignmentWithQuestions: AssignmentWithQuestions) => {
 
     const submit = async () => {
         if(!user) return null;
-        const submissionRows = await Promise.all(Object.keys(answers).map(key => {
+        setSubmissionLoading(true);
+        const successes = await Promise.all(Object.keys(answers).map(async key => {
             const [questionType, questionId] = key.split('-');
-            return addSubmission({
+            const submissionRow = await addSubmission({
                 userId: user.id,
                 questionId: parseInt(questionId),
                 answer: answers[key]
             }, questionType as QuestionTypes)
+            return gradeSubmission(submissionRow.id, questionType as QuestionTypes);
         }));
-        if(submissionRows.some(row => !row)) {
-            toast({
-                title: "Error",
-                description: "There was an error submitting your answers",
-                status: "error",
-                duration: 5000,
-                isClosable: true
-            })
-        } else {
+        const success = !successes.some(success => !success);
+        if(success) {
+            await generateSummary(assignmentWithQuestions.id, user.id)
             toast({
                 title: "Success",
                 description: "Your answers have been submitted",
@@ -51,11 +50,22 @@ const useAddSubmission = (assignmentWithQuestions: AssignmentWithQuestions) => {
                 duration: 5000,
                 isClosable: true
             })
+            emitAssignmentChangedEvent(assignmentWithQuestions.id)
+        } else {
+            toast({
+                title: "Error",
+                description: "There was an error submitting your answers",
+                status: "error",
+                duration: 5000,
+                isClosable: true
+            })
         }
+        setSubmissionLoading(false);
     }
 
     return {
         answers,
+        submissionLoading,
         setAnswer,
         submit
     }

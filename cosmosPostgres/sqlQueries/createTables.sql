@@ -86,6 +86,8 @@ CREATE TABLE IF NOT EXISTS MultipleChoiceSubmissions (
     user_id VARCHAR(255),
     question_id INT,
     answer CHAR(1) CHECK(answer IN ('A', 'B', 'C', 'D')),
+    points INT,
+    grade_explanation TEXT,
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
     FOREIGN KEY (question_id) REFERENCES MultipleChoiceQuestions(id) ON DELETE CASCADE
 );
@@ -95,9 +97,22 @@ CREATE TABLE IF NOT EXISTS FreeResponseSubmissions (
     user_id VARCHAR(255),
     question_id INT,
     answer TEXT,
+    points INT,
+    grade_explanation TEXT,
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
     FOREIGN KEY (question_id) REFERENCES FreeResponseQuestions(id) ON DELETE CASCADE
 );
+
+CREATE TABLE AssignmentSummaries (
+    user_id VARCHAR(255),
+    assignment_id INT,
+    summary TEXT,
+    PRIMARY KEY (user_id, assignment_id),
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (assignment_id) REFERENCES Assignments(id) ON DELETE CASCADE
+);
+
+SELECT * FROM FreeResponseSubmissions;
 
 -- DROP ALL TABLES
 DROP TABLE IF EXISTS Scores;
@@ -109,3 +124,6 @@ DROP TABLE IF EXISTS Assignments;
 DROP TABLE IF EXISTS FreeResponseQuestions;
 DROP TABLE IF EXISTS MultipleChoiceQuestions;
 DROP TABLE IF EXISTS Enrollments;
+DROP TABLE IF EXISTS MultipleChoiceSubmissions;
+DROP TABLE IF EXISTS FreeResponseSubmissions;
+DROP TABLE IF EXISTS AssignmentSummary;

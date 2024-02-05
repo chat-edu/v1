@@ -9,3 +9,4 @@ export const MULTIPLE_CHOICE_QUESTIONS_TABLE = "MultipleChoiceQuestions";
 export const FREE_RESPONSE_SUBMISSIONS_TABLE = "FreeResponseSubmissions";
 export const MULTIPLE_CHOICE_SUBMISSIONS_TABLE = "MultipleChoiceSubmissions";
 export const ENROLLMENTS_TABLE = "Enrollments";
+export const ASSIGNMENT_SUMMARIES_TABLE = "AssignmentSummaries";
