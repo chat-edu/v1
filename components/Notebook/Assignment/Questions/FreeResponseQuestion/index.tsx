@@ -1,9 +1,9 @@
 import React from 'react';
 
 import {FreeResponseQuestion as FreeResponseQuestionType} from "@/types/assignment/FreeResponseQuestion";
-import Question from "@/components/Notebook/Assignment/Question";
-import View from "@/components/Notebook/Assignment/FreeResponseQuestion/View";
-import Edit from "@/components/Notebook/Assignment/FreeResponseQuestion/Edit";
+import Question from "@/components/Notebook/Assignment/Questions/Question";
+import View from "@/components/Notebook/Assignment/Questions/FreeResponseQuestion/View";
+import Edit from "@/components/Notebook/Assignment/Questions/FreeResponseQuestion/Edit";
 
 interface Props {
     question: FreeResponseQuestionType,

@@ -1,11 +1,14 @@
 import React from 'react';
-import {AssignmentWithQuestions} from "@/types/assignment/Assignment";
+
 import {VStack} from "@chakra-ui/react";
+
 import AssignmentHeader from "@/components/Notebook/Assignment/AssignmentHeader";
-import Questions from "@/components/Notebook/Assignment/Questions";
-import GenerateQuestions from "@/components/Notebook/Assignment/GenerateQuestions";
-import Submissions from "@/components/Notebook/Assignment/Submissions";
+import TeacherQuestions from "@/components/Notebook/Assignment/TeacherAssignment/TeacherQuestions";
+import TeacherSummaries from "@/components/Notebook/Assignment/TeacherAssignment/TeacherSummaries";
+
 import {QuestionMap} from "@/types/assignment/Question";
+import {AssignmentWithQuestions} from "@/types/assignment/Assignment";
+import CommonlyMissedProblems from "@/components/Notebook/Assignment/TeacherAssignment/CommonlyMissedProblems";
 
 interface Props {
     assignment: AssignmentWithQuestions,
@@ -23,15 +26,15 @@ const TeacherAssignment: React.FC<Props> = ({ assignment, questionMap }) => {
                 assignment={assignment}
                 isTeacher={true}
             />
-            <Questions
-                assignmentWithQuestions={assignment}
-            />
-            <GenerateQuestions
-                assignmentWithQuestions={assignment}
-            />
-            <Submissions
+            <TeacherSummaries
                 assignmentWithQuestions={assignment}
                 questionMap={questionMap}
+            />
+            <CommonlyMissedProblems
+                assignmentWithQuestions={assignment}
+            />
+            <TeacherQuestions
+                assignment={assignment}
             />
         </VStack>
     );

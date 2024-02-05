@@ -12,7 +12,7 @@ import {
     VStack
 } from "@chakra-ui/react";
 
-import SubmissionSummary from "@/components/Notebook/Assignment/SubmissionSummary";
+import SubmissionSummary from "@/components/Notebook/Assignment/Submissions/SubmissionSummary";
 
 import useUser from "@/hooks/queries/user/useUser";
 

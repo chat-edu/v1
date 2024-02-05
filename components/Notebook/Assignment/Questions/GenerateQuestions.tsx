@@ -2,8 +2,9 @@ import React from 'react';
 
 import {Button, Divider, Skeleton, Text, VStack} from "@chakra-ui/react";
 
-import MultipleChoiceQuestion from "@/components/Notebook/Assignment/MultipleChoiceQuestion";
-import FreeResponseQuestion from "@/components/Notebook/Assignment/FreeResponseQuestion";
+import MultipleChoiceQuestion from "@/components/Notebook/Assignment/Questions/MultipleChoiceQuestion";
+import FreeResponseQuestion from "@/components/Notebook/Assignment/Questions/FreeResponseQuestion";
+
 import useGenerateAssignmentQuestions from "@/hooks/useGenerateAssignmentQuestions";
 
 import {AssignmentWithQuestions} from "@/types/assignment/Assignment";

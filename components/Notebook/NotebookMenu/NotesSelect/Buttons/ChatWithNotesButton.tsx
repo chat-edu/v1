@@ -19,7 +19,7 @@ const ChatWithNotesButton: React.FC<Props> = ({ onClick }) => {
             justifyContent={'flex-start'}
             variant={'ghost'}
         >
-            Chat with Notes
+            Ask Questions
         </Button>
     );
 };

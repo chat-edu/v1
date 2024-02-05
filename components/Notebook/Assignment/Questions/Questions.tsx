@@ -2,8 +2,8 @@ import React from 'react';
 
 import {Button, Skeleton, Text, VStack} from "@chakra-ui/react";
 
-import MultipleChoiceQuestion from "@/components/Notebook/Assignment/MultipleChoiceQuestion";
-import FreeResponseQuestion from "@/components/Notebook/Assignment/FreeResponseQuestion";
+import MultipleChoiceQuestion from "@/components/Notebook/Assignment/Questions/MultipleChoiceQuestion";
+import FreeResponseQuestion from "@/components/Notebook/Assignment/Questions/FreeResponseQuestion";
 
 import useUser from "@/hooks/queries/user/useUser";
 import useAuth from "@/hooks/useAuth";

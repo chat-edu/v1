@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Heading, VStack} from "@chakra-ui/react";
 
-import Submission from "@/components/Notebook/Assignment/Submission";
+import Submission from "@/components/Notebook/Assignment/Submissions/Submission";
 
 import useSubmissions from "@/hooks/queries/submissions/useSubmissions";
 

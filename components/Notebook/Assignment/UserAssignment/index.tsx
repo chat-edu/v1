@@ -3,8 +3,8 @@ import React from 'react';
 import {Skeleton, VStack} from "@chakra-ui/react";
 
 import AssignmentHeader from "@/components/Notebook/Assignment/AssignmentHeader";
-import Questions from "@/components/Notebook/Assignment/Questions";
-import Submission from "@/components/Notebook/Assignment/Submission";
+import Questions from "@/components/Notebook/Assignment/Questions/Questions";
+import Submission from "@/components/Notebook/Assignment/Submissions/Submission";
 
 import useUserSubmission from "@/hooks/queries/submissions/useUserSubmission";
 import useAuth from "@/hooks/useAuth";
