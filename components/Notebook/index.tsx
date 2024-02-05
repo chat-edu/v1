@@ -2,19 +2,25 @@ import React from 'react';
 
 import {Text} from "@chakra-ui/react";
 
-import NotebookLayout from "@/components/Notebook/NotebookLayout";
+import NotebookContent from "@/components/Notebook/NotebookContent";
 import Loading from "@/components/Utilities/Loading";
 
 import useNotebook from "@/hooks/queries/notebook/useNotebook";
 
 import {Notebook as NotebookType} from "@/types/Notebook";
+import useAuth from "@/hooks/useAuth";
+import useUser from "@/hooks/queries/user/useUser";
+import TeacherNotebook from "@/components/Notebook/TeacherNotebook";
 
 interface Props {
     notebookId: NotebookType["id"],
-    initialNoteId?: NotebookType["id"]
+    setOverviewMode?: () => void;
 }
 
-const Notebook: React.FC<Props> = ({ notebookId, initialNoteId }) => {
+const Notebook: React.FC<Props> = ({ notebookId }) => {
+
+    const { user } = useAuth();
+    const { isTeacher } = useUser(user?.id || '');
 
     const { notebook, loading } = useNotebook(notebookId);
 
@@ -25,10 +31,15 @@ const Notebook: React.FC<Props> = ({ notebookId, initialNoteId }) => {
         >
             {
                 notebook ? (
-                    <NotebookLayout
-                        notebook={notebook}
-                        initialNoteId={initialNoteId}
-                    />
+                    isTeacher ? (
+                        <TeacherNotebook
+                            notebook={notebook}
+                        />
+                    ) : (
+                        <NotebookContent
+                            notebook={notebook}
+                        />
+                    )
                 ) : (
                     <Text>
                         Notebook not found

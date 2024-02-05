@@ -6,7 +6,7 @@ import {useRouter} from "next/navigation";
 
 import Navbar, { navbarHeight, mobileNavbarHeight } from "@/components/Layout/Navbar";
 import Loading from "@/components/Utilities/Loading";
-import {mobileHeaderHeight} from "@/components/Notebook/NotebookMenu/MobileHeader";
+import {mobileHeaderHeight} from "@/components/Notebook/NotebookContent/NotebookMenu/MobileHeader";
 
 import useAuth from "@/hooks/useAuth";
 import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";

@@ -30,6 +30,7 @@ const ClickableCard: React.FC<Props> = ({ onClick, children, darkModeHoverBackgr
             }}
             onClick={handleClick}
             transition={'all 0.2s ease-in-out'}
+            shadow={props.variant === 'outline' ? "none" : "md"}
             {...props}
         >
             {children}

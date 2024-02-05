@@ -2,14 +2,11 @@ import Head from "next/head";
 
 import Layout from "@/components/Layout";
 import Notebook from "@/components/Notebook";
+import Loading from "@/components/Utilities/Loading";
 
 import {NextPageContext} from "next";
-import Loading from "@/components/Utilities/Loading";
-import {useSearchParams} from "next/navigation";
 
 const NotebookPage = ({ notebookId } : {notebookId: string}) => {
-
-    const params = useSearchParams();
 
     return (
         <>
@@ -29,7 +26,6 @@ const NotebookPage = ({ notebookId } : {notebookId: string}) => {
                 >
                     <Notebook
                         notebookId={parseInt(notebookId as string)}
-                        initialNoteId={params?.get('noteId') ? parseInt(params.get('noteId') as string) : undefined}
                     />
                 </Loading>
             </Layout>

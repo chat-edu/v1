@@ -24,9 +24,13 @@ export const findUserAssignmentSummariesByAssignmentId = async (assignment_id: A
 };
 
 // find summaries by user ID
-export const findUserAssignmentSummariesByUserId = async (user_id: UserRow["id"]): Promise<UserAssignmentSummaryRow[]> => {
-    const queryText = `SELECT * FROM ${USER_ASSIGNMENT_SUMMARIES_TABLE} WHERE user_id = $1;`;
-    return find<UserAssignmentSummaryRow>(queryText, [user_id]);
+export const findUserAssignmentSummariesByUserId = async (user_id: UserRow["id"], notebook_id: NotebookRow["id"]): Promise<UserAssignmentSummaryRow[]> => {
+    const queryText = `
+        SELECT * FROM ${USER_ASSIGNMENT_SUMMARIES_TABLE} 
+        WHERE user_id = $1 AND assignment_id IN 
+            (SELECT id FROM assignments WHERE topic_id IN 
+                (SELECT id FROM topics WHERE notebook_id = $2));`
+    return find<UserAssignmentSummaryRow>(queryText, [user_id, notebook_id]);
 };
 
 // find summaries by notebook ID

@@ -2,10 +2,11 @@ import React from 'react';
 
 import {HStack, Image, Text, TextProps, Tooltip, useColorModeValue, VStack} from "@chakra-ui/react";
 
-import {User} from "@/types/User";
-import Link from "next/link";
-import useUser from "@/hooks/queries/user/useUser";
 import VerifiedCheckmark from "@/components/Utilities/VerifiedCheckmark";
+
+import useUser from "@/hooks/queries/user/useUser";
+
+import {User} from "@/types/User";
 
 interface Props extends TextProps {
     username: User['username']
@@ -34,34 +35,25 @@ const UsernameText: React.FC<Props> = ({ username, id, verified,  ...rest }) => 
                     />
                 }
             >
-                <Link
-                    href={`/users/${id}`}
-                    style={{
-                        wordBreak: 'break-word',
-                        display: 'flex',
-                        alignItems: 'center'
+                <Text
+                    fontWeight={'semibold'}
+                    px={0.5}
+                    as={'span'}
+                    _hover={{
+                        bg: hoverColor
+                    }}
+                    {...rest}
+                    onClick={onClick}
+                    rounded={'md'}
+                    cursor={'pointer'}
+                    transition={'all 0.2s ease-in-out'}
+                    fontSize={{
+                        base: 'sm',
+                        md: 'md'
                     }}
                 >
-                    <Text
-                        fontWeight={'semibold'}
-                        px={0.5}
-                        as={'span'}
-                        _hover={{
-                            bg: hoverColor
-                        }}
-                        {...rest}
-                        onClick={onClick}
-                        rounded={'md'}
-                        cursor={'pointer'}
-                        transition={'all 0.2s ease-in-out'}
-                        fontSize={{
-                            base: 'sm',
-                            md: 'md'
-                        }}
-                    >
-                        @{username}
-                    </Text>
-                </Link>
+                    @{username}
+                </Text>
             </Tooltip>
             {
                 verified && (

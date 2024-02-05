@@ -6,44 +6,18 @@ import {
 } from "@/cosmosPostgres/services/summaries";
 
 import {UserIdParams} from "@/app/api/summaries/notebook/[notebookId]/user/[userId]/UserIdParams";
+import {generateUserNotebookSummary} from "@/app/api/summaries/notebook/[notebookId]/user/[userId]/generate";
 
 export const POST = async (req: Request, {params}: {params: UserIdParams}) => {
-    const userAssignmentSummaries = await findUserAssignmentSummariesByNotebookId(params.notebookId);
+    const summary = await generateUserNotebookSummary(params.notebookId, params.userId)
 
-    const response = await openai.chat.completions.create({
-        model: process.env.GPT_MODEL_ID as string,
-        messages: [
-            {
-                role: "system",
-                content: `
-                    The student has completed several assignments and their responses have been graded and summarized.
-
-                    Your goal is to provide a two sentence summary of the student's performance and understanding of the class material, which will inform both the student and the teacher of the student's understanding and knowledge gaps.
-
-                    The summaries are as follows:
-
-                    ${userAssignmentSummaries.map((summary) => JSON.stringify(summary)).join("\n")}
-
-                    Respond in JSON format with the following structure:
-
-                    {
-                        summary: <string>
-                    }
-                `,
-            }
-        ],
-        response_format: {
-            type: "json_object",
-        },
-    });
-
-    if(response.choices[0].message.content === null) {
+    if(summary === null) {
         return Response.json({error: "No response from GPT-4"}, {status: 500});
     }
 
     return Response.json(await addUserNotebookSummary({
         user_id: params.userId,
         notebook_id: params.notebookId,
-        summary: response.choices[0].message.content
+        summary
     }))
 }

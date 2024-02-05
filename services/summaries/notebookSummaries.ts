@@ -6,3 +6,8 @@ export const generateNotebookSummary = async (notebook_id: Notebook["id"]) =>
     fetch(`/api/summaries/notebook/${notebook_id}/create`, {
         method: 'POST',
     }).then(async res => (await res.json()) as UserNotebookSummaryRow);
+
+export const regenerateNotebookSummary = async (notebook_id: Notebook["id"]) =>
+    fetch(`/api/summaries/notebook/${notebook_id}/update`, {
+        method: 'PATCH',
+    }).then(async res => (await res.json()) as UserNotebookSummaryRow);
