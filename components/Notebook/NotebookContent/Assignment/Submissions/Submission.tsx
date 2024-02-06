@@ -29,8 +29,9 @@ const Submission: React.FC<Props> = ({ userSubmission, questionMap }) => {
     const { userData } = useUser(userSubmission.userId);
 
     const sortedSubmissions = useMemo(() => {
+        if(userSubmission.submissions.some(submission => questionMap[`${submission.questionType}-${submission.questionId}`] === undefined)) return [];
         return userSubmission.submissions.sort((a, b) => {
-            return questionMap[a.questionId].question.questionNumber - questionMap[b.questionId].question.questionNumber;
+            return questionMap[`${a.questionType}-${a.questionId}`].question.questionNumber - questionMap[`${b.questionType}-${b.questionId}`].question.questionNumber;
         });
     }, [userSubmission.submissions, questionMap]);
 
@@ -96,12 +97,12 @@ const Submission: React.FC<Props> = ({ userSubmission, questionMap }) => {
                                             fontWeight={'semibold'}
                                             fontStyle={'italic'}
                                         >
-                                            {index + 1}) {questionMap[submission.questionId].question.question}
+                                            {index + 1}) {questionMap[`${submission.questionType}-${submission.questionId}`].question.question}
                                         </Text>
                                         <Text>
                                             Answer: {
                                             submission.questionType === QuestionTypes.MultipleChoice ? (
-                                                `${submission.answer}) ${questionMap[submission.questionId].question.options[submission.answer]}`
+                                                `${submission.answer}) ${questionMap[`${submission.questionType}-${submission.questionId}`].question.options[submission.answer]}`
                                             ) : (
                                                 submission.answer
                                             )

@@ -28,9 +28,9 @@ const StudentSubmission: React.FC<Props> = ({ submission }) => {
     const { assignmentWithQuestions, loading } = useAssignment(submission.assignmentId);
 
     const questionMap: QuestionMap = useMemo(() => {
-        const map: { [key: number]: Question<any> } = {};
+        const map: { [key: string]: Question<any> } = {};
         assignmentWithQuestions?.questions.forEach(question => {
-            map[question.question.id] = question;
+            map[`${question.tag}-${question.question.id}`] = question;
         });
         return map;
     }, [assignmentWithQuestions?.questions]);
@@ -106,12 +106,12 @@ const StudentSubmission: React.FC<Props> = ({ submission }) => {
                                             fontWeight={'semibold'}
                                             fontStyle={'italic'}
                                         >
-                                            {index + 1}) {questionMap[questionSubmission.questionId].question.question}
+                                            {index + 1}) {questionMap[`${questionSubmission.questionType}-${questionSubmission.questionId}`].question.question}
                                         </Text>
                                         <Text>
                                             Answer: {
                                             questionSubmission.questionType === QuestionTypes.MultipleChoice ? (
-                                                `${questionSubmission.answer}) ${questionMap[questionSubmission.questionId].question.options[questionSubmission.answer]}`
+                                                `${questionSubmission.answer}) ${questionMap[`${questionSubmission.questionType}-${questionSubmission.questionId}`].question.options[questionSubmission.answer]}`
                                             ) : (
                                                 questionSubmission.answer
                                             )

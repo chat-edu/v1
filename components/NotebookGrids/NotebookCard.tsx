@@ -8,6 +8,7 @@ import UsernameText from "@/components/Utilities/UsernameText";
 import Link from "next/link";
 
 import {Notebook} from "@/types/Notebook";
+import NotebookBarChart from "@/components/Utilities/NotebookBarChart";
 
 interface Props {
     notebook: Notebook,
@@ -16,7 +17,6 @@ interface Props {
 }
 
 const NotebookCard: React.FC<Props> = ({ notebook, rightComponent }) => {
-
     return (
         <Link
             href={`/notebooks/${notebook.id}`}
@@ -25,6 +25,7 @@ const NotebookCard: React.FC<Props> = ({ notebook, rightComponent }) => {
                 onClick={() => {}}
                 flex={1}
                 w={'100%'}
+                gap={4}
             >
                 <HStack
                     w={'100%'}
@@ -70,6 +71,10 @@ const NotebookCard: React.FC<Props> = ({ notebook, rightComponent }) => {
                         {rightComponent}
                     </VStack>
                 </HStack>
+                <NotebookBarChart
+                    notebookId={notebook.id}
+                    height={100}
+                />
             </ClickableCard>
         </Link>
     );

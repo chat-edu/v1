@@ -9,5 +9,5 @@ export interface Question<QuestionType> {
 }
 
 export type QuestionMap = {
-    [key: number]: Question<any>
+    [key: string]: Question<any>
 }

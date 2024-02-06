@@ -21,14 +21,17 @@ const Assignment: React.FC<Props> = ({ assignment }) => {
 
     const { user } = useAuth();
     const { isTeacher } = useUser(user?.id || '');
+    const [questionMapLoading, setQuestionMapLoading] = React.useState<boolean>(true);
 
     const { assignmentWithQuestions, loading } = useAssignment(assignment.id);
 
     const questionMap: QuestionMap = useMemo(() => {
-        const map: { [key: number]: Question<any> } = {};
+        setQuestionMapLoading(true);
+        const map: { [key: string]: Question<any> } = {};
         assignmentWithQuestions?.questions.forEach(question => {
-            map[question.question.id] = question;
+            map[`${question.tag}-${question.question.id}`] = question;
         });
+        setQuestionMapLoading(false);
         return map;
     }, [assignmentWithQuestions?.questions]);
 
@@ -41,7 +44,7 @@ const Assignment: React.FC<Props> = ({ assignment }) => {
                 w={'100%'}
             >
                 {
-                    loading && !assignmentWithQuestions ? (
+                    (loading && !assignmentWithQuestions) || questionMapLoading  ? (
                         <Skeleton />
                     ) : (
                         assignmentWithQuestions ? (

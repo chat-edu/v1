@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Button, Divider, Skeleton, Text, VStack} from "@chakra-ui/react";
+import {Button, Divider, Text, VStack} from "@chakra-ui/react";
 
 import MultipleChoiceQuestion from "@/components/Notebook/NotebookContent/Assignment/Questions/MultipleChoiceQuestion";
 import FreeResponseQuestion from "@/components/Notebook/NotebookContent/Assignment/Questions/FreeResponseQuestion";
@@ -11,6 +11,7 @@ import {AssignmentWithQuestions} from "@/types/assignment/Assignment";
 import {QuestionTypes} from "@/types/assignment/Question";
 import {FreeResponseQuestion as FreeResponseQuestionType} from "@/types/assignment/FreeResponseQuestion";
 import {MultipleChoiceQuestion as MultipleChoiceQuestionType} from "@/types/assignment/MultipleChoiceQuestion";
+import TypewriterAnimation from "@/components/Utilities/TypewriterAnimation";
 
 interface Props {
     assignmentWithQuestions: AssignmentWithQuestions
@@ -25,7 +26,22 @@ const GenerateQuestions: React.FC<Props> = ({ assignmentWithQuestions }) => {
         addQuestionToAssignment
     } = useGenerateAssignmentQuestions(assignmentWithQuestions.id);
 
-    if(generationLoading) return <Skeleton />
+    if(generationLoading) return (
+        <TypewriterAnimation
+            subtexts={[
+                "Brewing some fresh questions from your notes...",
+                "Turning your notes into brain teasers...",
+                "Sifting through knowledge, one note at a time...",
+                "Whipping up some educational challenges...",
+                "Translating your notes into quiz magic...",
+                "Harvesting the seeds of knowledge from your notes...",
+                "Crafting custom questions from your classroom insights...",
+                "Concocting a quiz cocktail from your notes...",
+                "Weaving your notes into thought-provoking puzzles...",
+                "Mixing your notes into a potion of knowledge..."
+            ]}
+        />
+    )
 
     return (
         <VStack
@@ -80,7 +96,7 @@ const GenerateQuestions: React.FC<Props> = ({ assignmentWithQuestions }) => {
                 onClick={generateQuestions}
                 isLoading={generationLoading}
             >
-                Add Questions
+                Generate Questions
             </Button>
         </VStack>
     );

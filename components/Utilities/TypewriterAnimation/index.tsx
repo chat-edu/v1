@@ -4,20 +4,11 @@ import {VStack, Text} from "@chakra-ui/react";
 
 import '@/components/Utilities/TypewriterAnimation/TypeWriterAnimation.css';
 
-const subtexts = [
-    "Typing up your masterpieces...",
-    "Clacking away at your ideas...",
-    "Composing pages of wisdom...",
-    "Inking your thoughts into reality...",
-    "Your words, our paper...",
-    "Setting the stage for your stories...",
-    "Crafting your digital manuscript...",
-    "From keys to knowledge...",
-    "Aligning the margins of your mind...",
-    "Carriage returning your insights..."
-];
+interface Props {
+    subtexts: string[]
+}
 
-const TypewriterAnimation: React.FC = ({}) => {
+const TypewriterAnimation: React.FC<Props> = ({subtexts}) => {
 
     const [subtextIndex, setSubtextIndex] = useState(0);
     useEffect(() => {

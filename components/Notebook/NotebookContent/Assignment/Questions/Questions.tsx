@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Button, Skeleton, Text, VStack} from "@chakra-ui/react";
+import {Button, Text, VStack} from "@chakra-ui/react";
 
 import MultipleChoiceQuestion from "@/components/Notebook/NotebookContent/Assignment/Questions/MultipleChoiceQuestion";
 import FreeResponseQuestion from "@/components/Notebook/NotebookContent/Assignment/Questions/FreeResponseQuestion";
@@ -13,6 +13,7 @@ import {MultipleChoiceQuestion as MultipleChoiceQuestionType} from "@/types/assi
 import {AssignmentWithQuestions} from "@/types/assignment/Assignment";
 import {QuestionTypes} from "@/types/assignment/Question"
 import {FreeResponseQuestion as FreeResponseQuestionType} from "@/types/assignment/FreeResponseQuestion";
+import TypewriterAnimation from "@/components/Utilities/TypewriterAnimation";
 
 interface Props {
     assignmentWithQuestions: AssignmentWithQuestions
@@ -33,7 +34,24 @@ const Questions: React.FC<Props> = ({ assignmentWithQuestions }) => {
         >
             {
                 submissionLoading ? (
-                    <Skeleton />
+                    <VStack
+                        w={'100%'}
+                    >
+                        <TypewriterAnimation
+                            subtexts={[
+                                "Discovering the brilliance in your answers...",
+                                "Unveiling the gems in your assignment...",
+                                "Celebrating the effort you've put in...",
+                                "Admiring the creativity of your work...",
+                                "Appreciating the knowledge you've showcased...",
+                                "Commending the insights in your responses...",
+                                "Acknowledging the hard work behind your answers...",
+                                "Marveling at the depth of your understanding...",
+                                "Valuing the thoughtfulness in your assignment...",
+                                "Respecting the dedication in your study journey..."
+                            ]}
+                         />
+                    </VStack>
                 ) : (
                     assignmentWithQuestions.questions.length > 0 ? (
                         assignmentWithQuestions.questions.map(question => (
