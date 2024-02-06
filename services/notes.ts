@@ -27,6 +27,7 @@ export const updateNote = async (noteId: number, notebookId: number, note: Parti
         body: JSON.stringify(transformPartialNoteInput(note)),
     })
         .then(async (res) => {
+            emitNotesChangedEvent(notebookId);
             emitNoteChangedEvent(noteId);
             return res.json()
         })
@@ -45,6 +46,13 @@ export const deleteNote = async (noteId: Note["id"], notebookId: Notebook["id"])
             }
             return success;
         })
+        .catch(null);
+
+export const generateNoteContent = async (noteId: Note["id"]) =>
+    fetch(`/api/notes/${noteId}/generate`, {
+        method: "POST",
+    })
+        .then(async (res) => (await res.json()) as string)
         .catch(null);
 
 const transformNoteInput = (note: NoteInput): NoteRowInput => ({

@@ -26,16 +26,22 @@ const TeacherAssignment: React.FC<Props> = ({ assignment, questionMap }) => {
                 assignment={assignment}
                 isTeacher={true}
             />
-            <TeacherSummaries
-                assignmentWithQuestions={assignment}
-                questionMap={questionMap}
-            />
-            <CommonlyMissedProblems
-                assignmentWithQuestions={assignment}
-            />
             <TeacherQuestions
                 assignment={assignment}
             />
+            {
+                assignment.questions.length > 0 && (
+                    <>
+                        <TeacherSummaries
+                            assignmentWithQuestions={assignment}
+                            questionMap={questionMap}
+                        />
+                        <CommonlyMissedProblems
+                            assignmentWithQuestions={assignment}
+                        />
+                    </>
+                )
+            }
         </VStack>
     );
 };

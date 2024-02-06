@@ -13,6 +13,7 @@ import useDeleteNote from "@/hooks/mutators/delete/useDeleteNote";
 import {Note as NoteType} from "@/types/Note";
 import useAuth from "@/hooks/useAuth";
 import useUser from "@/hooks/queries/user/useUser";
+import UpdateNoteButton from "@/components/Notebook/NotebookContent/NotebookMenu/NotesSelect/Buttons/UpdateNoteButton";
 
 interface Props {
     note: NoteType,
@@ -86,14 +87,25 @@ const Note: React.FC<Props> = ({ note, onSelect, selected, selectNotes }) => {
                             <MenuList>
                                 {
                                     isTeacher && (
-                                        <MenuItem
-                                            p={0}
-                                        >
-                                            <DeleteButton
-                                                onDelete={deleteNote}
-                                                name={"Note"}
-                                            />
-                                        </MenuItem>
+                                        <>
+                                            <MenuItem
+                                                p={0}
+                                            >
+                                                <DeleteButton
+                                                    onDelete={deleteNote}
+                                                    name={"Note"}
+                                                />
+                                            </MenuItem>
+                                            <MenuItem
+                                                p={0}
+                                            >
+                                                <UpdateNoteButton
+                                                    notebookId={note.notebookId}
+                                                    noteId={note.id}
+                                                    noteName={note.name}
+                                                />
+                                            </MenuItem>
+                                        </>
                                     )
                                 }
                                 <MenuItem

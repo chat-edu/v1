@@ -50,12 +50,18 @@ export const deleteTopic = async (id: Topic["id"], notebookId: Notebook["id"]): 
 
 // UPDATE
 
-export const updateTopic = async (id: number, updatedFields: Partial<TopicInput>): Promise<Topic | null> =>
+export const updateTopic = async (id: Topic["id"], notebookId: Notebook["id"], updatedFields: Partial<TopicInput>): Promise<boolean> =>
     fetch(`/api/topics/${id}/update`, {
-        method: "PUT",
+        method: "PATCH",
         body: JSON.stringify(transformPartialTopicInput(updatedFields)),
     })
-        .then((res) => res.json())
+        .then(async (res) => {
+            const success = await res.json() as boolean;
+            if (success) {
+                emitTopicsChangedEvent(notebookId);
+            }
+            return success;
+        })
         .catch(null)
 
 const transformTopicInput = (topic: TopicInput): TopicRowInput => ({

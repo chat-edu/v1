@@ -19,7 +19,7 @@ export const getAssignment = async (id: number): Promise<AssignmentRow | null> =
 
 // Find Assignments by Topic ID
 export const findAssignmentsByTopicId = async (topicId: number): Promise<AssignmentRow[]> => {
-    const queryText = 'SELECT * FROM Assignments WHERE topic_id = $1;';
+    const queryText = 'SELECT * FROM Assignments WHERE topic_id = $1 AND user_id IS NULL;';
     return find<AssignmentRow>(queryText, [topicId]);
 };
 

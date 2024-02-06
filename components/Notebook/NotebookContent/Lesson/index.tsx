@@ -2,7 +2,7 @@ import React from 'react';
 
 import dynamic from "next/dynamic";
 
-import {Button, Card, Container, Flex, Heading, HStack, Image, Skeleton, Text, Tooltip} from "@chakra-ui/react";
+import {Button, Card, Container, Heading, HStack, Image, Skeleton, Text, Tooltip} from "@chakra-ui/react";
 
 import Markdown from "@/components/Utilities/Markdown";
 import {mobileNavbarHeight, navbarHeight} from "@/components/Layout/Navbar";
@@ -96,6 +96,7 @@ const Lesson: React.FC<Props> = ({ selectedLesson, selectNotes }) => {
                                 colorScheme={'brand'}
                                 leftIcon={
                                     <Image
+                                        alt={'logo'}
                                         src={'/logo.png'}
                                         boxSize={'24px'}
                                     />
@@ -122,7 +123,7 @@ const Lesson: React.FC<Props> = ({ selectedLesson, selectNotes }) => {
                 {
                     viewMode === ViewModes.EDIT ? (
                         <Editor
-                            initialMarkdown={note.content}
+                            note={note}
                             save={(markdown: string) => updateNoteContent(markdown)}
                         />
                     ) : (

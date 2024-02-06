@@ -18,6 +18,7 @@ const ChatWithNotesButton: React.FC<Props> = ({ onClick }) => {
             leftIcon={<MdChatBubble />}
             justifyContent={'flex-start'}
             variant={'ghost'}
+            w={'100%'}
         >
             Ask Questions
         </Button>

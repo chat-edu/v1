@@ -26,6 +26,8 @@ import {Note as NoteType} from "@/types/Note";
 import {FaEllipsisH} from "react-icons/fa";
 import useUser from "@/hooks/queries/user/useUser";
 import useAuth from "@/hooks/useAuth";
+import UpdateTopicButton
+    from "@/components/Notebook/NotebookContent/NotebookMenu/NotesSelect/Buttons/UpdateTopicButton";
 
 interface Props {
     topicHierarchy: TopicHierarchy,
@@ -119,6 +121,15 @@ const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectedNotes,
                                                         >
                                                             <AddAssignmentButton
                                                                 topicId={topicHierarchy.id}
+                                                            />
+                                                        </MenuItem>
+                                                        <MenuItem
+                                                            p={0}
+                                                        >
+                                                            <UpdateTopicButton
+                                                                notebookId={topicHierarchy.notebookId}
+                                                                topicId={topicHierarchy.id}
+                                                                topicName={topicHierarchy.name}
                                                             />
                                                         </MenuItem>
                                                         <MenuItem

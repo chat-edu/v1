@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 
 import {
     MDXEditor,
@@ -19,43 +19,41 @@ import {
     linkDialogPlugin,
     tablePlugin,
     thematicBreakPlugin,
-    toolbarPlugin, MDXEditorMethods
+    toolbarPlugin
 } from '@mdxeditor/editor';
 import '@mdxeditor/editor/style.css';
 
-import {Box, Button, Heading, HStack, IconButton} from "@chakra-ui/react";
+import {Box, Button, Heading, HStack} from "@chakra-ui/react";
+import {MdDocumentScanner} from "react-icons/md";
+import {FaWandMagicSparkles} from "react-icons/fa6";
 
 import "@/components/Utilities/Editor/editorContent.css";
 import FileInput from "@/components/Utilities/FormUtilities/FIleInput";
-import useProcessPdf from "@/hooks/utilities/useProcessPdf";
 import TooltipIconButton from "@/components/Utilities/TooltipIconButton";
-import {FaWandMagicSparkles} from "react-icons/fa6";
+
+import useEditor from "@/hooks/utilities/useEditor";
+
+import {Note} from "@/types/Note";
+
 
 interface Props {
-    initialMarkdown: string,
     save: (markdown: string) => Promise<void>,
+    note: Note,
 }
 
-const Editor: React.FC<Props> = ({ initialMarkdown, save }) => {
+const Editor: React.FC<Props> = ({ note, save }) => {
 
-    const [markdown, setMarkdown] = useState<string>(initialMarkdown);
-
-    const ref = useRef<MDXEditorMethods>(null);
-
-    useEffect(() => {
-        if(ref.current) {
-            ref.current.setMarkdown(initialMarkdown);
-        }
-    }, [initialMarkdown])
-
-    const { file, updateFile, extractedText, processFile, resetFile, isFileExtracting } = useProcessPdf();
-
-    useEffect(() => {
-        console.log(extractedText)
-        if(extractedText && ref.current) {
-            ref.current.setMarkdown(ref.current.getMarkdown() + '\n\n' + extractedText);
-        }
-    }, [extractedText]);
+    const {
+        ref,
+        file,
+        updateFile,
+        processFile,
+        isFileExtracting,
+        markdown,
+        setMarkdown,
+        generateContent,
+        isGeneratingContent
+    } = useEditor(note);
 
     return (
         <Box
@@ -81,6 +79,16 @@ const Editor: React.FC<Props> = ({ initialMarkdown, save }) => {
                         text={file ? file.name : 'Upload PDF'}
                         accept={'.pdf'}
                     />
+                    <Button
+                        onClick={generateContent}
+                        colorScheme={'brand'}
+                        variant={'outline'}
+                        flexShrink={0}
+                        leftIcon={<FaWandMagicSparkles />}
+                        isLoading={isGeneratingContent}
+                    >
+                        Generate Notes
+                    </Button>
                     {
                         file && (
                             <TooltipIconButton
@@ -88,14 +96,15 @@ const Editor: React.FC<Props> = ({ initialMarkdown, save }) => {
                                 onClick={processFile}
                                 colorScheme={'brand'}
                                 isLoading={isFileExtracting}
-                                icon={<FaWandMagicSparkles />}
+                                icon={<MdDocumentScanner />}
                             />
                         )
                     }
                     <Button
                         onClick={() => save(markdown)}
                         colorScheme={'brand'}
-                        isDisabled={markdown === initialMarkdown}
+                        isDisabled={markdown === note.content}
+                        flexShrink={0}
                     >
                         Save
                     </Button>
@@ -126,7 +135,6 @@ const Editor: React.FC<Props> = ({ initialMarkdown, save }) => {
                     })
                 ]}
                 contentEditableClassName={'editor-content'}
-                // placeholder={'Start typing...'}
             />
         </Box>
     )

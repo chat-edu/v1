@@ -49,7 +49,8 @@ CREATE TABLE IF NOT EXISTS Scores (
 CREATE TABLE Assignments (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    topic_id INT REFERENCES topics(id)
+    topic_id INT REFERENCES topics(id),
+    user_id VARCHAR(255) REFERENCES Users(id) ON DELETE SET NULL
 );
 
 CREATE TABLE FreeResponseQuestions (
@@ -134,6 +135,9 @@ CREATE TABLE NotebookSummaries (
     PRIMARY KEY (notebook_id),
     FOREIGN KEY (notebook_id) REFERENCES Notebooks(id) ON DELETE CASCADE
 );
+
+-- alter the assignments table to add a user_id column that defaults to null
+Select * from Assignments;
 
 -- DROP ALL TABLES
 DROP TABLE IF EXISTS Scores;
