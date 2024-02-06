@@ -51,29 +51,6 @@ jobs:
           api_location: "" # Api source code path - optional
           output_location: "" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: Set Application Settings
-        run: |
-          az staticwebapp appsettings set --name chatedu-client --resource-group ChatEDU \
-          --setting-names \
-          OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
-          GPT_MODEL_ID=${{ secrets.GPT_MODEL_ID }} \
-          COSMOS_POSTGRES_HOST=${{ secrets.COSMOS_POSTGRES_HOST }} \
-          COSMOS_POSTGRES_PASSWORD=${{ secrets.COSMOS_POSTGRES_PASSWORD }} \
-          GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} \
-          GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} \
-          GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }} \
-          AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }} \
-          AZURE_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }} \
-          NEXTAUTH_SECRET=${{ secrets.AZURE_CLIENT_SECRET }} \
-          NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} \
-          NEXT_PUBLIC_DOCUMENT_INTELLIGENCE_KEY=${{ secrets.NEXT_PUBLIC_DOCUMENT_INTELLIGENCE_KEY }} \
-          NEXT_PUBLIC_CHAT_ENDPOINT=${{ secrets.NEXT_PUBLIC_CHAT_ENDPOINT }} \
-          AZURE_SEARCH_URL=${{ secrets.AZURE_SEARCH_URL }} \
-          AZURE_SEARCH_KEY=${{ secrets.AZURE_SEARCH_KEY }} \
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
