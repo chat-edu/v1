@@ -10,6 +10,7 @@ import useAssignmentSummary from "@/hooks/queries/summaries/useAssignmentSummary
 import {generateAssignmentSummary, regenerateAssignmentSummary} from "@/services/summaries";
 
 import {Assignment} from "@/types/assignment/Assignment";
+import Markdown from "@/components/Utilities/Markdown";
 
 interface Props {
     assignmentId: Assignment['id'];
@@ -85,6 +86,7 @@ const AssignmentSummary: React.FC<Props> = ({ assignmentId }) => {
             <VStack
                 w={'100%'}
                 align={'flex-start'}
+                spacing={0}
             >
                 <Text
                     fontSize={'sm'}
@@ -94,9 +96,9 @@ const AssignmentSummary: React.FC<Props> = ({ assignmentId }) => {
                 </Text>
                 {
                     assignmentSummary ? (
-                        <Text>
+                        <Markdown>
                             {assignmentSummary.summary}
-                        </Text>
+                        </Markdown>
                     ) : (
                         <Button
                             onClick={generateSummary}

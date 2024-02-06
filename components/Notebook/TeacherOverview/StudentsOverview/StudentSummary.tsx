@@ -1,6 +1,17 @@
 import React, {useState} from 'react';
 
-import {Button, HStack, Icon, Skeleton, Text, useToast, VStack} from "@chakra-ui/react";
+import {
+    Button,
+    HStack,
+    Icon,
+    Skeleton,
+    useToast,
+    VStack
+} from "@chakra-ui/react";
+import {IoMdRefreshCircle} from "react-icons/io";
+
+import Markdown from "@/components/Utilities/Markdown";
+import TooltipIconButton from "@/components/Utilities/TooltipIconButton";
 
 import useUserNotebookSummary from "@/hooks/queries/summaries/useUserNotebookSummary";
 
@@ -11,8 +22,6 @@ import {
 
 import {Notebook} from "@/types/Notebook";
 import {User} from "@/types/User";
-import {IoMdRefreshCircle} from "react-icons/io";
-import TooltipIconButton from "@/components/Utilities/TooltipIconButton";
 
 
 interface Props {
@@ -21,6 +30,7 @@ interface Props {
 }
 
 const StudentSummary: React.FC<Props> = ({ userId, notebookId }) => {
+
     const toast = useToast();
 
     const [isRegenerating, setIsRegenerating] = useState(false);
@@ -95,11 +105,9 @@ const StudentSummary: React.FC<Props> = ({ userId, notebookId }) => {
             >
                 {
                     userNotebookSummary ? (
-                        <Text
-                            flex={1}
-                        >
+                        <Markdown>
                             {userNotebookSummary.summary}
-                        </Text>
+                        </Markdown>
                     ) : (
                         <Button
                             onClick={generateSummary}

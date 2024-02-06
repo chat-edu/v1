@@ -1,4 +1,9 @@
-import {GradeExplanation, SubmissionRow, SubmissionRowInput} from "@/cosmosPostgres/types/submission";
+import {
+    GradeExplanation,
+    SubmissionRow,
+    SubmissionRowInput,
+    SubmissionRowWithQuestion
+} from "@/cosmosPostgres/types/submission";
 import {add, del, find, get, update} from "@/cosmosPostgres/services/base";
 import {
     FREE_RESPONSE_QUESTIONS_TABLE,
@@ -6,6 +11,7 @@ import {
     MULTIPLE_CHOICE_SUBMISSIONS_TABLE
 } from "@/cosmosPostgres/constants/tables";
 import {QuestionTypes} from "@/types/assignment/Question";
+import {NotebookRow, UserRow} from "@/cosmosPostgres/types";
 
 export const addSubmission = async (submission: SubmissionRowInput, questionType: QuestionTypes) =>
     add<SubmissionRowInput, SubmissionRow>(
@@ -57,4 +63,18 @@ export const findUserSubmissionsByAssignment = async (userId: string, assignment
                WHERE assignment_id = $1)
         AND user_id = $2;`
     return find<SubmissionRow>(query, [assignmentId, userId])
+}
+
+export const findUserSubmissionsByNotebook = async (userId: UserRow["id"], notebookId: NotebookRow["id"], questionType: QuestionTypes) => {
+    const query = `
+        SELECT
+            s.*,
+            q.question,
+            q.question_number,
+            a.id as assignment_id
+        FROM ${questionType === QuestionTypes.FreeResponse ? FREE_RESPONSE_SUBMISSIONS_TABLE : MULTIPLE_CHOICE_SUBMISSIONS_TABLE} as s
+        JOIN ${questionType === QuestionTypes.FreeResponse ? FREE_RESPONSE_QUESTIONS_TABLE : MULTIPLE_CHOICE_QUESTIONS_TABLE} as q ON s.question_id = q.id
+        JOIN assignments as a ON q.assignment_id = a.id
+        WHERE s.user_id = $1 AND a.topic_id IN (SELECT id FROM topics WHERE notebook_id = $2);`
+    return find<SubmissionRowWithQuestion>(query, [userId, notebookId])
 }

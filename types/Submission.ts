@@ -16,6 +16,12 @@ export interface Submission extends SubmissionInput {
     questionType: QuestionTypes;
 }
 
+export interface SubmissionWithQuestion extends Submission {
+    question: string;
+    questionNumber: number;
+    assignmentId: Assignment["id"];
+}
+
 export interface UserSubmission {
     userId: User["id"];
     assignmentId: Assignment["id"];

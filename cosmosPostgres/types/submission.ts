@@ -16,3 +16,9 @@ export interface GradeExplanation {
     points: number;
     grade_explanation: string;
 }
+
+export interface SubmissionRowWithQuestion extends SubmissionRow {
+    question: string,
+    question_number: number,
+    assignment_id: number,
+}

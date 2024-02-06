@@ -12,6 +12,7 @@ import {
 import {Notebook} from "@/types/Notebook";
 import {IoMdRefreshCircle} from "react-icons/io";
 import TooltipIconButton from "@/components/Utilities/TooltipIconButton";
+import Markdown from "@/components/Utilities/Markdown";
 
 interface Props {
     notebookId: Notebook['id']
@@ -89,6 +90,7 @@ const NotebookSummary: React.FC<Props> = ({ notebookId }) => {
                 w={'100%'}
                 align={'flex-start'}
                 flex={1}
+                spacing={0}
             >
                 <Text
                     fontSize={'sm'}
@@ -98,11 +100,9 @@ const NotebookSummary: React.FC<Props> = ({ notebookId }) => {
                 </Text>
                 {
                     notebookSummary ? (
-                        <Text
-                            flex={1}
-                        >
+                        <Markdown>
                             {notebookSummary.summary}
-                        </Text>
+                        </Markdown>
                     ) : (
                         <Button
                             onClick={generateSummary}

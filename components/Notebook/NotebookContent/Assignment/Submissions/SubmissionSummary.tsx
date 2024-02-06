@@ -3,6 +3,7 @@ import {User} from "@/types/User";
 import {Assignment} from "@/types/assignment/Assignment";
 import useUserAssignmentSummary from "@/hooks/queries/summaries/useUserAssignmentSummary";
 import {Skeleton, Text, VStack} from "@chakra-ui/react";
+import Markdown from "@/components/Utilities/Markdown";
 
 interface Props {
     userId: User['id'],
@@ -40,9 +41,9 @@ const SubmissionSummary: React.FC<Props> = ({ userId, assignmentId}) => {
             >
                 Summary
             </Text>
-            <Text>
+            <Markdown>
                 {summary.summary}
-            </Text>
+            </Markdown>
         </VStack>
     );
 };

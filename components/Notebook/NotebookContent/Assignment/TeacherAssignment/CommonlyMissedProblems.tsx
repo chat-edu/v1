@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 
-import {Card, HStack, Icon, SimpleGrid, Text, VStack} from "@chakra-ui/react";
+import {Card, HStack, Icon, SimpleGrid, Skeleton, Text, VStack} from "@chakra-ui/react";
 import {IoMdClose} from "react-icons/io";
 
 import useSubmissions from "@/hooks/queries/submissions/useSubmissions";
@@ -42,6 +42,7 @@ const CommonlyMissedProblems: React.FC<Props> = ({ assignmentWithQuestions }) =>
         <Card
             variant={'outline'}
             shadow={'none'}
+            w={'100%'}
         >
             <HStack
                 spacing={4}
@@ -61,17 +62,27 @@ const CommonlyMissedProblems: React.FC<Props> = ({ assignmentWithQuestions }) =>
                         fontWeight={'bold'}
                         lineHeight={1}
                     >
-                        Commonly Missed Problems
+                        Common Mistakes
                     </Text>
                     <Text>
                         Your students are struggling with the following problems.
                     </Text>
-                    <VStack
-                        w={'100%'}
-                        mt={4}
-                        spacing={4}
-                    >
-                        {
+                </VStack>
+            </HStack>
+            <VStack
+                w={'100%'}
+                mt={4}
+                spacing={4}
+                alignItems={'start'}
+            >
+                {
+                    loading ? (
+                        <Skeleton
+                            w={'100%'}
+                            h={20}
+                        />
+                    ) : (
+                        commonlyMissedProblemIds.length > 0 ? (
                             commonlyMissedProblemIds.map((questionWithCount, index) => (
                                 <HStack
                                     key={questionWithCount.id}
@@ -94,10 +105,14 @@ const CommonlyMissedProblems: React.FC<Props> = ({ assignmentWithQuestions }) =>
                                     </Text>
                                 </HStack>
                             ))
-                        }
-                    </VStack>
-                </VStack>
-            </HStack>
+                        ) : (
+                            <Text>
+                                No problems have been missed by your students.
+                            </Text>
+                        )
+                    )
+                }
+            </VStack>
         </Card>
     );
 };

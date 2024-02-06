@@ -11,8 +11,6 @@ export const generateUserNotebookSummary = async (
 ): Promise<string | null> => {
     const userAssignmentSummaries = await findUserAssignmentSummariesByUserId(user_id, notebook_id);
 
-    console.log(userAssignmentSummaries);
-
     const response = await openai.chat.completions.create({
         model: process.env.GPT_MODEL_ID as string,
         messages: [
@@ -21,17 +19,21 @@ export const generateUserNotebookSummary = async (
                 content: `
                         The student has completed several assignments and their responses have been graded and summarized.
     
-                        Your goal is to provide a two sentence summary of the student's performance and understanding of the class material, which will inform both the student and the teacher of the student's understanding and knowledge gaps.
+                        Your goal is to provide a two sentence summary of the student's performance and understanding of the class material, which will inform the teacher of the student's understanding and knowledge gaps.
     
                         The summaries are as follows:
     
                         ${userAssignmentSummaries.map((summary) => JSON.stringify(summary)).join("\n")}
     
+                        Respond in the second person as if you informing the teacher of the student's performance.
+                    
                         Respond in JSON format with the following structure:
     
                         {
                             summary: <string>
                         }
+                        
+                        The summary should use markdown to format the text, bolding the most important information with asterisks.
                     `,
             }
         ],

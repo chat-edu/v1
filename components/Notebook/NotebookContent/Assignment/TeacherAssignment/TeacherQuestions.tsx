@@ -79,25 +79,25 @@ const TeacherQuestions: React.FC<Props> = ({ assignment }) => {
                         <Text>
                             Click to view and edit the questions for this assignment.
                         </Text>
-                        <SimpleGrid
-                            columns={2}
-                            spacing={4}
-                            w={'100%'}
-                            mt={4}
-                        >
-                            {
-                                assignment.questions.map((question, index) => (
-                                    <Text
-                                        key={question.question.id}
-                                        fontSize={'sm'}
-                                    >
-                                        {index + 1}) {question.question.question}
-                                    </Text>
-                                ))
-                            }
-                        </SimpleGrid>
                     </VStack>
                 </HStack>
+                <SimpleGrid
+                    columns={2}
+                    spacing={4}
+                    w={'100%'}
+                    mt={4}
+                >
+                    {
+                        assignment.questions.map((question, index) => (
+                            <Text
+                                key={question.question.id}
+                                fontSize={'sm'}
+                            >
+                                {index + 1}) {question.question.question}
+                            </Text>
+                        ))
+                    }
+                </SimpleGrid>
             </ClickableCard>
         </>
     );

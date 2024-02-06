@@ -1,5 +1,5 @@
-import {SubmissionRow} from "@/cosmosPostgres/types/submission";
-import {Submission} from "@/types/Submission";
+import {SubmissionRow, SubmissionRowWithQuestion} from "@/cosmosPostgres/types/submission";
+import {Submission, SubmissionWithQuestion} from "@/types/Submission";
 import {QuestionTypes} from "@/types/assignment/Question";
 
 export const transformSubmission = (submission: SubmissionRow, questionType: QuestionTypes): Submission => ({
@@ -11,3 +11,10 @@ export const transformSubmission = (submission: SubmissionRow, questionType: Que
     gradeExplanation: submission.grade_explanation,
     questionType,
 })
+
+export const transformSubmissionWithQuestion = (submission: SubmissionRowWithQuestion, questionType: QuestionTypes): SubmissionWithQuestion => ({
+    ...transformSubmission(submission, questionType),
+    question: submission.question,
+    questionNumber: submission.question_number,
+    assignmentId: submission.assignment_id,
+});

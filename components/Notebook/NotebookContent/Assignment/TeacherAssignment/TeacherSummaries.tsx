@@ -95,6 +95,12 @@ const TeacherSummaries: React.FC<Props> = ({ assignmentWithQuestions, questionMa
                             Click here to view all of your students&apos; submissions and their scores.
                         </Text>
                     </VStack>
+                    <Text
+                        fontSize={'xl'}
+                        fontWeight={'bold'}
+                    >
+                        {averageScorePercentage.toFixed(2)}%
+                    </Text>
                 </HStack>
                 <AssignmentSummary
                     assignmentId={assignmentWithQuestions.id}
