@@ -22,6 +22,7 @@ import useUser from "@/hooks/queries/user/useUser";
 import {User} from "@/types/User";
 import {Notebook} from "@/types/Notebook";
 import ClickableCard from "@/components/Utilities/ClickableCard";
+import StudentGrade from "@/components/Notebook/TeacherOverview/StudentsOverview/StudentGrade";
 
 interface Props {
     userId: User["id"],
@@ -112,18 +113,26 @@ const StudentOverview: React.FC<Props> = ({ userId, notebookId }) => {
             >
                 <HStack
                     w={'100%'}
-                    spacing={4}
+                    justifyContent={'space-between'}
                 >
-                    <Avatar
-                        src={userData.profilePictureUrl || ''}
-                        boxSize={'40px'}
-                    />
-                    <Text
-                        fontWeight={'bold'}
-                        fontSize={'lg'}
+                    <HStack
+                        spacing={4}
                     >
-                        {userData.name}
-                    </Text>
+                        <Avatar
+                            src={userData.profilePictureUrl || ''}
+                            boxSize={'40px'}
+                        />
+                        <Text
+                            fontWeight={'bold'}
+                            fontSize={'lg'}
+                        >
+                            {userData.name}
+                        </Text>
+                    </HStack>
+                    <StudentGrade
+                        userId={userData.id}
+                        notebookId={notebookId}
+                    />
                 </HStack>
                 <StudentSummary
                     userId={userId}

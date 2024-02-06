@@ -137,7 +137,10 @@ CREATE TABLE NotebookSummaries (
 );
 
 -- alter the assignments table to add a user_id column that defaults to null
-Select * from Assignments;
+Select * from Users;
+
+-- delete the user with id gh6kx
+DELETE FROM Users WHERE id = 'gh6kx';
 
 -- DROP ALL TABLES
 DROP TABLE IF EXISTS Scores;
