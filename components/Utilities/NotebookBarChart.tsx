@@ -24,7 +24,6 @@ const NotebookBarChart: React.FC<Props> = ({ notebookId, height }) => {
     const gradesData = useMemo(() => {
         const gradesData: {grade: string, "Students": number}[] = [];
         if(!userSubmissionsMap) return gradesData;
-        // for each grade, calculate the number of students who received that grade
         grades.forEach(grade => {
             let count = 0;
             for (const [_, submissions] of userSubmissionsMap) {
