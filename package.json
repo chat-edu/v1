@@ -39,6 +39,7 @@
     "react-icons": "^4.11.0",
     "react-markdown": "^8.0.0",
     "react-singleton-hook": "^4.0.1",
+    "recharts": "^2.11.0",
     "rehype-katex": "^7.0.0",
     "remark-gfm": "^3.0.1",
     "remark-math": "^6.0.0",

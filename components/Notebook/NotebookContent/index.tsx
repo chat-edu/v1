@@ -91,6 +91,7 @@ const NotebookContent: React.FC<Props> = ({ notebook, setOverviewMode }) => {
                         mode === Modes.CONTENT && selectedLesson && (
                             <Lesson
                                 selectedLesson={selectedLesson}
+                                selectNotes={selectNotes}
                             />
                         )
                     }

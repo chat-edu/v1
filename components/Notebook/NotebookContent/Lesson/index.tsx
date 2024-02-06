@@ -2,7 +2,7 @@ import React from 'react';
 
 import dynamic from "next/dynamic";
 
-import {Button, Container, Flex, Heading, HStack, Skeleton, Text} from "@chakra-ui/react";
+import {Button, Card, Container, Flex, Heading, HStack, Image, Skeleton, Text, Tooltip} from "@chakra-ui/react";
 
 import Markdown from "@/components/Utilities/Markdown";
 import {mobileNavbarHeight, navbarHeight} from "@/components/Layout/Navbar";
@@ -23,6 +23,7 @@ const Editor = dynamic(() => import('@/components/Utilities/Editor'), {
 
 interface Props {
     selectedLesson: Note
+    selectNotes: (notes: Note[]) => void
 }
 
 enum ViewModes {
@@ -30,7 +31,7 @@ enum ViewModes {
     PREVIEW = 'view'
 }
 
-const Lesson: React.FC<Props> = ({ selectedLesson }) => {
+const Lesson: React.FC<Props> = ({ selectedLesson, selectNotes }) => {
 
     const { user } = useAuth();
     const { isTeacher } = useUser(user?.id || '')
@@ -67,21 +68,47 @@ const Lesson: React.FC<Props> = ({ selectedLesson }) => {
                 md: height - navbarHeight
             }}
         >
-            <Flex
+            <Card
                 flexDirection={'column'}
                 w={'100%'}
                 position={'relative'}
                 overflow={'auto'}
                 h={'100%'}
                 gap={4}
+                alignItems={'flex-start'}
             >
                 <HStack
                     w={'100%'}
                     justifyContent={'space-between'}
                 >
-                    <Heading>
-                        {note.name}
-                    </Heading>
+                    <HStack
+                        spacing={4}
+                    >
+                        <Heading>
+                            {note.name}
+                        </Heading>
+                        <Tooltip
+                            label={'Ask Questions, Get Help, and Create Practice Problems'}
+                            aria-label={'Ask ChatEDU'}
+                        >
+                            <Button
+                                onClick={() => selectNotes([note])}
+                                colorScheme={'brand'}
+                                leftIcon={
+                                    <Image
+                                        src={'/logo.png'}
+                                        boxSize={'24px'}
+                                    />
+                                }
+                                p={4}
+                                justifyContent={'flex-start'}
+                                variant={'outline'}
+                            >
+                                Ask ChatEDU
+                            </Button>
+                        </Tooltip>
+                    </HStack>
+
                     {
                         isTeacher && (
                             <Button
@@ -104,7 +131,7 @@ const Lesson: React.FC<Props> = ({ selectedLesson }) => {
                         </Markdown>
                     )
                 }
-            </Flex>
+            </Card>
         </Container>
     );
 };

@@ -29,7 +29,6 @@ const StudentSubmission: React.FC<Props> = ({ submission }) => {
 
     const questionMap: QuestionMap = useMemo(() => {
         const map: { [key: number]: Question<any> } = {};
-        console.log(assignmentWithQuestions?.questions)
         assignmentWithQuestions?.questions.forEach(question => {
             map[question.question.id] = question;
         });
@@ -48,8 +47,6 @@ const StudentSubmission: React.FC<Props> = ({ submission }) => {
             />
         )
     }
-
-    console.log(questionMap)
 
     return (
         <Flex

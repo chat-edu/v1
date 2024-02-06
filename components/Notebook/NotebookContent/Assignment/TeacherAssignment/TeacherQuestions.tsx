@@ -88,14 +88,20 @@ const TeacherQuestions: React.FC<Props> = ({ assignment }) => {
                     mt={4}
                 >
                     {
-                        assignment.questions.map((question, index) => (
-                            <Text
-                                key={question.question.id}
-                                fontSize={'sm'}
-                            >
-                                {index + 1}) {question.question.question}
+                        assignment.questions.length > 0 ? (
+                            assignment.questions.map((question, index) => (
+                                <Text
+                                    key={question.question.id}
+                                    fontSize={'sm'}
+                                >
+                                    {index + 1}) {question.question.question}
+                                </Text>
+                            ))
+                        ) : (
+                            <Text>
+                                No questions have been added to this assignment.
                             </Text>
-                        ))
+                        )
                     }
                 </SimpleGrid>
             </ClickableCard>

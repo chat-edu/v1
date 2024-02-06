@@ -71,7 +71,9 @@ const TeacherSummaries: React.FC<Props> = ({ assignmentWithQuestions, questionMa
                 variant={'outline'}
                 w={'100%'}
             >
-                <HStack>
+                <HStack
+                    w={'100%'}
+                >
                     <Icon
                         as={TbReportAnalytics}
                         boxSize={'36px'}
@@ -95,12 +97,17 @@ const TeacherSummaries: React.FC<Props> = ({ assignmentWithQuestions, questionMa
                             Click here to view all of your students&apos; submissions and their scores.
                         </Text>
                     </VStack>
-                    <Text
-                        fontSize={'xl'}
-                        fontWeight={'bold'}
-                    >
-                        {averageScorePercentage.toFixed(2)}%
-                    </Text>
+                    {
+                        userSubmissions.length > 0 && (
+                            <Text
+                                fontSize={'xl'}
+                                fontWeight={'bold'}
+                                ml={'auto'}
+                            >
+                                {(averageScorePercentage * 100).toFixed(2)}%
+                            </Text>
+                        )
+                    }
                 </HStack>
                 <AssignmentSummary
                     assignmentId={assignmentWithQuestions.id}

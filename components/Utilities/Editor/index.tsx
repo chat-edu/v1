@@ -23,9 +23,13 @@ import {
 } from '@mdxeditor/editor';
 import '@mdxeditor/editor/style.css';
 
-import {Button, Card, Heading, HStack} from "@chakra-ui/react";
+import {Box, Button, Heading, HStack, IconButton} from "@chakra-ui/react";
 
 import "@/components/Utilities/Editor/editorContent.css";
+import FileInput from "@/components/Utilities/FormUtilities/FIleInput";
+import useProcessPdf from "@/hooks/utilities/useProcessPdf";
+import TooltipIconButton from "@/components/Utilities/TooltipIconButton";
+import {FaWandMagicSparkles} from "react-icons/fa6";
 
 interface Props {
     initialMarkdown: string,
@@ -44,12 +48,23 @@ const Editor: React.FC<Props> = ({ initialMarkdown, save }) => {
         }
     }, [initialMarkdown])
 
+    const { file, updateFile, extractedText, processFile, resetFile, isFileExtracting } = useProcessPdf();
+
+    useEffect(() => {
+        console.log(extractedText)
+        if(extractedText && ref.current) {
+            ref.current.setMarkdown(ref.current.getMarkdown() + '\n\n' + extractedText);
+        }
+    }, [extractedText]);
+
     return (
-        <Card
+        <Box
             w={'100%'}
             maxW={'100%'}
             p={4}
             gap={4}
+            display={'flex'}
+            flexDirection={'column'}
         >
             <HStack
                 w={'100%'}
@@ -60,13 +75,31 @@ const Editor: React.FC<Props> = ({ initialMarkdown, save }) => {
                 >
                     Editor
                 </Heading>
-                <Button
-                    onClick={() => save(markdown)}
-                    colorScheme={'brand'}
-                    isDisabled={markdown === initialMarkdown}
-                >
-                    Save
-                </Button>
+                <HStack>
+                    <FileInput
+                        setFile={updateFile}
+                        text={file ? file.name : 'Upload PDF'}
+                        accept={'.pdf'}
+                    />
+                    {
+                        file && (
+                            <TooltipIconButton
+                                aria-label={'Extract Text'}
+                                onClick={processFile}
+                                colorScheme={'brand'}
+                                isLoading={isFileExtracting}
+                                icon={<FaWandMagicSparkles />}
+                            />
+                        )
+                    }
+                    <Button
+                        onClick={() => save(markdown)}
+                        colorScheme={'brand'}
+                        isDisabled={markdown === initialMarkdown}
+                    >
+                        Save
+                    </Button>
+                </HStack>
             </HStack>
             <MDXEditor
                 markdown={markdown}
@@ -93,9 +126,9 @@ const Editor: React.FC<Props> = ({ initialMarkdown, save }) => {
                     })
                 ]}
                 contentEditableClassName={'editor-content'}
-                placeholder={'Start typing...'}
+                // placeholder={'Start typing...'}
             />
-        </Card>
+        </Box>
     )
 }
 

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 
 import {Button, HStack, Icon, Skeleton, Text, useToast, VStack} from "@chakra-ui/react";
+import {FaWandMagicSparkles} from "react-icons/fa6";
 
 import useNotebookSummary from "@/hooks/queries/summaries/useNotebookSummary";
 
@@ -10,7 +11,6 @@ import {
 } from "@/services/summaries";
 
 import {Notebook} from "@/types/Notebook";
-import {IoMdRefreshCircle} from "react-icons/io";
 import TooltipIconButton from "@/components/Utilities/TooltipIconButton";
 import Markdown from "@/components/Utilities/Markdown";
 
@@ -116,10 +116,10 @@ const NotebookSummary: React.FC<Props> = ({ notebookId }) => {
             {
                 notebookSummary && (
                     <TooltipIconButton
-                        aria-label={'Regenerate Summary'}
+                        aria-label={'Regenerate Notebook Summary'}
                         icon={
                             <Icon
-                                as={IoMdRefreshCircle}
+                                as={FaWandMagicSparkles}
                                 boxSize={'36px'}
                                 color={'brand.500'}
                             />

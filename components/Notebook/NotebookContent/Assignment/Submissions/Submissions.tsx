@@ -8,6 +8,8 @@ import useSubmissions from "@/hooks/queries/submissions/useSubmissions";
 
 import {QuestionMap} from "@/types/assignment/Question";
 import {AssignmentWithQuestions} from "@/types/assignment/Assignment";
+import BarChart from "@/components/Utilities/BarChart";
+import {calculateGrade, grades} from "@/lib/grades";
 
 interface Props {
     assignmentWithQuestions: AssignmentWithQuestions;
@@ -26,6 +28,19 @@ const Submissions: React.FC<Props> = ({ assignmentWithQuestions, questionMap}) =
             <Heading>
                 Submissions
             </Heading>
+            <BarChart
+                height={150}
+                width={"100%"}
+                data={grades.map((grade, index) => ({
+                    grade: grade.grade,
+                    "Assignments": userSubmissions.filter(submission => calculateGrade(
+                        submission.submissions.reduce((acc, submission) => acc + (submission.points ? submission.points : 0), 0),
+                        submission.submissions.length
+                    ) === grade.grade).length
+                }))}
+                labelKey={'grade'}
+                valueKey={'Assignments'}
+            />
             {
                 userSubmissions.map(userSubmission => (
                     <Submission

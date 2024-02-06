@@ -30,7 +30,7 @@ const TeacherNotebook: React.FC<Props> = ({ notebook }) => {
         <Container
             flex={1}
             w={'100%'}
-            maxW={'6xl'}
+            maxW={'4xl'}
             py={8}
         >
             <TeacherOverview

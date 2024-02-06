@@ -11,8 +11,6 @@ export const POST = async (req: Request, { params }: {params: NotebookIdParams})
         return Response.json({error: "No response from GPT-4"}, {status: 500});
     }
 
-    console.log(params.notebookId, summary);
-
     return Response.json(await addNotebookSummary({
         notebook_id: params.notebookId,
         summary: summary

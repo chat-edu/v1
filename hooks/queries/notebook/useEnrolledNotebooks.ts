@@ -9,8 +9,6 @@ const useEnrolledNotebooks = (userId: User["id"]) => {
         transformNotebook
     );
 
-    console.log(userId, notebooks);
-
     return {
         notebooks,
         loading,

@@ -8,7 +8,7 @@ import {
     useToast,
     VStack
 } from "@chakra-ui/react";
-import {IoMdRefreshCircle} from "react-icons/io";
+import {FaWandMagicSparkles} from "react-icons/fa6";
 
 import Markdown from "@/components/Utilities/Markdown";
 import TooltipIconButton from "@/components/Utilities/TooltipIconButton";
@@ -121,10 +121,10 @@ const StudentSummary: React.FC<Props> = ({ userId, notebookId }) => {
             {
                 userNotebookSummary && (
                     <TooltipIconButton
-                        aria-label={'Regenerate Summary'}
+                        aria-label={'Regenerate Student Summary'}
                         icon={
                             <Icon
-                                as={IoMdRefreshCircle}
+                                as={FaWandMagicSparkles}
                                 boxSize={'36px'}
                                 color={'brand.500'}
                             />

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 import {Button, HStack, Icon, Skeleton, Text, useToast, VStack} from "@chakra-ui/react";
-import {IoMdRefreshCircle} from "react-icons/io";
+import {FaWandMagicSparkles} from "react-icons/fa6";
 
 import TooltipIconButton from "@/components/Utilities/TooltipIconButton";
 
@@ -113,10 +113,10 @@ const AssignmentSummary: React.FC<Props> = ({ assignmentId }) => {
             {
                 assignmentSummary && (
                     <TooltipIconButton
-                        aria-label={'Regenerate Summary'}
+                        aria-label={'Regenerate Assignment Summary'}
                         icon={
                             <Icon
-                                as={IoMdRefreshCircle}
+                                as={FaWandMagicSparkles}
                                 boxSize={'36px'}
                                 color={'brand.500'}
                             />

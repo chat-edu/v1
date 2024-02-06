@@ -78,3 +78,17 @@ export const findUserSubmissionsByNotebook = async (userId: UserRow["id"], noteb
         WHERE s.user_id = $1 AND a.topic_id IN (SELECT id FROM topics WHERE notebook_id = $2);`
     return find<SubmissionRowWithQuestion>(query, [userId, notebookId])
 }
+
+export const findSubmissionsByNotebook = async (notebookId: NotebookRow["id"], questionType: QuestionTypes) => {
+    const query = `
+        SELECT
+            s.*,
+            q.question,
+            q.question_number,
+            a.id as assignment_id
+        FROM ${questionType === QuestionTypes.FreeResponse ? FREE_RESPONSE_SUBMISSIONS_TABLE : MULTIPLE_CHOICE_SUBMISSIONS_TABLE} as s
+        JOIN ${questionType === QuestionTypes.FreeResponse ? FREE_RESPONSE_QUESTIONS_TABLE : MULTIPLE_CHOICE_QUESTIONS_TABLE} as q ON s.question_id = q.id
+        JOIN assignments as a ON q.assignment_id = a.id
+        WHERE a.topic_id IN (SELECT id FROM topics WHERE notebook_id = $1);`
+    return find<SubmissionRowWithQuestion>(query, [notebookId])
+}

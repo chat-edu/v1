@@ -22,15 +22,15 @@ const TeacherOverview: React.FC<Props> = ({ notebook, setContentMode }) => {
             <NotebookHeader
                 notebook={notebook}
             />
+            <ContentOverview
+                notebookId={notebook.id}
+                setContentMode={setContentMode}
+            />
             <NotebookOverview
                 notebookId={notebook.id}
             />
             <StudentsOverview
                 notebookId={notebook.id}
-            />
-            <ContentOverview
-                notebookId={notebook.id}
-                setContentMode={setContentMode}
             />
         </VStack>
     );
