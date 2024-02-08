@@ -88,24 +88,27 @@ const AssignmentSummary: React.FC<Props> = ({ assignmentId }) => {
                 align={'flex-start'}
                 spacing={0}
             >
-                <Text
-                    fontSize={'sm'}
-                    fontWeight={'bold'}
-                >
-                    Performance Summary
-                </Text>
                 {
                     assignmentSummary ? (
-                        <Markdown>
-                            {assignmentSummary.summary}
-                        </Markdown>
+                        <>
+                            <Text
+                                fontSize={'sm'}
+                                fontWeight={'bold'}
+                            >
+                                Performance Summary
+                            </Text>
+                            <Markdown>
+                                {assignmentSummary.summary}
+                            </Markdown>
+                        </>
                     ) : (
                         <Button
                             onClick={generateSummary}
                             flexShrink={0}
                             isLoading={isRegenerating}
+                            colorScheme={'brand'}
                         >
-                            Generate Summary
+                            Generate Assignment Summary
                         </Button>
                     )
                 }

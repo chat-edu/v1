@@ -112,8 +112,10 @@ const StudentSummary: React.FC<Props> = ({ userId, notebookId }) => {
                         <Button
                             onClick={generateSummary}
                             flexShrink={0}
+                            isLoading={isRegenerating}
+                            colorScheme={'brand'}
                         >
-                            Generate Summary
+                            Generate Student Summary
                         </Button>
                     )
                 }

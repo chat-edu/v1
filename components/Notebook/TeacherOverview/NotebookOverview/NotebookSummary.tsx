@@ -92,23 +92,28 @@ const NotebookSummary: React.FC<Props> = ({ notebookId }) => {
                 flex={1}
                 spacing={0}
             >
-                <Text
-                    fontSize={'sm'}
-                    fontWeight={'bold'}
-                >
-                    Class Summary
-                </Text>
                 {
                     notebookSummary ? (
-                        <Markdown>
-                            {notebookSummary.summary}
-                        </Markdown>
+                        <>
+                            <Text
+                                fontSize={'sm'}
+                                fontWeight={'bold'}
+                            >
+                                Class Summary
+                            </Text>
+                            <Markdown>
+                                {notebookSummary.summary}
+                            </Markdown>
+                        </>
+
                     ) : (
                         <Button
                             onClick={generateSummary}
                             flexShrink={0}
+                            isLoading={isRegenerating}
+                            colorScheme={'brand'}
                         >
-                            Generate Summary
+                            Generate Classroom Summary
                         </Button>
                     )
                 }
