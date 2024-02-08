@@ -7,6 +7,7 @@ import { SessionProvider } from "next-auth/react"
 import theme from "@/theme";
 
 import type { AppProps } from 'next/app'
+import {CurrentUserProvider} from "@/contexts/CurrentUserContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -17,7 +18,9 @@ export default function App({ Component, pageProps }: AppProps) {
               theme={theme}
           >
               <Analytics />
-              <Component {...pageProps} />
+                <CurrentUserProvider>
+                    <Component {...pageProps} />
+                </CurrentUserProvider>
           </ChakraProvider>
       </SessionProvider>
   )

@@ -9,8 +9,7 @@ import SectionBlock from "@/components/Utilities/SectionBlock";
 import AuthProviderButtons from "@/components/Utilities/AuthButtons/AuthProviderButtons";
 import AddEnrollmentCard from "@/components/AddModals/AddEnrollment/AddEnrollmentCard";
 
-import useAuth from "@/hooks/useAuth";
-import useUser from "@/hooks/queries/user/useUser";
+import {useCurrentUser} from "@/contexts/CurrentUserContext";
 
 import {Notebook} from "@/types/Notebook";
 
@@ -28,8 +27,7 @@ interface Props<NotebookType extends Notebook> {
 
 const NotebookGrid = <NotebookType extends Notebook>({ heading, headingRightComponent, notebooks, loading, onClick, noNotebooksComponent, rightComponent, addNotebook, authGate}: Props<NotebookType>) => {
 
-    const { user } = useAuth();
-    const { isTeacher } = useUser(user?.id || '')
+    const { isTeacher, user } = useCurrentUser();
 
     return (
         <SectionBlock

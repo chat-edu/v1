@@ -12,9 +12,9 @@ import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
 import useUpdateNote from "@/hooks/mutators/update/useUpdateNote";
 import useNote from "@/hooks/queries/notes/useNote";
 
+import {useCurrentUser} from "@/contexts/CurrentUserContext";
+
 import {Note} from "@/types/Note";
-import useAuth from "@/hooks/useAuth";
-import useUser from "@/hooks/queries/user/useUser";
 
 
 const Editor = dynamic(() => import('@/components/Utilities/Editor'), {
@@ -33,8 +33,7 @@ enum ViewModes {
 
 const Lesson: React.FC<Props> = ({ selectedLesson, selectNotes }) => {
 
-    const { user } = useAuth();
-    const { isTeacher } = useUser(user?.id || '')
+    const { isTeacher } = useCurrentUser();
 
     const { height } = useViewportDimensions();
 

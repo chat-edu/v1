@@ -2,18 +2,19 @@ import React from 'react';
 
 import {Button, Text, VStack} from "@chakra-ui/react";
 
+import TypewriterAnimation from "@/components/Utilities/TypewriterAnimation";
+
 import MultipleChoiceQuestion from "@/components/Notebook/NotebookContent/Assignment/Questions/MultipleChoiceQuestion";
 import FreeResponseQuestion from "@/components/Notebook/NotebookContent/Assignment/Questions/FreeResponseQuestion";
 
-import useUser from "@/hooks/queries/user/useUser";
-import useAuth from "@/hooks/useAuth";
 import useAddSubmission from "@/hooks/mutators/add/useAddSubmission";
+
+import {useCurrentUser} from "@/contexts/CurrentUserContext";
 
 import {MultipleChoiceQuestion as MultipleChoiceQuestionType} from "@/types/assignment/MultipleChoiceQuestion";
 import {AssignmentWithQuestions} from "@/types/assignment/Assignment";
 import {QuestionTypes} from "@/types/assignment/Question"
 import {FreeResponseQuestion as FreeResponseQuestionType} from "@/types/assignment/FreeResponseQuestion";
-import TypewriterAnimation from "@/components/Utilities/TypewriterAnimation";
 
 interface Props {
     assignmentWithQuestions: AssignmentWithQuestions
@@ -21,8 +22,7 @@ interface Props {
 
 const Questions: React.FC<Props> = ({ assignmentWithQuestions }) => {
 
-    const { user } = useAuth();
-    const { isTeacher } = useUser(user?.id || '');
+    const { isTeacher } = useCurrentUser();
 
     const { setAnswer, submit, submissionLoading } = useAddSubmission(assignmentWithQuestions);
 

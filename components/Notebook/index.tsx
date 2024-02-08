@@ -4,13 +4,13 @@ import {Text} from "@chakra-ui/react";
 
 import NotebookContent from "@/components/Notebook/NotebookContent";
 import Loading from "@/components/Utilities/Loading";
+import TeacherNotebook from "@/components/Notebook/TeacherNotebook";
 
 import useNotebook from "@/hooks/queries/notebook/useNotebook";
 
+import {useCurrentUser} from "@/contexts/CurrentUserContext";
+
 import {Notebook as NotebookType} from "@/types/Notebook";
-import useAuth from "@/hooks/useAuth";
-import useUser from "@/hooks/queries/user/useUser";
-import TeacherNotebook from "@/components/Notebook/TeacherNotebook";
 
 interface Props {
     notebookId: NotebookType["id"],
@@ -19,8 +19,7 @@ interface Props {
 
 const Notebook: React.FC<Props> = ({ notebookId }) => {
 
-    const { user } = useAuth();
-    const { isTeacher } = useUser(user?.id || '');
+    const { isTeacher } = useCurrentUser();
 
     const { notebook, loading } = useNotebook(notebookId);
 

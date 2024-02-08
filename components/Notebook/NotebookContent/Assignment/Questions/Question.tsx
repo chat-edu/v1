@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 
 import {Button, Flex} from "@chakra-ui/react";
-import useAuth from "@/hooks/useAuth";
-import useUser from "@/hooks/queries/user/useUser";
+
+import {useCurrentUser} from "@/contexts/CurrentUserContext";
 
 
 interface EditComponentProps {
@@ -22,8 +22,7 @@ enum Modes {
 
 const Question: React.FC<Props> = ({ viewComponent, editComponent, onConfirm }) => {
 
-    const { user } = useAuth();
-    const { isTeacher } = useUser(user?.id || '')
+    const { isTeacher } = useCurrentUser();
 
     const [isHovering, setIsHovering] = useState<boolean>(false)
     const [mode, setMode] = useState<Modes>(Modes.VIEW)

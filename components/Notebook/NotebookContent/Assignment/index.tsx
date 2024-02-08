@@ -6,8 +6,8 @@ import UserAssignment from "@/components/Notebook/NotebookContent/Assignment/Use
 import TeacherAssignment from "@/components/Notebook/NotebookContent/Assignment/TeacherAssignment";
 
 import useAssignment from "@/hooks/queries/assignment/useAssignment";
-import useAuth from "@/hooks/useAuth";
-import useUser from "@/hooks/queries/user/useUser";
+
+import {useCurrentUser} from "@/contexts/CurrentUserContext";
 
 import {Question, QuestionMap} from "@/types/assignment/Question";
 import { Assignment as AssignmentType } from "@/types/assignment/Assignment";
@@ -19,8 +19,8 @@ interface Props {
 
 const Assignment: React.FC<Props> = ({ assignment }) => {
 
-    const { user } = useAuth();
-    const { isTeacher } = useUser(user?.id || '');
+    const { isTeacher } = useCurrentUser();
+
     const [questionMapLoading, setQuestionMapLoading] = React.useState<boolean>(true);
 
     const { assignmentWithQuestions, loading } = useAssignment(assignment.id);

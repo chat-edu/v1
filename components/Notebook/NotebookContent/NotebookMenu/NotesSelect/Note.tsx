@@ -7,13 +7,13 @@ import {FaEllipsisH} from "react-icons/fa";
 
 import ChatWithNotesButton from "@/components/Notebook/NotebookContent/NotebookMenu/NotesSelect/Buttons/ChatWithNotesButton";
 import DeleteButton from "@/components/Notebook/NotebookContent/NotebookMenu/NotesSelect/Buttons/DeleteButton";
+import UpdateNoteButton from "@/components/Notebook/NotebookContent/NotebookMenu/NotesSelect/Buttons/UpdateNoteButton";
 
 import useDeleteNote from "@/hooks/mutators/delete/useDeleteNote";
 
+import {useCurrentUser} from "@/contexts/CurrentUserContext";
+
 import {Note as NoteType} from "@/types/Note";
-import useAuth from "@/hooks/useAuth";
-import useUser from "@/hooks/queries/user/useUser";
-import UpdateNoteButton from "@/components/Notebook/NotebookContent/NotebookMenu/NotesSelect/Buttons/UpdateNoteButton";
 
 interface Props {
     note: NoteType,
@@ -24,8 +24,7 @@ interface Props {
 
 const Note: React.FC<Props> = ({ note, onSelect, selected, selectNotes }) => {
 
-    const { user } = useAuth();
-    const { isTeacher } = useUser(user?.id || '')
+    const { isTeacher } = useCurrentUser();
 
     const [isHovering, setIsHovering] = useState(false);
 

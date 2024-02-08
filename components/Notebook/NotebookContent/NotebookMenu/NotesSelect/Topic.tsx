@@ -9,6 +9,7 @@ import {
     HStack, Icon, IconButton, Menu, MenuButton, MenuItem, MenuList,
     Text, VStack
 } from "@chakra-ui/react";
+import {FaEllipsisH} from "react-icons/fa";
 
 import AddNoteButton from "@/components/Notebook/NotebookContent/NotebookMenu/NotesSelect/Buttons/AddNoteButton";
 import AddTopicButton from "@/components/Notebook/NotebookContent/NotebookMenu/NotesSelect/Buttons/AddTopicButton";
@@ -17,17 +18,15 @@ import ChatWithNotesButton from "@/components/Notebook/NotebookContent/NotebookM
 import Note from "@/components/Notebook/NotebookContent/NotebookMenu/NotesSelect/Note";
 import Assignment from "@/components/Notebook/NotebookContent/NotebookMenu/NotesSelect/Assignment";
 import DeleteButton from "@/components/Notebook/NotebookContent/NotebookMenu/NotesSelect/Buttons/DeleteButton";
+import UpdateTopicButton from "@/components/Notebook/NotebookContent/NotebookMenu/NotesSelect/Buttons/UpdateTopicButton";
 
 import useAssignments from "@/hooks/queries/assignment/useAssignments";
 import useDeleteTopic from "@/hooks/mutators/delete/useDeleteTopic";
 
+import {useCurrentUser} from "@/contexts/CurrentUserContext";
+
 import {TopicHierarchy} from "@/types/Topic";
 import {Note as NoteType} from "@/types/Note";
-import {FaEllipsisH} from "react-icons/fa";
-import useUser from "@/hooks/queries/user/useUser";
-import useAuth from "@/hooks/useAuth";
-import UpdateTopicButton
-    from "@/components/Notebook/NotebookContent/NotebookMenu/NotesSelect/Buttons/UpdateTopicButton";
 
 interface Props {
     topicHierarchy: TopicHierarchy,
@@ -42,8 +41,7 @@ interface Props {
 
 const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectedNotes, selectLesson, deselectLesson, selectNotes, selectedAssignment, selectAssignment }) => {
 
-    const { user } = useAuth();
-    const { isTeacher } = useUser(user?.id || '');
+    const { isTeacher } = useCurrentUser();
 
     const [isHovering, setIsHovering] = React.useState(false);
 

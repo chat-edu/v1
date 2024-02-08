@@ -1,38 +1,25 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import {Box, Flex} from "@chakra-ui/react";
-
-import {useRouter} from "next/navigation";
 
 import Navbar, { navbarHeight, mobileNavbarHeight } from "@/components/Layout/Navbar";
 import Loading from "@/components/Utilities/Loading";
 import {mobileHeaderHeight} from "@/components/Notebook/NotebookContent/NotebookMenu/MobileHeader";
 
-import useAuth from "@/hooks/useAuth";
 import useViewportDimensions from "@/hooks/utilities/useViewportDimensions";
-import useUser from "@/hooks/queries/user/useUser";
+
+import {useCurrentUser} from "@/contexts/CurrentUserContext";
 
 
 interface Props {
     children: React.ReactElement,
-    isOnboarding?: boolean
 }
 
-const Layout: React.FC<Props> = ({ children, isOnboarding }) => {
-
-    const { user, loading: authLoading } = useAuth();
+const Layout: React.FC<Props> = ({ children }) => {
 
     const { height } = useViewportDimensions();
 
-    const { userData, loading: userDataLoading } = useUser(user?.id || '');
-
-    const router = useRouter();
-
-    useEffect(() => {
-        if(user && userData === null && !userDataLoading && !isOnboarding) {
-            router.replace('/onboarding')
-        }
-    }, [user, userData, userDataLoading, router]);
+    const { loading } = useCurrentUser();
 
     return (
         <Box
@@ -51,7 +38,7 @@ const Layout: React.FC<Props> = ({ children, isOnboarding }) => {
                 position={'relative'}
             >
                 <Loading
-                    loading={authLoading || userDataLoading || (Boolean(user) && !userData && !isOnboarding)}
+                    loading={loading}
                     h={'100%'}
                 >
                     {children}

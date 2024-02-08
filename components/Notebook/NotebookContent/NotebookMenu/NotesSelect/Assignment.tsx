@@ -7,9 +7,9 @@ import DeleteButton from "@/components/Notebook/NotebookContent/NotebookMenu/Not
 
 import useDeleteAssignment from "@/hooks/mutators/delete/useDeleteAssignment";
 
+import {useCurrentUser} from "@/contexts/CurrentUserContext";
+
 import {Assignment} from "@/types/assignment/Assignment";
-import useAuth from "@/hooks/useAuth";
-import useUser from "@/hooks/queries/user/useUser";
 
 interface Props {
     assignment: Assignment,
@@ -19,8 +19,7 @@ interface Props {
 
 const Assignment: React.FC<Props> = ({ assignment, selectAssignment, selected }) => {
 
-    const { user } = useAuth();
-    const { isTeacher } = useUser(user?.id || '');
+    const { isTeacher } = useCurrentUser();
 
     const { deleteAssignment } = useDeleteAssignment(assignment);
 
