@@ -83,6 +83,7 @@ const Lesson: React.FC<Props> = ({ selectedLesson, selectNotes }) => {
                 >
                     <HStack
                         spacing={4}
+                        flex={1}
                     >
                         <Heading>
                             {note.name}
@@ -90,6 +91,7 @@ const Lesson: React.FC<Props> = ({ selectedLesson, selectNotes }) => {
                         <Tooltip
                             label={'Ask Questions, Get Help, and Create Practice Problems'}
                             aria-label={'Ask ChatEDU'}
+                            flexShrink={0}
                         >
                             <Button
                                 onClick={() => selectNotes([note])}
@@ -104,12 +106,12 @@ const Lesson: React.FC<Props> = ({ selectedLesson, selectNotes }) => {
                                 p={4}
                                 justifyContent={'flex-start'}
                                 variant={'outline'}
+                                flexShrink={0}
                             >
                                 Ask ChatEDU
                             </Button>
                         </Tooltip>
                     </HStack>
-
                     {
                         isTeacher && (
                             <Button

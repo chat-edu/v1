@@ -1,15 +1,21 @@
 import {NotebookRow, UserRow} from "@/cosmosPostgres/types";
 import {
-    findUserAssignmentSummariesByNotebookId,
     findUserAssignmentSummariesByUserId
 } from "@/cosmosPostgres/services/summaries";
 import openai from "@/openai";
+import {getUser} from "@/cosmosPostgres/services/user";
 
 export const generateUserNotebookSummary = async (
     notebook_id: NotebookRow["id"],
     user_id: UserRow["id"]
 ): Promise<string | null> => {
     const userAssignmentSummaries = await findUserAssignmentSummariesByUserId(user_id, notebook_id);
+
+    const user = await getUser(user_id);
+
+    if (user === null) {
+        return null;
+    }
 
     const response = await openai.chat.completions.create({
         model: process.env.GPT_MODEL_ID as string,
@@ -18,6 +24,8 @@ export const generateUserNotebookSummary = async (
                 role: "system",
                 content: `
                         The student has completed several assignments and their responses have been graded and summarized.
+                        
+                        The student's name is *${user.name}*.
     
                         Your goal is to provide a two sentence summary of the student's performance and understanding of the class material, which will inform the teacher of the student's understanding and knowledge gaps.
     

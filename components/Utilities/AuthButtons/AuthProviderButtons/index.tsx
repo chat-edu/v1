@@ -1,22 +1,13 @@
 import React from 'react';
 
-import {VStack} from "@chakra-ui/react";
+import {HStack} from "@chakra-ui/react";
 
 import AuthProviderButton from "@/components/Utilities/AuthButtons/AuthProviderButtons/AuthProviderButton";
 import authProviderButtons from "@/components/Utilities/AuthButtons/buttons";
 
-interface Props {
-    width?: string
-}
-
-const AuthProviderButtons: React.FC<Props> = ({ width = '75%'}) => {
+const AuthProviderButtons: React.FC = () => {
     return (
-        <VStack
-            w={{
-                base: '100%',
-                md: width
-            }}
-        >
+        <HStack>
             {
                 authProviderButtons.map(providerButton => (
                     <AuthProviderButton
@@ -25,7 +16,7 @@ const AuthProviderButtons: React.FC<Props> = ({ width = '75%'}) => {
                     />
                 ))
             }
-        </VStack>
+        </HStack>
     )
 };
 

@@ -9,14 +9,20 @@ import Link from "next/link";
 
 import {Notebook} from "@/types/Notebook";
 import NotebookBarChart from "@/components/Utilities/NotebookBarChart";
+import StudentSubmissions from "@/components/Notebook/TeacherOverview/StudentsOverview/StudentSubmissions";
+import useAuth from "@/hooks/useAuth";
 
 interface Props {
     notebook: Notebook,
     rightComponent?: React.ReactNode,
-    onClick: () => void
+    onClick: () => void,
+    isTeacher: boolean
 }
 
-const NotebookCard: React.FC<Props> = ({ notebook, rightComponent }) => {
+const NotebookCard: React.FC<Props> = ({ notebook, rightComponent, isTeacher }) => {
+
+    const { user } = useAuth();
+
     return (
         <Link
             href={`/notebooks/${notebook.id}`}
@@ -71,10 +77,21 @@ const NotebookCard: React.FC<Props> = ({ notebook, rightComponent }) => {
                         {rightComponent}
                     </VStack>
                 </HStack>
-                <NotebookBarChart
-                    notebookId={notebook.id}
-                    height={100}
-                />
+                {
+                    isTeacher ? (
+                        <NotebookBarChart
+                            notebookId={notebook.id}
+                            height={100}
+                        />
+                    ) : (
+                        <StudentSubmissions
+                            userId={user?.id || ""}
+                            notebookId={notebook.id}
+                            height={100}
+                            hideHeader
+                        />
+                    )
+                }
             </ClickableCard>
         </Link>
     );

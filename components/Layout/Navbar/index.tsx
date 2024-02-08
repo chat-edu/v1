@@ -60,9 +60,7 @@ const Navbar: React.FC = () => {
                     </Heading>
                 </HStack>
             </Link>
-            <HStack
-                justify={'flex-end'}
-            >
+            <HStack>
                 <AuthButton />
                 <ColorModeToggle />
             </HStack>

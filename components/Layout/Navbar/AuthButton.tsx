@@ -1,7 +1,7 @@
 import React from 'react'
 
-import AuthProviderIconButtons from "@/components/Utilities/AuthButtons/AuthProviderIconButtons";
 import Profile from "@/components/Layout/Navbar/Profile";
+import AuthProviderButtons from "@/components/Utilities/AuthButtons/AuthProviderButtons";
 
 import useAuth from "@/hooks/useAuth";
 
@@ -11,7 +11,7 @@ const AuthButton = () => {
 
     if(!user) {
         return (
-            <AuthProviderIconButtons />
+            <AuthProviderButtons />
         )
     }
 

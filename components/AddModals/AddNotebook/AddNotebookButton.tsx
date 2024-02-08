@@ -17,7 +17,7 @@ const AddNotebookButton: React.FC<ButtonProps> = (buttonProps) => {
                 leftIcon={<SmallAddIcon />}
                 {...buttonProps}
             >
-                Add Notebook
+                Add Classroom
             </Button>
             <AddNotebookModal
                 isOpen={isOpen}

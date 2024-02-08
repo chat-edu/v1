@@ -1,13 +1,14 @@
 import React, {useMemo} from 'react';
 
+import {Skeleton} from "@chakra-ui/react";
+
+import BarChart from "@/components/Utilities/BarChart";
+
 import useNotebookSubmissions from "@/hooks/queries/submissions/useNotebookSubmissions";
 
 import {calculateGrade, grades} from "@/lib/grades";
+
 import {Notebook} from "@/types/Notebook";
-import BarChart from "@/components/Utilities/BarChart";
-import {Skeleton} from "@chakra-ui/react";
-import useAuth from "@/hooks/useAuth";
-import useUser from "@/hooks/queries/user/useUser";
 
 interface Props {
     notebookId: Notebook["id"],
@@ -15,9 +16,6 @@ interface Props {
 }
 
 const NotebookBarChart: React.FC<Props> = ({ notebookId, height }) => {
-
-    const { user } = useAuth();
-    const { isTeacher, loading: userDataLoading } = useUser(user?.id || '')
 
     const { userSubmissionsMap, loading } = useNotebookSubmissions(notebookId);
 
@@ -44,7 +42,7 @@ const NotebookBarChart: React.FC<Props> = ({ notebookId, height }) => {
         return gradesData;
     }, [userSubmissionsMap])
 
-    if(loading || userDataLoading) {
+    if(loading) {
         return (
             <Skeleton
                 height={`${height}px`}
@@ -52,8 +50,6 @@ const NotebookBarChart: React.FC<Props> = ({ notebookId, height }) => {
             />
         )
     }
-
-    if(!isTeacher) return null;
 
     return (
         <BarChart

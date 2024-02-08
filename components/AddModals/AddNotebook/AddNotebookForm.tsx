@@ -37,8 +37,8 @@ const AddNotebookForm: React.FC<Props> = ({ onSuccess }) => {
         >
             <TextInput
                 label={'Classroom Name'}
-                placeholder={'Ex: Math Period A'}
-                helperText={'Enter the name of the notebook'}
+                placeholder={'Ex: Computer Science'}
+                helperText={'Enter the name of your Classroom'}
                 value={values.name}
                 onChange={(name) => setFieldValue('name', name)}
                 onBlur={() => setFieldTouched('name')}

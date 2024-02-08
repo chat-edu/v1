@@ -79,9 +79,7 @@ const NotebookGrid = <NotebookType extends Notebook>({ heading, headingRightComp
                                             >
                                                 Sign In or Sign Up
                                             </Text>
-                                            <AuthProviderButtons
-                                                width={'100%'}
-                                            />
+                                            <AuthProviderButtons />
                                         </VStack>
                                     </Card>
                                 ) : (
@@ -102,6 +100,7 @@ const NotebookGrid = <NotebookType extends Notebook>({ heading, headingRightComp
                                                     notebook={notebook}
                                                     rightComponent={rightComponent ? rightComponent(notebook, index) : undefined}
                                                     onClick={() => onClick(notebook)}
+                                                    isTeacher={isTeacher}
                                                 />
                                             ))
                                         }

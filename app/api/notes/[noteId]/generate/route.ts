@@ -3,6 +3,7 @@ import openai from "@/openai";
 import {NoteIdParams} from "@/app/api/notes/[noteId]/NoteIdParams";
 import {getNote} from "@/cosmosPostgres/services/notes";
 import {getTopic} from "@/cosmosPostgres/services/topic";
+import {getNotebook} from "@/cosmosPostgres/services/notebooks";
 
 export const POST = async (req: Request, { params }: { params: NoteIdParams}) => {
 
@@ -14,6 +15,8 @@ export const POST = async (req: Request, { params }: { params: NoteIdParams}) =>
 
     const parentTopic = await getTopic(note.topic_id || 0);
 
+    const notebook = await getNotebook(note.notebook_id);
+
     const response = await openai.chat.completions.create({
         model: process.env.GPT_MODEL_ID as string,
         messages: [
@@ -21,6 +24,8 @@ export const POST = async (req: Request, { params }: { params: NoteIdParams}) =>
                 role: "system",
                 content: `
                     Your goal is to generate more content for a note about ${note.name} on the topic of ${parentTopic?.name}.
+                    
+                    The note is part of a class about ${notebook?.name}
 
                     The note is ${note.content.length === 0 
                         ? "currently empty. Create a note that will be used to teach students." 

@@ -98,6 +98,7 @@ const StudentOverview: React.FC<Props> = ({ userId, notebookId }) => {
                             <StudentSubmissions
                                 userId={userId}
                                 notebookId={notebookId}
+                                showSubmissions
                             />
                         </VStack>
                     </ModalBody>

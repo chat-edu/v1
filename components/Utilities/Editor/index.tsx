@@ -15,11 +15,16 @@ import {
     directivesPlugin,
     frontmatterPlugin,
     imagePlugin,
-    KitchenSinkToolbar,
     linkDialogPlugin,
     tablePlugin,
     thematicBreakPlugin,
-    toolbarPlugin
+    toolbarPlugin,
+    BoldItalicUnderlineToggles,
+    BlockTypeSelect,
+    CreateLink,
+    CodeToggle,
+    InsertCodeBlock,
+    InsertTable, ListsToggle
 } from '@mdxeditor/editor';
 import '@mdxeditor/editor/style.css';
 
@@ -125,12 +130,22 @@ const Editor: React.FC<Props> = ({ note, save }) => {
                     thematicBreakPlugin(),
                     frontmatterPlugin(),
                     codeBlockPlugin({ defaultCodeBlockLanguage: 'txt' }),
-                    codeMirrorPlugin({ codeBlockLanguages: { js: 'JavaScript', css: 'CSS', txt: 'text', tsx: 'TypeScript' } }),
+                    codeMirrorPlugin({ codeBlockLanguages: { js: 'JavaScript', css: 'CSS', txt: 'text', tsx: 'TypeScript', java: "Java", python: "Python" } }),
                     directivesPlugin({ directiveDescriptors: [AdmonitionDirectiveDescriptor] }),
                     markdownShortcutPlugin(),
                     toolbarPlugin({
                         toolbarContents: () => (
-                            <KitchenSinkToolbar />
+                            <HStack
+                                maxW={'100%'}
+                            >
+                                <BlockTypeSelect />
+                                <BoldItalicUnderlineToggles />
+                                <CodeToggle />
+                                <CreateLink />
+                                <InsertCodeBlock />
+                                <InsertTable />
+                                <ListsToggle />
+                            </HStack>
                         )
                     })
                 ]}
