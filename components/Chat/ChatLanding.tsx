@@ -45,9 +45,7 @@ const HomeLanding = () => {
                         >
                             Sign in to get started!
                         </Text>
-                        <AuthProviderButtons
-                            width={'100%'}
-                        />
+                        <AuthProviderButtons />
                     </VStack>
                 )
             }
