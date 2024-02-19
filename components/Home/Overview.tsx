@@ -4,6 +4,8 @@ import {Text, Image, VStack} from "@chakra-ui/react";
 
 import BoldText from "@/components/Utilities/BoldText";
 
+import Graph from '@/components/Graphs/App.jsx'; 
+
 const Overview = () => {
     return (
         <VStack
@@ -31,6 +33,7 @@ const Overview = () => {
                 src={'diagrams/knowledge_graph.png'}
                 maxW={'600px'}
             />
+            <Graph />
             <Text>
                 Knowledge Graphs visually outline conceptual connections and personalized learning paths that adapt to each student`&apos;s performance. These graphs are generated using accredited learning standards, and present educators with detailed insights into students`&apos; strengths and learning gaps. These clear, visual indicators of student performance enable teachers to implement targeted, individualized teaching approaches. Students benefit from a structured, goal-oriented learning journey tailored to their unique abilities and pace. Dynamically maintained by PVTs, Knowledge Graphs ensure a clear and adaptive educational experience, steering away from a one-size-fits-all approach and reinforcing achievement of learning objectives.
             </Text>
