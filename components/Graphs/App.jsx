@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactFlow from 'reactflow';
+import ReactFlow from 'react-flow-renderer';
  
-import 'reactflow/dist/style.css';
+import 'react-flow-renderer/dist/style.css';
  
 const initialNodes = [
   { id: '1', position: { x: 0, y: 0 }, data: { label: 'Function' }, style: { backgroundColor: '#006400', color: '#FFFFFF', border: '1px solid #000000' }},
