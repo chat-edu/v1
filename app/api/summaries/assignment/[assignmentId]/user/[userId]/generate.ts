@@ -9,6 +9,7 @@ import {findUserSubmissionsByAssignment} from "@/cosmosPostgres/services/submiss
 import {FreeResponseQuestionRow, MultipleChoiceQuestionRow, UserRow} from "@/cosmosPostgres/types";
 import {QuestionTypes} from "@/types/assignment/Question";
 import {Assignment} from "@/types/assignment/Assignment";
+import generateSummaryPrompt from "@/prompts/commands/generateSummaryPrompt";
 
 
 export const generateUserAssignmentSummary = async (
@@ -31,42 +32,15 @@ export const generateUserAssignmentSummary = async (
     mcqQuestions.forEach(q => questionMap[q.id] = q);
     frqQuestions.forEach(q => questionMap[q.id] = q);
 
+    // TODO - mcqQuestions is of type FreeResponseQuestionRow and vice versa for frqQuestions
+    const prompt = generateSummaryPrompt(mcqQuestions, frqQuestions, mcqSubmissions, frqSubmissions, questionMap);
+
     const response = await openai.chat.completions.create({
         model: process.env.GPT_MODEL_ID as string,
         messages: [
             {
                 role: "system",
-                content: `
-                    The student has completed an assignment and their response has been graded.
-
-                    Your goal is to provide a two sentence summary of the student's performance, which will inform both the student and the teacher of the student's understanding and knowledge gaps.
-
-                    The questions of the assignmet are as follows:
-
-                    ${[...mcqQuestions, ...frqQuestions]
-                        .sort((a, b) => a.question_number - b.question_number)
-                        .map((question) => JSON.stringify(question))
-                        .join("\n")
-                    }
-
-                    The student's responses are as follows:
-
-                    ${[...mcqSubmissions, ...frqSubmissions]
-                        .sort((a, b) => questionMap[a.question_id].question_number - questionMap[b.question_id].question_number)
-                        .map((submission) => JSON.stringify(submission))
-                        .join("\n")
-                    }
-                    
-                    Respond in the second person as if you are talking to the student as their tutor.
-
-                    Respond in JSON format with the following structure:
-
-                    {
-                        summary: <string>
-                    }
-                    
-                    The summary should use markdown to format the text, bolding the most important information with asterisks.
-                `,
+                content: prompt,
             }
         ],
         response_format: {
