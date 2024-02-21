@@ -1,10 +1,12 @@
-import React from 'react';
-import ReactFlow from 'react-flow-renderer';
+import React, { useState } from 'react';
+import ReactFlow, { Background } from 'react-flow-renderer';
  
 import 'react-flow-renderer/dist/style.css';
  
+const nodeStyle = { border: '1px solid #000000', color: '#FFFFFF' };
+
 const initialNodes = [
-  { id: '1', position: { x: 0, y: 0 }, data: { label: 'Function' }, style: { backgroundColor: '#006400', color: '#FFFFFF', border: '1px solid #000000' }},
+  { id: '1', position: { x: 0, y: 0 }, data: { label: 'Function' }, style: { backgroundColor: '#006400',  border: '1px solid #000000' }},
   { id: '2', position: { x: 200, y: 100 }, data: { label: 'Range' } },
   { id: '3', position: { x: 200, y: 0 }, data: { label: 'Linear function' } },
   { id: '4', position: { x: 400, y: 0 }, data: { label: 'Quadratic function' } },
@@ -13,7 +15,7 @@ const initialNodes = [
   { id: '7', position: { x: 400, y: 200 }, data: { label: 'Zero of a function' } },
   { id: '8', position: { x: 600, y: 200 }, data: { label: 'Solution set' } },
   { id: '9', position: { x: 800, y: 100 }, data: { label: 'Total mastery' } },
-];
+].map(node => ({ ...node, style: { ...node.style, backgroundColor: '#FFFFFF' }}));
 const initialEdges = [
   { id: 'edge1', source: '1', target: '2', markerEnd: { type: 'arrow' } },
   { id: 'edge2', source: '1', target: '3', markerEnd: { type: 'arrow' } },
@@ -28,17 +30,35 @@ const initialEdges = [
 ];
  
 export default function Graph() {
-  return (
-    <div style={{ width: '100vw', height: '100vh' }}>
-      <ReactFlow
-        nodes={initialNodes}
-        edges={initialEdges}
-        nodesDraggable={false}
-        nodesConnectable={false}
-        elementsSelectable={false}
-        paneMoveable={false}
-        zoomOnScroll={false}
-      />
-    </div>
-  );
+// State to track all nodes
+const [nodes, setNodes] = useState(initialNodes);
+
+// Handler for node click events
+const handleNodeClick = (nodeId) => {
+  setNodes(nodes.map(node => {
+    if (node.id === nodeId) {
+      const nextColor = node.style.backgroundColor === '#FFFFFF' ? '#006400' : '#FFFFFF';
+      return { ...node, style: { ...node.style, backgroundColor: nextColor } };
+    }
+    return node;
+  }));
+};
+
+return (
+  <div style={{ width: '100vw', height: '100vh' }}>
+    <ReactFlow
+      nodes={nodes}
+      edges={initialEdges}
+      onNodeClick={(_, node) => handleNodeClick(node.id)}
+      nodesDraggable={false}
+      nodesConnectable={false}
+      elementsSelectable={false}
+      paneMoveable={false}
+      zoomOnScroll={false}
+      zoomOnDoubleClick={false}
+    >
+      <Background color="#aaa" gap={16} />
+    </ReactFlow>
+  </div>
+);
 }
