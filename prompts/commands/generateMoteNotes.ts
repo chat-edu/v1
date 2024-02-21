@@ -1,18 +1,7 @@
-interface Note {
-    name: string;
-    content: string;
-  }
-  
-  interface Topic {
-    name?: string;
-  }
-  
-  interface Notebook {
-    name?: string;
-  }
-  
+import { NoteRow, NotebookRow, TopicRow } from '@/cosmosPostgres/types';
+
   // Define the function to generate the prompt
-  export const generatePrompt = (note: Note, parentTopic?: Topic, notebook?: Notebook): string => {
+  export const generatePrompt = (note: NoteRow, parentTopic?: TopicRow | null, notebook?: NotebookRow | null): string => {
     return `
       Your goal is to generate more content for a note about ${note.name} on the topic of ${parentTopic?.name || 'the topic'}.
       
