@@ -1,7 +1,7 @@
 import React from 'react';
 import {Notebook} from "@/types/Notebook";
 import useEnrollments from "@/hooks/queries/enrollments/useEnrollments";
-import {Card, HStack, Icon, Skeleton, Text, VStack} from "@chakra-ui/react";
+import {Card, HStack, Icon, Skeleton, Text, VStack, Button, Spacer} from "@chakra-ui/react";
 import StudentOverview from "@/components/Notebook/TeacherOverview/StudentsOverview/StudentOverview";
 import {PiStudentBold} from "react-icons/pi";
 
@@ -12,6 +12,10 @@ interface Props {
 const StudentsOverview: React.FC<Props> = ({ notebookId }) => {
 
     const { enrollments, loading } = useEnrollments(notebookId);
+
+    const handleDownload = () => {
+        console.log('Download as CSV');
+    };
 
     return (
         <Card
@@ -39,6 +43,10 @@ const StudentsOverview: React.FC<Props> = ({ notebookId }) => {
                         View and manage your students&apos; progress and submissions.
                     </Text>
                 </VStack>
+                <Spacer />
+                <Button onClick={handleDownload} colorScheme="blue">
+                    Download as CSV
+                </Button>
             </HStack>
             {
                 loading ? (
