@@ -27,6 +27,7 @@
     "canvas-confetti": "^1.9.0",
     "chakra-ui-markdown-renderer": "^4.1.0",
     "create-next-app": "^14.1.0",
+    "encoding": "^0.1.13",
     "formik": "^2.4.5",
     "framer-motion": "^10.16.4",
     "json-autocomplete": "^0.1.3",

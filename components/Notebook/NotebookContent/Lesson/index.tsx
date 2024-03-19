@@ -15,6 +15,9 @@ import useNote from "@/hooks/queries/notes/useNote";
 import {useCurrentUser} from "@/contexts/CurrentUserContext";
 
 import {Note} from "@/types/Note";
+import useSpeech from "@/hooks/queries/notes/useSpeech";
+import {BsSoundwave} from "react-icons/bs";
+import {FaPause, FaPlay} from "react-icons/fa6";
 
 
 const Editor = dynamic(() => import('@/components/Utilities/Editor'), {
@@ -41,6 +44,8 @@ const Lesson: React.FC<Props> = ({ selectedLesson, selectNotes }) => {
 
     const { note, loading } = useNote(selectedLesson.id);
     const { updateNoteContent } = useUpdateNote(selectedLesson.id, selectedLesson.notebookId);
+
+    const { audio, isLoading, isPlaying, getSpeech, play, pause } = useSpeech(selectedLesson.content);
 
     if(loading && !note) return (
         <Skeleton />
@@ -111,15 +116,36 @@ const Lesson: React.FC<Props> = ({ selectedLesson, selectNotes }) => {
                             </Button>
                         </Tooltip>
                     </HStack>
-                    {
-                        isTeacher && (
-                            <Button
-                                onClick={() => setViewMode(viewMode === ViewModes.EDIT ? ViewModes.PREVIEW : ViewModes.EDIT)}
-                            >
-                                {viewMode === ViewModes.EDIT ? 'Preview' : 'Edit'}
-                            </Button>
-                        )
-                    }
+                    <HStack
+                        spacing={4}
+                    >
+                        <Button
+                            onClick={() => audio ? (isPlaying ? pause() : play()) : getSpeech()}
+                            leftIcon={audio
+                                ? (
+                                    isPlaying
+                                        ? <FaPause />
+                                        : <FaPlay />
+                                )
+                                : <BsSoundwave />
+                            }
+                            isLoading={isLoading}
+                            variant={'outline'}
+                            colorScheme={'brand'}
+                        >
+                            {isPlaying ? 'Pause' : 'Play'}
+                        </Button>
+                        {
+                            isTeacher && (
+                                <Button
+                                    onClick={() => setViewMode(viewMode === ViewModes.EDIT ? ViewModes.PREVIEW : ViewModes.EDIT)}
+                                >
+                                    {viewMode === ViewModes.EDIT ? 'Preview' : 'Edit'}
+                                </Button>
+                            )
+                        }
+                    </HStack>
+
                 </HStack>
                 {
                     viewMode === ViewModes.EDIT ? (
