@@ -4,10 +4,10 @@ import {HStack, Icon, Text, useColorModeValue, VStack} from "@chakra-ui/react";
 
 import {AiOutlineInfoCircle} from "react-icons/ai";
 
-import {Hint} from "@/types/commands/Hint";
+import {Hint as HintType} from "@/types/commands/Hint";
 import Markdown from "@/components/Utilities/Markdown";
 interface Props {
-    hint: Hint
+    hint: HintType
 }
 
 const Hint: React.FC<Props> = ({ hint }) => {
