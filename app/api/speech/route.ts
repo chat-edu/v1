@@ -1,4 +1,4 @@
-import openai from "@/openai";
+import openai from "../../../llm/openai";
 
 export const POST = async (request: Request) => {
 

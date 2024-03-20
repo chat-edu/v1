@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import AuthButton from '@/components/Layout/Navbar/AuthButton'
 import ColorModeToggle from "@/components/Layout/Navbar/ColorModeToggle";
+import ModelToggle from "@/components/Layout/Navbar/ModelToggle";
 
 export const navbarHeight = 80;
 export const mobileNavbarHeight = 60;
@@ -61,6 +62,7 @@ const Navbar: React.FC = () => {
                 </HStack>
             </Link>
             <HStack>
+                <ModelToggle />
                 <AuthButton />
                 <ColorModeToggle />
             </HStack>

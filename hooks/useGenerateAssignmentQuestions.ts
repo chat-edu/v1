@@ -9,8 +9,11 @@ import {Question, QuestionTypes} from "@/types/assignment/Question";
 import {MultipleChoiceQuestion} from "@/types/commands/MultipleChoiceQuestion";
 import {TextBasedQuestion} from "@/types/commands/TextBasedQuestion";
 import {Assignment} from "@/types/assignment/Assignment";
+import {useModel} from "@/contexts/ModelContext";
 
 const useGenerateAssignmentQuestions = (assignmentId: Assignment["id"]) => {
+
+    const { model } = useModel();
 
     const toast = useToast();
 
@@ -23,7 +26,7 @@ const useGenerateAssignmentQuestions = (assignmentId: Assignment["id"]) => {
 
     const generateQuestions = async () => {
         setLoading(true);
-        const generatedAssignment = await generateAssignmentService(assignmentId);
+        const generatedAssignment = await generateAssignmentService(assignmentId, model);
         setGeneratedQuestions(generatedAssignment.questions);
         setLoading(false);
     }

@@ -2,7 +2,7 @@ import {NotebookRow, UserRow} from "@/cosmosPostgres/types";
 import {
     findUserAssignmentSummariesByUserId
 } from "@/cosmosPostgres/services/summaries";
-import openai from "@/openai";
+import openai from "../../../../../../../llm/openai";
 import {getUser} from "@/cosmosPostgres/services/user";
 import generateUserNotebookSummaryPrompt from "@/prompts/commands/generateUserNotebookSummaryPrompt";
 

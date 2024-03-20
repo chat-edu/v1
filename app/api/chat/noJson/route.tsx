@@ -1,4 +1,4 @@
-import openai from "@/openai";
+import openai from "../../../../llm/openai";
 
 import {OpenAIStream, StreamingTextResponse} from "ai";
 

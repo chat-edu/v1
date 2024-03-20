@@ -1,14 +1,12 @@
 import {findNotesByTopicId} from "@/cosmosPostgres/services/notes";
-import openai from "@/openai";
-
-import {applicationQuestionCommand, multipleChoiceCommand, understandingQuestionCommand} from "@/prompts";
-import {QuestionTypes} from "@/types/assignment/Question";
 import {getAssignment} from "@/cosmosPostgres/services/assignments";
 import {
     findFreeResponseQuestionsByAssignmentId,
     findMultipleChoiceQuestionsByAssignmentId
 } from "@/cosmosPostgres/services/questions";
 import generateAssignmentPrompt from "@/prompts/commands/generateAssignmentPrompt";
+import {generateWithSystemPrompt} from "@/llm";
+import {Model} from "@/types/Model";
 
 export const POST = async (req: Request) => {
     const body = await req.json();
@@ -36,22 +34,7 @@ export const POST = async (req: Request) => {
     const questions = [...multipleChoiceQuestions, ...freeResponseQuestions]
         .sort((a, b) => a.question_number - b.question_number);
 
-    const prompt = generateAssignmentPrompt(notes, questions);
-
-    const response = await openai.chat.completions.create({
-        model: process.env.GPT_MODEL_ID as string,
-        messages: [
-            {
-                role: "system",
-                content: prompt,
-            }
-        ],
-        response_format: {
-            type: "json_object",
-        },
-    });
-
-    const content = response.choices[0].message.content;
+    const content = await generateWithSystemPrompt(generateAssignmentPrompt(notes, questions), body.model || Model.OPENAI);
 
     return Response.json(content ? JSON.parse(content) : {}, {
         headers: {

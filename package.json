@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.18.0",
     "@azure/ai-form-recognizer": "^5.0.0",
     "@azure/cosmos": "^4.0.0",
     "@azure/identity": "^4.0.0",
@@ -19,6 +20,7 @@
     "@choc-ui/chakra-autocomplete": "^5.2.8",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@google/generative-ai": "^0.3.1",
     "@mdxeditor/editor": "^2.3.7",
     "@next/font": "^14.1.0",
     "@vercel/analytics": "^1.1.1",

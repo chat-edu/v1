@@ -5,6 +5,7 @@ import {Notebook} from "@/types/Notebook";
 
 import {NoteRowInput, NoteRow} from "@/cosmosPostgres/types";
 import {emitNoteChangedEvent} from "@/cosmosPostgres/eventEmitters/noteEventEmitter";
+import {Model} from "@/types/Model";
 
 // CREATE
 
@@ -48,9 +49,10 @@ export const deleteNote = async (noteId: Note["id"], notebookId: Notebook["id"])
         })
         .catch(null);
 
-export const generateNoteContent = async (noteId: Note["id"]) =>
+export const generateNoteContent = async (noteId: Note["id"], model: Model) =>
     fetch(`/api/notes/${noteId}/generate`, {
         method: "POST",
+        body: JSON.stringify({model}),
     })
         .then(async (res) => (await res.json()) as string)
         .catch(null);
