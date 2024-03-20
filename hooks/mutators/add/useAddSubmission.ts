@@ -11,12 +11,15 @@ import {emitAssignmentChangedEvent} from "@/cosmosPostgres/eventEmitters/assignm
 import {AssignmentWithQuestions} from "@/types/assignment/Assignment";
 import {QuestionTypes} from "@/types/assignment/Question";
 import {generateUserAssignmentSummary} from "@/services/summaries";
+import {useModel} from "@/contexts/ModelContext";
 
 interface Answers {
     [key: string]: string
 }
 
 const useAddSubmission = (assignmentWithQuestions: AssignmentWithQuestions) => {
+
+    const { model } = useModel();
 
     const toast = useToast();
 
@@ -46,7 +49,7 @@ const useAddSubmission = (assignmentWithQuestions: AssignmentWithQuestions) => {
         }));
         const success = !successes.some(success => !success);
         if(success) {
-            await generateUserAssignmentSummary(user.id, assignmentWithQuestions.id);
+            await generateUserAssignmentSummary(user.id, assignmentWithQuestions.id, model);
             toast({
                 title: "Success",
                 description: "Your answers have been submitted",

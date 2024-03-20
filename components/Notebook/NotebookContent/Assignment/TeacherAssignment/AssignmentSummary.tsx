@@ -11,12 +11,15 @@ import {generateAssignmentSummary, regenerateAssignmentSummary} from "@/services
 
 import {Assignment} from "@/types/assignment/Assignment";
 import Markdown from "@/components/Utilities/Markdown";
+import {useModel} from "@/contexts/ModelContext";
 
 interface Props {
     assignmentId: Assignment['id'];
 }
 
 const AssignmentSummary: React.FC<Props> = ({ assignmentId }) => {
+
+    const { model } = useModel();
 
     const toast = useToast();
 
@@ -34,7 +37,7 @@ const AssignmentSummary: React.FC<Props> = ({ assignmentId }) => {
     const generateSummary = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         setIsRegenerating(true);
-        const summary = await generateAssignmentSummary(assignmentId);
+        const summary = await generateAssignmentSummary(assignmentId, model);
         if(summary) {
             toast({
                 title: 'Summary Generated',
@@ -57,7 +60,7 @@ const AssignmentSummary: React.FC<Props> = ({ assignmentId }) => {
     const regenerateSummary = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         setIsRegenerating(true);
-        const summary = await regenerateAssignmentSummary(assignmentId);
+        const summary = await regenerateAssignmentSummary(assignmentId, model);
         if(summary) {
             toast({
                 title: 'Summary regenerated',

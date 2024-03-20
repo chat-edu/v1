@@ -1,6 +1,6 @@
 import {getSubmission, updateSubmissionGrade} from "@/cosmosPostgres/services/submissions";
 import {getFreeResponseQuestion} from "@/cosmosPostgres/services/questions";
-import {gradeFreeResponseQuestion} from "@/openai/grading/gradeSubmission";
+import {gradeFreeResponseQuestion} from "@/llm/openai/grading/gradeSubmission";
 
 import {SubmissionIdParams} from "@/app/api/submissions/freeResponse/[submissionId]/SubmissionIdParams";
 import {QuestionTypes} from "@/types/assignment/Question";

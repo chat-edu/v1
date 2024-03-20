@@ -3,8 +3,11 @@ import {useEffect, useRef, useState} from "react";
 import {MDXEditorMethods} from "@mdxeditor/editor";
 import useProcessPdf from "@/hooks/utilities/useProcessPdf";
 import {generateNoteContent} from "@/services/notes";
+import {useModel} from "@/contexts/ModelContext";
 
 const useEditor = (note: Note) => {
+
+    const { model } = useModel();
 
     const [markdown, setMarkdown] = useState<string>(note.content);
 
@@ -28,7 +31,7 @@ const useEditor = (note: Note) => {
 
     const generateContent = async () => {
         setIsGeneratingContent(true);
-        const content = await generateNoteContent(note.id);
+        const content = await generateNoteContent(note.id, model);
         if(ref.current) {
             ref.current.setMarkdown(ref.current.getMarkdown() + '\n\n' + content);
         }

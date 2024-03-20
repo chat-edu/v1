@@ -2,7 +2,7 @@ import {SubmissionIdParams} from "@/app/api/submissions/freeResponse/[submission
 import {getSubmission, updateSubmissionGrade} from "@/cosmosPostgres/services/submissions";
 import {QuestionTypes} from "@/types/assignment/Question";
 import {getMultipleChoiceQuestion} from "@/cosmosPostgres/services/questions";
-import {gradeMultipleChoiceQuestion} from "@/openai/grading/gradeSubmission";
+import {gradeMultipleChoiceQuestion} from "@/llm/openai/grading/gradeSubmission";
 import {MultipleChoiceKey} from "@/types/commands/MultipleChoiceQuestion";
 
 export const POST = async (req: Request, {params}: {params: SubmissionIdParams}) => {

@@ -1,4 +1,4 @@
-import openai from "@/openai";
+import openai from "../../../../../../../llm/openai";
 
 import {
     findFreeResponseQuestionsByAssignmentId,
@@ -10,11 +10,14 @@ import {FreeResponseQuestionRow, MultipleChoiceQuestionRow, UserRow} from "@/cos
 import {QuestionTypes} from "@/types/assignment/Question";
 import {Assignment} from "@/types/assignment/Assignment";
 import generateSummaryPrompt from "@/prompts/commands/generateSummaryPrompt";
+import {Model} from "@/types/Model";
+import {generateWithSystemPrompt} from "@/llm";
 
 
 export const generateUserAssignmentSummary = async (
     userId: UserRow["id"],
-    assignmentId: Assignment["id"]
+    assignmentId: Assignment["id"],
+    model: Model
 ): Promise<string | null> => {
     const [
         mcqQuestions,
@@ -33,24 +36,14 @@ export const generateUserAssignmentSummary = async (
     frqQuestions.forEach(q => questionMap[q.id] = q);
 
     // TODO - mcqQuestions is of type FreeResponseQuestionRow and vice versa for frqQuestions
-    const prompt = generateSummaryPrompt(mcqQuestions, frqQuestions, mcqSubmissions, frqSubmissions, questionMap);
+    const content = await generateWithSystemPrompt(
+        generateSummaryPrompt(mcqQuestions, frqQuestions, mcqSubmissions, frqSubmissions, questionMap),
+        model
+    );
 
-    const response = await openai.chat.completions.create({
-        model: process.env.GPT_MODEL_ID as string,
-        messages: [
-            {
-                role: "system",
-                content: prompt,
-            }
-        ],
-        response_format: {
-            type: "json_object",
-        },
-    });
-
-    if(response.choices[0].message.content === null) {
+    if(content === "") {
         return null;
     }
 
-    return JSON.parse(response.choices[0].message.content).summary;
+    return JSON.parse(content).summary;
 }

@@ -26,8 +26,6 @@ const StudentSubmissions: React.FC<Props> = ({ userId, notebookId, hideHeader, h
 
     const { userSubmissions } = useUserSubmissions(userId, notebookId);
 
-    console.log(userSubmissions);
-
     return (
         <VStack
             w={'100%'}

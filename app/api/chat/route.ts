@@ -1,23 +1,21 @@
-import { OpenAIStream, StreamingTextResponse } from 'ai';
-import openai from "@/openai";
+import {OpenAIStream, StreamingTextResponse} from 'ai';
+import openai from "../../../llm/openai";
 
 // IMPORTANT! Set the runtime to edge
 export const runtime = 'edge';
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages, model } = await req.json();
 
-  const response = await openai.chat.completions.create({
+  let stream = OpenAIStream(await openai.chat.completions.create({
     model: process.env.GPT_MODEL_ID as string,
     response_format: {
       type: 'json_object'
     },
     stream: true,
     messages: messages,
-  });
+  }));
 
-  // @ts-ignore
-  const stream = OpenAIStream(response);
   return new StreamingTextResponse(
       stream, {
         headers: {
