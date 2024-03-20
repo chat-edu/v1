@@ -1,6 +1,6 @@
-import openai from "@/openai";
+import openai from "../../../../llm/openai";
 
-import {gradeFreeResponseQuestion, gradeMultipleChoiceQuestion} from "@/openai/grading/gradeSubmission";
+import {gradeFreeResponseQuestion, gradeMultipleChoiceQuestion} from "@/llm/openai/grading/gradeSubmission";
 
 import {addEnrollment} from "@/cosmosPostgres/services/enrollments";
 import {findAssignmentsByTopicId} from "@/cosmosPostgres/services/assignments";
@@ -24,13 +24,16 @@ import {
     addNotebookSummary,
     addUserAssignmentSummary,
     addUserNotebookSummary,
-    getAssignmentSummary, getNotebookSummary,
+    getAssignmentSummary,
+    getNotebookSummary,
     getUserNotebookSummary,
-    updateAssignmentSummary, updateNotebookSummary,
+    updateAssignmentSummary,
+    updateNotebookSummary,
     updateUserNotebookSummary
 } from "@/cosmosPostgres/services/summaries";
 import {generateAssignmentSummary} from "@/app/api/summaries/assignment/[assignmentId]/generate";
 import {generateNotebookSummary} from "@/app/api/summaries/notebook/[notebookId]/generate";
+import {Model} from "@/types/Model";
 
 export const POST = async (req: Request, { params }: { params: NotebookIdParams}) => {
 
@@ -107,7 +110,7 @@ export const POST = async (req: Request, { params }: { params: NotebookIdParams}
                 const gradeExplanation = await gradeFreeResponseQuestion(question, answer);
                 if(!gradeExplanation) return false;
                 await updateSubmissionGrade(userSubmission.id, gradeExplanation, QuestionTypes.FreeResponse);
-                const userAssignmentSummary = await generateUserAssignmentSummary(userId, assignment.id);
+                const userAssignmentSummary = await generateUserAssignmentSummary(userId, assignment.id, Model.OPENAI);
                 if(!userAssignmentSummary) return false;
                 const userAssignmentSummaryRow = await addUserAssignmentSummary({
                     user_id: userId,
@@ -134,7 +137,7 @@ export const POST = async (req: Request, { params }: { params: NotebookIdParams}
         }
         if(!userNotebookSuccess) return false;
 
-        const assignmentSummary = await generateAssignmentSummary(assignment.id);
+        const assignmentSummary = await generateAssignmentSummary(assignment.id, Model.OPENAI);
         if(!assignmentSummary) return false;
 
         let assignmentSummarySuccess: boolean;
@@ -155,7 +158,7 @@ export const POST = async (req: Request, { params }: { params: NotebookIdParams}
 
 
     if(submissions.every(submission => submission)) {
-        const noteboookSummary = await generateNotebookSummary(notebookId);
+        const noteboookSummary = await generateNotebookSummary(notebookId, Model.OPENAI);
         if(!noteboookSummary) return new Response("Failed to generate notebook summary", {status: 500});
 
         let notebookSummarySuccess: boolean;

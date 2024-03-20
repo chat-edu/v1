@@ -1,14 +1,18 @@
 import React from 'react';
 
-import {Text, Image, VStack} from "@chakra-ui/react";
+import {Text, Image, VStack, Box} from "@chakra-ui/react";
 
 import BoldText from "@/components/Utilities/BoldText";
+
+import Graph from '@/components/Graphs/App.jsx'; 
 
 const Overview = () => {
     return (
         <VStack
             w={'100%'}
             flex={1}
+            spacing={4}
+            align="center"
         >
             <Image
                 alt={'Overview'}
@@ -31,6 +35,7 @@ const Overview = () => {
                 src={'diagrams/knowledge_graph.png'}
                 maxW={'600px'}
             />
+
             <Text>
                 Knowledge Graphs visually outline conceptual connections and personalized learning paths that adapt to each student`&apos;s performance. These graphs are generated using accredited learning standards, and present educators with detailed insights into students`&apos; strengths and learning gaps. These clear, visual indicators of student performance enable teachers to implement targeted, individualized teaching approaches. Students benefit from a structured, goal-oriented learning journey tailored to their unique abilities and pace. Dynamically maintained by PVTs, Knowledge Graphs ensure a clear and adaptive educational experience, steering away from a one-size-fits-all approach and reinforcing achievement of learning objectives.
             </Text>
@@ -50,6 +55,9 @@ const Overview = () => {
             <Text>
                 ChatEDU`&apos;s Supervising Teaching Assistants serve as a conduit between personalized student tutoring and broader classroom insights, equipping educators with synthesized data on student performance and learning gaps. This integration allows for targeted teaching interventions and informed lesson planning, ensuring a tailored educational approach that evolves with student needs.
             </Text>
+            <Box width="80vw" height="5vh" my={30}> {/* 'my' is for margin in the Y axis (top & bottom) */}
+                <Graph />
+            </Box>
         </VStack>
     );
 };

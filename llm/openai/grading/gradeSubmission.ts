@@ -1,4 +1,4 @@
-import openai from "@/openai";
+import openai from "@/llm/openai";
 
 import {FreeResponseQuestionRow, MultipleChoiceQuestionRow} from "@/cosmosPostgres/types";
 import {MultipleChoiceKey} from "@/types/commands/MultipleChoiceQuestion";

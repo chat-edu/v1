@@ -5,6 +5,7 @@ import {Assignment, AssignmentInput} from "@/types/assignment/Assignment";
 import {AssignmentRow, AssignmentRowInput} from "@/cosmosPostgres/types";
 import {GeneratedAssignment} from "@/types/assignment/GeneratedAssignment";
 import {Topic} from "@/types/Topic";
+import {Model} from "@/types/Model";
 
 export const addAssignment = async (assignment: AssignmentInput) => fetch(`/api/assignment/create`, {
     method: "POST",
@@ -46,10 +47,10 @@ export const deleteAssignment = async (assignmentId: Assignment["id"], topicId: 
         })
         .catch(() => false);
 
-export const generateAssignment = async (assignmentId: Assignment["id"]) =>
+export const generateAssignment = async (assignmentId: Assignment["id"], model: Model) =>
     fetch(`/api/assignment/generate`, {
         method: "POST",
-        body: JSON.stringify({assignmentId}),
+        body: JSON.stringify({assignmentId, model}),
     })
         .then(async (res) => (await res.json()) as GeneratedAssignment)
         .catch(null);

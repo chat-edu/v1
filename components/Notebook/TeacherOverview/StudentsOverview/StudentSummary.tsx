@@ -22,6 +22,7 @@ import {
 
 import {Notebook} from "@/types/Notebook";
 import {User} from "@/types/User";
+import {useModel} from "@/contexts/ModelContext";
 
 
 interface Props {
@@ -30,6 +31,8 @@ interface Props {
 }
 
 const StudentSummary: React.FC<Props> = ({ userId, notebookId }) => {
+
+    const { model } = useModel();
 
     const toast = useToast();
 
@@ -49,7 +52,7 @@ const StudentSummary: React.FC<Props> = ({ userId, notebookId }) => {
     const generateSummary = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         setIsRegenerating(true)
-        const summary = await generateUserNotebookSummary(userId, notebookId);
+        const summary = await generateUserNotebookSummary(userId, notebookId, model);
         if(summary) {
             toast({
                 title: 'Summary Generated',
@@ -72,7 +75,7 @@ const StudentSummary: React.FC<Props> = ({ userId, notebookId }) => {
     const regenerateSummary = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         setIsRegenerating(true);
-        const summary = await regenerateUserNotebookSummary(userId, notebookId);
+        const summary = await regenerateUserNotebookSummary(userId, notebookId, model);
         if(summary) {
             toast({
                 title: 'Summary regenerated',

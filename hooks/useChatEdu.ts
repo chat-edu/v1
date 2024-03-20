@@ -17,6 +17,7 @@ import {
 import {Command, CommandTypes} from "@/types/commands/Command";
 import {Note} from "@/types/Note";
 import {Notebook} from "@/types/Notebook";
+import {useModel} from "@/contexts/ModelContext";
 
 export enum AnswerStates {
     CORRECT,
@@ -25,6 +26,8 @@ export enum AnswerStates {
 }
 
 const useChatEdu = (notebookId: Notebook["id"], notes: Note[]) => {
+
+    const { model } = useModel();
 
     const [promptType, setPromptType] = useState<CommandTypes>(CommandTypes.REGULAR);
 
@@ -73,6 +76,9 @@ const useChatEdu = (notebookId: Notebook["id"], notes: Note[]) => {
         isLoading
     } = useChat({
         api: process.env.NEXT_PUBLIC_CHAT_ENDPOINT as string,
+        body: {
+            model
+        },
         onFinish,
     });
 

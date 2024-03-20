@@ -13,12 +13,16 @@ import {
 import {Notebook} from "@/types/Notebook";
 import TooltipIconButton from "@/components/Utilities/TooltipIconButton";
 import Markdown from "@/components/Utilities/Markdown";
+import {useModel} from "@/contexts/ModelContext";
 
 interface Props {
     notebookId: Notebook['id']
 }
 
 const NotebookSummary: React.FC<Props> = ({ notebookId }) => {
+
+    const { model } = useModel();
+
     const toast = useToast();
 
     const [isRegenerating, setIsRegenerating] = useState(false);
@@ -37,7 +41,7 @@ const NotebookSummary: React.FC<Props> = ({ notebookId }) => {
     const generateSummary = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         setIsRegenerating(true)
-        const summary = await generateNotebookSummary(notebookId);
+        const summary = await generateNotebookSummary(notebookId, model);
         if(summary) {
             toast({
                 title: 'Summary Generated',
@@ -60,7 +64,7 @@ const NotebookSummary: React.FC<Props> = ({ notebookId }) => {
     const regenerateSummary = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         setIsRegenerating(true);
-        const summary = await regenerateNotebookSummary(notebookId);
+        const summary = await regenerateNotebookSummary(notebookId, model);
         if(summary) {
             toast({
                 title: 'Summary regenerated',
