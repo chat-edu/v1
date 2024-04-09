@@ -1,7 +1,6 @@
 export const USERS_TABLE = "Users";
 export const NOTEBOOKS_TABLE = "Notebooks";
 export const NOTES_TABLE = "Notes";
-export const SCORES_TABLE = "Scores";
 export const TOPICS_TABLE = "Topics";
 export const ASSIGNMENTS_TABLE = "Assignments";
 export const FREE_RESPONSE_QUESTIONS_TABLE = "FreeResponseQuestions";
@@ -13,3 +12,6 @@ export const USER_ASSIGNMENT_SUMMARIES_TABLE = "UserAssignmentSummaries";
 export const USER_NOTEBOOK_SUMMARIES_TABLE = "UserNotebookSummaries";
 export const ASSIGNMENT_SUMMARIES_TABLE = "AssignmentSummaries";
 export const NOTEBOOK_SUMMARIES_TABLE = "NotebookSummaries";
+export const TOPIC_NODES_TABLE = "TopicNodes";
+export const TOPIC_EDGES_TABLE = "TopicEdges";
+export const TOPIC_COMPLETIONS_TABLE = "TopicCompletions";

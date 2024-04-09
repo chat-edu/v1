@@ -1,14 +1,10 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 
-import {HStack, Icon, Skeleton, Text, VStack} from "@chakra-ui/react";
+import {Button, Card, HStack, Icon, Text, VStack} from "@chakra-ui/react";
 
-import ClickableCard from "@/components/Utilities/ClickableCard";
 import {PiGraphBold} from "react-icons/pi";
 
-import useTopics from "@/hooks/queries/topics/useTopics";
-import useNotes from "@/hooks/queries/notes/useNotes";
-
-import {generateHierarchy} from "@/services/topics";
+import NotebookKnowledgeGraph from "@/components/Notebook/TeacherOverview/NotebookKnowledgeGraph";
 
 import {Notebook} from "@/types/Notebook";
 
@@ -20,14 +16,16 @@ interface Props {
 const ContentOverview: React.FC<Props> = ({ notebookId, setContentMode }) => {
 
     return (
-        <ClickableCard
-            onClick={setContentMode}
+        <Card
             w={'100%'}
             p={4}
             variant={'outline'}
             gap={4}
         >
-            <HStack>
+            <HStack
+                w={'100%'}
+                mb={4}
+            >
                 <Icon
                     as={PiGraphBold}
                     boxSize={'36px'}
@@ -47,8 +45,19 @@ const ContentOverview: React.FC<Props> = ({ notebookId, setContentMode }) => {
                         Create and manage topics, lessons, and assignments for your class.
                     </Text>
                 </VStack>
+                <Button
+                    colorScheme={'brand'}
+                    onClick={setContentMode}
+                    ml={'auto'}
+                    size={'sm'}
+                >
+                    Edit Content
+                </Button>
             </HStack>
-        </ClickableCard>
+            <NotebookKnowledgeGraph
+                notebookId={notebookId}
+            />
+        </Card>
     );
 };
 

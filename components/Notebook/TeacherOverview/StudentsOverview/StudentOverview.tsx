@@ -23,6 +23,7 @@ import {User} from "@/types/User";
 import {Notebook} from "@/types/Notebook";
 import ClickableCard from "@/components/Utilities/ClickableCard";
 import StudentGrade from "@/components/Notebook/TeacherOverview/StudentsOverview/StudentGrade";
+import StudentKnowledgeGraph from "@/components/Notebook/TeacherOverview/StudentsOverview/StudentKnowledgeGraph";
 
 interface Props {
     userId: User["id"],
@@ -91,6 +92,21 @@ const StudentOverview: React.FC<Props> = ({ userId, notebookId }) => {
                                     Summary
                                 </Text>
                                 <StudentSummary
+                                    userId={userId}
+                                    notebookId={notebookId}
+                                />
+                            </VStack>
+                            <VStack
+                                alignItems={'flex-start'}
+                                w={'100%'}
+                            >
+                                <Text
+                                    fontSize={'xl'}
+                                    fontWeight={'bold'}
+                                >
+                                    Knowledge Graph
+                                </Text>
+                                <StudentKnowledgeGraph
                                     userId={userId}
                                     notebookId={notebookId}
                                 />

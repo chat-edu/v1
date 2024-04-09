@@ -5,6 +5,7 @@ import {AddIcon} from "@chakra-ui/icons";
 
 import AddNotebookModal from "@/components/AddModals/AddNotebook/AddNotebookModal";
 import {transparentize} from "@chakra-ui/theme-tools";
+import theme from "@/theme";
 
 const AddNotebookCard = () => {
 
@@ -17,7 +18,7 @@ const AddNotebookCard = () => {
             <Card
                 cursor={'pointer'}
                 _hover={{
-                    bg: hoverBackground
+                    bg: hoverBackground(theme)
                 }}
                 onClick={onOpen}
                 transition={'all 0.2s ease-in-out'}
