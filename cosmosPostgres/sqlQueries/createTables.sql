@@ -161,8 +161,8 @@ CREATE TABLE NotebookSummaries (
     FOREIGN KEY (notebook_id) REFERENCES Notebooks(id) ON DELETE CASCADE
 );
 
--- alter the assignments table to add a user_id column that defaults to null
-Select * from Users;
+-- delete the notebook with id 19
+DELETE FROM Notebooks WHERE id = 19;
 
 -- DROP ALL TABLES
 DROP TABLE IF EXISTS Scores;

@@ -76,7 +76,9 @@ const NotebookContent: React.FC<Props> = ({ notebook, setOverviewMode }) => {
                 >
                     {
                         !selectedLesson && selectedNotes.length === 0 && selectedAssignment === null && (
-                            <ChatLanding />
+                            <ChatLanding
+                                notebookId={notebook.id}
+                            />
                         )
                     }
                     {
