@@ -1,10 +1,15 @@
 import React from 'react';
-import {Notebook} from "@/types/Notebook";
-import useEnrollments from "@/hooks/queries/enrollments/useEnrollments";
-import {Card, HStack, Icon, Skeleton, Text, VStack, Button, Spacer} from "@chakra-ui/react";
-import StudentOverview from "@/components/Notebook/TeacherOverview/StudentsOverview/StudentOverview";
+
+import {Card, HStack, Icon, Skeleton, Text, VStack, Button} from "@chakra-ui/react";
+
 import {PiStudentBold} from "react-icons/pi";
-import StudentSummary from './StudentSummary';
+
+import StudentOverview from "@/components/Notebook/TeacherOverview/StudentsOverview/StudentOverview";
+import StudentSummary from '@/components/Notebook/TeacherOverview/StudentsOverview/StudentSummary';
+
+import useEnrollments from "@/hooks/queries/enrollments/useEnrollments";
+
+import {Notebook} from "@/types/Notebook";
 
 interface Props {
     notebookId: Notebook["id"]
@@ -34,28 +39,37 @@ const StudentsOverview: React.FC<Props> = ({ notebookId }) => {
             w={'100%'}
             gap={4}
         >
-            <HStack>
-                <Icon
-                    boxSize={'36px'}
-                    color={'brand.500'}
-                    as={PiStudentBold}
-                />
-                <VStack
-                    align={'flex-start'}
-                >
-                    <Text
-                        fontSize={'xl'}
-                        fontWeight={'bold'}
-                        lineHeight={1}
+            <HStack
+                justifyContent={'space-between'}
+                w={'100%'}
+            >
+                <HStack>
+                    <Icon
+                        boxSize={'36px'}
+                        color={'brand.500'}
+                        as={PiStudentBold}
+                    />
+                    <VStack
+                        align={'flex-start'}
                     >
-                        Students Overview
-                    </Text>
-                    <Text>
-                        View and manage your students&apos; progress and submissions.
-                    </Text>
-                </VStack>
-                <Spacer />
-                <Button onClick={handleDownload} colorScheme="blue">
+                        <Text
+                            fontSize={'xl'}
+                            fontWeight={'bold'}
+                            lineHeight={1}
+                        >
+                            Students Overview
+                        </Text>
+                        <Text>
+                            View and manage your students&apos; progress and submissions.
+                        </Text>
+                    </VStack>
+                </HStack>
+                <Button
+                    onClick={handleDownload}
+                    colorScheme="brand"
+                    variant={'outline'}
+                    size={'sm'}
+                >
                     Download as CSV
                 </Button>
             </HStack>

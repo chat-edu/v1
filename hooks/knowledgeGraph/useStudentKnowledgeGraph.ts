@@ -5,10 +5,11 @@ import {Edge, MarkerType, Node, useEdgesState, useNodesState} from "reactflow";
 
 import useTopicEdges from "@/hooks/queries/knowledgeGraph/useTopicEdges";
 
+import useUserTopicNodes from "@/hooks/queries/knowledgeGraph/useUserTopicNodes";
+
 import {Notebook} from "@/types/Notebook";
 import {TopicNode} from "@/types/Topic";
 import {User} from "@/types/User";
-import useUserTopicNodes from "@/hooks/queries/knowledgeGraph/useUserTopicNodes";
 
 const useStudentKnowledgeGraph = (notebookId: Notebook['id'], userId: User["id"]) => {
 

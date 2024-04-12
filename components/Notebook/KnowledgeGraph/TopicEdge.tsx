@@ -39,6 +39,8 @@ const TopicEdge: ComponentType<EdgeProps> = ({ id, sourceX, sourceY, targetX, ta
                         colorScheme={'brand'}
                         icon={<DeleteIcon />}
                         aria-label={'Delete Edge'}
+                        opacity={0}
+                        transition={'opacity 0.2s'}
                         _hover={{
                             opacity: 1
                         }}
