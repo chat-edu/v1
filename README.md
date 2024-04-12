@@ -55,6 +55,9 @@ The CI/CD pipeline for ChatEDU is implemented using GitHub Actions, which automa
 
 ![Continuous Integration and Deployment Workflow with Next.js, GitHub, and Azure.png](https://raw.githubusercontent.com/chat-edu/chat-edu/main/public/architecture/deployment.png)
 
+### Knowledge Graphs
+Knowledge graphs are our novel mechanism of displaying student information and progress in a classroom. For each course, a student can visualize their progress through the course material as a directed acyclic graph with information about their progress in each class topic or section, what prerequisite information a topic has, and what learning a topic opens up for future learning. Teachers can use this data to understand the class progress through various topics, and gain quick insights into which areas may need further focus in the classroom. The hope is that these knowledge graphs help to gamify the process of learning by providing students with continuous reminders about their progression. 
+
 ## Directory Structure
 
 ### `/pages`
