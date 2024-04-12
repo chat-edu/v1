@@ -9,10 +9,10 @@ import useDeleteAssignment from "@/hooks/mutators/delete/useDeleteAssignment";
 
 import {useCurrentUser} from "@/contexts/CurrentUserContext";
 
-import {Assignment} from "@/types/assignment/Assignment";
+import {Assignment as AssignmentType} from "@/types/assignment/Assignment";
 
 interface Props {
-    assignment: Assignment,
+    assignment: AssignmentType,
     selectAssignment: () => void,
     selected: boolean
 }

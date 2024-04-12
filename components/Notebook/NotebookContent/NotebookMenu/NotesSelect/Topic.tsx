@@ -27,6 +27,7 @@ import {useCurrentUser} from "@/contexts/CurrentUserContext";
 
 import {TopicHierarchy} from "@/types/Topic";
 import {Note as NoteType} from "@/types/Note";
+import { Assignment as AssignmentType } from "@/types/assignment/Assignment";
 
 interface Props {
     topicHierarchy: TopicHierarchy,
@@ -35,8 +36,8 @@ interface Props {
     selectedLesson: NoteType | null,
     selectedNotes: NoteType[],
     selectNotes: (notes: NoteType[]) => void,
-    selectedAssignment: Assignment | null,
-    selectAssignment: (assignment: Assignment) => void
+    selectedAssignment: AssignmentType | null,
+    selectAssignment: (assignment: AssignmentType) => void
 }
 
 const Topic: React.FC<Props> = ({ topicHierarchy, selectedLesson, selectedNotes, selectLesson, deselectLesson, selectNotes, selectedAssignment, selectAssignment }) => {

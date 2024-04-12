@@ -1,15 +1,22 @@
 import React from 'react';
 
-import {Text, VStack} from "@chakra-ui/react";
+import {Card, Text, VStack} from "@chakra-ui/react";
 
 import Welcome from "@/components/Welcome";
-
-import useAuth from "@/hooks/useAuth";
 import AuthProviderButtons from "@/components/Utilities/AuthButtons/AuthProviderButtons";
 
-const HomeLanding = () => {
+import {Notebook} from "@/types/Notebook";
+import NotebookKnowledgeGraph from "@/components/Notebook/TeacherOverview/NotebookKnowledgeGraph";
+import {useCurrentUser} from "@/contexts/CurrentUserContext";
+import StudentKnowledgeGraph from "@/components/Notebook/TeacherOverview/StudentsOverview/StudentKnowledgeGraph";
 
-    const { user } = useAuth();
+interface Props {
+    notebookId: Notebook["id"]
+}
+
+const HomeLanding: React.FC<Props> = ({ notebookId }) => {
+
+    const { user } = useCurrentUser();
 
     return (
         <VStack
@@ -24,16 +31,44 @@ const HomeLanding = () => {
             <Welcome />
             {
                 user ? (
-                    <Text
-                        fontSize={{
-                            base: 'sm',
-                            md: 'lg'
-                        }}
-                        textAlign={'center'}
-                        fontWeight={'bold'}
-                    >
-                        Select a note to get started!
-                    </Text>
+                    <>
+                        <Card
+                            w={'100%'}
+                            maxW={'4xl'}
+                            alignItems={'center'}
+                        >
+                            <Text
+                                fontSize={{
+                                    base: 'lg',
+                                    md: 'xl'
+                                }}
+                                fontWeight={'bold'}
+                                textAlign={'center'}
+                            >
+                                {user.role === 'teacher' ? "Notebook Knowledge Graph" : "Your Knowledge Graph"}
+                            </Text>
+                            {
+                                user.role === 'teacher' ? (
+                                    <NotebookKnowledgeGraph notebookId={notebookId} />
+                                ) : (
+                                    <StudentKnowledgeGraph
+                                        notebookId={notebookId}
+                                        userId={user.id}
+                                    />
+                                )
+                            }
+                        </Card>
+                        <Text
+                            fontSize={{
+                                base: 'sm',
+                                md: 'lg'
+                            }}
+                            textAlign={'center'}
+                            fontWeight={'bold'}
+                        >
+                            Select a note to get started!
+                        </Text>
+                    </>
                 ) : (
                     <VStack>
                         <Text

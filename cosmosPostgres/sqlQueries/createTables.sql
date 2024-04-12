@@ -26,6 +26,31 @@ CREATE TABLE IF NOT EXISTS Topics (
     FOREIGN KEY (parent_topic_id) REFERENCES Topics(id) ON DELETE SET NULL
 );
 
+CREATE TABLE IF NOT EXISTS TopicNodes (
+    topic_id INT,
+    x INT,
+    y INT,
+    PRIMARY KEY (topic_id),
+    FOREIGN KEY (topic_id) REFERENCES Topics(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS TopicEdges (
+    source_topic_id INT,
+    target_topic_id INT,
+    PRIMARY KEY (source_topic_id, target_topic_id),
+    FOREIGN KEY (source_topic_id) REFERENCES Topics(id) ON DELETE CASCADE,
+    FOREIGN KEY (target_topic_id) REFERENCES Topics(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS TopicCompletions (
+    user_id VARCHAR(255),
+    topic_id INT,
+    completion_percentage FLOAT,
+    PRIMARY KEY (user_id, topic_id),
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (topic_id) REFERENCES Topics(id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS Notes (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255),
@@ -136,11 +161,8 @@ CREATE TABLE NotebookSummaries (
     FOREIGN KEY (notebook_id) REFERENCES Notebooks(id) ON DELETE CASCADE
 );
 
--- alter the assignments table to add a user_id column that defaults to null
-Select * from Users;
-
--- delete the user with id gh6kx
-DELETE FROM Users WHERE id = 'gh6kx';
+-- delete the notebook with id 19
+DELETE FROM Notebooks WHERE id = 19;
 
 -- DROP ALL TABLES
 DROP TABLE IF EXISTS Scores;

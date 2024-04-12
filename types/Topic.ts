@@ -16,3 +16,8 @@ export interface TopicHierarchy extends Topic {
     notes: Note[];
     subTopics: TopicHierarchy[];
 }
+
+export interface TopicNode {
+    name: string;
+    completionPercentage: number;
+}

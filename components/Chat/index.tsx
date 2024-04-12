@@ -32,7 +32,9 @@ const Chat: React.FC<Props> = ({ notebookId, notes }) => {
     } = useChatEdu(notebookId, notes);
 
     if(notes.length === 0) return (
-        <ChatLanding />
+        <ChatLanding
+            notebookId={notebookId}
+        />
     )
 
     return (
