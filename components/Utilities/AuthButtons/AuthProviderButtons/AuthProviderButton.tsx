@@ -4,10 +4,10 @@ import {Button, Image} from "@chakra-ui/react";
 
 import { signIn } from "next-auth/react";
 
-import {AuthProviderButton} from "@/types/AuthProviderButton";
+import {AuthProviderButton as AuthProviderButtonType } from "@/types/AuthProviderButton";
 
 interface Props {
-    provider: AuthProviderButton
+    provider: AuthProviderButtonType
 }
 
 const AuthProviderButton: React.FC<Props> = ({ provider }) => {

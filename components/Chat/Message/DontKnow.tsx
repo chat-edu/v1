@@ -1,11 +1,11 @@
 import React from 'react';
-import {DontKnow} from "@/types/commands/DontKnow";
+import {DontKnow as DontKnowType} from "@/types/commands/DontKnow";
 import Markdown from "@/components/Utilities/Markdown";
 import {HStack, Icon} from "@chakra-ui/react";
 import {FaInfo} from "react-icons/fa";
 
 interface Props {
-    dontKnow: DontKnow
+    dontKnow: DontKnowType
 }
 
 const DontKnow: React.FC<Props> = ({ dontKnow }) => {

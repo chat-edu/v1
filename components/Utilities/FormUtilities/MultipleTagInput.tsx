@@ -37,8 +37,6 @@ const MultipleTagInput: React.FC<Props> = ({ tagOptions, label, selectedTags, se
                         selectTag(inputValue);
                         setInputValue('');
                     }}
-                    flexDir="column-reverse"
-                    colorScheme={'brand'}
                 >
                     <AutoCompleteInput
                         variant="outline"

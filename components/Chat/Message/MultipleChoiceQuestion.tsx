@@ -92,7 +92,7 @@ const MultipleChoiceQuestion: React.FC<Props> = ({ question, promptWithCommand, 
                     {
                         Object.keys(question.options || {}).map((option, index) => (
                             <Button
-                                ref={(el: HTMLButtonElement | null) => buttonRefs.current[index] = el}
+                                ref={(el: HTMLButtonElement) => {buttonRefs.current[index] = el}}
                                 variant={'outline'}
                                 key={index}
                                 maxW={'100%'}
