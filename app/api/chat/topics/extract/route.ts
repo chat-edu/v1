@@ -2,6 +2,8 @@ import openai from "@/openai";
 
 import {extractTopicsPrompt} from "@/prompts/topics";
 
+export const maxDuration = 300;
+
 export const runtime = 'edge';
 
 export async function POST(req: Request) {
