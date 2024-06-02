@@ -10,6 +10,7 @@ import HomeUsersLeaderboard from "@/components/Home/HomeUsersLeaderboard";
 
 import useNotebookModal from "@/hooks/utilities/useNotebookModal";
 import HomeCreatorsLeaderboard from "@/components/Home/HomeCreatorsLeaderboard";
+import FeaturedNotebooks from "@/components/NotebookGrids/FeaturedNotebooks";
 
 const Home = () => {
 
@@ -28,6 +29,9 @@ const Home = () => {
             }
             <Container>
                 <HomeHeader />
+                <FeaturedNotebooks
+                    onClick={selectNotebook}
+                />
                 <YourNotebooks
                     onClick={selectNotebook}
                 />

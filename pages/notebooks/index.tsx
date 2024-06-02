@@ -11,7 +11,7 @@ const NotebooksPage: NextPage = () => {
         <>
             <Head>
                 <title>Notebooks</title>
-                <meta name="description" content="Supercharge your learning with AI" />
+                <meta name="description" content="Your AI-Powered Learning Copilot" />
                 <meta name="viewport" content="width=device-width, height=device-height,  initial-scale=1.0, user-scalable=no, user-scalable=0;" />
                 <link rel="icon" href="/favicon.ico" />
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png" />

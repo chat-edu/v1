@@ -19,6 +19,7 @@
     "@choc-ui/chakra-autocomplete": "^5.2.8",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@next/font": "^14.2.3",
     "@vercel/analytics": "^1.1.1",
     "@vercel/og": "^0.5.20",
     "ai": "^2.2.20",

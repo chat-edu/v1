@@ -12,7 +12,7 @@ const UserPage = ({ userId} : { userId: string}) => {
         <>
             <Head>
                 <title>User</title>
-                <meta name="description" content="Supercharge your learning with AI" />
+                <meta name="description" content="Your AI-Powered Learning Copilot" />
                 <meta name="viewport" content="width=device-width, height=device-height,  initial-scale=1.0, user-scalable=no, user-scalable=0;" />
                 <meta property="og:image" content={`https://www.chatedu.tech/api/og/users/${userId}`}/>
                 <link rel="icon" href="/favicon.ico" />

@@ -37,7 +37,7 @@ const HomeHeader = () => {
                 </>
             }
             subheading={
-                "Supercharge your learning with AI"
+                "Your AI-Powered Learning Copilot"
             }
         />
     );
