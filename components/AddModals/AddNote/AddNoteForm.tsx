@@ -78,12 +78,12 @@ const AddNoteForm: React.FC<Props> = ({ onDone, notebookId }) => {
             >
                 {
                     step === AddNoteStep.CONTENT ? (
-                        "1) Add Content"
+                        "1) Upload Course Material"
                     ) : (
                         step === AddNoteStep.TOPICS ? (
                             "2) Select Topics"
                         ) : (
-                            "3) Confirm Notes"
+                            "3) Confirm Topics"
                         )
                     )
                 }
@@ -104,12 +104,12 @@ const AddNoteForm: React.FC<Props> = ({ onDone, notebookId }) => {
                                 >
                                     <TextareaInput
                                         label={"Content"}
-                                        placeholder={"Enter the contents of the note here..."}
+                                        placeholder={"Copy and paste course material here…"}
                                         value={content}
                                         onChange={(val) => setContent(val)}
                                         onBlur={() => setContentTouched(true)}
                                         error={contentTouched && content.length === 0 ? "Content is required." : undefined}
-                                        helperText={"Ex: A loop is a sequence of instructions that is continually repeated until a certain condition is reached."}
+                                        helperText={"Ex: Class notes, lecture slides, practice exams, etc."}
                                     />
                                     <Text>
                                         or
@@ -189,7 +189,7 @@ const AddNoteForm: React.FC<Props> = ({ onDone, notebookId }) => {
                                             step === AddNoteStep.TOPICS ? (
                                                 "Generate Notes"
                                             ) : (
-                                                "Add Notes"
+                                                "Add Topics"
                                             )
                                         )
                                     }

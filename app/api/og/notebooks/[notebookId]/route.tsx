@@ -99,7 +99,7 @@ export async function GET(req: NextRequest, { params }: { params: { notebookId: 
                         opacity: 0.5,
                     }}
                 >
-                    {notebookData.numNotes} modules
+                    {notebookData.numNotes} topics
                 </h3>
                 <ChatEduFooter />
             </div>

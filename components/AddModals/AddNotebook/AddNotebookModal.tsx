@@ -28,7 +28,7 @@ const AddNotebookModal: React.FC<Props> = ({ isOpen, onClose }) => {
         >
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Add Notebook</ModalHeader>
+                <ModalHeader>Add Course</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
                     <AddNotebookForm

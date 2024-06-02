@@ -41,7 +41,7 @@ const AddNotebookCard = () => {
                         md: 'lg'
                     }}
                 >
-                    Add Notebook
+                    Add Course
                 </Text>
             </Card>
             <AddNotebookModal

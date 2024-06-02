@@ -32,7 +32,7 @@ const HomeLanding = () => {
                         textAlign={'center'}
                         fontWeight={'bold'}
                     >
-                        Select a note to get started!
+                        Select a topic to get started!
                     </Text>
                 ) : (
                     <VStack>

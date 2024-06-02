@@ -45,7 +45,7 @@ const AddNoteCard: React.FC<Props> = ({ notebookId }) => {
                         md: 'lg'
                     }}
                 >
-                    Add Note
+                    Add Content
                 </Text>
             </Card>
             <AddNoteModal

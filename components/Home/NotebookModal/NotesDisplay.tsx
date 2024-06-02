@@ -29,7 +29,7 @@ const NotesDisplay: React.FC<Props> = ({ notebookId, authorId, allowAddNote }) =
             <Text
                 fontWeight={'bold'}
             >
-                Notes
+                Topics
             </Text>
             <Loading
                 loading={loading}

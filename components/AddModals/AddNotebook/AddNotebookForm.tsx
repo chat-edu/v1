@@ -47,9 +47,9 @@ const AddNotebookForm: React.FC<Props> = ({ onSuccess }) => {
             w={'100%'}
         >
             <TextInput
-                label={'Notebook Name'}
-                placeholder={'Ex: CS 2201'}
-                helperText={'Enter the name of the notebook'}
+                label={'Course Name'}
+                placeholder={'Ex: Chemistry 101'}
+                helperText={'Enter the name of your course'}
                 value={values.name}
                 onChange={(name) => setFieldValue('name', name)}
                 onBlur={() => setFieldTouched('name')}
@@ -61,7 +61,7 @@ const AddNotebookForm: React.FC<Props> = ({ onSuccess }) => {
                 optionLabels={Object.values(SchoolTagTypes).map(capitalize)}
                 options={Object.values(SchoolTagTypes) as SchoolTagTypes[]}
                 onSelect={setSchoolTag}
-                helperText={'What type of school is this notebook for?'}
+                helperText={'What level of school are you?'}
             />
             {
                 schoolTag && (
@@ -70,17 +70,17 @@ const AddNotebookForm: React.FC<Props> = ({ onSuccess }) => {
                         placeholder={"Ex: Vanderbilt University"}
                         value={schoolName}
                         onChange={setSchoolName}
-                        helperText={'What is the name of the school?'}
+                        helperText={'What is the name of your school?'}
                     />
                 )
             }
             <MenuInput
-                label={"Topic"}
+                label={"Subject"}
                 valueDisplay={topicTag ? capitalize(topicTag) : "Select a Type"}
                 optionLabels={Object.values(TopicTagTypes).map(capitalize)}
                 options={Object.values(TopicTagTypes) as TopicTagTypes[]}
                 onSelect={setTopicTag}
-                helperText={'What are your notes about?'}
+                helperText={'What is the subject of your course?'}
             />
             <Button
                 colorScheme="brand"

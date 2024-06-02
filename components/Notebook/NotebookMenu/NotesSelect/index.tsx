@@ -102,7 +102,7 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                             w={'100%'}
                         >
                             <AddNoteButton
-                                text={"Add Note"}
+                                text={"Add Content"}
                                 icon={<SmallAddIcon />}
                                 notebook={notebook}
                                 buttonProps={{

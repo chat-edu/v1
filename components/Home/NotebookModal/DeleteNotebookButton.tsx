@@ -39,7 +39,7 @@ const DeleteNotebookButton: React.FC<Props> = ({ notebookId, notebookName, onDel
                 w={'100%'}
                 onClick={onOpen}
             >
-                Delete Notebook
+                Delete Course
             </Button>
             <Modal
                 isOpen={isOpen}
@@ -49,9 +49,9 @@ const DeleteNotebookButton: React.FC<Props> = ({ notebookId, notebookName, onDel
                 <ModalOverlay />
                 <ModalContent>
                     <ModalCloseButton />
-                    <ModalHeader>Delete Notebook</ModalHeader>
+                    <ModalHeader>Delete Course</ModalHeader>
                     <ModalBody>
-                        Are you sure you want to delete this notebook? This action cannot be undone.
+                        Are you sure you want to delete this course? This action cannot be undone.
                     </ModalBody>
                     <ModalFooter>
                         <Button
