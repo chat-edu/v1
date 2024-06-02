@@ -24,7 +24,7 @@ const YourUsedNotebooks: React.FC<Props> = ({ onClick }) => {
 
     return (
         <NotebookGrid
-            heading={'Your Recent Notebooks'}
+            heading={'Your Recent Courses'}
             notebooks={notebookScores}
             loading={loading}
             onClick={onClick}

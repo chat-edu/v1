@@ -81,9 +81,9 @@ const SearchBar = () => {
                                 </AutoCompleteItem>
                             ))}
                         </AutoCompleteGroup>
-                        <AutoCompleteGroup title={'Notebooks'}>
+                        <AutoCompleteGroup title={'Courses'}>
                             <AutoCompleteGroupTitle>
-                                Notebooks
+                                Courses
                             </AutoCompleteGroupTitle>
                                 {notebookResults.map((notebook) => (
                                     <AutoCompleteItem

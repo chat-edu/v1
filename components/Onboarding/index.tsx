@@ -1,23 +1,22 @@
 import React from 'react';
 
-import OnboardingSteps from "@/components/Onboarding/OnboardingSteps";
 import Container from "@/components/Utilities/Container";
 
 import {User} from "next-auth";
+import CreateAccount from "@/components/Onboarding/CreateAccount";
 
 interface Props {
     user: User
 }
 
-const Onboarding: React.FC<Props> = ({ user }) => {
+const Onboarding: React.FC<Props> = () => {
     return (
         <Container
             h={'100%'}
             justifyContent={'center'}
+            maxW={'2xl'}
         >
-            <OnboardingSteps
-                user={user}
-            />
+            <CreateAccount />
         </Container>
     );
 };

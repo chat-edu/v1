@@ -54,3 +54,6 @@ DROP TABLE IF EXISTS Scores;
 DROP TABLE IF EXISTS Notes;
 DROP TABLE IF EXISTS Notebooks;
 DROP TABLE IF EXISTS Users;
+
+-- delete the user with username steve
+DELETE FROM Users WHERE username = 'testtesttest'

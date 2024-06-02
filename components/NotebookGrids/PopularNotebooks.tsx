@@ -18,7 +18,7 @@ const PopularNotebooks: React.FC<Props> = ({ onClick }) => {
 
     return (
         <NotebookGrid
-            heading={'Popular Notebooks'}
+            heading={'Popular Courses'}
             notebooks={notebooks}
             loading={loading}
             onClick={onClick}

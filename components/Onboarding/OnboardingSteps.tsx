@@ -15,11 +15,6 @@ import {
     VStack
 } from "@chakra-ui/react";
 
-import CreateAccount from "@/components/Onboarding/CreateAccount";
-import CreateNotebook from "@/components/Onboarding/CreateNotebook";
-import CreateNote from "@/components/Onboarding/CreateNote";
-import GetStarted from "@/components/Onboarding/GetStarted";
-
 import useUserNotebooks from "@/hooks/queries/scores/notebooks/useUserNotebooks";
 import useUser from "@/hooks/queries/user/useUser";
 
@@ -33,15 +28,15 @@ const steps = [
     {
         title: 'Create an account',
     },
-    {
-        title: 'Create a Notebook',
-    },
-    {
-        title: 'Create a Note',
-    },
-    {
-        title: 'Get Started',
-    }
+    // {
+    //     title: 'Create a Notebook',
+    // },
+    // {
+    //     title: 'Create a Note',
+    // },
+    // {
+    //     title: 'Get Started',
+    // }
 ]
 
 const OnboardingSteps: React.FC<Props> = ({ user }) => {
@@ -108,33 +103,26 @@ const OnboardingSteps: React.FC<Props> = ({ user }) => {
                     md: '75%'
                 }}
             >
-                {
-                    activeStep === 0 && (
-                        <CreateAccount
-                            nextStep={goToNext}
-                        />
-                    )
-                }
-                {
-                    activeStep === 1 && (
-                        <CreateNotebook
-                            onNext={goToNext}
-                        />
-                    )
-                }
-                {
-                    activeStep === 2 && (
-                        <CreateNote
-                            notebookId={notebooks[0]?.notebookId || 0}
-                            onNext={goToNext}
-                        />
-                    )
-                }
-                {
-                    activeStep === 3 && (
-                        <GetStarted />
-                    )
-                }
+                {/*{*/}
+                {/*    activeStep === 1 && (*/}
+                {/*        <CreateNotebook*/}
+                {/*            onNext={goToNext}*/}
+                {/*        />*/}
+                {/*    )*/}
+                {/*}*/}
+                {/*{*/}
+                {/*    activeStep === 2 && (*/}
+                {/*        <CreateNote*/}
+                {/*            notebookId={notebooks[0]?.notebookId || 0}*/}
+                {/*            onNext={goToNext}*/}
+                {/*        />*/}
+                {/*    )*/}
+                {/*}*/}
+                {/*{*/}
+                {/*    activeStep === 3 && (*/}
+                {/*        <GetStarted />*/}
+                {/*    )*/}
+                {/*}*/}
             </Card>
             {
                 (activeStep !== 0 && activeStep !== steps.length - 1) && (

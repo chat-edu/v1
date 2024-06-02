@@ -85,17 +85,6 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                     }
                 </Loading>
                 {
-                    selectedNotes.length > 0 && (
-                        <VStack
-                            w={'100%'}
-                        >
-                            <StudyGuide
-                                notes={selectedNotes}
-                            />
-                        </VStack>
-                    )
-                }
-                {
                     closeSidebar && selectedNotes.length > 0 && (
                         <Button
                             onClick={closeSidebar}
@@ -119,6 +108,17 @@ const NotesSelect: React.FC<Props> = ({ notebook, selectedNotes,  addNote, remov
                                 buttonProps={{
                                     w: '100%',
                                 }}
+                            />
+                        </VStack>
+                    )
+                }
+                {
+                    selectedNotes.length > 0 && (
+                        <VStack
+                            w={'100%'}
+                        >
+                            <StudyGuide
+                                notes={selectedNotes}
                             />
                         </VStack>
                     )

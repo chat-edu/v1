@@ -37,7 +37,7 @@ const NotebookLeaderboard: React.FC<Props> = ({ notebookId }) => {
                 >
                     {
                         userScores.length > 0 ? (
-                            userScores.map((userScore, index) => (
+                            userScores.slice(0, 5).map((userScore, index) => (
                                 <NotebookLeaderboardRow
                                     key={userScore.userId}
                                     userScore={userScore}
@@ -46,7 +46,7 @@ const NotebookLeaderboard: React.FC<Props> = ({ notebookId }) => {
                             ))
                         ) : (
                             <Text>
-                                No one has used this notebook yet
+                                No one has studied this course yet
                             </Text>
                         )
                     }

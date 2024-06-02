@@ -22,13 +22,13 @@ const YourNotebooks: React.FC<Props> = ({ onClick }) => {
 
     return (
         <NotebookGrid
-            heading={'Your Notebooks'}
+            heading={'Your Courses'}
             notebooks={notebooks}
             loading={loading}
             onClick={onClick}
             noNotebooksComponent={
                 <Text>
-                    {"You don't have any notebooks yet"}
+                    {"You don't have any courses yet"}
                 </Text>
             }
             addNotebook

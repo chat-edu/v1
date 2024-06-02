@@ -43,6 +43,7 @@ const useAddUser = () => {
         setFieldTouched,
         submitForm,
         resetForm,
+        isSubmitting,
     } = useFormik<UserInput>({
         initialValues: {
             name: user?.name || '',
@@ -86,6 +87,11 @@ const useAddUser = () => {
         }
     }, [setFieldValue, user]);
 
+    const randomizeProfilePicture = () => {
+        const randomNum = Math.floor(Math.random() * 1000000);
+        setFieldValue('profilePictureUrl', `https://api.multiavatar.com/${randomNum}.png`);
+    }
+
 
     return {
         values,
@@ -94,7 +100,9 @@ const useAddUser = () => {
         setFieldValue,
         setFieldTouched,
         submitForm,
+        randomizeProfilePicture,
         resetForm,
+        isSubmitting,
         disabled: Object.keys(errors).length > 0,
     }
 }
