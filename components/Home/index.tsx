@@ -29,10 +29,10 @@ const Home = () => {
             }
             <Container>
                 <HomeHeader />
-                <FeaturedNotebooks
+                <YourNotebooks
                     onClick={selectNotebook}
                 />
-                <YourNotebooks
+                <FeaturedNotebooks
                     onClick={selectNotebook}
                 />
                 <PopularNotebooks
